@@ -1,0 +1,11 @@
+You have 2 parts for the projet:
+
+- ZeOntologyNewsExtractor => the server part used to produce a rss fedd annotated (in a rdf file)
+  * In order to run this project please copy the content of http://rdf.insee.fr/geo/archive-2011.zip in the folder resouces/geographie
+
+
+- The webApp part ... todo
+
+
+
+
