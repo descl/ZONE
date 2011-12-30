@@ -8,4 +8,19 @@ You have 2 parts for the projet:
 
 
 
+LICENCE:
+This project is distributed under Apache 2.0 licence
+
+We are using various java projects:
+-rome (ApachePL-1.1 or Apache -2.0) => rss reader
+-jdom (Apache) => manipulation of xml
+-jena (Apache) => RDF manipulation http://jena.sourceforge.net/
+  -tdb (Apache) => persistence in jena
+  -arq(Apache) => graph manipulation in jena
+  -jackson(Apache 2.0) => for xml/json manipulation
+  -slf4j (Apache 2.0) => loging in jena http://www.slf4j.org/
+  -iri (Apache 2.0) => part of jena project
+-j-calais (Apache 2.0) used for connexion with opencalais http://code.google.com/p/j-calais/
+-corese (gpl v2 or Apache 2.0)http://www-sop.inria.fr/edelweiss/software/corese/
+
 
