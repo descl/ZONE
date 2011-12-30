@@ -1,0 +1,13 @@
+{"document":
+[
+{"Account":{"user":"descl","time":"0"}},
+{"words":
+[
+ {"word":".", "PartOfSPeech":"SENT"}
+]},
+{"Named Entities":
+[
+{"EN":"Antibes","type":"LOC","URI":"http://www.wikimeta.com/perl/display.pl?query=Antibes&search=FR","LINKEDDATA":"http://www.dbpedia.org/resource/Antibes","position":"3","confidenceScore":"630.165047269364"},{"EN":"Toulon","type":"LOC","URI":"http://www.wikimeta.com/perl/display.pl?query=Toulon&search=FR","LINKEDDATA":"http://www.dbpedia.org/resource/Toulon","position":"7","confidenceScore":"734.067480899601"},
+{"EN":"Nicolas Sarkozy","type":"PERS","URI":"http://www.wikimeta.com/perl/display.pl?query=Nicolas Sarkozy&search=FR","LINKEDDATA":"http://www.dbpedia.org/resource/Nicolas_Sarkozy","position":"9","confidenceScore":"1437.17967145975"}
+]}
+]}

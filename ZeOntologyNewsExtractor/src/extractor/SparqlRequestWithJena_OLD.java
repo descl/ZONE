@@ -19,7 +19,7 @@ import utils.Prop;
  *
  * @author descl
  */
-public class SparqlRequestWithJena {
+public class SparqlRequestWithJena_OLD {
     private static String directorySource = "geoDB";
     public static Model model = null;
     
@@ -52,7 +52,7 @@ public class SparqlRequestWithJena {
             //model = TDBFactory.createModel(directorySource);
             model = ModelFactory.createDefaultModel();
             
-            SparqlRequestWithJena.createDB();
+            SparqlRequestWithJena_OLD.createDB();
             
         }
         
@@ -64,7 +64,7 @@ public class SparqlRequestWithJena {
     }
     public static ResultSet request(String queryString){
         Query query = QueryFactory.create(queryString);
-        QueryExecution qe = QueryExecutionFactory.create(query, SparqlRequestWithJena.getModel());
+        QueryExecution qe = QueryExecutionFactory.create(query, SparqlRequestWithJena_OLD.getModel());
         ResultSet res = qe.execSelect();
         //qe.close();
         return res;
@@ -72,7 +72,7 @@ public class SparqlRequestWithJena {
     
     public static ArrayList<Prop> getDimensions(String city){
         String[] list = {city};
-        return SparqlRequestWithJena.getDimensions(list);
+        return SparqlRequestWithJena_OLD.getDimensions(list);
     }
     public static ArrayList<Prop> getDimensions(String[] cities){
          String queryString=""
@@ -96,7 +96,7 @@ public class SparqlRequestWithJena {
         System.out.println("start query");
         
         Query query = QueryFactory.create(queryString);
-        QueryExecution qe = QueryExecutionFactory.create(query, SparqlRequestWithJena.getModel());
+        QueryExecution qe = QueryExecutionFactory.create(query, SparqlRequestWithJena_OLD.getModel());
         ResultSet res = qe.execSelect();
         
         //ResultSet res = SparqlRequest.request(query);

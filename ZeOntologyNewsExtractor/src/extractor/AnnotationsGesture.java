@@ -1,5 +1,7 @@
 package extractor;
 
+import extractor.WikiMeta.WikiMetaExtractorXML_OLD;
+import extractor.WikiMeta.WikiMetaExtractorJSON;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,16 +18,16 @@ public class AnnotationsGesture {
     private static ArrayList<Prop> getAllAnnotations(Item item){
         ArrayList<Prop> annotations = new ArrayList<Prop>();
         
-        //Add cities annotations
+        //get opencalais annotations
         //String[] cities = openCalaisExtractor.getCitiesResult(item.concat());
-        String [] cities = {"Toulon"};
-        annotations.addAll(SparqlRequest.getDimensions(cities));
+        //annotations.addAll(SparqlRequest.getDimensions(cities));
         
-        //Add persons annotations
-        //String[] persons = openCalaisExtractor.getPersonsResult(item.concat());
-        //for(String curP : persons){
-        //    annotations.add(new Prop("person", curP));
-        //}
+        
+        //get WikiMeta annotations
+        ArrayList<Prop> props = WikiMetaExtractorJSON.getProperties(item);
+        annotations.addAll(props);
+        
+        //get location annotations using WikiMeta and INSEE database
         
         
         return annotations;        
@@ -35,7 +37,13 @@ public class AnnotationsGesture {
         Iterator<Item> it = items.iterator();
         while(it.hasNext()){
             Item i = it.next();
-            i.addProps(AnnotationsGesture.getAllAnnotations(i));
+            
+            System.out.println("get WikiMeta annotations for "+i.getUri());
+            ArrayList<Prop> props = AnnotationsGesture.getAllAnnotations(i);
+            i.addProps(props);
+            System.out.println("\t"+props);
+            
+            System.out.println("get WikiMeta annotations => done");
         }
     }
 }

@@ -1,0 +1,369 @@
+<xml>
+<format value="WIKIMETA">
+<user>descl</user>
+<time>48 s</time>
+<version>V 1.6.4.0.2 - 15 dec 2011</version>
+<![CDATA[
+Salaires	NOM	UNK					
+:	PUN	UNK					
+la	DET:ART	UNK					
+Fonction	XNAM	ORG	http://www.wikimeta.com/perl/display.pl?query=Fonction publique&search=FR	http://www.dbpedia.org/resource/Civil_service	84.4502932337877		
+publique	ADJ	ORG					
+veut	VER:pres	UNK					
+négocier	VER:infi	UNK					
+.	SENT	UNK					
+Les	DET:ART	UNK					
+syndicats	NOM	UNK					
+de	PRP	UNK					
+la	DET:ART	UNK					
+Fonction	XNAM	ORG	http://www.wikimeta.com/perl/display.pl?query=Fonction publique&search=FR	http://www.dbpedia.org/resource/Civil_service	83.5066849220268		
+publique	ADJ	ORG					
+ont	VER:pres	UNK					
+demandé	VER:pper	UNK					
+mercredi	NDAY	TIME	NORDF				
+l'	DET:ART	UNK					
+ouverture	NOM	UNK					
+de	PRP	UNK					
+négociations	NOM	UNK					
+sur	PRP	UNK					
+les	DET:ART	UNK					
+salaires	NOM	UNK					
+avec	PRP	UNK					
+la	DET:ART	UNK					
+refonte	NOM	UNK					
+des	PRP:det	UNK					
+grilles	NOM	UNK					
+indiciaires	ADJ	UNK					
+et	KON	UNK					
+l'	DET:ART	UNK					
+augmentation	NOM	UNK					
+de	PRP	UNK					
+la	DET:ART	UNK					
+valeur	NOM	UNK					
+du	PRP:det	UNK					
+point	NOM	UNK					
+d'	PRP	UNK					
+indice	NOM	UNK					
+des	PRP:det	UNK					
+fonctionnaires	NOM	UNK					
+.	SENT	UNK					
+Les	DET:ART	UNK					
+syndicats	NOM	UNK					
+CFDT	ABR	ORG	http://www.wikimeta.com/perl/display.pl?query=Confédération française démocratique du travail&search=FR		100.066701047444		
+,	PUN	UNK					
+CFTC	ABR	ORG	http://www.wikimeta.com/perl/display.pl?query=Confédération française des travailleurs chrétiens&search=FR		78.2015584006885		
+,	PUN	UNK					
+CGC	ABR	ORG	http://www.wikimeta.com/perl/display.pl?query=Confédération française de l'encadrement - Confédération générale des cadres&search=FR		70.4900182269066	http://www.wikimeta.com/perl/display.pl?query=Conspicuous Gallantry Cross&search=FR	
+,	PUN	UNK					
+CGT	ABR	ORG	http://www.wikimeta.com/perl/display.pl?query=Confédération générale du travail&search=FR		197.722685127615	http://www.wikimeta.com/perl/display.pl?query=Classification géographique type&search=FR	http://www.wikimeta.com/perl/display.pl?query=Compagnie générale transatlantique&search=FR
+,	PUN	UNK					
+FSU	ABR	ORG	http://www.wikimeta.com/perl/display.pl?query=Fédération syndicale unitaire&search=FR		80.8171131538273		
+,	PUN	UNK					
+Solidaires	NAM	LOC	http://www.wikimeta.com/perl/display.pl?query=Union syndicale Solidaires&search=FR	http://www.dbpedia.org/resource/Solidaires_Unitaires_D%C3%A9mocratiques	127.974558377249		
+et	KON	UNK					
+Unsa	NAM	ORG	http://www.wikimeta.com/perl/display.pl?query=Union nationale des syndicats autonomes&search=FR	http://www.dbpedia.org/resource/National_Union_of_Autonomous_Unions	118.995261654808		
+ont	VER:pres	UNK					
+dénoncé	VER:pper	UNK					
+dans	PRP	UNK					
+un	DET:ART	UNK					
+communiqué	NOM	UNK					
+commun	ADJ	UNK					
+le	DET:ART	UNK					
+"	"	UNK					
+tassement	NOM	UNK					
+des	PRP:det	UNK					
+grilles	NOM	UNK					
+indiciaires	ADJ	UNK					
+et	KON	UNK					
+la	DET:ART	UNK					
+dévalorisation	NOM	UNK					
+globale	ADJ	UNK					
+des	PRP:det	UNK					
+carrières	NOM	UNK					
+de	PRP	UNK					
+la	DET:ART	UNK					
+fonction	NOM	ORG	http://www.wikimeta.com/perl/display.pl?query=Fonction publique&search=FR	http://www.dbpedia.org/resource/Civil_service	83.5066849220268		
+publique	ADJ	ORG					
+"	"	UNK					
+,	PUN	UNK					
+demandant	VER:ppre	UNK					
+l'	DET:ART	UNK					
+ouverture	NOM	UNK					
+"	"	UNK					
+immédiate	ADJ	UNK					
+de	PRP	UNK					
+négociations	NOM	UNK					
+"	"	UNK					
+.	SENT	UNK					
+Les	DET:ART	UNK					
+organisations	NOM	UNK					
+syndicales	ADJ	UNK					
+se	PRO:PER	UNK					
+sont	VER:pres	UNK					
+cependant	ADV	UNK					
+félicitées	VER:pper	UNK					
+que	KON	UNK					
+le	DET:ART	UNK					
+ministre	NOM	FONC	http://www.wikimeta.com/perl/display.pl?query=Ministre de la Fonction publique&search=FR	http://www.dbpedia.org/resource/Minister_for_the_Civil_Service	19.4311877794055		
+de	PRP	FONC					
+la	DET:ART	FONC					
+Fonction	XNAM	FONC					
+publique	ADJ	FONC					
+,	PUN	UNK					
+François	FNAM	PERS	http://www.wikimeta.com/perl/display.pl?query=François Sauvadet&search=FR		36.6306764884297		
+Sauvadet	NAM	PERS					
+,	PUN	UNK					
+ait	VER:subp	UNK					
+choisit	VER:pres	UNK					
+21 déc. 2011 22:22:18 extractor.WikiMetaExtractor getProperties
+"	"	UNK					
+la	DET:ART	UNK					
+voie	NOM	UNK					
+de	PRP	UNK					
+la	DET:ART	UNK					
+GRAVE: null
+revalorisation	NOM	UNK					
+indiciaire	ADJ	UNK					
+pour	PRP	UNK					
+org.jdom.input.JDOMParseException: Error on line 215: The reference to entity "search" must end with the ';' delimiter.
+remettre	VER:infi	UNK					
+en	PRP	UNK					
+urgence	NOM	UNK					
+le	DET:ART	UNK					
+salaire	NOM	UNK					
+	at org.jdom.input.SAXBuilder.build(SAXBuilder.java:533)
+minimum	NOM	UNK					
+de	PRP	UNK					
+la	DET:ART	UNK					
+	at org.jdom.input.SAXBuilder.build(SAXBuilder.java:946)
+Fonction	XNAM	ORG	http://www.wikimeta.com/perl/display.pl?query=Fonction publique&search=FR	http://www.dbpedia.org/resource/Civil_service	83.5066849220268		
+	at extractor.WikiMetaExtractor.getProperties(WikiMetaExtractor.java:97)
+publique	ADJ	ORG					
+au	PRP:det	UNK					
+niveau	NOM	UNK					
+	at extractor.AnnotationsGesture.getAllAnnotations(du	PRP:det	UNK					
+AnnotationsGesture.java:25)
+Smic	NAM	UNK					
+"	"	UNK					
+et	KON	UNK					
+	at extractor.AnnotationsGesture.addAnnotations(AnnotationsGesture.java:36)
+	at zeontologynewsextractor.ZeOntologyNewsExtractor.main(ZeOntologyNewsExtractor.java:37)
+Caused by: org.xml.sax.SAXParseException; lineNumber: 215; columnNumber: 76; The reference to entity "search" must end with the ';' delimiter.
+renoncé	VER:pper	UNK					
+	at org.apache.xerces.util.ErrorHandlerWrapper.createSAXParseException(Unknown Source)
+"	"	UNK					
+aux	PRP:det	UNK					
+mesures	NOM	UNK					
+	at org.apache.xerces.util.ErrorHandlerWrapper.fatalError(Unknown Source)
+indemnitaires	ADJ	UNK					
+qu'	PRO:REL	UNK					
+il	PRO:PER	UNK					
+avait	VER:impf	UNK					
+	at org.apache.xerces.impl.XMLErrorReporter.reportError(Unknown Source)
+initialement	ADV	UNK					
+proposées	VER:pper	UNK					
+"	"	UNK					
+	at org.apache.xerces.impl.XMLErrorReporter.reportError(Unknown Source)
+.	SENT	UNK					
+	at org.apache.xerces.impl.XMLScanner.reportFatalError(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl.scanEntityReference(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$FragmentContentDispatcher.dispatch(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl.scanDocument(Unknown Source)
+<img	NOM	UNK					
+width	NOM	UNK					
+=	ADJ	UNK					
+'1'	ADJ	UNK					
+height	NOM	UNK					
+=	ADJ	UNK					
+'1'	ADJ	UNK					
+src	NOM	UNK					
+=	ADJ	UNK					
+'http://europe1.fr	ADJ	UNK					
+.feedsportal.com	NOM	UNK					
+/	PUN	UNK					
+c	VER:pper	UNK					
+/	PUN	UNK					
+32376	NUM	ORG	NORDF				
+/	PUN	UNK					
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+f	NOM	UNK					
+/	PUN	UNK					
+546041	NUM	TIME	NORDF				
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+/	PUN	UNK					
+s	NOM	UNK					
+/	PUN	UNK					
+1b288486	NOM	UNK					
+/	PUN	UNK					
+mf	NOM	UNK					
+.	SENT	UNK					
+gif'	NOM	UNK					
+border	VER:infi	UNK					
+	at org.apache.xerces.parsers.XMLParser.parse(Unknown Source)
+=	NOM	UNK					
+'0'	ADJ	UNK					
+/	PUN	UNK					
+><div	NOM	UNK					
+	at org.apache.xerces.parsers.AbstractSAXParser.parse(Unknown Source)
+class	ADV	UNK					
+=	ADJ	UNK					
+'mf-viral'	NOM	UNK					
+><table	ADJ	UNK					
+	at org.apache.xerces.jaxp.SAXParserImpl$JAXPSAXParser.parse(Unknown Source)
+border	VER:infi	UNK					
+=	NOM	UNK					
+'0'><tr><td	VER:subi	UNK					
+valign	NOM	UNK					
+	at org.jdom.input.SAXBuilder.build(SAXBuilder.java:518)
+=	ADJ	UNK					
+	... 5 more
+'middle'><a	VER:simp	UNK					
+href	NOM	UNK					
+=	ADJ	UNK					
+"	"	UNK					
+http://res.feedsportal.com	NOM	UNK					
+/	PUN	UNK					
+viral	ADJ	UNK					
+Caused by: org.xml.sax.SAXParseException; lineNumber: 215; columnNumber: 76; The reference to entity "search" must end with the ';' delimiter.
+/	PUN	UNK					
+sendEmail	NOM	UNK					
+.	SENT	UNK					
+cfm	NOM	UNK					
+?	SENT	UNK					
+lang	NOM	UNK					
+	at org.apache.xerces.util.ErrorHandlerWrapper.createSAXParseException(Unknown Source)
+=	NOM	UNK					
+fr	ADJ	UNK					
+.	SENT	UNK					
+]]>
+<extraction>
+<NE>Fonction publique</NE>
+<type>ORG</type>
+<URI>http://www.wikimeta.com/perl/display.pl?query=Fonction publique&search=FR</URI>
+<LINKEDDATA>http://www.dbpedia.org/resource/Civil_service</LINKEDDATA>
+<position>3</position>
+<confidenceScore>84.4502932337877</confidenceScore>
+</extraction>
+<extraction>
+<NE>Fonction publique</NE>
+<type>ORG</type>
+<URI>http://www.wikimeta.com/perl/display.pl?query=Fonction publique&search=FR</URI>
+<LINKEDDATA>http://www.dbpedia.org/resource/Civil_service</LINKEDDATA>
+<position>12</position>
+<confidenceScore>83.5066849220268</confidenceScore>
+</extraction>
+<extraction>
+<NE>mercredi</NE>
+<type>TIME</type>
+<URI>NORDF</URI>
+<LINKEDDATA></LINKEDDATA>
+<position>16</position>
+<confidenceScore></confidenceScore>
+</extraction>
+<extraction>
+<NE>CFDT</NE>
+<type>ORG</type>
+<URI>http://www.wikimeta.com/perl/display.pl?query=Confédération française démocratique du travail&search=FR</URI>
+<LINKEDDATA></LINKEDDATA>
+<position>45</position>
+<confidenceScore>100.066701047444</confidenceScore>
+</extraction>
+<extraction>
+<NE>CFTC</NE>
+<type>ORG</type>
+<URI>http://www.wikimeta.com/perl/display.pl?query=Confédération française des travailleurs chrétiens&search=FR</URI>
+<LINKEDDATA></LINKEDDATA>
+<position>47</position>
+<confidenceScore>78.2015584006885</confidenceScore>
+</extraction>
+<extraction>
+<NE>CGC</NE>
+<type>ORG</type>
+<URI>http://www.wikimeta.com/perl/display.pl?query=Confédération française de l'encadrement - Confédération générale des cadres&search=FR</URI>
+<LINKEDDATA></LINKEDDATA>
+<position>49</position>
+<confidenceScore>70.4900182269066</confidenceScore>
+</extraction>
+<extraction>
+<NE>CGT</NE>
+<type>ORG</type>
+<URI>http://www.wikimeta.com/perl/display.pl?query=Confédération générale du travail&search=FR</URI>
+<LINKEDDATA></LINKEDDATA>
+<position>51</position>
+<confidenceScore>197.722685127615</confidenceScore>
+</extraction>
+<extraction>
+<NE>FSU</NE>
+<type>ORG</type>
+<URI>http://www.wikimeta.com/perl/display.pl?query=Fédération syndicale unitaire&search=FR</URI>
+<LINKEDDATA></LINKEDDATA>
+<position>53</position>
+<confidenceScore>80.8171131538273</confidenceScore>
+</extraction>
+<extraction>
+<NE>Solidaires</NE>
+<type>LOC</type>
+<URI>http://www.wikimeta.com/perl/display.pl?query=Union syndicale Solidaires&search=FR</URI>
+<LINKEDDATA>http://www.dbpedia.org/resource/Solidaires_Unitaires_D%C3%A9mocratiques</LINKEDDATA>
+<position>55</position>
+<confidenceScore>127.974558377249</confidenceScore>
+</extraction>
+<extraction>
+<NE>Unsa</NE>
+<type>ORG</type>
+<URI>http://www.wikimeta.com/perl/display.pl?query=Union nationale des syndicats autonomes&search=FR</URI>
+<LINKEDDATA>http://www.dbpedia.org/resource/National_Union_of_Autonomous_Unions</LINKEDDATA>
+<position>57</position>
+<confidenceScore>118.995261654808</confidenceScore>
+</extraction>
+<extraction>
+<NE>fonction publique</NE>
+<type>ORG</type>
+<URI>http://www.wikimeta.com/perl/display.pl?query=Fonction publique&search=FR</URI>
+<LINKEDDATA>http://www.dbpedia.org/resource/Civil_service</LINKEDDATA>
+<position>78</position>
+<confidenceScore>83.5066849220268</confidenceScore>
+</extraction>
+<extraction>
+<NE>ministre de la Fonction publique</NE>
+<type>FONC</type>
+<URI>http://www.wikimeta.com/perl/display.pl?query=Ministre de la Fonction publique&search=FR</URI>
+<LINKEDDATA>http://www.dbpedia.org/resource/Minister_for_the_Civil_Service</LINKEDDATA>
+<position>100</position>
+<confidenceScore>19.4311877794055</confidenceScore>
+</extraction>
+
+<extraction>
+<NE>François Sauvadet</NE>
+<type>PERS</type>
+<URI>http://www.wikimeta.com/perl/display.pl?query=François Sauvadet&search=FR</URI>
+<LINKEDDATA></LINKEDDATA>
+<position>106</position>
+<confidenceScore>36.6306764884297</confidenceScore>
+</extraction>
+<extraction>
+<NE>Fonction publique</NE>
+<type>ORG</type>
+<URI>http://www.wikimeta.com/perl/display.pl?query=Fonction publique&search=FR</URI>
+<LINKEDDATA>http://www.dbpedia.org/resource/Civil_service</LINKEDDATA>
+<position>127</position>
+<confidenceScore>83.5066849220268</confidenceScore>
+</extraction>
+<extraction>
+<NE>32376</NE>
+<type>ORG</type>
+<URI>NORDF</URI>
+<LINKEDDATA></LINKEDDATA>
+<position>161</position>
+<confidenceScore></confidenceScore>
+</extraction>
+<extraction>
+<NE>546041</NE>
+<type>TIME</type>
+<URI>NORDF</URI>
+<LINKEDDATA></LINKEDDATA>
+<position>165</position>
+<confidenceScore></confidenceScore>
+</extraction>
+</format>
+</xml>

@@ -3,7 +3,7 @@ package zeontologynewsextractor;
 import extractor.AnnotationsGesture;
 import extractor.RSSGetter;
 import extractor.SparqlRequest;
-import extractor.WikiMetaExtractor;
+import extractor.WikiMeta.WikiMetaExtractorXML_OLD;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -25,20 +25,20 @@ public class ZeOntologyNewsExtractor {
         String [] fluxLinks = {
                          //"resources/examples/europe1.rss",
                          "http://europe1.fr.feedsportal.com/c/32376/f/546041/index.rss"
-                         ,"http://actualite.portail.free.fr/france/rss.xml"
-                         ,"http://www.tv5.org/TV5Site/rss/actualites.php?rub=3"
+                 //        ,"http://actualite.portail.free.fr/france/rss.xml"
+                 //        ,"http://www.tv5.org/TV5Site/rss/actualites.php?rub=3"
         };
         items.addAll(RSSGetter.getFlux(fluxLinks));
+        
+        /*for(int i=0; i< items.size();i++){
+            System.out.println("\n"+items.get(i));
+        }*/
+        
+        AnnotationsGesture.addAnnotations(items);
         
         for(int i=0; i< items.size();i++){
             System.out.println("\n"+items.get(i));
         }
-        
-        /*AnnotationsGesture.addAnnotations(items);
-        
-        for(int i=0; i< items.size();i++){
-            System.out.println("\n"+items.get(i));
-        }*/
         
         //Database.addItems(items.toArray(new Item[items.size()]));
 
