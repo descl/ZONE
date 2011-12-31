@@ -2,7 +2,7 @@ package utils;
 
 /**
  *
- * @author descl
+ * @author Desclaux Christophe <christophe@zouig.org>
  */
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Database extends Object {
+public class RDFDatabase extends Object {
       private static String directory = "out/" ;
       private static Model model = null; 
       private static String newsURI  = "http://news.com/News#";
@@ -26,12 +26,12 @@ public class Database extends Object {
       }
       public static void addItems(Item[] items){
         for(int i=0; i < items.length;i++){
-            Database.addItem(items[i]);
+            RDFDatabase.addItem(items[i]);
         }
       }
       
       public static void addItem(Item item){
-            Resource itemNode = Database.getModel().createResource(item.getUri());
+            Resource itemNode = RDFDatabase.getModel().createResource(item.getUri());
             Iterator it = item.values.iterator();
             while (it.hasNext()){
                 Prop cle = (Prop)it.next();
@@ -53,9 +53,9 @@ public class Database extends Object {
       public static void print(){
         OutputStream out = null;
         try {
-            Database.getModel().write(new PrintWriter(System.out));
+            RDFDatabase.getModel().write(new PrintWriter(System.out));
         } catch (Exception ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RDFDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
         
       }
@@ -63,7 +63,7 @@ public class Database extends Object {
       public static boolean ItemURIExist(String uri){
           String queryString = "ASK { <"+uri+"> <"+newsURI+"title> ?z}";
           Query query = QueryFactory.create(queryString) ;
-          QueryExecution qexec = QueryExecutionFactory.create(query, Database.getModel()) ;
+          QueryExecution qexec = QueryExecutionFactory.create(query, RDFDatabase.getModel()) ;
           boolean result = qexec.execAsk() ;
           qexec.close() ;
           return result;

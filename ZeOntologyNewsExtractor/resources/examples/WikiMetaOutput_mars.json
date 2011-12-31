@@ -1,0 +1,17 @@
+{"document":
+[
+{"Account":{user:"descl",time:"1"}},
+{"words":
+[
+ {word:"Les", PartOfSPeech:"DET:ART"}, {word:"règlements", PartOfSPeech:"NOM"}, {word:"de", PartOfSPeech:"PRP"}, {word:"compte", PartOfSPeech:"NOM"}, {word:"continuent", PartOfSPeech:"VER:pres"}, {word:"à", PartOfSPeech:"PRP"}, {word:"Marseille", PartOfSPeech:"NAM"}, {word:"comme", PartOfSPeech:"KON"}, {word:"le", PartOfSPeech:"PRO:PER"}, {word:"rapporte", PartOfSPeech:"VER:pres"}, {word:"Le", PartOfSPeech:"DET:ART"}, {word:"Figaro", PartOfSPeech:"NAM"}, {word:".", PartOfSPeech:"SENT"}, {word:"Hier", PartOfSPeech:"ADV"}, {word:"soir", PartOfSPeech:"NDAY"}, {word:",", PartOfSPeech:"PUN"}, {word:"deux", PartOfSPeech:"NUM"}, {word:"hommes", PartOfSPeech:"NOM"}, {word:"ont", PartOfSPeech:"VER:pres"}, {word:"été", PartOfSPeech:"VER:pper"}, {word:"blessés", PartOfSPeech:"VER:pper"}, {word:"par", PartOfSPeech:"PRP"}, {word:"balles", PartOfSPeech:"NOM"}, {word:"dans", PartOfSPeech:"PRP"}, {word:"une", PartOfSPeech:"DET:ART"}, {word:"cité", PartOfSPeech:"NOM"}, {word:"de", PartOfSPeech:"PRP"}, {word:"Marseille", PartOfSPeech:"NAM"}, {word:"(", PartOfSPeech:"PUN"}, {word:"Bouches-du-Rhône", PartOfSPeech:"NAM"}, {word:")", PartOfSPeech:"PUN"}, {word:".", PartOfSPeech:"SENT"}, {word:"Les", PartOfSPeech:"DET:ART"}, {word:"deux", PartOfSPeech:"NUM"}, {word:"individus", PartOfSPeech:"NOM"}, {word:"âgés", PartOfSPeech:"ADJ"}, {word:"de", PartOfSPeech:"PRP"}, {word:"18", PartOfSPeech:"NUM"}, {word:"et", PartOfSPeech:"KON"}, {word:"23", PartOfSPeech:"NUM"}, {word:"ans", PartOfSPeech:"NDAY"}, {word:"se", PartOfSPeech:"PRO:PER"}, {word:"trouvaient", PartOfSPeech:"VER:impf"}, {word:"dans", PartOfSPeech:"PRP"}, {word:"une", PartOfSPeech:"DET:ART"}, {word:"voiture", PartOfSPeech:"NOM"}, {word:"quand", PartOfSPeech:"KON"}, {word:"ils", PartOfSPeech:"PRO:PER"}, {word:"ont", PartOfSPeech:"VER:pres"}, {word:"été", PartOfSPeech:"VER:pper"}, {word:"pris", PartOfSPeech:"VER:pper"}, {word:"pour", PartOfSPeech:"PRP"}, {word:"cibles", PartOfSPeech:"NOM"}, {word:".", PartOfSPeech:"SENT"}, {word:"Ils", PartOfSPeech:"PRO:PER"}, {word:"ont", PartOfSPeech:"VER:pres"}, {word:"…", PartOfSPeech:"SENT"}, {word:".", PartOfSPeech:"SENT"}
+]},
+{"Named Entities":
+[
+{EN:"Marseille",type:"LOC",URI:"http://www.wikimeta.com/perl/display.pl?query=Marseille&search=FR",LINKEDDATA:"http://www.dbpedia.org/resource/Marseille",position:"6",confidenceScore:"1136.55368698918"},
+{EN:"Le Figaro",type:"ORG",URI:"http://www.wikimeta.com/perl/display.pl?query=Le Figaro&search=FR",LINKEDDATA:"http://www.dbpedia.org/resource/Le_Figaro",position:"10",confidenceScore:"200.413629070957"},
+{EN:"Marseille",type:"LOC",URI:"http://www.wikimeta.com/perl/display.pl?query=Marseille&search=FR",LINKEDDATA:"http://www.dbpedia.org/resource/Marseille",position:"27",confidenceScore:"1136.55368698918"},
+{EN:"Bouches-du-Rhône",type:"LOC",URI:"http://www.wikimeta.com/perl/display.pl?query=Bouches-du-Rhône&search=FR",LINKEDDATA:"",position:"29",confidenceScore:"75.9200981581809"},
+{EN:"18",type:"AMOUNT",URI:"NORDF",LINKEDDATA:"",position:"37",confidenceScore:""},
+{EN:"23 ans",type:"AMOUNT",URI:"NORDF",LINKEDDATA:"",position:"39",confidenceScore:""}
+]}
+]}

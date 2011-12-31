@@ -1,0 +1,12 @@
+{"document":
+[
+{"Account":{user:"descl",time:"1"}},
+{"words":
+[
+ {word:"Vingt", PartOfSPeech:"NUM"}, {word:"cas", PartOfSPeech:"NOM"}, {word:"de", PartOfSPeech:"PRP"}, {word:"cancers", PartOfSPeech:"NOM"}, {word:"survenus", PartOfSPeech:"VER:pper"}, {word:"chez", PartOfSPeech:"PRP"}, {word:"des", PartOfSPeech:"PRP:det"}, {word:"femmes", PartOfSPeech:"NOM"}, {word:"porteuses", PartOfSPeech:"NOM"}, {word:"de", PartOfSPeech:"PRP"}, {word:"prothèses", PartOfSPeech:"NOM"}, {word:"mammaires", PartOfSPeech:"ADJ"}, {word:"PIP", PartOfSPeech:"ABR"}, {word:"ont", PartOfSPeech:"VER:pres"}, {word:"été", PartOfSPeech:"VER:pper"}, {word:"déclarés", PartOfSPeech:"VER:pper"}, {word:"à", PartOfSPeech:"PRP"}, {word:"l'", PartOfSPeech:"DET:ART"}, {word:"Agence", PartOfSPeech:"NAM"}, {word:"des", PartOfSPeech:"PRP:det"}, {word:"produits", PartOfSPeech:"NOM"}, {word:"de", PartOfSPeech:"PRP"}, {word:"santé", PartOfSPeech:"NOM"}, {word:"(", PartOfSPeech:"PUN"}, {word:"Afssaps", PartOfSPeech:"NAM"}, {word:")", PartOfSPeech:"PUN"}, {word:",", PartOfSPeech:"PUN"}, {word:"a", PartOfSPeech:"VER:pres"}, {word:"annoncé", PartOfSPeech:"VER:pper"}, {word:"vendredi", PartOfSPeech:"NDAY"}, {word:"cette", PartOfSPeech:"PRO:DEM"}, {word:"dernière", PartOfSPeech:"NOM"}, {word:".", PartOfSPeech:"SENT"}
+]},
+{"Named Entities":
+[
+{EN:"PIP",type:"ORG",URI:"http://www.wikimeta.com/perl/display.pl?query=PIP (gène)&search=FR",LINKEDDATA:"",position:"12",confidenceScore:"27.4027447935827"},{EN:"Agence des",type:"ORG",URI:"NORDF",LINKEDDATA:"",position:"18",confidenceScore:""},{EN:"Afssaps",type:"LOC",URI:"http://www.wikimeta.com/perl/display.pl?query=Agence française de sécurité sanitaire des produits de santé&search=FR",LINKEDDATA:"",position:"24",confidenceScore:"107.409520062237"},{EN:"vendredi",type:"TIME",URI:"NORDF",LINKEDDATA:"",position:"29",confidenceScore:""}
+]}
+]}

@@ -1,4 +1,7 @@
-package extractor;
+/**
+ * class used to parse rss feed
+ */
+package utils;
 
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
@@ -14,10 +17,14 @@ import utils.Item;
 
 /**
  *
- * @author descl
+ * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class RSSGetter {
-    
+    /**
+     * transform a list of rss feeds links to a list of items
+     * @param urls pointing to the rss feeds
+     * @return the list of items
+     */
     public static ArrayList<Item> getFlux(String[] urls) {
         ArrayList<Item> result = new ArrayList<Item>();
         try {
@@ -30,6 +37,11 @@ public class RSSGetter {
         return result;
     }
     
+    /**
+     * get the list of items contained in a rss feed link
+     * @param url
+     * @return the list of items
+     */
     public static ArrayList<Item> getFlux(String url) {
         try {
             return RSSGetter.getFlux(new XmlReader(new URL(url)));
@@ -38,6 +50,12 @@ public class RSSGetter {
         }
         return null;
     }
+    
+    /**
+     * get the list of items contained in a rss feed file
+     * @param file
+     * @return 
+     */
     public static ArrayList<Item> getFlux(File file) {
         try {
             return getFlux(new XmlReader(file));
@@ -46,7 +64,8 @@ public class RSSGetter {
         }
         return null;
     }
-    public static ArrayList<Item> getFlux(XmlReader reader){
+    
+    private static ArrayList<Item> getFlux(XmlReader reader){
         ArrayList<Item> items = new ArrayList<Item>();
         
         SyndFeedInput sfi = new SyndFeedInput();
@@ -69,5 +88,13 @@ public class RSSGetter {
             System.out.println(e);
         }
         return items;
+    }
+    
+    
+    public static void main(String[] args){
+        
+        String fileURI = "http://europe1.fr.feedsportal.com/c/32376/f/546041/index.rss";
+        ArrayList result = RSSGetter.getFlux(fileURI);
+        System.out.println(result);
     }
 }

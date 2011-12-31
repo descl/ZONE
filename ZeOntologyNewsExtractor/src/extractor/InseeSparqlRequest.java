@@ -8,12 +8,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.Prop;
 
-
 /**
  *
- * @author descl
+ * @author Desclaux Christophe <christophe@zouig.org>
  */
-public class SparqlRequest {
+public class InseeSparqlRequest {
     
     public static IEngine engine = null;
     
@@ -24,7 +23,7 @@ public class SparqlRequest {
             try {
                 engine.load(input);
             } catch (EngineException ex) {
-                Logger.getLogger(SparqlRequest.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(InseeSparqlRequest.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return engine;
@@ -32,10 +31,10 @@ public class SparqlRequest {
     
     public static IResults request(String queryString){
         try {
-            IResults res = SparqlRequest.getEngine().SPARQLQuery(queryString);
+            IResults res = InseeSparqlRequest.getEngine().SPARQLQuery(queryString);
             return res;
         } catch (EngineException ex) {
-            Logger.getLogger(SparqlRequest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InseeSparqlRequest.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return null;
@@ -44,7 +43,7 @@ public class SparqlRequest {
     public static ArrayList<Prop> getDimensions(String[] cities){
         ArrayList<Prop> result = new ArrayList<Prop>();
         for(int i=0; i < cities.length; i++){
-            result.addAll(SparqlRequest.getDimensions(cities[i]));
+            result.addAll(InseeSparqlRequest.getDimensions(cities[i]));
         }
         return result;
     }
@@ -72,7 +71,7 @@ public class SparqlRequest {
         
         
         
-        IResults res = SparqlRequest.request(query);
+        IResults res = InseeSparqlRequest.request(query);
         
         ArrayList<Prop> dims = new ArrayList<Prop>();
         for (Enumeration<IResult> en = res.getResults(); en.hasMoreElements();) {

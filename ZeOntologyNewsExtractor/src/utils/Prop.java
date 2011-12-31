@@ -2,7 +2,7 @@ package utils;
 
 /**
  *
- * @author descl
+ * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class Prop {
     private String type;

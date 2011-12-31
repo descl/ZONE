@@ -1,19 +1,18 @@
 package zeontologynewsextractor;
 
 import extractor.AnnotationsGesture;
-import extractor.RSSGetter;
-import extractor.SparqlRequest;
-import extractor.WikiMeta.WikiMetaExtractorXML_OLD;
+import utils.RSSGetter;
+import extractor.InseeSparqlRequest;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import utils.Database;
+import utils.RDFDatabase;
 import utils.Item;
 import utils.MysqlDatabase;
 
 /**
  *
- * @author descl
+ * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class ZeOntologyNewsExtractor {
 

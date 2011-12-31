@@ -14,10 +14,9 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import utils.Prop;
 
-
 /**
  *
- * @author descl
+ * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class SparqlRequestWithJena_OLD {
     private static String directorySource = "geoDB";

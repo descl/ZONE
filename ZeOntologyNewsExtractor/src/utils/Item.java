@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 /**
  *
- * @author descl
+ * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class Item {
     public String uri;

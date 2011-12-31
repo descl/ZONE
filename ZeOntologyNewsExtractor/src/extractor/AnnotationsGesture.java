@@ -1,7 +1,5 @@
 package extractor;
 
-import extractor.WikiMeta.WikiMetaExtractorXML_OLD;
-import extractor.WikiMeta.WikiMetaExtractorJSON;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,7 +10,7 @@ import utils.Prop;
 
 /**
  *
- * @author descl
+ * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class AnnotationsGesture {
     private static ArrayList<Prop> getAllAnnotations(Item item){
@@ -24,10 +22,13 @@ public class AnnotationsGesture {
         
         
         //get WikiMeta annotations
-        ArrayList<Prop> props = WikiMetaExtractorJSON.getProperties(item);
-        annotations.addAll(props);
+        ArrayList<Prop> WikiMetaProps = WikiMetaRequest.getProperties(item);
+        annotations.addAll(WikiMetaProps);
         
         //get location annotations using WikiMeta and INSEE database
+        ArrayList<Prop> DBpediaProps = DBpediaRequest.getProperties(WikiMetaProps);
+        annotations.addAll(DBpediaProps);
+        
         
         
         return annotations;        

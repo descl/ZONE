@@ -1,3 +1,7 @@
+/**
+ * requests to openCalais webservice
+ * not used anymore because need too much time 
+ */
 package extractor;
 
 import java.io.IOException;
@@ -11,7 +15,7 @@ import mx.bigdata.jcalais.rest.CalaisRestClient;
 
 /**
  *
- * @author descl
+ * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class openCalaisExtractor {
     public static CalaisResponse getResult(java.lang.String content) {

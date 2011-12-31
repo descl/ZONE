@@ -8,6 +8,10 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ * @author Desclaux Christophe <christophe@zouig.org>
+ */
 public class MysqlDatabase {
     
     private static Statement st = null;
