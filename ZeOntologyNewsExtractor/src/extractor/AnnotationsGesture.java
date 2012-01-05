@@ -25,10 +25,13 @@ public class AnnotationsGesture {
         ArrayList<Prop> WikiMetaProps = WikiMetaRequest.getProperties(item);
         annotations.addAll(WikiMetaProps);
         
-        //get location annotations using WikiMeta and INSEE database
+        //get location annotations using WikiMeta
         ArrayList<Prop> DBpediaProps = DBpediaRequest.getProperties(WikiMetaProps);
         annotations.addAll(DBpediaProps);
         
+        //get the grid of locations length using INSEE database
+        ArrayList<Prop> InseeProps = InseeSparqlRequest.getProperties(DBpediaProps);
+        annotations.addAll(InseeProps);
         
         
         return annotations;        
@@ -46,5 +49,11 @@ public class AnnotationsGesture {
             
             System.out.println("get WikiMeta annotations => done");
         }
+    }
+    
+    
+    public static void main(String[] args){
+        Item it = new Item("http://test","bienvenue à Antibes","");
+        System.out.println(getAllAnnotations(it));
     }
 }

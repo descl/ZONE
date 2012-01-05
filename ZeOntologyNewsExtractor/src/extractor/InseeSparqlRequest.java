@@ -40,36 +40,25 @@ public class InseeSparqlRequest {
         return null;
     }
     
-    public static ArrayList<Prop> getDimensions(String[] cities){
-        ArrayList<Prop> result = new ArrayList<Prop>();
-        for(int i=0; i < cities.length; i++){
-            result.addAll(InseeSparqlRequest.getDimensions(cities[i]));
-        }
-        return result;
-    }
     public static ArrayList<Prop> getDimensions(String city){
-         /*String query="PREFIX geo: <http://rdf.insee.fr/geo/>"
-                  + "\nSELECT  DISTINCT ?nom ?entite ?type WHERE{"
-                  + "\n    ?entite geo:nom ?nom"
-                  + "\n    ?entite rdf:type ?type"
-                  + "\n    ?ville geo:nom ?nomVille"
-                  + "\n    ?entite geo:subdivision* ?ville"
-                  + "\n    FILTER(?type != geo:Pays_ou_Territoire && (FALSE";
-                  for(int i=0; i < cities.length;i++){
-                      query += "|| regex(str(?nomVille), '"+cities[i]+"', 'i') ";
-                  }
-        query += "))\n}";*/
-        
+        String [] arr = {city};
+        return getDimensions(arr);
+    }
+    public static ArrayList<Prop> getDimensions(String[] cities){
         String query="PREFIX geo: <http://rdf.insee.fr/geo/>"
                   + "\nSELECT  DISTINCT ?nom ?entite ?type WHERE{"
                 
                   + "\n    ?entite geo:nom ?nom"
-                  + "\n    ?ville geo:nom '"+city+"'@fr"
                   + "\n    ?entite geo:subdivision* ?ville"
+                  + "\n    ?ville geo:nom ?nomVille"
                   + "\n    ?entite rdf:type ?type"
-                  + "\n    FILTER(?type != geo:Pays_ou_Territoire)\n}";
+                  + "\n    FILTER(?type != geo:Pays_ou_Territoire && (FALSE";
+                  for(int i=0; i < cities.length;i++){
+                      query += "|| regex(str(?nomVille), '"+cities[i]+"', 'i') ";
+                  }
+        query += "))\n}";
         
-        
+        System.out.println(query);
         
         IResults res = InseeSparqlRequest.request(query);
         
@@ -83,13 +72,23 @@ public class InseeSparqlRequest {
         return dims;
     }
     
+    public static ArrayList<Prop> getProperties(ArrayList<Prop> locations){
+        
+        ArrayList<String> arrElements = new ArrayList<String>();
+        for(int i =0; i < locations.size(); i++){
+            Prop cur = locations.get(i);
+            arrElements.add(cur.getValue());
+        }
+        return getDimensions(arrElements.toArray(new String[arrElements.size()]));
+    }
+    
     public static void main(String[] args){
         System.out.println((new Date()).toString());
         IEngine engine = getEngine();
         System.out.println((new Date()).toString());
-        System.out.println(getDimensions("Seyne"));
-        System.out.println(getDimensions("La Seyne sur mer"));
-        System.out.println(getDimensions("Toulon"));
+        System.out.println(getDimensions("Antibes"));
+        //System.out.println(getDimensions("La Seyne sur mer"));
+        //System.out.println(getDimensions("Toulon"));
         System.out.println((new Date()).toString());
         System.out.println("Done");
     }

@@ -29,11 +29,9 @@ public class DBpediaRequest {
             Prop cur = uris.get(i);
             String name = getCityNameFromURI(cur.getValue());
             if(name != null)
-                result.add(new Prop(cur.getType(), name, false));
+                result.add(new Prop(cur.getType(), name, true));
         }
-        
-        
-        return null;
+        return result;
     }
     
     /**

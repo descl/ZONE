@@ -13,16 +13,20 @@ public class Item {
     public ArrayList<Prop> values;
 
     public Item(SyndEntry entry){
-        this.uri = entry.getLink();
-        values = new ArrayList<Prop>();
-        values.add(new Prop("link",entry.getLink()));
-        values.add(new Prop("title",entry.getTitle()));
-        values.add(new Prop("description",entry.getDescription().getValue()));
+        this(entry.getLink(),entry.getTitle(),entry.getDescription().getValue());
     }
     
     public Item(String uri){
        this.uri = uri;
         values = new ArrayList<Prop>();
+    }
+    
+    public Item(String link, String title, String description){
+        this.uri = link;
+        values = new ArrayList<Prop>();
+        values.add(new Prop("link",link));
+        values.add(new Prop("title",title));
+        values.add(new Prop("description",description));
     }
     
     public void addElement(String key, String content){
