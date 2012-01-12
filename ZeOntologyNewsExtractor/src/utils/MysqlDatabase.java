@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -102,9 +103,22 @@ public class MysqlDatabase {
         return Integer.parseInt(res);
     }
     
-    public static void createItem(Prop prop){
+    public static void createItemFromProp(Prop prop){
         if(!prop.isLiteral()){
             MysqlDatabase.createItem(prop.getType(), prop.getValue());
         }
     }
+    
+    public static void createItemFromProps(ArrayList<Prop> props){
+        for(int i=0; i < props.size();i++){
+            createItemFromProp(props.get(i));
+        }
+    }
+    
+    
+    public static void createItemFromItems(ArrayList<Item> items){
+        for(int i=0; i < items.size();i++){
+            createItemFromProps(items.get(i).values);
+        }
+    }            
 }

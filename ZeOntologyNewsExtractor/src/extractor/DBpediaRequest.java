@@ -13,8 +13,11 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.util.FileManager;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import utils.Prop;
 
 /**
@@ -23,6 +26,14 @@ import utils.Prop;
  */
 public class DBpediaRequest {
     
+    public static ArrayList<Prop> filter(ArrayList <Prop> props, String filter){
+        ArrayList <Prop> result = new ArrayList<Prop>();
+        for(int i=0; i< props.size();i++){
+            if(props.get(i).getType().equals(filter))
+                result.add(props.get(i));
+        }
+        return result;
+    }
     public static ArrayList<Prop> getProperties(ArrayList<Prop> uris){
         ArrayList<Prop> result = new ArrayList<Prop>();
         for(int i =0; i < uris.size(); i++){
@@ -57,7 +68,13 @@ public class DBpediaRequest {
      */
     public static String getCityNameFromURI(String uri){
         System.out.println("looking for"+uri);
-        Model model = DBpediaRequest.getRDFSchemaFromRDF_URI(uri);
+        Model model;
+        try {
+            model = DBpediaRequest.getRDFSchemaFromRDF_URI(uri);
+        } catch (IOException ex) {
+            System.out.println("DBpedia resource error for "+uri+"\n Error:"+ex.getMessage());
+            return null;
+        }
         
         String canton = getCanton(model);
         if(canton != null)return canton;
@@ -120,16 +137,18 @@ public class DBpediaRequest {
      * @param uri
      * @return the model
      */
-    private static Model getRDFSchemaFromRDF_URI(String uri){
+    private static Model getRDFSchemaFromRDF_URI(String uri)throws IOException{
         String rdfURI = formatURIforRDF(uri);
         
         // create an empty model
         Model model = ModelFactory.createDefaultModel();
 
         // use the FileManager to find the input file
+        
         InputStream in = FileManager.get().open(rdfURI);
+        
         if (in == null) {
-        throw new IllegalArgumentException("File: " + rdfURI + " not found");}
+        throw new IOException("File: " + rdfURI + " not found");}
 
         // read the RDF/XML file
         model.read(in, null);

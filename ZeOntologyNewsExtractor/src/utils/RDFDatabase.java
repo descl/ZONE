@@ -11,6 +11,7 @@ import com.hp.hpl.jena.query.QueryFactory;
 import java.io.*;
 import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.tdb.TDBFactory;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,10 @@ public class RDFDatabase extends Object {
           if(model == null)model = TDBFactory.createModel(directory);
           return model;
       }
+      
+      public static void addItems(ArrayList<Item> items){
+          addItems(items.toArray(new Item[items.size()]));
+      }
       public static void addItems(Item[] items){
         for(int i=0; i < items.length;i++){
             RDFDatabase.addItem(items[i]);
@@ -35,9 +40,6 @@ public class RDFDatabase extends Object {
             Iterator it = item.values.iterator();
             while (it.hasNext()){
                 Prop cle = (Prop)it.next();
-                
-                //insert item in database
-                MysqlDatabase.createItem(cle);
                 
                 Property P = model.createProperty( newsURI + cle.getType());
                 if(cle.isLiteral()){

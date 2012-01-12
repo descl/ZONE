@@ -24,14 +24,10 @@ public class ZeOntologyNewsExtractor {
         String [] fluxLinks = {
                          //"resources/examples/europe1.rss",
                          "http://europe1.fr.feedsportal.com/c/32376/f/546041/index.rss"
-                 //        ,"http://actualite.portail.free.fr/france/rss.xml"
-                 //        ,"http://www.tv5.org/TV5Site/rss/actualites.php?rub=3"
+                    //     ,"http://actualite.portail.free.fr/france/rss.xml"
+                    //     ,"http://www.tv5.org/TV5Site/rss/actualites.php?rub=3"
         };
         items.addAll(RSSGetter.getFlux(fluxLinks));
-        
-        /*for(int i=0; i< items.size();i++){
-            System.out.println("\n"+items.get(i));
-        }*/
         
         AnnotationsGesture.addAnnotations(items);
         
@@ -39,12 +35,11 @@ public class ZeOntologyNewsExtractor {
             System.out.println("\n"+items.get(i));
         }
         
-        //Database.addItems(items.toArray(new Item[items.size()]));
 
         
-        //Database.print();
         
-        
+        MysqlDatabase.createItemFromItems(items);
+        RDFDatabase.addItems(items);
         MysqlDatabase.close();
         
         System.out.println("Done");

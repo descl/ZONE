@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import utils.Item;
+import utils.MysqlDatabase;
 import utils.Prop;
 
 /**
@@ -30,10 +31,8 @@ public class AnnotationsGesture {
         annotations.addAll(DBpediaProps);
         
         //get the grid of locations length using INSEE database
-        ArrayList<Prop> InseeProps = InseeSparqlRequest.getProperties(DBpediaProps);
+        ArrayList<Prop> InseeProps = InseeSparqlRequest.getProperties(DBpediaRequest.filter(DBpediaProps,"LOC"));
         annotations.addAll(InseeProps);
-        
-        
         return annotations;        
     }
     
