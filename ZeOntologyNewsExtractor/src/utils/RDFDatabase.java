@@ -11,6 +11,9 @@ import com.hp.hpl.jena.query.QueryFactory;
 import java.io.*;
 import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.tdb.TDBFactory;
+import com.hp.hpl.jena.update.UpdateAction;
+import com.hp.hpl.jena.update.UpdateFactory;
+import com.hp.hpl.jena.update.UpdateRequest;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -66,8 +69,30 @@ public class RDFDatabase extends Object {
           String queryString = "ASK { <"+uri+"> <"+newsURI+"title> ?z}";
           Query query = QueryFactory.create(queryString) ;
           QueryExecution qexec = QueryExecutionFactory.create(query, RDFDatabase.getModel()) ;
+          
           boolean result = qexec.execAsk() ;
           qexec.close() ;
           return result;
+      }
+      
+      
+      
+      public static void deleteItem(String uri){
+          String queryString = "DELETE{ <"+uri+"> ?y ?z}"
+                  +"WHERE{"
+                  +"SELECT * { <"+uri+"> ?y ?z}"
+                  +"}";
+          
+          UpdateRequest r = UpdateFactory.create(queryString);
+          UpdateAction.execute(r, RDFDatabase.getModel());
+      }
+      
+      public static void verifyItemsList(ArrayList<Item> items){
+          for (Iterator<Item> iterator = items.iterator(); iterator.hasNext(); ) {
+              Item o = iterator.next();
+              if (ItemURIExist(o.getUri())) {
+                   iterator.remove();
+              }
+          }
       }
 }
