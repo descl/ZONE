@@ -16,8 +16,6 @@ import com.hp.hpl.jena.util.FileManager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import utils.Prop;
 
 /**
@@ -29,7 +27,7 @@ public class DBpediaRequest {
     public static ArrayList<Prop> filter(ArrayList <Prop> props, String filter){
         ArrayList <Prop> result = new ArrayList<Prop>();
         for(int i=0; i< props.size();i++){
-            if(props.get(i).getType().equals(filter))
+            if(props.get(i).getType().startsWith(filter))
                 result.add(props.get(i));
         }
         return result;
@@ -50,7 +48,7 @@ public class DBpediaRequest {
      * @param uri
      * @return the string uri to the rdf file
      */
-    private static String formatURIforRDF(String uri){
+    public static String formatURIforRDF(String uri){
         String rdfURI = uri.replaceFirst("page", "data");
         rdfURI = rdfURI.replaceFirst("resource", "data");
         
@@ -73,13 +71,19 @@ public class DBpediaRequest {
             model = DBpediaRequest.getRDFSchemaFromRDF_URI(uri);
         } catch (IOException ex) {
             System.out.println("DBpedia resource error for "+uri+"\n Error:"+ex.getMessage());
-            return null;
+            return getNameResource(uri);
         }
         
         String canton = getCanton(model);
         if(canton != null)return canton;
+       
+        String label = getLabel(model);
+        if(label != null)return label;
         
-        return  getLabel(model);
+        return  getNameResource(uri);
+    }
+    public static String getNameResource(String uri){
+        return uri.substring(uri.lastIndexOf("/")+1);
     }
     
     /**
@@ -149,9 +153,13 @@ public class DBpediaRequest {
         
         if (in == null) {
         throw new IOException("File: " + rdfURI + " not found");}
-
+        
         // read the RDF/XML file
-        model.read(in, null);
+        try{
+            model.read(in, null);
+        }catch (Exception ex){
+            throw new IOException("File: " + rdfURI + " error on loading (not xml well formed");
+        }
         return model;
     }
     
@@ -160,7 +168,8 @@ public class DBpediaRequest {
      * @param args 
      */
     public static void main(String[] args){
-        System.out.println(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/page/House_of_Lorraine"));
+        System.out.println(DBpediaRequest.getCityNameFromURI("http://www.dbpedia.org/resource/Antwerp"));
+        /*System.out.println(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/page/House_of_Lorraine"));
         System.out.println(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/page/Petit-Couronne"));
         System.out.println(DBpediaRequest.getCityNameFromURI("http://www.dbpedia.org/resource/Pau,_Pyr%C3%A9n%C3%A9es-Atlantiques"));
         System.out.println(DBpediaRequest.getCityNameFromURI("http://www.dbpedia.org/resource/Pau,_Pyr%C3%A9n%C3%A9es-Atlantiques"));
@@ -168,6 +177,6 @@ public class DBpediaRequest {
         System.out.println(DBpediaRequest.getCityNameFromURI("http://www.dbpedia.org/resource/Dinaric_Alps"));
         System.out.println(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/page/Pau,_Pyr%C3%A9n%C3%A9es-Atlantiques"));
         System.out.println(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/page/Port-la-Nouvelle"));
-        System.out.println(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/data/Quimper.rdf"));
+        System.out.println(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/data/Quimper.rdf"));*/
     }    
 }

@@ -75,4 +75,13 @@ public class DBpediaRequestTest {
         String result = DBpediaRequest.getCityNameFromURI(uri);
         assertEquals(expResult, result);
     }
+    
+    @Test
+    public void testGetCityNameFromURI_6() {
+        System.out.println("getCityNameFromURI");
+        String uri = "http://www.dbpedia.org/resource/Antwerp";
+        String expResult = "Antwerp";
+        String result = DBpediaRequest.getCityNameFromURI(uri);
+        assertEquals(expResult, result);
+    }
 }
