@@ -70,6 +70,10 @@ public class Item {
         this.uri = uri;
     }
     
+    public void addProp(Prop prop){
+        this.values.add(prop);
+    }
+    
     public void addProps(ArrayList<Prop> props){
         this.values.addAll(props);
     }

@@ -27,19 +27,26 @@ public class ZeOntologyNewsExtractor {
                     //     ,"http://actualite.portail.free.fr/france/rss.xml"
                     //     ,"http://www.tv5.org/TV5Site/rss/actualites.php?rub=3"
         };
+        
+        System.out.println("========= Starting rss downloading==================");
         items.addAll(RSSGetter.getFlux(fluxLinks));
         
+        System.out.println("========= Cleaning flow with already analysed items==================");
+        RDFDatabase.verifyItemsList(items);
+        
+        System.out.println("========= Starting annotations adding==================");
         AnnotationsGesture.addAnnotations(items);
         
-        for(int i=0; i< items.size();i++){
-            System.out.println("\n"+items.get(i));
-        }
+        System.out.println("========= Printing result items==================");
+        for(int i=0; i< items.size();i++)System.out.println("\n"+items.get(i));
         
-
-        
-        
+        System.out.println("========= Saving to MYSQL==================");
         MysqlDatabase.createItemFromItems(items);
+        
+        System.out.println("========= saving to rdf database==================");
         RDFDatabase.addItems(items);
+        
+        System.out.println("========= closing database ==================");
         MysqlDatabase.close();
         
         System.out.println("Done");
