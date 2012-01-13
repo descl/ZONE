@@ -71,8 +71,11 @@ public class WikiMetaRequest {
             
             LinkedHashMap cur = namedEntities.get(i);
             if(cur.containsKey("LINKEDDATA")){
-                if(cur.get("LINKEDDATA").equals(""))continue;
-                result.add(new Prop(cur.get("type").toString(), cur.get("LINKEDDATA").toString(), false));
+                if(cur.get("LINKEDDATA").equals(""))
+                    continue;
+                Prop p = new Prop(cur.get("type").toString(), cur.get("LINKEDDATA").toString(), false);
+                if(!result.contains(p))
+                    result.add(p);
             }
         }
         return result;

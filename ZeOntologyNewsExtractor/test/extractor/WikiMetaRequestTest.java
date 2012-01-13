@@ -45,10 +45,9 @@ public class WikiMetaRequestTest {
     public void testGetProperties_String() {
         System.out.println("getProperties");
         String texte = "Bienvenue à Antibes";
-        ArrayList expResult = null;
         ArrayList result = WikiMetaRequest.getProperties(texte);
         System.out.println(result);
-        assertEquals(result.size(), 2);
+        assertEquals(1,result.size());
     }
 
     /**
@@ -70,6 +69,16 @@ public class WikiMetaRequestTest {
         System.out.println("getProperties");
         File file = new File("resources/examples/WikiMetaOutput_mars.json");
         ArrayList result = WikiMetaRequest.getProperties(file);
-        assertEquals(result.size(), 6);
+        System.out.println(result);
+        assertEquals(3,result.size());
+    }
+    
+    @Test
+    public void testGetProperties_String_cleaningResult() {
+        System.out.println("getProperties");
+        String texte = "Arnaud Montebourg est Arnaud Montebourg";
+        ArrayList result = WikiMetaRequest.getProperties(texte);
+        System.out.println(result);
+        assertEquals(1,result.size());
     }
 }
