@@ -1,0 +1,285 @@
+% easychair.tex,v 3.0 2011/10/24
+%
+% Select appropriate paper format in your document class as
+% instructed by your conference organizers. Only withtimes
+% and notimes can be used in proceedings created by EasyChair
+%
+% The available formats are 'letterpaper' and 'a4paper' with
+% the former being the default if omitted as in the example
+% below.
+%
+%\documentclass{easychair}
+\documentclass[]{easychair}
+%\documentclass[verbose]{easychair}
+%\documentclass[notimes]{easychair}
+%\documentclass[withtimes]{easychair}
+%\documentclass[a4paper]{easychair}
+%\documentclass[letterpaper]{easychair}
+%\documentclass[notimes,custompaper,lmargin=1cm,rmargin=2cm,tmargin=.5cm,bmargin=1.5cm]{easychair}
+%\documentclass[notimes,custompaper,lmargin=1cm,rmargin=2cm,tmargin=.5cm,bmargin=1.5cm]{easychair}
+
+% This provides the \BibTeX macro
+\usepackage{doc}
+\usepackage{makeidx}
+
+% In order to save space or manage large tables or figures in a
+% landcape-like text, you can use the rotating and pdflscape
+% packages. Uncomment the desired from the below.
+%
+% \usepackage{rotating}
+% \usepackage{pdflscape}
+
+% If you plan on including some algorithm specification, we recommend
+% the below package. Read more details on the custom options of the
+% package documentation.
+%
+% \usepackage{algorithm2e}
+
+% Some of our commands for this guide.
+%
+\usepackage{xspace}
+\usepackage{amssymb}
+\usepackage{color}
+\newcommand{\comment}[4]{\par\noindent\hspace*{-0.5cm}{\parbox{\columnwidth}{\textbf{\color{#1}//#2[#3]:#4}}}\par}
+
+\newcommand{\easychair}{\textsf{easychair}}
+\newcommand{\miktex}{MiK{\TeX}}
+\newcommand{\texniccenter}{{\TeX}nicCenter}
+\newcommand{\makefile}{\texttt{Makefile}}
+\newcommand{\latexeditor}{LEd}
+\newcommand{\ex}[1]{\emph{ex.}\xspace\emph{#1}}
+\newcommand{\ie}[0]{\emph{c-à-d.}\xspace}
+\newcommand{\mi}[1]{\comment{blue}{}{#1}{MI}}
+\newcommand{\FM}[0]{\textsc{fm}\xspace}
+\newcommand{\Y}[0]{\textsc{YourCast}\xspace}
+\newcommand{\LP}[0]{{ligne de produits}\xspace}
+\newcommand{\LPS}[0]{{lignes de produits}\xspace}
+\newcommand{\IR}[0]{interFMRelation}%\xspace}
+\newcommand{\source}[0]{\textsc{source}\xspace}
+\newcommand{\policy}[0]{\textsc{policy}\xspace}
+
+%\makeindex
+
+%% Document
+%%
+\begin{document}
+
+%% Front Matter
+%%
+% Regular title as in the article class.
+%
+\title{Composition de workflows pour le filtrage sémantique d'informations}
+
+% \titlerunning{} has to be set to either the main title or its shorter
+% version for the running heads. Use {\sf} for highlighting your system
+% name, application, or a tool.
+%
+\titlerunning{workflow et filtrage sémantique}
+
+% For only the editors. Authors, please keep this commented out
+% \volumeinfo
+% 	{G. Sutcliffe, A. Voronkov}         % editors
+% 	{2}                                 % number of editors
+%	{{\easychair} 3.0 Beta 5, March 2011}      % event
+%	{2}                                 % volume
+%	{1}                                 % issue
+%	{1}                                 % starting page number
+%\indexededitor{Sutcliffe, Geoff}
+%\indexededitor{Voronkov, Andrei}
+
+%\headfootstyle
+%	{}
+%	{\sf}
+%	{\footnotesize\sf}
+%	{\small}
+
+\volumeinfoECPS
+	{CIEL Proceedings}
+	{ECPS vol. 7999}
+
+% Authors are joined by \and and their affiliations are on the
+% subsequent lines separated by \\ just like the article class
+% allows.
+%
+\author{
+    Christophe Desclaux\\
+    \affiliation{Université Nice Sophia-Antipolis}\\
+    \affiliation{\url{christophe@zouig.org}}\\
+\and
+    Simon Urli\\
+    \affiliation{I3S, CNRS}\\
+    \affiliation{Université Nice Sophia-Antipolis}\\
+    \affiliation{\url{urli@i3s.unice.fr}}\\
+\and
+    Mireille Blay-Fornarino\\
+    \affiliation{I3S, CNRS}\\
+    \affiliation{Université Nice Sophia-Antipolis}\\
+    \affiliation{\url{blay@polytech.unice.fr}}\\
+\and
+    Catherine Faron Zucker\\
+    \affiliation{I3S, CNRS}\\
+    \affiliation{Université Nice Sophia-Antipolis}\\
+    \affiliation{\url{faron@polytech.unice.fr}}\\
+}
+
+% \authorrunning{} has to be set for the shorter version of the authors' names;
+% otherwise a warning will be rendered in the running heads.
+%
+\authorrunning{C. Desclaux, S. Urli, M. Blay-Fornarino and C. Faron Zucker}
+\indexedauthor{Christophe, Desclaux}
+\indexedauthor{Simon, Urli}
+\indexedauthor{Mireille, Blay-Fornarino}
+\indexedauthor{Catherine, Faron Zucker}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------------------------------------------------------------------------------
+% Abstract
+%
+\begin{abstract}
+Le web se révèle aujourd'hui un merveilleux support de diffusion d'informations. Tandis que les sources se multiplient (flux rss, services web, ..), la quantité d'informations croît et il est difficile de les filtrer en fonction de nos centres d'intérêts. Actuellement de nombreux outils qui exploitent les ontologies ou les thésaurus sont mis au point. Il permettent d'annoter les informations, d'en déduire des critères et d'ensuite obtenir uniquement les informations pertinentes. La composition de ces outils constitue des workflows qui devraient encore s'enrichir grâce à l'apparition de nouvelles ontologies ciblées sur différents domaines et outils de lecture.  Cependant la construction de telles chaînes logicielles n'est pas à la portée de tous. \\
+Dans cet article nous montrons comment de tels workflows ont été construits et présentons nos perspectives en matière de construction automatique de ces workflows en fonction des besoins utilisateur. Ce travail s'appuie sur le projet ANR EMergence Yourcast qui vise à automatiser la diffusion des informations sur de grands écrans, et pour lequel la pertinence des informations diffusées est donc particulièrement pertinent. 
+
+\end{abstract}
+
+%------------------------------------------------------------------------------
+\section{Introduction}
+\label{sect:introduction}
+
+\mi{j'aime pas vraiment le titre...}
+Le web se révèle aujourd'hui un merveilleux support de diffusion des informations. Tandis que les sources se multiplient (flux rss, services web, ..), la quantité des informations croît et il est difficile de les filtrer en fonction de nos centres d'intérêts\cite{refSiPossible}. Des outils qui exploitent les ontologies ou les thésaurus ont été mis au point qui permettent d'annoter les informations, d'en déduire des critères et d'ensuite obtenir uniquement les informations pertinentes. 
+\mi{enrichir ce qui précede avec des références en essayant si possible de faire ressentir les éléments de l'architecture.}
+
+Il devient aujourd'hui possible de construire à la fois des workflows mettant en jeux ces différents outils pour annoter les flux d'informations  puis les sélectionner les informations. 
+Cependant la construction de ces workflows reste technique malgré les nouveaux supports logiciels tels que les mashup \cite{Reference}. \mi{expliquer un tout petit peu pourquoi c'est pas simpel}. De plus de nouvelles ontologies, sources, systèmes d'annontations apparaissent régulièrement tandis que le web se démocratise \cite{Reference} \mi{et surtout bien le dire}. 
+Dans ce contexte, la production automatique de ces workflows à partir d'un ensemble de caractéristiques proposées à l'utilisateur apparaît comme d'une grande utilité. 
+
+Dans cet article, en section \ref{sect:exemple}  nous présentons un cas d'étude qui a été mené dans le cadre projet ANR EMergence Yourcast qui vise à automatiser la diffusion des informations sur de grands écrans. Nous montrons au travers de ce cas d'étude les différents choix qui se posent à l'utilisateur \mi{MOntrer cela} et décrivons dans la section \ref{sect:miseEnOuvre} les workflows  mis en place pour répondre à ce cas particulier. Fort de cette expérience, nous proposons en \ref{sect:perspectives} de produire de tels workflows en utilisant un développement dirigé par les modèles et les feature models pour produire automatiquement de tels workflows à partir de données utilisateur de haut niveau. 
+
+
+
+%------------------------------------------------------------------------------
+\section{Système de diffusion des informations sur grands écrans et filtrage}
+\label{sect:exemple}
+\mi{Clairement je cherche...}
+Dans le cadre du projet \Y, nous visons à diffuser sur de grands écrans des informations en provenance de différentes sources en particulier celles issues du web. Or de tels systèmes exigent une adhérence forte aux attentes des utilisateurs et l'adéquation des informations avec les centres d'intérêts des personnes est essentielle à l'acceptation de tels systèmes. 
+
+\paragraph*{Des sources hétérogènes}
+Or il existe aujourd'hui de nombreuses sources ..... le choix des sources peut être simplement lié au travail.... 
+Dans notre cas, nous avons choisi ....
+
+\paragraph*{Sélections des informations}
+Beaucoup de sources d'informations sont visibles aujourd'hui sur internet sous la forme de flux rss.  Les critères de sélection sont alors pré-établis.  Par exemple sur le site de news de google \url{http://news.google.fr} vous pouvez accéder à des nouvelles liées à l'économie ou bien les news locales mais si vous vous ne pouvez pas récupérer les news économiques liées à la ville de Marseille ou plus largement à la région PACA.
+
+Dans notre cas nous avons choisi d'analyser une 20ene de flux rss sur de vastes sujets. Ceux-ci sont essentiellement des flux aillant déjà une étape de filtrage qui a permis de les classer selon leurs thématique générale (technologies, international, médical...).
+
+\paragraph*{Des critères utilisateurs}
+
+Pour capturer ces critères il existe différents systèmes... [citer des exemples?]
+
+Nous avions besoin d'un système intuitif qui permet de capturer simplement les exigences utilisateur. Nous avons choisis sur ce point un système d'aide au choix qui après captation en langage naturel des besoins les retranscrit sous forme d'entités nommées qui sont typées par notre système en fonction des éléments que nous avons déjà pu instancier dans la base de connaissances.
+
+\paragraph*{Des processus d'annotations diversifiés}
+Le système est basé sur une annotation des informations la plus vaste possible. En effet le système doit pouvoir annoter des informations provenant de domaines totalement différents.
+
+Nous avons choisis d'utiliser des annotions basées sur la récupération d'entités nommées présentes sur un grand nombre de bases de données RDF (Resource Description
+Framework \cite{O. Lassila, R. Swick, Resource Description Framework (RDF) Model and Syntax Specification, W3C Recommendation 22 February 1999}).
+Nous utilisons alors des systèmes d'extraction d'information et d'annotation sémantique qui permettent d'ajouter des liaisons vers les entitées nommés spécifiques.
+
+
+%------------------------------------------------------------------------------
+\section{Système de diffusion des informations sur grands écrans et filtrage}
+=======
+
+Etant donné que nous aurions des bases annotées, comment supporter l'expression de criteres et leur utilisation pour filtrer ces bases.... qui conduit à orchestrer un ensemble de composants.
+
+=> Challenges 2
+ Comment exprimer de tels critères pour que le filtrage des nouvelles soit opérationnel?
+
+Sachant que il y a qualité de l'information, le critere....
+qui conduit à orchestrer un ensemble de composants lié u précédent.
+
+Donc .....
+
+Il existe aujourd'hui de nombreuses sources d'informations, peut-on soumettre ces masses d'informations aux mêmes artefacts de filtrage et comment?
+
+L'expression des critères a été étudiée ......
+
+
+
+
+
+
+
+
+%------------------------------------------------------------------------------
+
+\section{Mise en oeuvre}
+\label{sect:miseEnOuvre}
+Dans le cadre de l'étude présentée prcédemment nous avons donc mis au point deux workflows, dont nous présentons à présent l'architecture brièvement. 
+
+\mi{Mettre une figure visualisant le workflow}
+
+%\begin{figure}[htb!]
+%	\begin{centering}
+%	\includegraphics[width=0.5\textwidth]{metamodelFeature}
+%	\caption{Workflow de traitements....}
+%	\label{fig:mmFM}
+%	\end{centering}
+%\end{figure}
+\subsection{Workflow d'enrichissement des informations}
+\subsubsection{Lecture de flux RSS}
+Construction du diffuseur d'informations par un utilisateur final
+\subsubsection{Annotations }
+\subsubsection{Mémorisation}
+\mi{je ne sens pas cette partie.. à voir}
+
+\subsection{Workflow de filtrage des informations}
+\subsubsection{Gestion des critères}
+\subsubsection{Filtrage}
+
+%------------------------------------------------------------------------------
+\section{Vers la contruction automatique de workflows }
+\label{sect:perspectives}
+Notre objectif à terme est de construire une ligne de produits qui capturerait les différents sources et systèmes d'annotation disponibles, les qualifierait et permettrait à un utilisateur final de construire ses propres workflow en sélectionnant pour lui  les sources  et  les systèmes d'annotations idoines conformément à ses besoins. 
+
+
+\subsection{Feature Model de sources}
+\subsection{Feature Model de services d'annotation}
+\subsection{Metamodele de mise en relation des FMs}
+
+\subsection{Vers la génération des codes}
+
+Des travaux relatifs à la construction de workflows scientifiques ont été menés...
+
+Notons que la pertinence d'un ssytème sur la langue n'est pas seulement oui ou non mais est quantifiée ce point reste une piste ouverte.
+
+
+%---------------------------------------------------------------
+\section{Conclusion}
+\label{sect:conclusion}
+
+
+
+%------------------------------------------------------------------------------
+% Refs:
+%
+\label{sect:bib}
+\bibliographystyle{plain}
+%\bibliographystyle{alpha}
+%\bibliographystyle{unsrt}
+%\bibliographystyle{abbrv}
+\bibliography{biblio}
+
+%------------------------------------------------------------------------------
+\appendix
+
+%------------------------------------------------------------------------------
+% Index
+%\printindex
+
+%------------------------------------------------------------------------------
+\end{document}
+
+% EOF
