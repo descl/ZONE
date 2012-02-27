@@ -15,7 +15,7 @@
 #PDFLATEXFLAGS = --interaction=batchmode --file-line-error-style
 PDFLATEXFLAGS = --interaction=batchmode
 
-DELIVERABLE = easychair
+DELIVERABLE = christophe
 SUBMISSIONDIR = easychair-submission
 
 

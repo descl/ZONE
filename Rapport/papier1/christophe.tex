@@ -50,6 +50,7 @@
 \newcommand{\ex}[1]{\emph{ex.}\xspace\emph{#1}}
 \newcommand{\ie}[0]{\emph{c-à-d.}\xspace}
 \newcommand{\mi}[1]{\comment{blue}{}{#1}{MI}}
+\newcommand{\ch}[1]{\comment{green}{}{#1}{CH}}
 \newcommand{\FM}[0]{\textsc{fm}\xspace}
 \newcommand{\Y}[0]{\textsc{YourCast}\xspace}
 \newcommand{\LP}[0]{{ligne de produits}\xspace}
@@ -148,6 +149,8 @@ Dans cet article nous montrons comment de tels workflows ont été construits et
 \label{sect:introduction}
 
 \mi{j'aime pas vraiment le titre...}
+\ch{presenter aujourd'hui, références sentre d'interets [ref] ... par exemple [ref]... plan}
+
 Le web se révèle aujourd'hui un merveilleux support de diffusion des informations. Tandis que les sources se multiplient (flux rss, services web, ..), la quantité des informations croît et il est difficile de les filtrer en fonction de nos centres d'intérêts\cite{refSiPossible}. Des outils qui exploitent les ontologies ou les thésaurus ont été mis au point qui permettent d'annoter les informations, d'en déduire des critères et d'ensuite obtenir uniquement les informations pertinentes. 
 \mi{enrichir ce qui précede avec des références en essayant si possible de faire ressentir les éléments de l'architecture.}
 
@@ -161,26 +164,27 @@ Dans cet article, en section \ref{sect:exemple}  nous présentons un cas d'étud
 
 %------------------------------------------------------------------------------
 \section{Système de diffusion des informations sur grands écrans et filtrage}
+\ch{etat de l'art de notre appli, présentation du problème (outils à utiliser solutions, exploitation et de qu'on aimerait faire. chalenges!}
 \label{sect:exemple}
-\mi{Clairement je cherche...}
+\mi{Clairement je cherche le titre...}
 Dans le cadre du projet \Y, nous visons à diffuser sur de grands écrans des informations en provenance de différentes sources en particulier celles issues du web. Or de tels systèmes exigent une adhérence forte aux attentes des utilisateurs et l'adéquation des informations avec les centres d'intérêts des personnes est essentielle à l'acceptation de tels systèmes. 
 
 \paragraph*{Des sources hétérogènes}
-Or il existe aujourd'hui de nombreuses sources ..... le choix des sources peut être simplement lié au travail.... 
-Dans notre cas, nous avons choisi ....
+Or il existe aujourd'hui de nombreuses sources d'informations disponibles grâce à l'utilisation de flux RSS \cite{RSS version 2.0 Specifications, http://blogs.law.harvard.edu/tech/rss, 2003.}. Le choix des sources peut être simplement lié au travail ou à l'emplacement géographique de l'écran d'information.
+Dans notre cas, nous avons choisi d'agréger le plus de sources d'informations possible pour couvrir tous les champs d'application des écrans d'accueil. 
+Nous faisons donc appel dans notre application à une vingtaine de flux rss sur de vastes sujets. Ceux-ci sont essentiellement des flux aillant déjà subit une étape de filtrage qui a permis de les classer selon leurs thématique générale (technologies, international, médical...).
 
 \paragraph*{Sélections des informations}
-Beaucoup de sources d'informations sont visibles aujourd'hui sur internet sous la forme de flux rss.  Les critères de sélection sont alors pré-établis.  Par exemple sur le site de news de google \url{http://news.google.fr} vous pouvez accéder à des nouvelles liées à l'économie ou bien les news locales mais si vous vous ne pouvez pas récupérer les news économiques liées à la ville de Marseille ou plus largement à la région PACA.
+Beaucoup de sources d'informations sont agrégeables. Des critères de sélection sont alors pré-établis par les fournisseurs de contenus.  Par exemple sur le site de news de google \url{http://news.google.fr} vous pouvez accéder à des nouvelles liées à l'économie ou bien les news locales. Cependant  vous ne pouvez pas récupérer les news économiques liées à la ville de Marseille ou plus largement à la région PACA. Dans notre exploitation des flux RSS nous devons donc pouvoir fournir un filtrage multi-critères permettant un tri fin des informations. 
 
-Dans notre cas nous avons choisi d'analyser une 20ene de flux rss sur de vastes sujets. Ceux-ci sont essentiellement des flux aillant déjà une étape de filtrage qui a permis de les classer selon leurs thématique générale (technologies, international, médical...).
 
 \paragraph*{Des critères utilisateurs}
 
-Pour capturer ces critères il existe différents systèmes... [citer des exemples?]
+Pour capturer ces critères il existe différents systèmes actuellement tel que le service \url{http://www.google.fr/reader/} ou bien \url{http://rsslounge.aditu.de} cependant ceux-ci ne proposent pas de regroupement des flux et de filtrage multi-critère de ceux-ci.
+En effet, nous avions besoin d'un système intuitif qui permet de capturer simplement les exigences utilisateur. Nous avons choisis sur ce point un système d'aide au choix qui après captation en langage naturel des besoins les retranscrit sous forme d'entités nommées qui sont typées par notre système en fonction des éléments que nous avons déjà pu instancier dans la base de connaissances.
 
-Nous avions besoin d'un système intuitif qui permet de capturer simplement les exigences utilisateur. Nous avons choisis sur ce point un système d'aide au choix qui après captation en langage naturel des besoins les retranscrit sous forme d'entités nommées qui sont typées par notre système en fonction des éléments que nous avons déjà pu instancier dans la base de connaissances.
-
-\paragraph*{Des processus d'annotations diversifiés}
+\paragraph*{Des processus d'annotation diversifié}
+Système de base \cite{http://ieeexplore.ieee.org/xpl/freeabs_all.jsp?arnumber=5474737}
 Le système est basé sur une annotation des informations la plus vaste possible. En effet le système doit pouvoir annoter des informations provenant de domaines totalement différents.
 
 Nous avons choisis d'utiliser des annotions basées sur la récupération d'entités nommées présentes sur un grand nombre de bases de données RDF (Resource Description
@@ -190,6 +194,7 @@ Nous utilisons alors des systèmes d'extraction d'information et d'annotation s�
 
 %------------------------------------------------------------------------------
 \section{Système de diffusion des informations sur grands écrans et filtrage}
+\ch{ici la solution joli pour le futur, en intro besoin de serialisation suivi des 2 workflows en cascade}
 =======
 
 Etant donné que nous aurions des bases annotées, comment supporter l'expression de criteres et leur utilisation pour filtrer ces bases.... qui conduit à orchestrer un ensemble de composants.
@@ -241,6 +246,7 @@ Construction du diffuseur d'informations par un utilisateur final
 
 %------------------------------------------------------------------------------
 \section{Vers la contruction automatique de workflows }
+\ch{perspectives meta modèle à expliciter,discutions sur LDP definitions des params de langue/choix, differentes sources}
 \label{sect:perspectives}
 Notre objectif à terme est de construire une ligne de produits qui capturerait les différents sources et systèmes d'annotation disponibles, les qualifierait et permettrait à un utilisateur final de construire ses propres workflow en sélectionnant pour lui  les sources  et  les systèmes d'annotations idoines conformément à ses besoins. 
 
