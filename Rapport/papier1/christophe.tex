@@ -251,7 +251,6 @@ Construction du diffuseur d'informations par un utilisateur final
 \label{sect:perspectives}
 Notre objectif à terme est de construire une ligne de produits qui capturerait les différents sources et systèmes d'annotation disponibles, les qualifierait et permettrait à un utilisateur final de construire ses propres workflows d'annotation en sélectionnant pour lui les sources et les systèmes d'annotations idoines conformément à ses choix.
 
-\si{Est-ce qu'il y a une distinction entre 'workflow utilisateur' et 'workflow d'annotation' avant ?}
 
 La construction automatique de workflow d'annotations peut répondre à différentes problématiques. Du point de vue de l'utilisateur final, l'utilisation d'une construction de workflow pourrait permettre, à partir d'une liste de thème, de sélectionner automatiquement les flux qui l'intéresse, tout en lui donnant la possibilité d'affiner la granularité des annotations qu'il souhaite récupérer par l'entremise des sélections de services de généralisation. \si{Service de généralisation d'annotation ? Un autre nom ?}
 
@@ -267,6 +266,7 @@ Les choix que va faire l'utilisateur vont avoir un impact sur trois concepts inh
 
 La figure ... montre ainsi le FM de \textit{Service d'Annotation} : les produits finaux correspondent aux feuilles de la feature \textit{Product}, les thèmes aux feuilles de la feature \textit{Thème} et les langues à celles de la feature \textit{Langue}. La sélection d'une feature de langue ou de thème influe directement sur le choix d'un produit final par le jeu des contraintes internes au FM. 
 
+\si{à voir si on garde en dessous...}
 Chacun des FM des différents concepts est une construction réalisée à partir d'une approche bottom-up. Nous partons des produits existants, en les exprimant sous forme de FM individuels, puis nous effectuons la fusion [ref merge Mathieu] de ces FM afin d'obtenir une SPL modélisant les différents produits disponibles ainsi que leur variabilité.
 
 \subsection{Modèle de mise en relation des LPL}
@@ -280,6 +280,8 @@ Par exemple, un \textit{Flux} va être annoté par un ou plusieurs \textit{Servi
 Cependant, la relation permet également d'exprimer une restriction sur les choix de l'utilisateur : elle force que la sélection d'un produit dans un FM soit compatible avec la sélection d'un autre produit. En effet, la sélection d'un flux d'un certain thème et d'une certaine langue doit contraindre l'utilisateur à ne pouvoir sélectionner que les services d'annotations capables d'annoter des informations dans cette langue et sur ce thème. 
 
 Cela est possible par la définition et l'application d'une opération de restriction sur les FMs liés entre eux en cascade. Par exemple, dans le cadre de la relation entre les \textit{Flux} et les \textit{Service d'annotation}, un service d'annotation ne peut annoter un flux que s'ils possèdent au moins un thème et une langue commune. \si{OK... donc si on part là dessus ça veut dire que la restriction est compliquée : est-ce que c'est pertinent de dire que la sélection d'un service d'annotation ne peut se faire que si tous les thèmes du flux sont lisibles par le service d'annotation ?.. Après il faudra encore traiter la langue... } 
+
+\si{Présenter la restriction en parlant de la langue : intersection}
 
 Ainsi, la sélection d'un produit dans un FM va automatiquement induire l'indisponibilité de certains produits dans les FM liés. Or cette opération va elle même engendrer de nouvelles restrictions : en effet, la déselection d'un produit dans un FM peut également engendrer la déselection d'un autre produit dans un autre FM par le truchement des relations. 
 

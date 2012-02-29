@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.29)  29 FEB 2012 17:51
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.29)  29 FEB 2012 18:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -882,20 +882,11 @@ Package atveryend Info: Empty hook `BeforeClearDocument' on input line 325.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 325.
  (./christophe.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 325.
+Package rerunfilecheck Info: File `christophe.out' has not changed.
+(rerunfilecheck)             Checksum: BE5B49BFC3A202A33D684562F4A5F818;1242.
 
-
-Package rerunfilecheck Warning: File `christophe.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `christophe.out':
-(rerunfilecheck)             Before: D4531E47BAF674EB52E9823D7C0B98E4;1243
-(rerunfilecheck)             After:  BE5B49BFC3A202A33D684562F4A5F818;1242.
 
 LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
@@ -916,7 +907,7 @@ ocal/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/loca
 l/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local
 /texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/
 texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on christophe.pdf (6 pages, 163089 bytes).
+Output written on christophe.pdf (6 pages, 163083 bytes).
 PDF statistics:
  161 PDF objects out of 1000 (max. 8388607)
  141 compressed objects within 2 object streams
