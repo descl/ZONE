@@ -51,6 +51,7 @@
 \newcommand{\ie}[0]{\emph{c-à-d.}\xspace}
 \newcommand{\mi}[1]{\comment{blue}{}{#1}{MI}}
 \newcommand{\ch}[1]{\comment{green}{}{#1}{CH}}
+\newcommand{\si}[1]{\comment{red}{}{#1}{SI}}
 \newcommand{\FM}[0]{\textsc{fm}\xspace}
 \newcommand{\Y}[0]{\textsc{YourCast}\xspace}
 \newcommand{\LP}[0]{{ligne de produits}\xspace}
@@ -245,21 +246,56 @@ Construction du diffuseur d'informations par un utilisateur final
 \subsubsection{Filtrage}
 
 %------------------------------------------------------------------------------
-\section{Vers la contruction automatique de workflows }
+\section{Vers la construction automatique de workflows }
 \ch{perspectives meta modèle à expliciter,discutions sur LDP definitions des params de langue/choix, differentes sources}
 \label{sect:perspectives}
-Notre objectif à terme est de construire une ligne de produits qui capturerait les différents sources et systèmes d'annotation disponibles, les qualifierait et permettrait à un utilisateur final de construire ses propres workflow en sélectionnant pour lui  les sources  et  les systèmes d'annotations idoines conformément à ses besoins. 
+Notre objectif à terme est de construire une ligne de produits qui capturerait les différents sources et systèmes d'annotation disponibles, les qualifierait et permettrait à un utilisateur final de construire ses propres workflows d'annotation en sélectionnant pour lui les sources et les systèmes d'annotations idoines conformément à ses choix.
+
+\si{Est-ce qu'il y a une distinction entre 'workflow utilisateur' et 'workflow d'annotation' avant ?}
+
+La construction automatique de workflow d'annotations peut répondre à différentes problématiques. Du point de vue de l'utilisateur final, l'utilisation d'une construction de workflow pourrait permettre, à partir d'une liste de thème, de sélectionner automatiquement les flux qui l'intéresse, tout en lui donnant la possibilité d'affiner la granularité des annotations qu'il souhaite récupérer par l'entremise des sélections de services de généralisation. \si{Service de généralisation d'annotation ? Un autre nom ?}
 
 
-\subsection{Feature Model de sources}
-\subsection{Feature Model de services d'annotation}
-\subsection{Metamodele de mise en relation des FMs}
+En outre, à l'heure actuelle le workflow d'annotation interroge tous les services d'annotations disponibles, sans distinction de catégories, ce qui génère de nombreux appels de service dont la plupart sont inutiles. L'utilisation d'une construction automatique à partir des choix de l'utilisateur permettrait de restreindre les appels aux seuls services pertinents et donc d'accélérer les temps de traitements en réduisant la charge des services. 
+
+
+Nous limitons dans cette expérimentation les choix de l'utilisateur aux seules notions de \textit{Thèmes} et de \textit{Langues} en raison de leur pertinence et de leur impact sur la sélection des sources et des systèmes d'annotations. En effet, soient les systèmes d'annotations sont directement spécialisés pour certains types d'informations [exemple ?], soit ils fournissent une API permettant de restreindre les annotations à certaines catégories d'informations, certains \textit{Thèmes}. Par ailleurs, la langue est un critère déterminant pour annoter correctement les informations, les systèmes d'annotations n'en supportent ainsi qu'un nombre limité. 
+
+\subsection{Lignes de produits de services}
+
+Les choix que va faire l'utilisateur vont avoir un impact sur trois concepts inhérents aux workflow d'annotations : les \textit{Flux} d'information, les \textit{Services d'Annotation} et les \textit{Services de Généralisation}. Chacun de ces concepts peut être pris comme une ligne de produit indépendante, représentée par un feature model (FM) afin d'exprimer la variabilité des différents concepts.
+
+La figure ... montre ainsi le FM de \textit{Service d'Annotation} : les produits finaux correspondent aux feuilles de la feature \textit{Product}, les thèmes aux feuilles de la feature \textit{Thème} et les langues à celles de la feature \textit{Langue}. La sélection d'une feature de langue ou de thème influe directement sur le choix d'un produit final par le jeu des contraintes internes au FM. 
+
+Chacun des FM des différents concepts est une construction réalisée à partir d'une approche bottom-up. Nous partons des produits existants, en les exprimant sous forme de FM individuels, puis nous effectuons la fusion [ref merge Mathieu] de ces FM afin d'obtenir une SPL modélisant les différents produits disponibles ainsi que leur variabilité.
+
+\subsection{Modèle de mise en relation des LPL}
+
+Notre but est de fournir un outil permettant à un utilisateur final de sélectionner des services cohérents en fonction de ses choix. Cela implique que chaque choix que l'utilisateur fera dans un des FM, doit avoir un impact sur les autres concepts du domaine. 
+
+Comme le montre la figure ...., nous exprimons donc des relations entre les différents concepts du domaine, relations qui s'expriment - comme nous l'avons introduit - essentiellement sur le \textit{Thème} et la \textit{Langue}. La notion de relation a ici une double signification : elle va tout d'abord exprimer qu'un concept va être lié à un ou plusieurs autres concepts, en fonction de la cardinalité de la relation.
+
+Par exemple, un \textit{Flux} va être annoté par un ou plusieurs \textit{Service d'annotation}, et chaque service d'annotation peut ensuite faire appel à un ou plusieurs \textit{Service de généralisation} afin d'améliorer la qualité des annotations. De façon réflexive, un \textit{service de généralisation} peut également en appeler un unique autre afin d'être encore plus fin.
+
+Cependant, la relation permet également d'exprimer une restriction sur les choix de l'utilisateur : elle force que la sélection d'un produit dans un FM soit compatible avec la sélection d'un autre produit. En effet, la sélection d'un flux d'un certain thème et d'une certaine langue doit contraindre l'utilisateur à ne pouvoir sélectionner que les services d'annotations capables d'annoter des informations dans cette langue et sur ce thème. 
+
+Cela est possible par la définition et l'application d'une opération de restriction sur les FMs liés entre eux en cascade. Par exemple, dans le cadre de la relation entre les \textit{Flux} et les \textit{Service d'annotation}, un service d'annotation ne peut annoter un flux que s'ils possèdent au moins un thème et une langue commune. \si{OK... donc si on part là dessus ça veut dire que la restriction est compliquée : est-ce que c'est pertinent de dire que la sélection d'un service d'annotation ne peut se faire que si tous les thèmes du flux sont lisibles par le service d'annotation ?.. Après il faudra encore traiter la langue... } 
+
+Ainsi, la sélection d'un produit dans un FM va automatiquement induire l'indisponibilité de certains produits dans les FM liés. Or cette opération va elle même engendrer de nouvelles restrictions : en effet, la déselection d'un produit dans un FM peut également engendrer la déselection d'un autre produit dans un autre FM par le truchement des relations. 
+
+Cependant il est important de noter que chacune de ces opérations de restriction correspond à un contexte spécifique aux sélections de l'utilisateur dans les différents FM. En effet, l'utilisateur doit avoir la possibilité de sélectionner plusieurs produits dans chacun des FM : il va certainement souhaiter utiliser plusieurs services d'annotations différents pour un flux, ou au contraire souhaiter sélectionner plusieurs flux pour un même service d'annotation. Dans ces deux exemples différents, nous nous situons à chaque fois dans un contexte précis, le contexte de la sélection d'un flux spécifique, ou encore le contexte de la sélection d'un service d'annotation spécifique. Les opérations de restriction vont toujours s'exprimer dans un contexte spécifique tels que ceux-ci, mais l'utilisateur doit toujours avoir la possibilité de faire une nouvelle sélection, à partir d'un contexte vide. 
+
 
 \subsection{Vers la génération des codes}
 
-Des travaux relatifs à la construction de workflows scientifiques ont été menés...
+\paragraph{}
+Lien Asset / FM 
 
-Notons que la pertinence d'un système sur la langue n'est pas seulement oui ou non mais est quantifiée ce point reste une piste ouverte.
+\paragraph{}
+Construction de Workflow à partir du modèle
+
+\paragraph{}
+Lien workflow / code ?
 
 
 %---------------------------------------------------------------
