@@ -56,7 +56,10 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.17.2)
     multi_json (1.1.0)
+    mysql2 (0.3.11)
+    nokogiri (1.5.0)
     polyglot (0.3.3)
+    ppe-4store-ruby (0.0.3)
     rack (1.4.1)
     rack-cache (1.1)
       rack (>= 0.4)
@@ -87,6 +90,8 @@ GEM
       rdf (~> 0.3.0)
     rdoc (3.12)
       json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     sass (3.1.15)
     sass-rails (3.2.4)
       railties (~> 3.2.0)
@@ -114,9 +119,13 @@ DEPENDENCIES
   backports
   coffee-rails (~> 3.2.1)
   jquery-rails
+  mysql2
+  nokogiri (~> 1.5.0)
+  ppe-4store-ruby (~> 0.0.3)
   rails (= 3.2.1)
   rdf
   rdf-raptor
+  rest-client (~> 1.6.7)
   sass-rails (~> 3.2.3)
   sqlite3
   uglifier (>= 1.0.3)

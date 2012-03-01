@@ -1,4 +1,10 @@
 ZeOntologyNewsExtractorUserRunner::Application.routes.draw do
+  resources :items
+
+ # get "items/index"
+
+  get "config/list"
+
   get "config/index"
 
   get "home/index"

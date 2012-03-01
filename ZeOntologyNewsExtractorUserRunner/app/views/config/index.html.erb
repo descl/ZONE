@@ -1,2 +1,12 @@
-<h1>Config#index</h1>
-<p>Find me in app/views/config/index.html.erb</p>
+<h1>Configuration du flux:</h1>
+<p>Page qui permet de bien configurer son flux</p>
+<%= form_tag("/config/index", :method => "get") do %>
+
+<h2>Choix de votre domaine géographique</h2>
+
+<input id="geo" name="geo" type="text" />
+
+
+<%= submit_tag("→") %>
+
+<% end %>
