@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Typeitem:</b>
+  <%= @item.typeItem %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @item.value %>
+</p>
+
+<p>
+  <b>ValueInfos:</b>
+  <%= get4StoreNameElem(@item.value) %>
+</p>
+
+<p>
+  <b>Inc:</b>
+  <%= @item.inc %>
+</p>
+
+
+<%= link_to 'Edit', edit_item_path(@item) %> |
+<%= link_to 'Back', items_path %>
