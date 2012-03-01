@@ -256,8 +256,8 @@ De manière concrète nous utilisons les services d'annotation suivants:
 \begin{itemize}
 \item \textbf{DBpedia} travaille sur les données provenant du service d'annotation WikiMeta et permet de les enrichire sémantiquement à l'aide de liens vers d'autres resources liées à l'élément
 \item \textbf{INSEE geo} \url{http://rdf.insee.fr/geo/} La base de données RDF de l'INSEE nous permet de récupérer les ensembles géographiques liées à une entité nommée géographique. Ce service d'annnotation géographique s'utilise donc uniquement en aval d'un service d'annotation classique qui récupère des informations géographiques. Il renvoi en sortie des URI vers les entités géographiques liées à la news étudiée. Nous utilisons pour cette intérogation la requête SPARQL suivante qui permet d'avoir les informations désirées:
-\begin{quote}
-\begin{tabbing}
+
+\begin{verbatim}
 PREFIX geo: <http://rdf.insee.fr/geo/>\\
 SELECT \= DISTINCT \= ?nom ?type WHERE\{\\
 	\> ?entite geo:nom ?nom\\
@@ -268,8 +268,7 @@ SELECT \= DISTINCT \= ?nom ?type WHERE\{\\
 		\> \> ?FILTER(regex(str(?nomVille), ‘Nice’, ‘i’))\\
 	\>\}\\
 \}
-\end{tabbing}
-\end{quote}
+\end{verbatim}
 \end{itemize}
 \end{itemize}
 
