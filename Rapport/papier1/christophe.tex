@@ -171,7 +171,7 @@ Dans cet article, en section \ref{sect:exemple}  nous présentons un cas d'étud
 Dans le cadre du projet \Y, nous visons à diffuser sur de grands écrans des informations en provenance de différentes sources en particulier celles issues du web. Or de tels systèmes exigent une adhérence forte aux attentes des utilisateurs et l'adéquation des informations avec les centres d'intérêts des personnes est essentielle à l'acceptation de tels systèmes. 
 
 \paragraph*{Des sources hétérogènes}
-Or il existe aujourd'hui de nombreuses sources d'informations disponibles grâce à l'utilisation de flux RSS \cite{RSS version 2.0 Specifications, http://blogs.law.harvard.edu/tech/rss, 2003.}. Le choix des sources peut être simplement lié au travail ou à l'emplacement géographique de l'écran d'information.
+Or il existe aujourd'hui de nombreuses sources d'information disponibles grâce à l'utilisation de flux RSS \cite{RSS version 2.0 Specifications, http://blogs.law.harvard.edu/tech/rss, 2003.}. Le choix des sources peut être simplement lié au travail ou à l'emplacement géographique de l'écran d'information.
 Dans notre cas, nous avons choisi d'agréger le plus de sources d'informations possible pour couvrir tous les champs d'application des écrans d'accueil. 
 Nous faisons donc appel dans notre application à une vingtaine de flux rss sur de vastes sujets. Ceux-ci sont essentiellement des flux aillant déjà subit une étape de filtrage qui a permis de les classer selon leurs thématique générale (technologies, international, médical...).
 
@@ -182,7 +182,7 @@ Beaucoup de sources d'informations sont agrégeables. Des critères de sélectio
 \paragraph*{Des critères utilisateurs}
 
 Pour capturer ces critères il existe différents systèmes actuellement tel que le service \url{http://www.google.fr/reader/} ou bien \url{http://rsslounge.aditu.de} cependant ceux-ci ne proposent pas de regroupement des flux et de filtrage multi-critère de ceux-ci.
-En effet, nous avions besoin d'un système intuitif qui permet de capturer simplement les exigences utilisateur. Nous avons choisis sur ce point un système d'aide au choix qui après captation en langage naturel des besoins les retranscrit sous forme d'entités nommées qui sont typées par notre système en fonction des éléments que nous avons déjà pu instancier dans la base de connaissances.
+En effet, nous avions besoin d'un système intuitif qui permet de capturer simplement les exigences utilisateur. Nous avons choisis sur ce point un système d'aide au choix que nous avons construit et qui après captation en langage naturel des besoins les retranscrit sous forme d'entités nommées qui sont typées par notre système en fonction des éléments que nous avons déjà pu instancier dans la base de connaissances.
 
 \paragraph*{Des processus d'annotation diversifié}
 Système de base \cite{http://ieeexplore.ieee.org/xpl/freeabs_all.jsp?arnumber=5474737}
@@ -190,7 +190,7 @@ Le système est basé sur une annotation des informations la plus vaste possible
 
 Nous avons choisis d'utiliser des annotions basées sur la récupération d'entités nommées présentes sur un grand nombre de bases de données RDF (Resource Description
 Framework \cite{O. Lassila, R. Swick, Resource Description Framework (RDF) Model and Syntax Specification, W3C Recommendation 22 February 1999}).
-Nous utilisons alors des systèmes d'extraction d'information et d'annotation sémantique qui permettent d'ajouter des liaisons vers les entitées nommés spécifiques.
+Nous utilisons alors des systèmes d'extraction d'information et d'annotation sémantique qui permettent d'ajouter des liaisons vers les entités nommés spécifiques.
 
 
 %------------------------------------------------------------------------------
@@ -198,7 +198,7 @@ Nous utilisons alors des systèmes d'extraction d'information et d'annotation s�
 \ch{ici la solution joli pour le futur, en intro besoin de serialisation suivi des 2 workflows en cascade}
 =======
 
-Etant donné que nous aurions des bases annotées, comment supporter l'expression de criteres et leur utilisation pour filtrer ces bases.... qui conduit à orchestrer un ensemble de composants.
+Étant donné que nous devons utiliser des bases de données annotées, comment supporter l'expression de critères et leur utilisation pour filtrer ces bases.... qui conduit à orchestrer un ensemble de composants.
 
 => Challenges 2
  Comment exprimer de tels critères pour que le filtrage des nouvelles soit opérationnel?
@@ -223,27 +223,63 @@ L'expression des critères a été étudiée ......
 
 \section{Mise en oeuvre}
 \label{sect:miseEnOuvre}
-Dans le cadre de l'étude présentée prcédemment nous avons donc mis au point deux workflows, dont nous présentons à présent l'architecture brièvement. 
+Dans le cadre de l'étude présentée précédemment nous avons donc mis au point deux workflows, dont nous présentons à présent l'architecture brièvement. Comme présenté sur le diagramme suivant nous avons ainsi le workflow d'enrichissement des informations (coloré en bleu ainsi que le workflow de filtrage des informations.
 
-\mi{Mettre une figure visualisant le workflow}
+\begin{figure}[htb!]
+	\begin{centering}
+	\includegraphics[width=1\textwidth]{diagramme-Archi.png}
+	\caption{Workflow de traitements....}
+	\label{fig:mmFM}
+	\end{centering}
+\end{figure}
 
-%\begin{figure}[htb!]
-%	\begin{centering}
-%	\includegraphics[width=0.5\textwidth]{metamodelFeature}
-%	\caption{Workflow de traitements....}
-%	\label{fig:mmFM}
-%	\end{centering}
-%\end{figure}
 \subsection{Workflow d'enrichissement des informations}
+Nous allons nous attarder particulièrement sur ce workflow car il fait appel à de nombreux services d'annotation et nécessite une modularité dans l'organisation de ceux-ci.
+
 \subsubsection{Lecture de flux RSS}
-Construction du diffuseur d'informations par un utilisateur final
-\subsubsection{Annotations }
+L'application se base sur la récupération de flux RSS qui sont choisis par l'utilisateur et dont nous connaissons le thème et la langue, chaque flux rss va contenir un lot de news les plus récentes publiées chez le fournisseur du flux. Le flux peut être mis à jour et nous devons l'interroger périodiquement pour récupérer les dernières informations publiées.
+
+\subsubsection{Annotation }
+Sur chaque news nous devons utiliser les services d'annotation pour récupérer les entitées nommées interessantes le concernant. Pour cela nous faisons appel à divers services d'annotation qui nous renvoient les informations. Nous avons aussi besoin de faire appel à des services de généralisation qui vont travailler en aval des services d'annotation pour ajouter des notions à une annotation.\\
+De manière concrète nous utilisons les services d'annotation suivants:
+\begin{itemize}
+\item Services d'Annotation
+\begin{itemize}
+\item \textbf{OpenCalais} nous permet de récupérer les entités des textes correspondant à des lieux français ainsi que des noms de personnalités en langue anglaise. Nous lui indiquons en entrée le texte à annoter et récupérons une liste de mots correspondant à nos critères.
+\item \textbf{WikiMeta} fonctionne de la même manière qu'OpenCalais mais permet de récupérer directement des entitées nommées pointant vers la base de connaissance DBpedia, il peut donc être utilisé seul en tant que service d'annotation principal
+	
+\end{itemize}
+
+\item Services de Généralisation
+\begin{itemize}
+\item \textbf{DBpedia} travaille sur les données provenant du service d'annotation WikiMeta et permet de les enrichire sémantiquement à l'aide de liens vers d'autres resources liées à l'élément
+\item \textbf{INSEE geo} \url{http://rdf.insee.fr/geo/} La base de données RDF de l'INSEE nous permet de récupérer les ensembles géographiques liées à une entité nommée géographique. Ce service d'annnotation géographique s'utilise donc uniquement en aval d'un service d'annotation classique qui récupère des informations géographiques. Il renvoi en sortie des URI vers les entités géographiques liées à la news étudiée. Nous utilisons pour cette intérogation la requête SPARQL suivante qui permet d'avoir les informations désirées:
+\begin{quote}
+\begin{tabbing}
+PREFIX geo: <http://rdf.insee.fr/geo/>\\
+SELECT \= DISTINCT \= ?nom ?type WHERE\{\\
+	\> ?entite geo:nom ?nom\\
+	\> ?entite rdf:type ?type\\
+	\> \{ \\
+		\> \> ?ville geo:nom ?nomVille\\
+		\> \> ?entite geo:subdivision* ?ville\\
+		\> \> ?FILTER(regex(str(?nomVille), ‘Nice’, ‘i’))\\
+	\>\}\\
+\}
+\end{tabbing}
+\end{quote}
+\end{itemize}
+\end{itemize}
+
+
 \subsubsection{Mémorisation}
 \mi{je ne sens pas cette partie.. à voir}
+Nous stockons le contenu des flux RSS et les annotations dans une base de données RDF grâce à l'utilisation de l'application 4Store. 4store est un serveur de triplets RDF fournissant un accès aux données en lecture et écriture. Il nous permet de créer un EndPoint en ligne rapide et puissant. De plus, cela permet une réutilisation de notre travail d'annotations dans d'autres projets aillant besoin d'accéder à des flux annotés. Enfin cette technologie va permettre une excellente connection entre le workflow d'enrichissement et celui de filtrage car de nombreuses APIs existent pour attaquer la base de données dans différents langages.
 
 \subsection{Workflow de filtrage des informations}
-\subsubsection{Gestion des critères}
-\subsubsection{Filtrage}
+Le workflow de filtrage permet de créer des critères utilisateurs affin de récupérer les données intéressantes sur la base de données. Chaque critère est défini par le couple (TypeDeRelation, EntitéeNommée) et va permettre un choix précis des éléments à récupérer. Nous fournissons une application complète permettant de choisir les critères à appliquer sur la base. Ce workflow ne sera pas décrit plus dans en détail dans le cadre de ce travail mais est visible sur \url{https://github.com/descl/ZONE/tree/master/ZeOntologyNewsExtractorUserRunner}
+
+
 
 %------------------------------------------------------------------------------
 \section{Vers la construction automatique de workflows }
@@ -252,13 +288,13 @@ Construction du diffuseur d'informations par un utilisateur final
 Notre objectif à terme est de construire une ligne de produits qui capturerait les différents sources et systèmes d'annotation disponibles, les qualifierait et permettrait à un utilisateur final de construire ses propres workflows d'annotation en sélectionnant pour lui les sources et les systèmes d'annotations idoines conformément à ses choix.
 
 
-La construction automatique de workflow d'annotations peut répondre à différentes problématiques. Du point de vue de l'utilisateur final, l'utilisation d'une construction de workflow pourrait permettre, à partir d'une liste de thème, de sélectionner automatiquement les flux qui l'intéresse, tout en lui donnant la possibilité d'affiner la granularité des annotations qu'il souhaite récupérer par l'entremise des sélections de services de généralisation. \si{Service de généralisation d'annotation ? Un autre nom ?}
+La construction automatique de workflow d'annotations peut répondre à différentes problématiques. Du point de vue de l'utilisateur final, l'utilisation d'une construction de workflow pourrait permettre, à partir d'une liste de thème, de sélectionner automatiquement les flux qui l'intéresse, tout en lui donnant la possibilité d'affiner la granularité des annotations qu'il souhaite récupérer par l'entremise des sélections de services de généralisation. \si{Service de généralisation d'annotation ? Un autre nom ?} \ch{ok pour service de généralisation, je l'ai explicité plus haut}
 
 
 En outre, à l'heure actuelle le workflow d'annotation interroge tous les services d'annotations disponibles, sans distinction de catégories, ce qui génère de nombreux appels de service dont la plupart sont inutiles. L'utilisation d'une construction automatique à partir des choix de l'utilisateur permettrait de restreindre les appels aux seuls services pertinents et donc d'accélérer les temps de traitements en réduisant la charge des services. 
 
 
-Nous limitons dans cette expérimentation les choix de l'utilisateur aux seules notions de \textit{Thèmes} et de \textit{Langues} en raison de leur pertinence et de leur impact sur la sélection des sources et des systèmes d'annotations. En effet, soient les systèmes d'annotations sont directement spécialisés pour certains types d'informations [exemple ?], soit ils fournissent une API permettant de restreindre les annotations à certaines catégories d'informations, certains \textit{Thèmes}. Par ailleurs, la langue est un critère déterminant pour annoter correctement les informations, les systèmes d'annotations n'en supportent ainsi qu'un nombre limité. 
+Nous limitons dans cette expérimentation les choix de l'utilisateur aux seules notions de \textit{Thèmes} et de \textit{Langues} en raison de leur pertinence et de leur impact sur la sélection des sources et des systèmes d'annotations. En effet, soient les systèmes d'annotations sont directement spécialisés pour certains types d'informations [exemple ?]\ch{Exemple de MetaMap http://metamap.nlm.nih.gov/ qui permet de faire de l'annotation sur les données médicales}, soit ils fournissent une API permettant de restreindre les annotations à certaines catégories d'informations, certains \textit{Thèmes}. Par ailleurs, la langue est un critère déterminant pour annoter correctement les informations, les systèmes d'annotations n'en supportent ainsi qu'un nombre limité. 
 
 \subsection{Lignes de produits de services}
 
@@ -279,12 +315,12 @@ Par exemple, un \textit{Flux} va être annoté par un ou plusieurs \textit{Servi
 
 Cependant, la relation permet également d'exprimer une restriction sur les choix de l'utilisateur : elle force que la sélection d'un produit dans un FM soit compatible avec la sélection d'un autre produit. En effet, la sélection d'un flux d'un certain thème et d'une certaine langue doit contraindre l'utilisateur à ne pouvoir sélectionner que les services d'annotations capables d'annoter des informations dans cette langue et sur ce thème. 
 
-Cela est possible par la définition et l'application d'une opération de restriction sur les FMs liés entre eux en cascade. Par exemple, dans le cadre de la relation entre les \textit{Flux} et les \textit{Service d'annotation}, un service d'annotation ne peut annoter un flux que s'ils possèdent au moins un thème et une langue commune. \si{OK... donc si on part là dessus ça veut dire que la restriction est compliquée : est-ce que c'est pertinent de dire que la sélection d'un service d'annotation ne peut se faire que si tous les thèmes du flux sont lisibles par le service d'annotation ?.. Après il faudra encore traiter la langue... } 
+Cela est possible par la définition et l'application d'une opération de restriction sur les FMs liés entre eux en cascade. Par exemple, dans le cadre de la relation entre les \textit{Flux} et les \textit{Service d'Annotation}, un service d'annotation ne peut annoter un flux que s'ils possèdent au moins un thème et une langue commune. \si{OK... donc si on part là dessus ça veut dire que la restriction est compliquée : est-ce que c'est pertinent de dire que la sélection d'un service d'annotation ne peut se faire que si tous les thèmes du flux sont lisibles par le service d'annotation ?.. Après il faudra encore traiter la langue... } \ch{oui, ca devient compliqué, après discution on part sur le faite que un flux peut être lié que à un seul thème, pour appliquer un service d'annotation à un flux donnée, il faut que theme ET langue correspondent (si l'un ou l'autre n'est pas définit dans le service d'annotation, ca veut dire qu'on n'a pas besoin que celui-ci corresponde pour appliquer}
 
 \si{Présenter la restriction en parlant de la langue : intersection}
 
 Ainsi, la sélection d'un produit dans un FM va automatiquement induire l'indisponibilité de certains produits dans les FM liés. Or cette opération va elle même engendrer de nouvelles restrictions : en effet, la déselection d'un produit dans un FM peut également engendrer la déselection d'un autre produit dans un autre FM par le truchement des relations. 
-
+\ch{parler certainement de la notion de cascade ici}
 Cependant il est important de noter que chacune de ces opérations de restriction correspond à un contexte spécifique aux sélections de l'utilisateur dans les différents FM. En effet, l'utilisateur doit avoir la possibilité de sélectionner plusieurs produits dans chacun des FM : il va certainement souhaiter utiliser plusieurs services d'annotations différents pour un flux, ou au contraire souhaiter sélectionner plusieurs flux pour un même service d'annotation. Dans ces deux exemples différents, nous nous situons à chaque fois dans un contexte précis, le contexte de la sélection d'un flux spécifique, ou encore le contexte de la sélection d'un service d'annotation spécifique. Les opérations de restriction vont toujours s'exprimer dans un contexte spécifique tels que ceux-ci, mais l'utilisateur doit toujours avoir la possibilité de faire une nouvelle sélection, à partir d'un contexte vide. 
 
 
