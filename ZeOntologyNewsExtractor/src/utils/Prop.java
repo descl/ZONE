@@ -1,29 +1,40 @@
 package utils;
 
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+
 /**
  *
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class Prop {
-    private String type;
-    private String value;
+    private Property type=null;
+    private String value=null;
     private boolean isLiteral;
+
+    public Prop(Property t, String value){
+        this(t,value,true);
+    }
 
     public Prop(String type, String value) {
         this(type,value,true);
-        
     }
 
-    public Prop(String type, String value, boolean isLi){
-        this.type = type;
-        this.value = value;
+    public Prop(String t, String value, boolean isLi){
+        this(ResourceFactory.createProperty(t),value,isLi);
+    }
+    
+    public Prop(Property t, String value, boolean isLi){
+        this.type = t;
+        this.value= value;
         this.isLiteral = isLi;
     }
-    public String getType() {
+    
+    public Property getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Property type) {
         this.type = type;
     }
 

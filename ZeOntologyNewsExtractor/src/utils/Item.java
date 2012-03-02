@@ -1,7 +1,10 @@
 package utils;
 
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.vocabulary.RSS;
 import com.sun.syndication.feed.synd.SyndEntry;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 
 /**
@@ -13,7 +16,7 @@ public class Item {
     public ArrayList<Prop> values;
 
     public Item(SyndEntry entry){
-        this(entry.getLink(),entry.getTitle(),entry.getDescription().getValue());
+        this(entry.getLink(),entry.getTitle(),entry.getDescription().getValue(),entry.getPublishedDate());
     }
     
     public Item(String uri){
@@ -21,19 +24,20 @@ public class Item {
         values = new ArrayList<Prop>();
     }
     
-    public Item(String link, String title, String description){
+    public Item(String link, String title, String description, Date datePublication){
         this.uri = link;
         values = new ArrayList<Prop>();
-        values.add(new Prop("link",link));
-        values.add(new Prop("title",title));
-        values.add(new Prop("description",description));
+        values.add(new Prop(RSS.link,link,true));
+        values.add(new Prop(RSS.title,title));
+        values.add(new Prop(RSS.description,description));
+        values.add(new Prop(RSS.getURI()+"pubDate",datePublication.toString()));
     }
     
     public void addElement(String key, String content){
         values.add(new Prop(key, content));
     }
     
-    public String getElement(String key){
+    public String getElement(Property key){
         for(int i=0; i < values.size();i++){
             if(values.get(i).getType().equals(key))
                 return values.get(i).getValue();
@@ -49,7 +53,9 @@ public class Item {
 
         while(i.hasNext()){
             Prop me = (Prop)i.next();
-            content += "\n\t"+me.getType() + " : " + me.getValue();
+            String isL = "Uri";
+            if(me.isLiteral()) isL = "Lit";
+            content += "\n\t"+isL+" "+me.getType() + " : " + me.getValue();
         }
         return content;
     }
@@ -59,7 +65,7 @@ public class Item {
     }
     
     public String concat(){
-        return this.getElement("title")+".\n "+this.getElement("description");
+        return this.getElement(RSS.title)+".\n "+this.getElement(RSS.description);
     }
 
     public String getUri() {

@@ -27,6 +27,7 @@ import utils.Prop;
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class WikiMetaRequest {
+    public static String EntitiesURI = "http://www.wikimeta.org/Entities#";
     
     public static ArrayList<Prop> getProperties(Item item){
         return getProperties(item.concat());
@@ -34,8 +35,6 @@ public class WikiMetaRequest {
     
     public static ArrayList<Prop> getProperties(String texte){
         String f = WikiMetaRequest_API.getResult("descl", WikiMetaRequest_API.Format.JSON, texte);
-        
-        //File f = new File("resources/examples/WikiMetaOutput.txt");
         return analyseWikiMetaResult(f);
     }
     
@@ -73,7 +72,7 @@ public class WikiMetaRequest {
             if(cur.containsKey("LINKEDDATA")){
                 if(cur.get("LINKEDDATA").equals(""))
                     continue;
-                Prop p = new Prop(cur.get("type").toString(), cur.get("LINKEDDATA").toString(), false);
+                Prop p = new Prop(WikiMetaRequest.EntitiesURI+""+cur.get("type").toString(), cur.get("LINKEDDATA").toString(), false);
                 if(!result.contains(p))
                     result.add(p);
             }
@@ -85,7 +84,8 @@ public class WikiMetaRequest {
         //String result = getResult("descl",WikiMetaExtractorJSON.Format.JSON,"Bienvenue à Antibes");
         //System.out.println(result);
         
-        System.out.println(getProperties(new File("resources/examples/WikiMetaOutput_pip.json")));
-        System.out.println(getProperties(new File("resources/examples/WikiMetaOutput_mars.json")));
+        System.out.println(getProperties("Reuters se site dans la ville de Paris"));
+        //System.out.println(getProperties(new File("resources/examples/WikiMetaOutput_pip.json")));
+        //System.out.println(getProperties(new File("resources/examples/WikiMetaOutput_mars.json")));
     }
 }

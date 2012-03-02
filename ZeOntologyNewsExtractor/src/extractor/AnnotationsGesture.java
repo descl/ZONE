@@ -1,10 +1,6 @@
 package extractor;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import utils.Item;
 import utils.MysqlDatabase;
 import utils.Prop;
@@ -18,8 +14,8 @@ public class AnnotationsGesture {
         ArrayList<Prop> annotations = new ArrayList<Prop>();
         
         //get opencalais annotations
-        //String[] cities = openCalaisExtractor.getCitiesResult(item.concat());
-        //annotations.addAll(SparqlRequest.getDimensions(cities));
+        ArrayList<Prop> citiesProps = openCalaisExtractor.getCitiesResultProp(item.concat());
+        annotations.addAll(citiesProps);
         
         
         //get WikiMeta annotations
@@ -27,11 +23,14 @@ public class AnnotationsGesture {
         annotations.addAll(WikiMetaProps);
         
         //get location annotations using WikiMeta
-        ArrayList<Prop> DBpediaProps = DBpediaRequest.getProperties(WikiMetaProps);
+        /*ArrayList<Prop> DBpediaProps = DBpediaRequest.getProperties(WikiMetaProps);
+                   DBpediaProps.addAll(DBpediaRequest.getProperties(citiesProps));
         annotations.addAll(DBpediaProps);
+        */
         
         //get the grid of locations length using INSEE database
-        ArrayList<Prop> InseeProps = InseeSparqlRequest.getProperties(DBpediaRequest.filter(DBpediaProps,"LOC"));
+        
+        ArrayList<Prop> InseeProps = InseeSparqlRequest.getProperties(citiesProps);
         annotations.addAll(InseeProps);
         return annotations;        
     }
@@ -42,6 +41,7 @@ public class AnnotationsGesture {
             Item i = it.next();
             
             System.out.println("get WikiMeta annotations for "+i.getUri());
+            System.out.println("\t"+i);
             ArrayList<Prop> props = AnnotationsGesture.getAllAnnotations(i);
             i.addProps(props);
             System.out.println("\t"+props);
@@ -52,7 +52,7 @@ public class AnnotationsGesture {
     
     
     public static void main(String[] args){
-        Item it = new Item("http://test","bienvenue à Antibes","");
+        Item it = new Item("http://test","bienvenue à Antibes","", new Date());
         System.out.println(getAllAnnotations(it));
     }
 }

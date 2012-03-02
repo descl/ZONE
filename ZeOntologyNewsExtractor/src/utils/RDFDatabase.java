@@ -44,12 +44,14 @@ public class RDFDatabase extends Object {
             while (it.hasNext()){
                 Prop cle = (Prop)it.next();
                 
-                Property P = model.createProperty( newsURI + cle.getType());
+                //Property P = model.createProperty( newsURI + cle.getType());
+                //Property P = model.createProperty( newsURI + cle.getType());
+                System.out.println(cle.getType());
                 if(cle.isLiteral()){
-                    itemNode.addLiteral(P, model.createLiteral(cle.getValue()));
+                    itemNode.addLiteral(cle.getType(), model.createLiteral(cle.getValue()));
                 }
                 else{
-                    itemNode.addProperty(P, model.createResource(cle.getValue()));
+                    itemNode.addProperty(cle.getType(), model.createResource(cle.getValue()));
                 }
             }
             model.commit();
@@ -66,7 +68,7 @@ public class RDFDatabase extends Object {
       }
       
       public static boolean ItemURIExist(String uri){
-          String queryString = "ASK { <"+uri+"> <"+newsURI+"title> ?z}";
+          String queryString = "ASK { <"+uri+"> <http://purl.org/rss/1.0/title> ?z}";
           Query query = QueryFactory.create(queryString) ;
           QueryExecution qexec = QueryExecutionFactory.create(query, RDFDatabase.getModel()) ;
           
@@ -94,5 +96,21 @@ public class RDFDatabase extends Object {
                    iterator.remove();
               }
           }
+      }
+      
+      public static void writeRDFFile(){
+        FileOutputStream fout = null;
+        try {
+            fout = new FileOutputStream("out/output.rdf");
+            RDFDatabase.model.write(fout);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(RDFDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fout.close();
+            } catch (IOException ex) {
+                Logger.getLogger(RDFDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
       }
 }

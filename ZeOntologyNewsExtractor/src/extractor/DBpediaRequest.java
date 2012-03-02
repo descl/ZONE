@@ -27,7 +27,7 @@ public class DBpediaRequest {
     public static ArrayList<Prop> filter(ArrayList <Prop> props, String filter){
         ArrayList <Prop> result = new ArrayList<Prop>();
         for(int i=0; i< props.size();i++){
-            if(props.get(i).getType().startsWith(filter))
+            if(props.get(i).getType().getURI().startsWith(filter))
                 result.add(props.get(i));
         }
         return result;

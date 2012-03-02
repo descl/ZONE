@@ -1,5 +1,6 @@
 package utils;
 
+import com.hp.hpl.jena.rdf.model.Property;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -86,19 +87,19 @@ public class MysqlDatabase {
         }        
     }
     private static void createItem(String type, String value,int inc){
-        MysqlDatabase.Exec("INSERT INTO  `ZONE`.`items` (`type` ,`value` ,`inc`)VALUES ('"+type+"',  '"+value+"',  '"+inc+"')");
+        MysqlDatabase.Exec("INSERT INTO  `ZONE`.`items` (`typeItem` ,`value` ,`inc`, `created_at`, `updated_at`)VALUES ('"+type+"',  '"+value+"',  '"+inc+"', NOW(), NOW())");
     }
-    private static void createItem(String type, String value){
-        int nbOcc = MysqlDatabase.getNbOccurences(type, value);
+    private static void createItem(Property type, String value){
+        int nbOcc = MysqlDatabase.getNbOccurences(type.getURI(), value);
         if(nbOcc < 0 ){
-            MysqlDatabase.createItem(type, value,1);
+            MysqlDatabase.createItem(type.getURI(), value,1);
         }else{
             nbOcc++;
-            MysqlDatabase.Exec("UPDATE  `ZONE`.`items` SET  `inc` =  '"+nbOcc+"' WHERE  `items`.`type` =  '"+type+"' AND  `items`.`value` =  '"+value+"';");
+            MysqlDatabase.Exec("UPDATE  `ZONE`.`items` SET  `inc` =  '"+nbOcc+"' WHERE  `items`.`typeItem` =  '"+type.getURI()+"' AND  `items`.`value` =  '"+value+"';");
         }
     }
     private static int getNbOccurences(String type, String value){
-        String res = MysqlDatabase.query("SELECT inc FROM `items` WHERE type='"+type+"' AND value='"+value+"'");
+        String res = MysqlDatabase.query("SELECT inc FROM `items` WHERE typeItem='"+type+"' AND value='"+value+"'");
         if(res == null)return -1;
         return Integer.parseInt(res);
     }
@@ -111,6 +112,7 @@ public class MysqlDatabase {
     
     public static void createItemFromProps(ArrayList<Prop> props){
         for(int i=0; i < props.size();i++){
+            
             createItemFromProp(props.get(i));
         }
     }

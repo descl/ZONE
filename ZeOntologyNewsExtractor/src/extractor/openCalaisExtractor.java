@@ -12,12 +12,15 @@ import mx.bigdata.jcalais.CalaisClient;
 import mx.bigdata.jcalais.CalaisObject;
 import mx.bigdata.jcalais.CalaisResponse;
 import mx.bigdata.jcalais.rest.CalaisRestClient;
+import utils.Prop;
 
 /**
  *
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class openCalaisExtractor {
+    public static String EntitiesURI = "http://www.opencalais.org/Entities#";
+    
     public static CalaisResponse getResult(java.lang.String content) {
         String license = "p8zhr726g3mzj9g7fs7hg7cj ";
         
@@ -46,6 +49,16 @@ public class openCalaisExtractor {
         return list.toArray(new String[list.size()]);
     }
     
+    public static ArrayList<Prop> getCitiesResultProp(java.lang.String content) {
+        String [] cities = getCitiesResult(content);
+        ArrayList<Prop> result = new ArrayList<Prop>();
+        for(String i : cities){
+            result.add(new Prop(EntitiesURI+"LOC",i,true));
+        }
+        return result;
+        
+    }
+    
     public static String[] getPersonsResult(java.lang.String content) {
         CalaisResponse response = openCalaisExtractor.getResult(content);
         
@@ -56,4 +69,13 @@ public class openCalaisExtractor {
         }
         return list.toArray(new String[list.size()]);
     }   
+    
+    public static void main(String[] args){
+        //String result = getResult("descl",WikiMetaExtractorJSON.Format.JSON,"Bienvenue à Antibes");
+        //System.out.println(result);
+        
+        System.out.println(openCalaisExtractor.getCitiesResultProp("Reuters se site dans la ville de Paris"));
+        //System.out.println(getProperties(new File("resources/examples/WikiMetaOutput_pip.json")));
+        //System.out.println(getProperties(new File("resources/examples/WikiMetaOutput_mars.json")));
+    }
 }
