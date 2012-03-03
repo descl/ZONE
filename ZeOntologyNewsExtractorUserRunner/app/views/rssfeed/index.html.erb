@@ -1,0 +1,19 @@
+<h1>Rssfeed#index</h1>
+<p><a href="index.rss">Recupérer le fichier .rss</a></p>
+
+<ol>
+<% @result.each do |element| %>
+	<li> <a href= "<%= element["concept"] %>"><%= element["http://purl.org/rss/1.0/title"] %></a>
+		</br><%= element["http://purl.org/rss/1.0/description"].html_safe %>
+		<table BORDER="1">
+		<% element.each do |item| %>
+			<tr><td><%= item[0] %></td><td><%= item[1] %></td>
+			</tr>
+		<% end%>
+		
+		<tr><td></td><td><%= element %></td></tr>
+		</table>
+		
+	</li></br></br/>
+<% end %>
+</ol>

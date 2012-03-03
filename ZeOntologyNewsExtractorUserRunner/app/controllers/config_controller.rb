@@ -5,9 +5,7 @@ class ConfigController < ApplicationController
     @allGeo = Array.new
     items.each do |item|
       if item["value"].match(/^http:\/\/rdf\.insee\.fr/)
-        it =item
-        it["valueInfo"] = get4StoreNameElem(it["value"])
-        allGeo.push it
+        @allGeo.push item
       end
     end
     
