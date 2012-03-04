@@ -52,11 +52,12 @@ public class InseeSparqlRequest {
         //return getDimensionsTooLong(arr);
         
                 String query="PREFIX geo: <http://rdf.insee.fr/geo/>"
-                  + "\nSELECT  DISTINCT ?nom ?entite ?type WHERE{"
+                  + "\nSELECT  DISTINCT ?nom ?nomEntite ?entite ?type WHERE{"
                   + "\n    ?ville geo:nom '"+city+"'@fr"
                   + "\n    ?entite geo:subdivision* ?ville"
                   + "\n    ?ville geo:nom ?nom"
                   + "\n    ?entite rdf:type ?type"
+                  + "\n    ?entite geo:nom ?nomEntite"
                   + "\n    FILTER(?type != geo:Pays_ou_Territoire)}";
         
         System.out.println(query);
@@ -66,7 +67,7 @@ public class InseeSparqlRequest {
         ArrayList<Prop> dims = new ArrayList<Prop>();
         for (Enumeration<IResult> en = res.getResults(); en.hasMoreElements();) {
             IResult r = en.nextElement();
-            dims.add(new Prop(r.getStringValue("?type"), r.getStringValue("?nom"),true));
+            //dims.add(new Prop(r.getStringValue("?type"), r.getStringValue("?nomEntite"),true));
             dims.add(new Prop(r.getStringValue("?type"), r.getStringValue("?entite"),false));
         }
         
@@ -93,7 +94,7 @@ public class InseeSparqlRequest {
         ArrayList<Prop> dims = new ArrayList<Prop>();
         for (Enumeration<IResult> en = res.getResults(); en.hasMoreElements();) {
             IResult r = en.nextElement();
-            dims.add(new Prop(r.getStringValue("?type"), r.getStringValue("?nom"),true));
+            //dims.add(new Prop(r.getStringValue("?type"), r.getStringValue("?nom"),true));
             dims.add(new Prop(r.getStringValue("?type"), r.getStringValue("?entite"),false));
         }
         

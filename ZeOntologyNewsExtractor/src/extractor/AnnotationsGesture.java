@@ -40,13 +40,13 @@ public class AnnotationsGesture {
         while(it.hasNext()){
             Item i = it.next();
             
-            System.out.println("get WikiMeta annotations for "+i.getUri());
+            System.out.println("get annotations for "+i.getUri());
             System.out.println("\t"+i);
             ArrayList<Prop> props = AnnotationsGesture.getAllAnnotations(i);
             i.addProps(props);
             System.out.println("\t"+props);
             
-            System.out.println("get WikiMeta annotations => done");
+            System.out.println("get annotations => done");
         }
     }
     
