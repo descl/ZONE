@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
+import utils.Config;
 import utils.Item;
 import utils.Prop;
 
@@ -34,7 +35,7 @@ public class WikiMetaRequest {
     }
     
     public static ArrayList<Prop> getProperties(String texte){
-        String f = WikiMetaRequest_API.getResult("descl", WikiMetaRequest_API.Format.JSON, texte);
+        String f = WikiMetaRequest_API.getResult(Config.getVar("wikiMeta-key"), WikiMetaRequest_API.Format.JSON, texte);
         return analyseWikiMetaResult(f);
     }
     

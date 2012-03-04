@@ -22,9 +22,9 @@ public class MysqlDatabase {
     public static Statement getStatement(){
         try {
             if(st == null){
-                String url = "jdbc:mysql://localhost:3306/ZONE";
-                String user = "ZONE";
-                String password = "ZONE";
+                String url = Config.getVar("mysql-server")+"/"+Config.getVar("mysql-bdd");
+                String user = Config.getVar("mysql-user");
+                String password = Config.getVar("mysql-password");
                 con = DriverManager.getConnection(url, user, password);
                 st = con.createStatement();
             }

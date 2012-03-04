@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class FourStoreDatabase {
     private static Store st = null;
-    private static String uri = "http://www.zouig.org:8081";
+    private static String uri = Config.getVar("FourStore-server");
     
     public static Store getStore(){
         try {
@@ -47,32 +47,11 @@ public class FourStoreDatabase {
     }
 
     public static void addItem(Item item){
-        //Resource itemNode = getStore().createResource(item.getUri());
-        /*Iterator it = item.values.iterator();
-        String graph = "<?xml version=\"1.0\"?>" 
-        + "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">" 
-                + "<rdf:Description rdf:about=\""+item.getUri()+"\">";
-        while (it.hasNext()){
-            Prop cle = (Prop)it.next();
-            System.out.println(cle.getType());
-            if(cle.isLiteral()){
-                graph += "<"+cle.getType()+">"+cle.getValue()+"</"+cle.getType()+">";
-            }
-            else{
-                graph += "<"+cle.getType()+" rdf:resource=\""+cle.getValue()+"\"/>";
-            }
-        }
-
-        graph += " </rdf:Description></rdf:RDF>";
-        System.out.println(graph);*/
         Model model = ModelFactory.createDefaultModel();
         Resource itemNode = model.createResource(item.getUri());
         Iterator it = item.values.iterator();
         while (it.hasNext()){
             Prop cle = (Prop)it.next();
-
-            //Property P = model.createProperty( newsURI + cle.getType());
-            //Property P = model.createProperty( newsURI + cle.getType());
             System.out.println(cle.getType());
             if(cle.isLiteral()){
                 itemNode.addLiteral(cle.getType(), model.createLiteral(cle.getValue()));
@@ -86,8 +65,6 @@ public class FourStoreDatabase {
         String graph = sw.toString();
         model.write(System.out);
 
-        
-        
         String response="";
         try {
             getStore().insertModel(model, "http://ZONE.zouig.org/data");
@@ -133,8 +110,6 @@ public class FourStoreDatabase {
         Item it = new Item("http://test","bienvenue à Antibes","",new Date());
         FourStoreDatabase.addItem(it);
         
-        
-    
     }
     
 }
