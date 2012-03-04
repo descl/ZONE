@@ -1,72 +1,50 @@
-This is BibTeX, Version 0.99d (TeX Live 2010)
+This is BibTeX, Version 0.99d (TeX Live 2012/dev/Arch Linux)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: christophe.aux
-White space in argument---line 22 of file christophe.aux
- : \citation{RSS
- :               version 2.0 Specifications}
-I'm skipping whatever remains of this command
-White space in argument---line 28 of file christophe.aux
- : \citation{O.
- :              Lassila}
-I'm skipping whatever remains of this command
-White space in argument---line 29 of file christophe.aux
- : \citation{R.
- :              Swick}
-I'm skipping whatever remains of this command
-White space in argument---line 30 of file christophe.aux
- : \citation{Resource
- :                    Description Framework (RDF) Model and Syntax Specification}
-I'm skipping whatever remains of this command
-White space in argument---line 31 of file christophe.aux
- : \citation{W3C
- :               Recommendation 22 February 1999}
-I'm skipping whatever remains of this command
 The style file: plain.bst
 Database file #1: christophe.bib
-Warning--I didn't find a database entry for "refSiPossible"
-Warning--I didn't find a database entry for "Reference"
-Warning--I didn't find a database entry for "http://blogs.law.harvard.edu/tech/rss"
-Warning--I didn't find a database entry for "2003."
-Warning--I didn't find a database entry for "http://ieeexplore.ieee.org/xpl/freeabs_all.jsp?arnumber=5474737"
-You've used 2 entries,
+Warning--empty publisher in Anderruthy2007
+Warning--empty institution in Lassila
+Warning--empty year in Lassila
+You've used 11 entries,
             2118 wiz_defined-function locations,
-            514 strings with 4329 characters,
-and the built_in function-call counts, 410 in all, are:
-= -- 37
-> -- 14
-< -- 0
-+ -- 6
-- -- 4
-* -- 16
-:= -- 80
-add.period$ -- 5
-call.type$ -- 2
-change.case$ -- 7
+            560 strings with 5547 characters,
+and the built_in function-call counts, 3204 in all, are:
+= -- 305
+> -- 153
+< -- 3
++ -- 61
+- -- 50
+* -- 186
+:= -- 543
+add.period$ -- 31
+call.type$ -- 11
+change.case$ -- 57
 chr.to.int$ -- 0
-cite$ -- 2
-duplicate$ -- 16
-empty$ -- 37
-format.name$ -- 4
-if$ -- 81
+cite$ -- 14
+duplicate$ -- 128
+empty$ -- 251
+format.name$ -- 50
+if$ -- 671
 int.to.chr$ -- 0
-int.to.str$ -- 2
-missing$ -- 0
-newline$ -- 12
-num.names$ -- 4
-pop$ -- 11
+int.to.str$ -- 11
+missing$ -- 7
+newline$ -- 55
+num.names$ -- 22
+pop$ -- 78
 preamble$ -- 1
-purify$ -- 6
+purify$ -- 47
 quote$ -- 0
-skip$ -- 16
+skip$ -- 106
 stack$ -- 0
-substring$ -- 10
-swap$ -- 2
-text.length$ -- 0
+substring$ -- 131
+swap$ -- 32
+text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 8
-warning$ -- 0
-while$ -- 4
-width$ -- 3
-write$ -- 20
-(There were 5 error messages)
+type$ -- 42
+warning$ -- 3
+while$ -- 31
+width$ -- 13
+write$ -- 108
+(There were 3 warnings)

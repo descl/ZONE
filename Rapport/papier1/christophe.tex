@@ -76,7 +76,7 @@
 % version for the running heads. Use {\sf} for highlighting your system
 % name, application, or a tool.
 %
-\titlerunning{workflow et filtrage sémantique}
+\titlerunning{workflows et filtrage sémantique}
 
 % For only the editors. Authors, please keep this commented out
 % \volumeinfo
@@ -140,96 +140,64 @@
 % Abstract
 %
 \begin{abstract}
-Le web se révèle aujourd'hui un merveilleux support de diffusion d'informations. Tandis que les sources se multiplient (flux rss, services web, ..), la quantité d'informations croît et il est difficile de les filtrer en fonction de nos centres d'intérêts. Actuellement de nombreux outils qui exploitent les ontologies ou les thésaurus sont mis au point. Il permettent d'annoter les informations, d'en déduire des critères et d'ensuite obtenir uniquement les informations pertinentes. La composition de ces outils constitue des workflows qui devraient encore s'enrichir grâce à l'apparition de nouvelles ontologies ciblées sur différents domaines et outils de lecture.  Cependant la construction de telles chaînes logicielles n'est pas à la portée de tous. \\
+Le web se révèle aujourd'hui un merveilleux support de diffusion d'informations. Tandis que les sources se multiplient (flux rss, services web, ..), la quantité d'informations croît et il est difficile de les filtrer en fonction de nos centres d'intérêts. Actuellement de nombreux outils qui exploitent les ontologies ou les thésaurus sont mis au point. Ils permettent d'annoter les informations, d'en déduire des critères et d'ensuite obtenir uniquement les informations pertinentes. La composition de ces outils constitue des workflows qui devraient encore s'enrichir grâce à l'apparition de nouvelles ontologies ciblées sur différents domaines et outils de lecture.  Cependant la construction de telles chaînes logicielles n'est pas à la portée de tous. \\
 Dans cet article nous montrons comment de tels workflows ont été construits et présentons nos perspectives en matière de construction automatique de ces workflows en fonction des besoins utilisateur. Ce travail s'appuie sur le projet ANR EMergence Yourcast qui vise à automatiser la diffusion des informations sur de grands écrans, et pour lequel la pertinence des informations diffusées est donc particulièrement pertinent. 
-
 \end{abstract}
 
+\begin{abstract}
+Internet is becoming today a wonderful medium for disseminating information. While the sources are multiplying (RSS, WebServices, ...), the amount of information is growing and it's difficult to filter them according to our interests. Currently many tools that exploits ontologies or thesauri are developed. They help us to annotate informations and to derive criteria and then get only the relevant information. The composition of these tools constitute workflows that should be enriched by the emergence of new ontologies focused on different domains and text analysis tools. However the composition of this tools-chain is not for everyone.\\
+In this paper we show how these workflows have built and present our outlook for the automated build of workflows based on user needs. This work is supported by the ANR Emergence Yourcast project designed to automate the dissemination of information on large screens, and for which the relevance of the information published is particularly relevant.
+\end{abstract}
 %------------------------------------------------------------------------------
-\section{Introduction}
+
+\section{Présentation et importance du filtrage des informations dans le web de données}
 \label{sect:introduction}
 
-\mi{j'aime pas vraiment le titre...}
-\ch{presenter aujourd'hui, références sentre d'interets [ref] ... par exemple [ref]... plan}
-
-Le web se révèle aujourd'hui un merveilleux support de diffusion des informations. Tandis que les sources se multiplient (flux rss, services web, ..), la quantité des informations croît et il est difficile de les filtrer en fonction de nos centres d'intérêts\cite{refSiPossible}. Des outils qui exploitent les ontologies ou les thésaurus ont été mis au point qui permettent d'annoter les informations, d'en déduire des critères et d'ensuite obtenir uniquement les informations pertinentes. 
-\mi{enrichir ce qui précede avec des références en essayant si possible de faire ressentir les éléments de l'architecture.}
+Le web se révèle aujourd'hui un merveilleux support de diffusion des informations. Tandis que les sources se multiplient (flux rss, services web, ..), la quantité des informations croît et il est difficile de les filtrer en fonction de nos centres d'intérêts  \cite{Bouzeghoub2005}. Des outils qui exploitent les ontologies ou les thésaurus dans le web sémantique \cite{Lee2001} ont été mis au point qui permettent d'annoter les informations, d'en déduire des critères et d'ensuite obtenir uniquement les informations pertinentes. 
+\mi{enrichir ce qui précède avec des références en essayant si possible de faire ressentir les éléments de l'architecture.}
 
 Il devient aujourd'hui possible de construire à la fois des workflows mettant en jeux ces différents outils pour annoter les flux d'informations  puis les sélectionner les informations. 
-Cependant la construction de ces workflows reste technique malgré les nouveaux supports logiciels tels que les mashup \cite{Reference}. \mi{expliquer un tout petit peu pourquoi c'est pas simpel}. De plus de nouvelles ontologies, sources, systèmes d'annontations apparaissent régulièrement tandis que le web se démocratise \cite{Reference} \mi{et surtout bien le dire}. 
+Cependant la construction de ces workflows reste technique malgré les nouveaux supports logiciels tels que les mashup \cite{Floyd2007} \cite{Milanovic2004}. En effet elle se base sur de nombreux critères qui doivent être pris en compte pour assembler les services et le fait que ces services soient hétéroclites ne permet pas une génération aisée des applications. De plus de nouvelles ontologies, sources, systèmes d'annotations apparaissent régulièrement tandis que le web se démocratise \cite{Anderruthy2007} \cite{Bross2010} \mi{et surtout bien le dire}. 
 Dans ce contexte, la production automatique de ces workflows à partir d'un ensemble de caractéristiques proposées à l'utilisateur apparaît comme d'une grande utilité. 
 
 Dans cet article, en section \ref{sect:exemple}  nous présentons un cas d'étude qui a été mené dans le cadre projet ANR EMergence Yourcast qui vise à automatiser la diffusion des informations sur de grands écrans. Nous montrons au travers de ce cas d'étude les différents choix qui se posent à l'utilisateur \mi{MOntrer cela} et décrivons dans la section \ref{sect:miseEnOuvre} les workflows  mis en place pour répondre à ce cas particulier. Fort de cette expérience, nous proposons en \ref{sect:perspectives} de produire de tels workflows en utilisant un développement dirigé par les modèles et les feature models pour produire automatiquement de tels workflows à partir de données utilisateur de haut niveau. 
 
 
-
 %------------------------------------------------------------------------------
+
 \section{Système de diffusion des informations sur grands écrans et filtrage}
-\ch{etat de l'art de notre appli, présentation du problème (outils à utiliser solutions, exploitation et de qu'on aimerait faire. chalenges!}
+%ch : etat de l'art de notre appli, présentation du problème (outils à utiliser solutions, exploitation et de qu'on aimerait faire. chalenges!
 \label{sect:exemple}
 \mi{Clairement je cherche le titre...}
 Dans le cadre du projet \Y, nous visons à diffuser sur de grands écrans des informations en provenance de différentes sources en particulier celles issues du web. Or de tels systèmes exigent une adhérence forte aux attentes des utilisateurs et l'adéquation des informations avec les centres d'intérêts des personnes est essentielle à l'acceptation de tels systèmes. 
 
 \paragraph*{Des sources hétérogènes}
-Or il existe aujourd'hui de nombreuses sources d'information disponibles grâce à l'utilisation de flux RSS \cite{RSS version 2.0 Specifications, http://blogs.law.harvard.edu/tech/rss, 2003.}. Le choix des sources peut être simplement lié au travail ou à l'emplacement géographique de l'écran d'information.
+Or il existe aujourd'hui de nombreuses sources d'information disponibles grâce à l'utilisation de flux RSS \cite{Lassila}. Le choix des sources peut être simplement lié au travail ou à l'emplacement géographique de l'écran d'information.
 Dans notre cas, nous avons choisi d'agréger le plus de sources d'informations possible pour couvrir tous les champs d'application des écrans d'accueil. 
 Nous faisons donc appel dans notre application à une vingtaine de flux rss sur de vastes sujets. Ceux-ci sont essentiellement des flux aillant déjà subit une étape de filtrage qui a permis de les classer selon leurs thématique générale (technologies, international, médical...).
 
 \paragraph*{Sélections des informations}
 Beaucoup de sources d'informations sont agrégeables. Des critères de sélection sont alors pré-établis par les fournisseurs de contenus.  Par exemple sur le site de news de google \url{http://news.google.fr} vous pouvez accéder à des nouvelles liées à l'économie ou bien les news locales. Cependant  vous ne pouvez pas récupérer les news économiques liées à la ville de Marseille ou plus largement à la région PACA. Dans notre exploitation des flux RSS nous devons donc pouvoir fournir un filtrage multi-critères permettant un tri fin des informations. 
 
-
 \paragraph*{Des critères utilisateurs}
-
 Pour capturer ces critères il existe différents systèmes actuellement tel que le service \url{http://www.google.fr/reader/} ou bien \url{http://rsslounge.aditu.de} cependant ceux-ci ne proposent pas de regroupement des flux et de filtrage multi-critère de ceux-ci.
 En effet, nous avions besoin d'un système intuitif qui permet de capturer simplement les exigences utilisateur. Nous avons choisis sur ce point un système d'aide au choix que nous avons construit et qui après captation en langage naturel des besoins les retranscrit sous forme d'entités nommées qui sont typées par notre système en fonction des éléments que nous avons déjà pu instancier dans la base de connaissances.
 
 \paragraph*{Des processus d'annotation diversifié}
-Système de base \cite{http://ieeexplore.ieee.org/xpl/freeabs_all.jsp?arnumber=5474737}
 Le système est basé sur une annotation des informations la plus vaste possible. En effet le système doit pouvoir annoter des informations provenant de domaines totalement différents.
-
-Nous avons choisis d'utiliser des annotions basées sur la récupération d'entités nommées présentes sur un grand nombre de bases de données RDF (Resource Description
-Framework \cite{O. Lassila, R. Swick, Resource Description Framework (RDF) Model and Syntax Specification, W3C Recommendation 22 February 1999}).
+Nous avons choisis d'utiliser des annotions basées sur la récupération d'entités nommées présentes sur un grand nombre de bases de données RDF (Resource Description Framework \cite{Winer2005}).
 Nous utilisons alors des systèmes d'extraction d'information et d'annotation sémantique qui permettent d'ajouter des liaisons vers les entités nommés spécifiques.
 
 
 %------------------------------------------------------------------------------
 
-\si{A supprimer ?}
-\section{Système de diffusion des informations sur grands écrans et filtrage}
-\ch{ici la solution joli pour le futur, en intro besoin de serialisation suivi des 2 workflows en cascade}
-=======
-
-Étant donné que nous devons utiliser des bases de données annotées, comment supporter l'expression de critères et leur utilisation pour filtrer ces bases.... qui conduit à orchestrer un ensemble de composants.
-
-=> Challenges 2
- Comment exprimer de tels critères pour que le filtrage des nouvelles soit opérationnel?
-
-Sachant que il y a qualité de l'information, le critere....
-qui conduit à orchestrer un ensemble de composants lié u précédent.
-
-Donc .....
-
-Il existe aujourd'hui de nombreuses sources d'informations, peut-on soumettre ces masses d'informations aux mêmes artefacts de filtrage et comment?
-
-L'expression des critères a été étudiée ......
-
-
-
-
-
-
-
-
-%------------------------------------------------------------------------------
-
-\section{Mise en oeuvre}
+\section{Mise en œuvre}
 \label{sect:miseEnOuvre}
 Dans le cadre de l'étude présentée précédemment nous avons donc mis au point deux workflows, dont nous présentons à présent l'architecture brièvement. Comme présenté sur le diagramme suivant nous avons ainsi le workflow d'enrichissement des informations (coloré en bleu ainsi que le workflow de filtrage des informations.
 
 \begin{figure}[htb!]
 	\begin{centering}
-	\includegraphics[width=1\textwidth]{diagramme-Archi.png}
+	\includegraphics[width=0.7\textwidth]{diagramme-Archi.png}
 	\caption{Workflow de traitements....}
 	\label{fig:mmFM}
 	\end{centering}
@@ -242,63 +210,60 @@ Nous allons nous attarder particulièrement sur ce workflow car il fait appel à
 L'application se base sur la récupération de flux RSS qui sont choisis par l'utilisateur et dont nous connaissons le thème et la langue, chaque flux rss va contenir un lot de news les plus récentes publiées chez le fournisseur du flux. Le flux peut être mis à jour et nous devons l'interroger périodiquement pour récupérer les dernières informations publiées.
 
 \subsubsection{Annotation }
-Sur chaque news nous devons utiliser les services d'annotation pour récupérer les entitées nommées interessantes le concernant. Pour cela nous faisons appel à divers services d'annotation qui nous renvoient les informations. Nous avons aussi besoin de faire appel à des services de généralisation qui vont travailler en aval des services d'annotation pour ajouter des notions à une annotation.\\
+Sur chaque news nous devons utiliser les services d'annotation pour récupérer les entités nommées intéressantes le concernant. Pour cela nous faisons appel à divers services d'annotation qui nous renvoient les informations. Nous avons aussi besoin de faire appel à des services de généralisation qui vont travailler en aval des services d'annotation pour ajouter des notions à une annotation.\\
 De manière concrète nous utilisons les services d'annotation suivants:
 \begin{itemize}
+
 \item Services d'Annotation
 \begin{itemize}
 \item \textbf{OpenCalais} nous permet de récupérer les entités des textes correspondant à des lieux français ainsi que des noms de personnalités en langue anglaise. Nous lui indiquons en entrée le texte à annoter et récupérons une liste de mots correspondant à nos critères.
-\item \textbf{WikiMeta} fonctionne de la même manière qu'OpenCalais mais permet de récupérer directement des entitées nommées pointant vers la base de connaissance DBpedia, il peut donc être utilisé seul en tant que service d'annotation principal
-	
+\item \textbf{WikiMeta} fonctionne de la même manière qu'OpenCalais mais permet de récupérer directement des entités nommées pointant vers la base de connaissance DBpedia, il peut donc être utilisé seul en tant que service d'annotation principal
 \end{itemize}
 
 \item Services de Généralisation
 \begin{itemize}
-\item \textbf{DBpedia} travaille sur les données provenant du service d'annotation WikiMeta et permet de les enrichire sémantiquement à l'aide de liens vers d'autres resources liées à l'élément
-\item \textbf{INSEE geo} \url{http://rdf.insee.fr/geo/} La base de données RDF de l'INSEE nous permet de récupérer les ensembles géographiques liées à une entité nommée géographique. Ce service d'annnotation géographique s'utilise donc uniquement en aval d'un service d'annotation classique qui récupère des informations géographiques. Il renvoi en sortie des URI vers les entités géographiques liées à la news étudiée. Nous utilisons pour cette intérogation la requête SPARQL suivante qui permet d'avoir les informations désirées:
+\item \textbf{DBpedia} travaille sur les données provenant du service d'annotation WikiMeta et permet de les enrichir sémantiquement à l'aide de liens vers d'autres ressources liées à l'élément
+\item \textbf{INSEE geo} \url{http://rdf.insee.fr/geo/} La base de données RDF de l'INSEE nous permet de récupérer les ensembles géographiques liées à une entité nommée géographique. Ce service d'annotation géographique s'utilise donc uniquement en aval d'un service d'annotation classique qui récupère des informations géographiques. Il renvoi en sortie des URI vers les entités géographiques liées à la news étudiée. Nous utilisons pour cette interrogation la requête SPARQL suivante qui permet d'avoir les informations désirées:
 
 \begin{verbatim}
-PREFIX geo: <http://rdf.insee.fr/geo/>\\
-SELECT \= DISTINCT \= ?nom ?type WHERE\{\\
-	\> ?entite geo:nom ?nom\\
-	\> ?entite rdf:type ?type\\
-	\> \{ \\
-		\> \> ?ville geo:nom ?nomVille\\
-		\> \> ?entite geo:subdivision* ?ville\\
-		\> \> ?FILTER(regex(str(?nomVille), ‘Nice’, ‘i’))\\
-	\>\}\\
-\}
+PREFIX geo: <http://rdf.insee.fr/geo/>
+SELECT = DISTINCT = ?nom ?type WHERE{
+	 ?entite geo:nom ?nom
+	 ?entite rdf:type ?type
+	 { 
+		  ?ville geo:nom ?nomVille
+		  ?entite geo:subdivision* ?ville
+		  ?FILTER(regex(str(?nomVille), ‘Nice’, ‘i’))
+	}
+}
 \end{verbatim}
 \end{itemize}
-\end{itemize}
 
+\end{itemize}
 
 \subsubsection{Mémorisation}
 \mi{je ne sens pas cette partie.. à voir}
 Nous stockons le contenu des flux RSS et les annotations dans une base de données RDF grâce à l'utilisation de l'application 4Store. 4store est un serveur de triplets RDF fournissant un accès aux données en lecture et écriture. Il nous permet de créer un EndPoint en ligne rapide et puissant. De plus, cela permet une réutilisation de notre travail d'annotations dans d'autres projets aillant besoin d'accéder à des flux annotés. Enfin cette technologie va permettre une excellente connection entre le workflow d'enrichissement et celui de filtrage car de nombreuses APIs existent pour attaquer la base de données dans différents langages.
 
 \subsection{Workflow de filtrage des informations}
-Le workflow de filtrage permet de créer des critères utilisateurs affin de récupérer les données intéressantes sur la base de données. Chaque critère est défini par le couple (TypeDeRelation, EntitéeNommée) et va permettre un choix précis des éléments à récupérer. Nous fournissons une application complète permettant de choisir les critères à appliquer sur la base. Ce workflow ne sera pas décrit plus dans en détail dans le cadre de ce travail mais est visible sur \url{https://github.com/descl/ZONE/tree/master/ZeOntologyNewsExtractorUserRunner}
-
-
+Le workflow de filtrage permet de créer des critères utilisateurs affin de récupérer les données intéressantes sur la base de données. Chaque critère est défini par le couple (TypeDeRelation, EntitéeNommée) et va permettre un choix précis des éléments à récupérer. Nous fournissons une application complète permettant de choisir les critères à appliquer sur la base \cite{Christophe}.
+%on choisi de ne pas détailler ce workflow
 
 %------------------------------------------------------------------------------
+
 \section{Perspective : Vers la construction automatique de workflows }
 \label{sect:perspectives}
 Notre objectif à terme est de construire une ligne de produits qui capturerait les différents sources et systèmes d'annotation disponibles, les qualifierait et permettrait à un utilisateur final de construire ses propres workflows d'annotation en sélectionnant pour lui les sources et les systèmes d'annotations idoines conformément à ses choix.
 
 \subsection{Objectifs et limites}
 \si{A revoir : on sélectionne un flux et ensuite on fait du raisonnement sur les services d'annotation}
-La construction automatique de workflows d'annotations permet de répondre à différentes problématiques. Du point de vue de l'utilisateur final, l'utilisation d'une construction de workflow pourrait permettre, à partir d'une liste de thème, de sélectionner automatiquement les flux qui l'intéresse, tout en lui donnant la possibilité d'affiner la granularité des annotations qu'il souhaite récupérer par l'entremise des sélections de services de généralisation.
-
+La construction automatique de workflows d'annotations permet de répondre à différentes problématiques. Du point de vue de l'utilisateur final, l'utilisation d'une construction de workflows pourrait permettre, à partir d'une liste de thème, de sélectionner automatiquement les flux qui l'intéresse, tout en lui donnant la possibilité d'affiner la granularité des annotations qu'il souhaite récupérer par l'entremise des sélections de services de généralisation.
 
 En outre, à l'heure actuelle le workflow d'annotation interroge tous les services d'annotations disponibles, sans distinction de catégories, ce qui génère de nombreux appels de service dont la plupart sont inutiles. L'utilisation d'une construction automatique à partir des choix de l'utilisateur permettrait de restreindre les appels aux seuls services pertinents et donc d'accélérer les temps de traitements en réduisant la charge des services. 
-
 
 Nous limitons dans cette expérimentation les choix de l'utilisateur aux seules notions de \textit{Thèmes} et de \textit{Langues} en raison de leur pertinence et de leur impact sur la sélection des sources et des systèmes d'annotations. En effet, soient les systèmes d'annotations sont directement spécialisés pour certains types d'informations, comme le service MetaMap \cite{MetaMap} spécialisé dans l'annotation de données médicales, soit ils fournissent une API permettant de restreindre les annotations à certaines catégories d'informations, certains \textit{Thèmes}. Par ailleurs, la langue est un critère déterminant pour annoter correctement les informations, les systèmes d'annotations n'en supportent ainsi qu'un nombre limité. 
 
 \subsection{Lignes de produits de services}
-
 Les choix que va faire l'utilisateur vont avoir un impact sur trois concepts inhérents aux workflow d'annotations : les \textit{Flux} d'information, les \textit{Services d'Annotation} et les \textit{Services de Généralisation}. Chacun de ces concepts peut être pris comme une ligne de produit indépendante, représentée par un feature model (FM) afin d'exprimer la variabilité des différents concepts.
 
 La figure ... montre ainsi le FM de \textit{Service d'Annotation} : les produits finaux correspondent aux feuilles de la feature \textit{Product}, les thèmes aux feuilles de la feature \textit{Thème} et les langues à celles de la feature \textit{Langue}. La sélection d'une feature de langue ou de thème influe directement sur le choix d'un produit final par le jeu des contraintes internes au FM. 
@@ -307,7 +272,6 @@ La figure ... montre ainsi le FM de \textit{Service d'Annotation} : les produits
 Chacun des FM des différents concepts est une construction réalisée à partir d'une approche bottom-up. Nous partons des produits existants, en les exprimant sous forme de FM individuels, puis nous effectuons la fusion de ces FM afin d'obtenir une SPL modélisant les différents produits disponibles ainsi que leur variabilité \cite{Acher2011}.
 
 \subsection{Modèle de mise en relation des LPL}
-
 Notre but est de fournir un outil permettant à un utilisateur final de sélectionner des services cohérents en fonction de ses choix. Cela implique que chaque choix que l'utilisateur fera dans un des FM, doit avoir un impact sur les autres concepts du domaine. 
 
 Comme le montre la figure ...., nous exprimons donc des relations entre les différents concepts du domaine, relations qui s'expriment - comme nous l'avons introduit - essentiellement sur le \textit{Thème} et la \textit{Langue}. La notion de relation a ici une double signification : elle va tout d'abord exprimer qu'un concept va être lié à un ou plusieurs autres concepts, en fonction de la cardinalité de la relation.
@@ -325,8 +289,8 @@ Ainsi, la sélection d'un produit dans un FM va automatiquement induire l'indisp
 \ch{parler certainement de la notion de cascade ici}
 Cependant il est important de noter que chacune de ces opérations de restriction correspond à un contexte spécifique aux sélections de l'utilisateur dans les différents FM. En effet, l'utilisateur doit avoir la possibilité de sélectionner plusieurs produits dans chacun des FM : il va certainement souhaiter utiliser plusieurs services d'annotations différents pour un flux, ou au contraire souhaiter sélectionner plusieurs flux pour un même service d'annotation. Dans ces deux exemples différents, nous nous situons à chaque fois dans un contexte précis, le contexte de la sélection d'un flux spécifique, ou encore le contexte de la sélection d'un service d'annotation spécifique. Les opérations de restriction vont toujours s'exprimer dans un contexte spécifique tels que ceux-ci, mais l'utilisateur doit toujours avoir la possibilité de faire une nouvelle sélection, à partir d'un contexte vide. 
 
-
 \subsection{Vers la génération des codes}
+\ch{on supprime cette partie la non?}
 
 \paragraph{}
 Lien Asset / FM 
