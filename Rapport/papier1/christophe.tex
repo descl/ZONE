@@ -194,6 +194,8 @@ Nous utilisons alors des systèmes d'extraction d'information et d'annotation s�
 
 
 %------------------------------------------------------------------------------
+
+\si{A supprimer ?}
 \section{Système de diffusion des informations sur grands écrans et filtrage}
 \ch{ici la solution joli pour le futur, en intro besoin de serialisation suivi des 2 workflows en cascade}
 =======
@@ -254,8 +256,8 @@ De manière concrète nous utilisons les services d'annotation suivants:
 \begin{itemize}
 \item \textbf{DBpedia} travaille sur les données provenant du service d'annotation WikiMeta et permet de les enrichire sémantiquement à l'aide de liens vers d'autres resources liées à l'élément
 \item \textbf{INSEE geo} \url{http://rdf.insee.fr/geo/} La base de données RDF de l'INSEE nous permet de récupérer les ensembles géographiques liées à une entité nommée géographique. Ce service d'annnotation géographique s'utilise donc uniquement en aval d'un service d'annotation classique qui récupère des informations géographiques. Il renvoi en sortie des URI vers les entités géographiques liées à la news étudiée. Nous utilisons pour cette intérogation la requête SPARQL suivante qui permet d'avoir les informations désirées:
-\begin{quote}
-\begin{tabbing}
+
+\begin{verbatim}
 PREFIX geo: <http://rdf.insee.fr/geo/>\\
 SELECT \= DISTINCT \= ?nom ?type WHERE\{\\
 	\> ?entite geo:nom ?nom\\
@@ -266,8 +268,7 @@ SELECT \= DISTINCT \= ?nom ?type WHERE\{\\
 		\> \> ?FILTER(regex(str(?nomVille), ‘Nice’, ‘i’))\\
 	\>\}\\
 \}
-\end{tabbing}
-\end{quote}
+\end{verbatim}
 \end{itemize}
 \end{itemize}
 
@@ -282,19 +283,19 @@ Le workflow de filtrage permet de créer des critères utilisateurs affin de ré
 
 
 %------------------------------------------------------------------------------
-\section{Vers la construction automatique de workflows }
-\ch{perspectives meta modèle à expliciter,discutions sur LDP definitions des params de langue/choix, differentes sources}
+\section{Perspective : Vers la construction automatique de workflows }
 \label{sect:perspectives}
 Notre objectif à terme est de construire une ligne de produits qui capturerait les différents sources et systèmes d'annotation disponibles, les qualifierait et permettrait à un utilisateur final de construire ses propres workflows d'annotation en sélectionnant pour lui les sources et les systèmes d'annotations idoines conformément à ses choix.
 
-
-La construction automatique de workflow d'annotations peut répondre à différentes problématiques. Du point de vue de l'utilisateur final, l'utilisation d'une construction de workflow pourrait permettre, à partir d'une liste de thème, de sélectionner automatiquement les flux qui l'intéresse, tout en lui donnant la possibilité d'affiner la granularité des annotations qu'il souhaite récupérer par l'entremise des sélections de services de généralisation. \si{Service de généralisation d'annotation ? Un autre nom ?} \ch{ok pour service de généralisation, je l'ai explicité plus haut}
+\subsection{Objectifs et limites}
+\si{A revoir : on sélectionne un flux et ensuite on fait du raisonnement sur les services d'annotation}
+La construction automatique de workflows d'annotations permet de répondre à différentes problématiques. Du point de vue de l'utilisateur final, l'utilisation d'une construction de workflow pourrait permettre, à partir d'une liste de thème, de sélectionner automatiquement les flux qui l'intéresse, tout en lui donnant la possibilité d'affiner la granularité des annotations qu'il souhaite récupérer par l'entremise des sélections de services de généralisation.
 
 
 En outre, à l'heure actuelle le workflow d'annotation interroge tous les services d'annotations disponibles, sans distinction de catégories, ce qui génère de nombreux appels de service dont la plupart sont inutiles. L'utilisation d'une construction automatique à partir des choix de l'utilisateur permettrait de restreindre les appels aux seuls services pertinents et donc d'accélérer les temps de traitements en réduisant la charge des services. 
 
 
-Nous limitons dans cette expérimentation les choix de l'utilisateur aux seules notions de \textit{Thèmes} et de \textit{Langues} en raison de leur pertinence et de leur impact sur la sélection des sources et des systèmes d'annotations. En effet, soient les systèmes d'annotations sont directement spécialisés pour certains types d'informations [exemple ?]\ch{Exemple de MetaMap http://metamap.nlm.nih.gov/ qui permet de faire de l'annotation sur les données médicales}, soit ils fournissent une API permettant de restreindre les annotations à certaines catégories d'informations, certains \textit{Thèmes}. Par ailleurs, la langue est un critère déterminant pour annoter correctement les informations, les systèmes d'annotations n'en supportent ainsi qu'un nombre limité. 
+Nous limitons dans cette expérimentation les choix de l'utilisateur aux seules notions de \textit{Thèmes} et de \textit{Langues} en raison de leur pertinence et de leur impact sur la sélection des sources et des systèmes d'annotations. En effet, soient les systèmes d'annotations sont directement spécialisés pour certains types d'informations, comme le service MetaMap \cite{MetaMap} spécialisé dans l'annotation de données médicales, soit ils fournissent une API permettant de restreindre les annotations à certaines catégories d'informations, certains \textit{Thèmes}. Par ailleurs, la langue est un critère déterminant pour annoter correctement les informations, les systèmes d'annotations n'en supportent ainsi qu'un nombre limité. 
 
 \subsection{Lignes de produits de services}
 
@@ -303,7 +304,7 @@ Les choix que va faire l'utilisateur vont avoir un impact sur trois concepts inh
 La figure ... montre ainsi le FM de \textit{Service d'Annotation} : les produits finaux correspondent aux feuilles de la feature \textit{Product}, les thèmes aux feuilles de la feature \textit{Thème} et les langues à celles de la feature \textit{Langue}. La sélection d'une feature de langue ou de thème influe directement sur le choix d'un produit final par le jeu des contraintes internes au FM. 
 
 \si{à voir si on garde en dessous...}
-Chacun des FM des différents concepts est une construction réalisée à partir d'une approche bottom-up. Nous partons des produits existants, en les exprimant sous forme de FM individuels, puis nous effectuons la fusion [ref merge Mathieu] de ces FM afin d'obtenir une SPL modélisant les différents produits disponibles ainsi que leur variabilité.
+Chacun des FM des différents concepts est une construction réalisée à partir d'une approche bottom-up. Nous partons des produits existants, en les exprimant sous forme de FM individuels, puis nous effectuons la fusion de ces FM afin d'obtenir une SPL modélisant les différents produits disponibles ainsi que leur variabilité \cite{Acher2011}.
 
 \subsection{Modèle de mise en relation des LPL}
 
@@ -315,9 +316,10 @@ Par exemple, un \textit{Flux} va être annoté par un ou plusieurs \textit{Servi
 
 Cependant, la relation permet également d'exprimer une restriction sur les choix de l'utilisateur : elle force que la sélection d'un produit dans un FM soit compatible avec la sélection d'un autre produit. En effet, la sélection d'un flux d'un certain thème et d'une certaine langue doit contraindre l'utilisateur à ne pouvoir sélectionner que les services d'annotations capables d'annoter des informations dans cette langue et sur ce thème. 
 
-Cela est possible par la définition et l'application d'une opération de restriction sur les FMs liés entre eux en cascade. Par exemple, dans le cadre de la relation entre les \textit{Flux} et les \textit{Service d'Annotation}, un service d'annotation ne peut annoter un flux que s'ils possèdent au moins un thème et une langue commune. \si{OK... donc si on part là dessus ça veut dire que la restriction est compliquée : est-ce que c'est pertinent de dire que la sélection d'un service d'annotation ne peut se faire que si tous les thèmes du flux sont lisibles par le service d'annotation ?.. Après il faudra encore traiter la langue... } \ch{oui, ca devient compliqué, après discution on part sur le faite que un flux peut être lié que à un seul thème, pour appliquer un service d'annotation à un flux donnée, il faut que theme ET langue correspondent (si l'un ou l'autre n'est pas définit dans le service d'annotation, ca veut dire qu'on n'a pas besoin que celui-ci corresponde pour appliquer}
+Cela est possible par la définition et l'application d'une opération de restriction sur les FMs liés entre eux en cascade. Par exemple, dans le cadre de la relation entre les \textit{Flux} et les \textit{Service d'Annotation}, un service d'annotation ne peut annoter un flux que s'ils s'expriment dans la même langue et parlent des mêmes thèmes. Ainsi, l'opération de restriction, pour la langue, consistera ici à déselectionner automatiquement dans un FM les langues ne correspondant pas au choix de l'utilisateur. 
 
-\si{Présenter la restriction en parlant de la langue : intersection}
+Par exemple, si un produit du FM \textit{Flux} est spécifié être en Français, la sélection de ce produit sélectionnera automatiquement la feature \textit{Fr} par le jeu des contraintes internes. La restriction associée à la relation \textit{Flux-Service d'Annotation} va avoir pour effet de déselectionner toutes les features filles de \textit{Langue} et par le truchement des relations internes, de déselectionner les produits associés à ces langues. Il ne restera donc plus à l'utilisateur que la possibilité de sélectionner un service spécifique au français (\textit{Fr}).
+
 
 Ainsi, la sélection d'un produit dans un FM va automatiquement induire l'indisponibilité de certains produits dans les FM liés. Or cette opération va elle même engendrer de nouvelles restrictions : en effet, la déselection d'un produit dans un FM peut également engendrer la déselection d'un autre produit dans un autre FM par le truchement des relations. 
 \ch{parler certainement de la notion de cascade ici}
@@ -350,7 +352,7 @@ Lien workflow / code ?
 %\bibliographystyle{alpha}
 %\bibliographystyle{unsrt}
 %\bibliographystyle{abbrv}
-\bibliography{biblio}
+\bibliography{christophe}
 
 %------------------------------------------------------------------------------
 \appendix
