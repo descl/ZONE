@@ -1,13 +1,11 @@
-require 'rubygems'
-require '4store-ruby'
-
 class RssfeedController < ApplicationController
   def index
+    load 'lib/store.rb'
     query = "SELECT ?concept ?relation ?result WHERE {\n"
     query += "?concept ?relation ?result} ORDER BY ?concept ?relation"
 
     endpoint = 'http://zouig.org:8081/sparql/'
-    
+
     store = FourStore::Store.new endpoint
     @elements = store.select(query)
     puts @elements
