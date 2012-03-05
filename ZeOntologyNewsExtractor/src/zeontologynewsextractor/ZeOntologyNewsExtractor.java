@@ -19,13 +19,7 @@ public class ZeOntologyNewsExtractor {
      */
     public static void main(String[] args) throws MalformedURLException  {
         ArrayList<Item>  items = new ArrayList<Item>();
-        String [] fluxLinks = {
-                         //"resources/examples/europe1.rss"
-                         "http://news.google.fr/news?pz=1&cf=all&ned=fr&hl=fr&topic=n&output=rss&num=1"
-                         ,"http://europe1.fr.feedsportal.com/c/32376/f/546041/index.rss"
-                         //,"http://actualite.portail.free.fr/france/rss.xml"
-                         //,"http://www.tv5.org/TV5Site/rss/actualites.php?rub=3"
-        };
+        String [] fluxLinks = Config.getVar("rssFeeds").split(",");
         
         System.out.println("========= Starting rss downloading==================");
         items.addAll(RSSGetter.getFlux(fluxLinks));

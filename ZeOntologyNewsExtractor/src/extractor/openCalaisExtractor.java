@@ -12,6 +12,7 @@ import mx.bigdata.jcalais.CalaisClient;
 import mx.bigdata.jcalais.CalaisObject;
 import mx.bigdata.jcalais.CalaisResponse;
 import mx.bigdata.jcalais.rest.CalaisRestClient;
+import utils.Config;
 import utils.Prop;
 
 /**
@@ -22,7 +23,7 @@ public class openCalaisExtractor {
     public static String EntitiesURI = "http://www.opencalais.org/Entities#";
     
     public static CalaisResponse getResult(java.lang.String content) {
-        String license = "p8zhr726g3mzj9g7fs7hg7cj ";
+        String license = Config.getVar("openCalais-key");
         
         CalaisClient client = new CalaisRestClient(license);
         CalaisResponse response = null;
