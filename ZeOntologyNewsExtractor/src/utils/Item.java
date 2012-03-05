@@ -65,7 +65,8 @@ public class Item {
     }
     
     public String concat(){
-        return this.getElement(RSS.title)+".\n "+this.getElement(RSS.description);
+        String result = this.getElement(RSS.title)+".\n "+this.getElement(RSS.description);
+        return result.replaceAll("<[^>]*>", "");
     }
 
     public String getUri() {
