@@ -1,12 +1,24 @@
-<h1>Rssfeed#index</h1>
-<h2>Votre filtre actuel: <%= @filter %></h2>
+<h1>Service de configuration de flux RSS</h1>
+<% if @filter.length > 0 %>
+<h3>Votre filtre actuel:</h3>
+<ol>
+<% @filter.each do |element| %>
+<li><%= element %></li>
+
+
+
+<% end %>
+</ol>
+
+
+<% end %>
 <p><%= link_to "Recupérer le flux RSS", params.merge(:format => :rss), :class => "feed_link" %></p>
 
 <ol>
 <% @result.each do |element| %>
 	<li> <a href= "<%= element["concept"] %>"><%= element["http://purl.org/rss/1.0/title"] %></a> <%= element["http://purl.org/rss/1.0/pubDate"] %>
 		</br><%= element["http://purl.org/rss/1.0/description"].html_safe %>
-		<table BORDER="1">
+		<table BORDER="1" style="border: 1px black; border-spacing: 0px;">
 		<% element.each do |item|
 			next if item[0].match(/^http\:\/\/purl.org/)
 			next if item[0] == 'concept'
