@@ -38,12 +38,13 @@ module ApplicationHelper
   
   def get4StoreNameElemINSEE(item)
     endpoint = 'http://zouig.org:8081/sparql/'
-    
     load 'lib/store.rb'
     store = FourStore::Store.new endpoint
-    query = "SELECT ?nom WHERE {\n"
-    query += "<"+item+"> <http://rdf.insee.fr/geo/nom> ?nom } LIMIT 1"
+    query = "SELECT ?nom WHERE { <"+item+"> <http://rdf.insee.fr/geo/nom> ?nom } LIMIT 1"
+
     result = store.select(query)
+    puts query
+    puts result
     if result.length > 0
       store.select(query)[0]["nom"]
     end

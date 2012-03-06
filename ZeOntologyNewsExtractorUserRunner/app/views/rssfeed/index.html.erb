@@ -1,17 +1,19 @@
 <h1>Rssfeed#index</h1>
-<p><a href="index.rss">Recupérer le fichier .rss</a></p>
+<h2>Votre filtre actuel: <%= @filter %></h2>
+<p><%= link_to "Recupérer le flux RSS", params.merge(:format => :rss), :class => "feed_link" %></p>
 
 <ol>
 <% @result.each do |element| %>
-	<li> <a href= "<%= element["concept"] %>"><%= element["http://purl.org/rss/1.0/title"] %></a>
+	<li> <a href= "<%= element["concept"] %>"><%= element["http://purl.org/rss/1.0/title"] %></a> <%= element["http://purl.org/rss/1.0/pubDate"] %>
 		</br><%= element["http://purl.org/rss/1.0/description"].html_safe %>
 		<table BORDER="1">
-		<% element.each do |item| %>
-			<tr><td><%= item[0] %></td><td><%= item[1] %></td>
-			</tr>
+		<% element.each do |item|
+			next if item[0].match(/^http\:\/\/purl.org/)
+			next if item[0] == 'concept'
+			 %>
+			<tr><td><%= item[0] %></td><td><%= item[1] %></td> <td>
+<%= link_to "Ajouter à la restriction", rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}) %></td></tr>
 		<% end%>
-		
-		<tr><td></td><td><%= element %></td></tr>
 		</table>
 		
 	</li></br></br/>
