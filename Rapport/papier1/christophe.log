@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.29)  6 MAR 2012 14:15
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.29)  6 MAR 2012 15:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -708,7 +708,11 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
 )
-(./christophe.aux)
+(./christophe.aux
+
+LaTeX Warning: Label `fig:mmFM' multiply defined.
+
+)
 \openout1 = `christophe.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 67.
@@ -725,8 +729,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 67.
 LaTeX Font Info:    ... okay on input line 67.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 67.
 LaTeX Font Info:    ... okay on input line 67.
-
-(/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
+ (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count144
 \scratchdimen=\dimen153
@@ -829,7 +832,7 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 ) [1
 
 {/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-<diagramme-Archi.png, id=98, 759.58781pt x 546.54187pt>
+<diagramme-Archi.png, id=98, 797.35252pt x 281.13824pt>
 File: diagramme-Archi.png Graphic file (type png)
 
 <use diagramme-Archi.png> [3 <./diagramme-Archi.png>]
@@ -843,23 +846,30 @@ Underfull \hbox (badness 10000) in paragraph at lines 220--221
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 222--223
+Underfull \hbox (badness 10000) in paragraph at lines 224--225
 
  []
 
-[4] [5] (./christophe.bbl) AED: lastpage setting LastPage [6]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 314.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 314.
+[4] <FM.png, id=113, 247.92625pt x 185.69376pt>
+File: FM.png Graphic file (type png)
+ <use FM.png> [5 <./FM.png>]
+(./christophe.bbl) AED: lastpage setting LastPage [6]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 320.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 320.
  (./christophe.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 314.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 320.
 Package rerunfilecheck Info: File `christophe.out' has not changed.
-(rerunfilecheck)             Checksum: B925315EB7EFCE04D46771F9DEE6C8B2;980.
+(rerunfilecheck)             Checksum: 6D437FB03C24112E9211F798B1A93060;969.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 9127 strings out of 493747
- 132747 string characters out of 3143546
- 232843 words of memory out of 3000000
- 12187 multiletter control sequences out of 15000+200000
+ 9132 strings out of 493747
+ 132802 string characters out of 3143546
+ 232882 words of memory out of 3000000
+ 12191 multiletter control sequences out of 15000+200000
  13029 words of font info for 53 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  46i,12n,45p,802b,414s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -874,10 +884,10 @@ l/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local
 /texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/t
 exlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/te
 xlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on christophe.pdf (6 pages, 253706 bytes).
+Output written on christophe.pdf (6 pages, 258831 bytes).
 PDF statistics:
- 172 PDF objects out of 1000 (max. 8388607)
- 150 compressed objects within 2 object streams
- 36 named destinations out of 1000 (max. 500000)
- 102 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 179 PDF objects out of 1000 (max. 8388607)
+ 155 compressed objects within 2 object streams
+ 37 named destinations out of 1000 (max. 500000)
+ 107 words of extra memory for PDF output out of 10000 (max. 10000000)
 
