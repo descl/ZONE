@@ -154,13 +154,15 @@ In this paper we show how these workflows have built and present our outlook for
 \label{sect:introduction}
 
 Le web se révèle aujourd'hui un merveilleux support de diffusion des informations. Tandis que les sources se multiplient (flux rss, services web, ..), la quantité des informations croît et il est difficile de les filtrer en fonction de nos centres d'intérêts  \cite{Bouzeghoub2005}. Des outils qui exploitent les ontologies ou les thésaurus dans le web sémantique \cite{Lee2001} ont été mis au point qui permettent d'annoter les informations, d'en déduire des critères et d'ensuite obtenir uniquement les informations pertinentes. 
-\mi{enrichir ce qui précède avec des références en essayant si possible de faire ressentir les éléments de l'architecture.}
+%\mi{enrichir ce qui précède avec des références en essayant si possible de faire ressentir les éléments de l'architecture.}
 
 Il devient aujourd'hui possible de construire à la fois des workflows mettant en jeux ces différents outils pour annoter les flux d'informations  puis les sélectionner les informations. 
-Cependant la construction de ces workflows reste technique malgré les nouveaux supports logiciels tels que les mashup \cite{Floyd2007} \cite{Milanovic2004}. En effet elle se base sur de nombreux critères qui doivent être pris en compte pour assembler les services et le fait que ces services soient hétéroclites ne permet pas une génération aisée des applications. De plus de nouvelles ontologies, sources, systèmes d'annotations apparaissent régulièrement tandis que le web se démocratise \cite{Anderruthy2007} \cite{Bross2010} \mi{et surtout bien le dire}. 
+Cependant la construction de ces workflows reste technique malgré les nouveaux supports logiciels tels que les mashup \cite{Floyd2007} \cite{Milanovic2004}. En effet elle se base sur de nombreux critères qui doivent être pris en compte pour assembler les services et le fait que ces services soient hétéroclites ne permet pas une génération aisée des applications. De plus de nouvelles ontologies, sources, systèmes d'annotations apparaissent régulièrement tandis que le web se démocratise \cite{Anderruthy2007} \cite{Bross2010}.
+%\mi{et surtout bien le dire}
+
 Dans ce contexte, la production automatique de ces workflows à partir d'un ensemble de caractéristiques proposées à l'utilisateur apparaît comme d'une grande utilité. 
 
-Dans cet article, en section \ref{sect:exemple}  nous présentons un cas d'étude qui a été mené dans le cadre projet ANR EMergence Yourcast qui vise à automatiser la diffusion des informations sur de grands écrans. Nous montrons au travers de ce cas d'étude les différents choix qui se posent à l'utilisateur \mi{MOntrer cela} et décrivons dans la section \ref{sect:miseEnOuvre} les workflows  mis en place pour répondre à ce cas particulier. Fort de cette expérience, nous proposons en \ref{sect:perspectives} de produire de tels workflows en utilisant un développement dirigé par les modèles et les feature models pour produire automatiquement de tels workflows à partir de données utilisateur de haut niveau. 
+Dans cet article, en section \ref{sect:exemple}  nous présentons un cas d'étude qui a été mené dans le cadre projet ANR EMergence Yourcast qui vise à automatiser la diffusion des informations sur de grands écrans. Nous montrons au travers de ce cas d'étude les différents choix qui se posent à l'utilisateur et décrivons dans la section \ref{sect:miseEnOuvre} les workflows  mis en place pour répondre à ce cas particulier. Fort de cette expérience, nous proposons en \ref{sect:perspectives} de produire de tels workflows en utilisant un développement dirigé par les modèles et les feature models. 
 
 
 %------------------------------------------------------------------------------
@@ -212,18 +214,14 @@ L'application se base sur la récupération de flux RSS qui sont choisis par l'u
 \subsubsection{Annotation }
 Sur chaque news nous devons utiliser les services d'annotation pour récupérer les entités nommées intéressantes le concernant. Pour cela nous faisons appel à divers services d'annotation qui nous renvoient les informations. Nous avons aussi besoin de faire appel à des services de généralisation qui vont travailler en aval des services d'annotation pour ajouter des notions à une annotation.\\
 De manière concrète nous utilisons les services d'annotation suivants:
-\begin{itemize}
 
-\item Services d'Annotation
-\begin{itemize}
-\item \textbf{OpenCalais} nous permet de récupérer les entités des textes correspondant à des lieux français ainsi que des noms de personnalités en langue anglaise. Nous lui indiquons en entrée le texte à annoter et récupérons une liste de mots correspondant à nos critères.
-\item \textbf{WikiMeta} fonctionne de la même manière qu'OpenCalais mais permet de récupérer directement des entités nommées pointant vers la base de connaissance DBpedia, il peut donc être utilisé seul en tant que service d'annotation principal
-\end{itemize}
+- \textbf{OpenCalais} nous permet de récupérer les entités des textes correspondant à des lieux français ainsi que des noms de personnalités en langue anglaise. Nous lui indiquons en entrée le texte à annoter et récupérons une liste de mots correspondant à nos critères.\\
 
-\item Services de Généralisation
-\begin{itemize}
-\item \textbf{DBpedia} travaille sur les données provenant du service d'annotation WikiMeta et permet de les enrichir sémantiquement à l'aide de liens vers d'autres ressources liées à l'élément
-\item \textbf{INSEE geo} \url{http://rdf.insee.fr/geo/} La base de données RDF de l'INSEE nous permet de récupérer les ensembles géographiques liées à une entité nommée géographique. Ce service d'annotation géographique s'utilise donc uniquement en aval d'un service d'annotation classique qui récupère des informations géographiques. Il renvoi en sortie des URI vers les entités géographiques liées à la news étudiée. Nous utilisons pour cette interrogation la requête SPARQL suivante qui permet d'avoir les informations désirées:
+- \textbf{WikiMeta} fonctionne de la même manière qu'OpenCalais mais permet de récupérer directement des entités nommées pointant vers la base de connaissance DBpedia, il peut donc être utilisé seul en tant que service d'annotation principal \\
+
+- \textbf{DBpedia} travaille sur les données provenant du service d'annotation WikiMeta et permet de les enrichir sémantiquement à l'aide de liens vers d'autres ressources liées à l'élément \\
+
+- \textbf{INSEE geo} \url{http://rdf.insee.fr/geo/} La base de données RDF de l'INSEE nous permet de récupérer les ensembles géographiques liées à une entité nommée géographique. Ce service d'annotation géographique s'utilise donc uniquement en aval d'un service d'annotation classique qui récupère des informations géographiques. Il renvoi en sortie des URI vers les entités géographiques liées à la news étudiée. Nous utilisons pour cette interrogation la requête SPARQL suivante qui permet d'avoir les informations désirées:
 
 \begin{verbatim}
 PREFIX geo: <http://rdf.insee.fr/geo/>
@@ -234,16 +232,13 @@ SELECT = DISTINCT = ?nom ?type WHERE{
 		  ?ville geo:nom ?nomVille
 		  ?entite geo:subdivision* ?ville
 		  ?FILTER(regex(str(?nomVille), ‘Nice’, ‘i’))
-	}
-}
+	 }}
 \end{verbatim}
-\end{itemize}
 
-\end{itemize}
 
-\subsubsection{Mémorisation}
-\mi{je ne sens pas cette partie.. à voir}
-Nous stockons le contenu des flux RSS et les annotations dans une base de données RDF grâce à l'utilisation de l'application 4Store. 4store est un serveur de triplets RDF fournissant un accès aux données en lecture et écriture. Il nous permet de créer un EndPoint en ligne rapide et puissant. De plus, cela permet une réutilisation de notre travail d'annotations dans d'autres projets aillant besoin d'accéder à des flux annotés. Enfin cette technologie va permettre une excellente connection entre le workflow d'enrichissement et celui de filtrage car de nombreuses APIs existent pour attaquer la base de données dans différents langages.
+%\subsubsection{Mémorisation}
+%\mi{je ne sens pas cette partie.. à voir}
+%Nous stockons le contenu des flux RSS et les annotations dans une base de données RDF grâce à l'utilisation de l'application 4Store. 4store est un serveur de triplets RDF fournissant un accès aux données en lecture et écriture. Il nous permet de créer un EndPoint en ligne rapide et puissant. De plus, cela permet une réutilisation de notre travail d'annotations dans d'autres projets aillant besoin d'accéder à des flux annotés. Enfin cette technologie va permettre une excellente connection entre le workflow d'enrichissement et celui de filtrage car de nombreuses APIs existent pour attaquer la base de données dans différents langages.
 
 \subsection{Workflow de filtrage des informations}
 Le workflow de filtrage permet de créer des critères utilisateurs affin de récupérer les données intéressantes sur la base de données. Chaque critère est défini par le couple (TypeDeRelation, EntitéeNommée) et va permettre un choix précis des éléments à récupérer. Nous fournissons une application complète permettant de choisir les critères à appliquer sur la base \cite{Christophe}.
@@ -253,7 +248,7 @@ Le workflow de filtrage permet de créer des critères utilisateurs affin de ré
 
 \section{Perspective : Vers la construction automatique de workflows }
 \label{sect:perspectives}
-Notre objectif à terme est de construire une ligne de produits qui capturerait les différents sources et systèmes d'annotation disponibles, les qualifierait et permettrait à un utilisateur final de construire ses propres workflows d'annotation en sélectionnant pour lui les sources et les systèmes d'annotations idoines conformément à ses choix.
+Notre objectif à terme est de construire une ligne de produits qui capturerait les différents sources et systèmes d'annotation disponibles, les qualifierait et permettrait à un utilisateur final de construire ses propres workflows d'annotation en le guidant dans sa sélection des différents services.
 
 \subsection{Objectifs et limites}
 
@@ -261,48 +256,35 @@ La construction automatique de workflows d'annotations permet de répondre à di
 
 En outre, à l'heure actuelle le workflow d'annotation interroge tous les services d'annotations disponibles, sans distinction de catégories, ce qui génère de nombreux appels de service dont la plupart sont inutiles. L'utilisation d'une construction automatique à partir des choix de l'utilisateur permettrait de restreindre les appels aux seuls services pertinents et donc d'accélérer les temps de traitements en réduisant la charge des services. 
 
-Nous limitons dans cette expérimentation les choix de l'utilisateur aux seules notions de \textit{Thèmes} et de \textit{Langues} en raison de leur pertinence et de leur impact sur la sélection des sources et des systèmes d'annotations. En effet, soient les systèmes d'annotations sont directement spécialisés pour certains types d'informations, comme le service MetaMap \cite{MetaMap} spécialisé dans l'annotation de données médicales, soit ils fournissent une API permettant de restreindre les annotations à certaines catégories d'informations, certains \textit{Thèmes}. Par ailleurs, la langue est un critère déterminant pour annoter correctement les informations, les systèmes d'annotations n'en supportent ainsi qu'un nombre limité. 
-
-Enfin, les travaux présentés dans cette section sont en cours de recherche et n'ont pas encore fait l'objet d'une implémentation concrète.
-
 \subsection{Lignes de produits de services}
-Les choix que va faire l'utilisateur vont avoir un impact sur trois concepts inhérents aux workflow d'annotations : les \textit{Flux} d'information, les \textit{Services d'Annotation} et les \textit{Services de Généralisation}. Chacun de ces concepts peut être pris comme une ligne de produit indépendante, représentée par un feature model (FM) afin d'exprimer la variabilité des différents concepts.
+Les choix que va faire l'utilisateur vont avoir un impact sur trois concepts inhérents au workflow d'annotations : les \textit{Flux} d'information, les \textit{Services d'Annotation} et les \textit{Services de Généralisation}. Chacun de ces concepts peut être pris comme une ligne de produit indépendante à partir de laquelle l'utilisateur choisira le produit qui lui convient. Nous représentons ces lignes de produits par des modèles de features (FM).
 \si{Réf FM / SPL - Expliquer choix de la SPL ?}
 
 La figure ... montre ainsi le FM de \textit{Service d'Annotation} : les produits finaux correspondent aux feuilles de la feature \textit{Product}, les thèmes aux feuilles de la feature \textit{Thème} et les langues à celles de la feature \textit{Langue}. La sélection d'une feature de langue ou de thème influe directement sur le choix d'un produit final par le jeu des contraintes internes au FM. 
 
-\si{à voir si on garde en dessous...}
-Chacun des FM des différents concepts est une construction réalisée à partir d'une approche bottom-up. Nous partons des produits existants, en les exprimant sous forme de FM individuels, puis nous effectuons la fusion de ces FM afin d'obtenir une SPL modélisant les différents produits disponibles ainsi que leur variabilité \cite{Acher2011}.
+%\si{à voir si on garde en dessous...}
+%Chacun des FM des différents concepts est une construction réalisée à partir d'une approche bottom-up. Nous partons des produits existants, en les exprimant sous forme de FM individuels, puis nous effectuons la fusion de ces FM afin d'obtenir une SPL modélisant les différents produits disponibles ainsi que leur variabilité \cite{Acher2011}.
 
 \subsection{Modèle de mise en relation des LPL}
 Notre but est de fournir un outil permettant à un utilisateur final de sélectionner des services cohérents en fonction de ses choix. Cela implique que chaque choix que l'utilisateur fera dans un des FM, doit avoir un impact sur les autres concepts du domaine. 
 
-Comme le montre la figure ...., nous exprimons donc des relations entre les différents concepts du domaine, relations qui s'expriment - comme nous l'avons introduit - essentiellement sur le \textit{Thème} et la \textit{Langue}. La notion de relation a ici une double signification : elle va tout d'abord exprimer qu'un concept va être lié à un ou plusieurs autres concepts, en fonction de la cardinalité de la relation.
+Nous exprimons donc des relations entre les différents concepts du domaine, relations qui s'expriment par le biais du \textit{Thème} et de la \textit{Langue}. En effet, les systèmes d'annotations sont spécialisés pour certains types d'informations, comme le service MetaMap \cite{MetaMap} et ne traitent que certaines langues. Une relation exprime à la fois qu'un produit (ie. un service) sera lié à un autre, mais aussi que sélectionner un produit influera sur la sélection d'un autre.
 
-Par exemple, un \textit{Flux} va être annoté par un ou plusieurs \textit{Service d'annotation}, et chaque service d'annotation peut ensuite faire appel à un ou plusieurs \textit{Service de généralisation} afin d'améliorer la qualité des annotations. De façon réflexive, un \textit{service de généralisation} peut également en appeler un unique autre afin d'être encore plus fin.
+Par exemple, un \textit{Flux} traitant de politiques va être annoté par un ou plusieurs \textit{Service d'annotation} pouvant annoter ce type d'information : les produits seront donc liés. Cependant ce \textit{Flux} ne pourra pas être lié à un \textit{Service d'annotation} parlant d'un thème différent ou traitant une langue différente : la sélection du flux influe directement sur la sélection des \textit{Services d'annotation} à lier.
 
-Cependant, la relation permet également d'exprimer une restriction sur les choix de l'utilisateur : elle force que la sélection d'un produit dans un FM soit compatible avec la sélection d'un autre produit. En effet, la sélection d'un flux d'un certain thème et d'une certaine langue doit contraindre l'utilisateur à ne pouvoir sélectionner que les services d'annotations capables d'annoter des informations dans cette langue et sur ce thème. 
+Pour cela nous définissons et appliquons des opérations de restrictions sur les relations entre les FMs, et ce en cascade. Pour reprendre notre exemple, la sélection d'un flux influe sur la sélection des annotations, en restreignant les services disponibles, ce qui aura également une influence sur les services de généralisation disponibles. 
 
-Cela est possible par la définition et l'application d'une opération de restriction sur les FMs liés entre eux en cascade. Par exemple, dans le cadre de la relation entre les \textit{Flux} et les \textit{Service d'Annotation}, un service d'annotation ne peut annoter un flux que s'ils s'expriment dans la même langue et parlent des mêmes thèmes. Ainsi, l'opération de restriction, pour la langue, consistera ici à déselectionner automatiquement dans un FM les langues ne correspondant pas au choix de l'utilisateur. 
-
-Par exemple, si un produit du FM \textit{Flux} est spécifié être en Français, la sélection de ce produit sélectionnera automatiquement la feature \textit{Fr} par le jeu des contraintes internes. La restriction associée à la relation \textit{Flux-Service d'Annotation} va avoir pour effet de déselectionner toutes les features filles de \textit{Langue} et par le truchement des relations internes, de déselectionner les produits associés à ces langues. Il ne restera donc plus à l'utilisateur que la possibilité de sélectionner un service spécifique au français (\textit{Fr}).
-
-
-Ainsi, la sélection d'un produit dans un FM va automatiquement induire l'indisponibilité de certains produits dans les FM liés. Or cette opération va elle même engendrer de nouvelles restrictions : en effet, la déselection d'un produit dans un FM peut également engendrer la déselection d'un autre produit dans un autre FM par le truchement des relations. 
-\ch{parler certainement de la notion de cascade ici}
-Cependant il est important de noter que chacune de ces opérations de restriction correspond à un contexte spécifique aux sélections de l'utilisateur dans les différents FM. En effet, l'utilisateur doit avoir la possibilité de sélectionner plusieurs produits dans chacun des FM : il va certainement souhaiter utiliser plusieurs services d'annotations différents pour un flux, ou au contraire souhaiter sélectionner plusieurs flux pour un même service d'annotation. Dans ces deux exemples différents, nous nous situons à chaque fois dans un contexte précis, le contexte de la sélection d'un flux spécifique, ou encore le contexte de la sélection d'un service d'annotation spécifique. Les opérations de restriction vont toujours s'exprimer dans un contexte spécifique tels que ceux-ci, mais l'utilisateur doit toujours avoir la possibilité de faire une nouvelle sélection, à partir d'un contexte vide. 
-
-\subsection{Vers la génération des codes}
-\ch{on supprime cette partie la non?}
-
-\paragraph{}
-Lien Asset / FM 
-
-\paragraph{}
-Construction de Workflow à partir du modèle
-
-\paragraph{}
-Lien workflow / code ?
+%\subsection{Vers la génération des codes}
+%\ch{on supprime cette partie la non?}
+%
+%\paragraph{}
+%Lien Asset / FM 
+%
+%\paragraph{}
+%Construction de Workflow à partir du modèle
+%
+%\paragraph{}
+%Lien workflow / code ?
 
 
 %---------------------------------------------------------------
