@@ -31,6 +31,7 @@ public class Item {
         values.add(new Prop(RSS.title,title));
         values.add(new Prop(RSS.description,description));
         values.add(new Prop(RSS.getURI()+"pubDate",datePublication.toString()));
+        values.add(new Prop(RSS.getURI()+"pubDateTime",Long.toString(datePublication.getTime())));
     }
     
     public void addElement(String key, String content){
