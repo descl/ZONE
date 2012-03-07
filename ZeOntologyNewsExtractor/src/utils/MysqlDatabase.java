@@ -25,6 +25,7 @@ public class MysqlDatabase {
                 String url = Config.getVar("mysql-server")+"/"+Config.getVar("mysql-bdd");
                 String user = Config.getVar("mysql-user");
                 String password = Config.getVar("mysql-password");
+                        
                 con = DriverManager.getConnection(url, user, password);
                 st = con.createStatement();
             }
@@ -87,7 +88,7 @@ public class MysqlDatabase {
         }        
     }
     private static void createItem(String type, String value,int inc){
-        MysqlDatabase.Exec("INSERT INTO  `ZONE`.`items` (`typeItem` ,`value` ,`inc`, `created_at`, `updated_at`)VALUES ('"+type+"',  '"+value+"',  '"+inc+"', NOW(), NOW())");
+        MysqlDatabase.Exec("INSERT INTO  `"+Config.getVar("mysql-bdd")+"`.`items` (`typeItem` ,`value` ,`inc`, `created_at`, `updated_at`)VALUES ('"+type+"',  '"+value+"',  '"+inc+"', NOW(), NOW())");
     }
     private static void createItem(Property type, String value){
         int nbOcc = MysqlDatabase.getNbOccurences(type.getURI(), value);
@@ -95,7 +96,7 @@ public class MysqlDatabase {
             MysqlDatabase.createItem(type.getURI(), value,1);
         }else{
             nbOcc++;
-            MysqlDatabase.Exec("UPDATE  `ZONE`.`items` SET  `inc` =  '"+nbOcc+"' WHERE  `items`.`typeItem` =  '"+type.getURI()+"' AND  `items`.`value` =  '"+value+"';");
+            MysqlDatabase.Exec("UPDATE  `"+Config.getVar("mysql-bdd")+"`.`items` SET  `inc` =  '"+nbOcc+"' WHERE  `items`.`typeItem` =  '"+type.getURI()+"' AND  `items`.`value` =  '"+value+"';");
         }
     }
     private static int getNbOccurences(String type, String value){
@@ -122,5 +123,9 @@ public class MysqlDatabase {
         for(int i=0; i < items.size();i++){
             createItemFromProps(items.get(i).values);
         }
-    }            
+    }   
+    
+    public static void main(String[] args){
+        createItemFromProp(new Prop("toto","tati",true));
+    }
 }
