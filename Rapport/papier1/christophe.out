@@ -1,12 +1,11 @@
-\BOOKMARK [1][-]{section.1}{Pr\351sentation et importance du filtrage des informations dans le web de donn\351es}{}% 1
-\BOOKMARK [1][-]{section.2}{Syst\350me de diffusion des informations sur grands \351crans et filtrage}{}% 2
-\BOOKMARK [1][-]{section.3}{Mise en \234uvre}{}% 3
-\BOOKMARK [2][-]{subsection.3.1}{Workflow d'enrichissement des informations}{section.3}% 4
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Contexte et besoins exprim\351s dans le projet YourCast}{}% 2
+\BOOKMARK [1][-]{section.3}{Annotation et filtrage s\351mantiques de flux RSS}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Workflow d'enrichissement s\351mantique des nouvelles}{section.3}% 4
 \BOOKMARK [3][-]{subsubsection.3.1.1}{Lecture de flux RSS}{subsection.3.1}% 5
-\BOOKMARK [3][-]{subsubsection.3.1.2}{Annotation }{subsection.3.1}% 6
-\BOOKMARK [2][-]{subsection.3.2}{Workflow de filtrage des informations}{section.3}% 7
-\BOOKMARK [1][-]{section.4}{Perspective : Vers la construction automatique de workflows }{}% 8
-\BOOKMARK [2][-]{subsection.4.1}{Objectifs}{section.4}% 9
-\BOOKMARK [2][-]{subsection.4.2}{Lignes de produits de services}{section.4}% 10
-\BOOKMARK [2][-]{subsection.4.3}{Mod\350le de mise en relation des LPL}{section.4}% 11
-\BOOKMARK [1][-]{section.5}{Conclusion}{}% 12
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Annotation s\351mantique de nouvelles}{subsection.3.1}% 6
+\BOOKMARK [2][-]{subsection.3.2}{Workflow de filtrage des nouvelles}{section.3}% 7
+\BOOKMARK [1][-]{section.4}{Vers la construction automatique de workflows }{}% 8
+\BOOKMARK [2][-]{subsection.4.1}{Lignes de produits de services}{section.4}% 9
+\BOOKMARK [2][-]{subsection.4.2}{Mod\350le de mise en relation des LPL}{section.4}% 10
+\BOOKMARK [1][-]{section.5}{Conclusion}{}% 11
