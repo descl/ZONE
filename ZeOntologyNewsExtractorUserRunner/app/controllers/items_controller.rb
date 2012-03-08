@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all
+    @items = Item.find(:all, :limit => 60, :order => "inc DESC")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -20,7 +20,15 @@ class ItemsController < ApplicationController
       format.json { render json: @item }
     end
   end
-
+  
+  def getOcc
+    @item = Item.find(params[:id])
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @item }
+    end
+  end
+  
   # GET /items/new
   # GET /items/new.json
   def new

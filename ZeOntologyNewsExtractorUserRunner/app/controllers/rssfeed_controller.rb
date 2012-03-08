@@ -1,4 +1,13 @@
 class RssfeedController < ApplicationController
+  def getOne
+    @itemURI = params[:element]
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @item }
+    end
+  end
+  
   def index
     @filter = Array.new
     extendQuery = ""
@@ -28,16 +37,17 @@ class RssfeedController < ApplicationController
     end
     
     load 'lib/store.rb'
-    query = "SELECT ?concept ?relation ?result WHERE {\n"
+    query = "SELECT ?concept ?relation ?result ?pubDateTime WHERE {\n"
     query += extendQuery
-    query += "?concept <http://purl.org/rss/1.0/title> ?title. ?concept ?relation ?result} ORDER BY ?concept ?relation LIMIT 200"
+    query += "?concept <http://purl.org/rss/1.0/title> ?title. 
+    ?concept ?relation ?result.  } ORDER BY ?concept LIMIT 1000"
 
     endpoint = 'http://zouig.org:8081/sparql/'
     puts query
     store = FourStore::Store.new endpoint
     @elements = store.select(query)
 
-
+puts @elements;
     @result = Array.new
     if @elements.length > 0
       item = {"concept" => @elements[0]["concept"]}
@@ -52,7 +62,6 @@ class RssfeedController < ApplicationController
       end
         @result[@result.length-1][element["relation"]] = element["result"]
     end
-
-    @result.sort! { |a,b| b["http://purl.org/rss/1.0/pubDate"] <=> a["http://purl.org/rss/1.0/pubDate"] }
+    #@result.sort! { |a,b| b["http://purl.org/rss/1.0/pubDate"] <=> a["http://purl.org/rss/1.0/pubDate"] }
   end
 end

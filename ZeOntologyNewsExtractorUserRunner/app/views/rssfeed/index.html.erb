@@ -1,33 +1,64 @@
 <h1>Service de configuration de flux RSS</h1>
+
 <% if @filter.length > 0 %>
-<h3>Votre filtre actuel:</h3>
-<ol>
-<% @filter.each do |element| %>
-<li><%= element %></li>
-
-
-
+	<h3>Votre filtre actuel:</h3>
+	<ol>
+	<% @filter.each do |element| %>
+	<li><%= element %></li>
+	<% end %>
+	</ol>
 <% end %>
-</ol>
 
 
+<%= javascript_tag do %>
+  $("#load-more2").bind("ajax:complete", function(et, e){
+  	$("#load-more2").html(e.responseText); // insert content
+    event.preventDefault(); // Prevent link from following its href
+  });
 <% end %>
+
+
 <p><%= link_to "Recupérer le flux RSS", params.merge(:format => :rss), :class => "feed_link" %></p>
 
 <ol>
-<% @result.each do |element| %>
+<% 
+i=1
+@result.each do |element| %>
 	<li> <a href= "<%= element["concept"] %>"><%= element["http://purl.org/rss/1.0/title"] %></a> <%= element["http://purl.org/rss/1.0/pubDate"] %>
-		</br><%= element["http://purl.org/rss/1.0/description"].html_safe %>
+		</br><%= if element["http://purl.org/rss/1.0/description"] != '' 
+			element["http://purl.org/rss/1.0/description"].html_safe end %>
 		<table BORDER="1" style="border: 1px black; border-spacing: 0px;">
 		<% element.each do |item|
+			i=i+1
 			next if item[0].match(/^http\:\/\/purl.org/)
 			next if item[0] == 'concept'
 			 %>
-			<tr><td><%= item[0] %></td><td><%= item[1] %></td> <td>
-<%= link_to "Ajouter à la restriction", rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}) %></td></tr>
+			<tr><td><%= item[0] %></td>
+				<td>
+					<%= link_to item[1], "/rssfeed/getOne?element="+item[1],:id => "elem"+i.to_s(), :remote => true %>
+<%= javascript_tag do %>
+  $("#elem<%=i%>").bind("ajax:complete", function(et, e){
+  	$("#elem<%=i.to_s()%>").html(e.responseText); // insert content
+    event.preventDefault(); // Prevent link from following its href
+  });
+<% end %>
+				</td><td>
+<%= link_to "Ajouter au filtre", rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}) %></td></tr>
 		<% end%>
 		</table>
 		
 	</li></br></br/>
 <% end %>
 </ol>
+
+
+
+
+
+
+
+
+<%= update_page_tag do |page|
+        page.visual_effect(:highlight, "bout_de_page")
+    end
+%>

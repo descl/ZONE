@@ -1,6 +1,6 @@
 ZeOntologyNewsExtractorUserRunner::Application.routes.draw do
   get "rssfeed/index"
-
+  get "rssfeed/getOne"
   get "rss_feed/index"
 
   resources :items
