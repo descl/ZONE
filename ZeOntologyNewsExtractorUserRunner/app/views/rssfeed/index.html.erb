@@ -24,11 +24,13 @@
 <% 
 i=1
 @result.each do |element| %>
-	<li> <a href= "<%= element["concept"] %>"><%= element["http://purl.org/rss/1.0/title"] %></a> <%= element["http://purl.org/rss/1.0/pubDate"] %>
-		</br><%= if element["http://purl.org/rss/1.0/description"] != '' 
-			element["http://purl.org/rss/1.0/description"].html_safe end %>
+	<li> <a href= "<%= element[0] %>">
+		<%= element[1]["http://purl.org/rss/1.0/title"] %></a> 
+		<%= element[1]["http://purl.org/rss/1.0/pubDate"] %>
+		</br><%= if element[1]["http://purl.org/rss/1.0/description"] != nil 
+			element[1]["http://purl.org/rss/1.0/description"].html_safe end %>
 		<table BORDER="1" style="border: 1px black; border-spacing: 0px;">
-		<% element.each do |item|
+		<% element[1].each do |item|
 			i=i+1
 			next if item[0].match(/^http\:\/\/purl.org/)
 			next if item[0] == 'concept'
@@ -50,15 +52,3 @@ i=1
 	</li></br></br/>
 <% end %>
 </ol>
-
-
-
-
-
-
-
-
-<%= update_page_tag do |page|
-        page.visual_effect(:highlight, "bout_de_page")
-    end
-%>

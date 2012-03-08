@@ -40,28 +40,55 @@ class RssfeedController < ApplicationController
     query = "SELECT ?concept ?relation ?result ?pubDateTime WHERE {\n"
     query += extendQuery
     query += "?concept <http://purl.org/rss/1.0/title> ?title. 
-    ?concept ?relation ?result.  } ORDER BY ?concept LIMIT 1000"
+    ?concept <http://purl.org/rss/1.0/pubDateTime> ?pubDateTime. 
+    ?concept ?relation ?result.  
+    
+    } ORDER BY DESC(?pubDateTime) LIMIT 500"
 
     endpoint = 'http://zouig.org:8081/sparql/'
     puts query
     store = FourStore::Store.new endpoint
     @elements = store.select(query)
 
-puts @elements;
-    @result = Array.new
-    if @elements.length > 0
-      item = {"concept" => @elements[0]["concept"]}
-      @result.push item
-    end
+#    @result = Array.new
+#    if @elements.length > 0
+#      item = {"concept" => @elements[0]["concept"]}
+ #     @result.push item
+ #   end
 
+#    @elements.each() do |element|
+#      if @result[@result.length-1]["concept"] != element["concept"]
+#        
+#        item = {"concept" => element["concept"]}
+#        @result.push item
+#      end
+#        @result[@result.length-1][element["relation"]] = element["result"]
+#    end
+    
+#    @result.delete_if{|x| x["http://purl.org/rss/1.0/pubDateTime"] == nil}
+#    @result.delete_if{|x| x["http://purl.org/rss/1.0/description"] == nil}
+    
+    @result = {}
+    
     @elements.each() do |element|
-      if @result[@result.length-1]["concept"] != element["concept"]
-        
-        item = {"concept" => element["concept"]}
-        @result.push item
+
+      if @result[element["concept"]] == nil
+        @result[element["concept"]] = {}
       end
-        @result[@result.length-1][element["relation"]] = element["result"]
+      @result[element["concept"]][element["relation"]] = element["result"]
+      
+      #if @result[@result.length-1]["concept"] != element["concept"]
+        
+      #  item = {"concept" => element["concept"]}
+      #  @result.push item
+      #end
+      #  @result[@result.length-1][element["relation"]] = element["result"]
     end
-    #@result.sort! { |a,b| b["http://purl.org/rss/1.0/pubDate"] <=> a["http://purl.org/rss/1.0/pubDate"] }
+    
+    puts @result
+    
+    #@result.each.delete_if{|x| x["http://purl.org/rss/1.0/link"] == nil}
+    #@result.delete_if{|x| x["http://purl.org/rss/1.0/description"] == nil}    
+    
   end
 end
