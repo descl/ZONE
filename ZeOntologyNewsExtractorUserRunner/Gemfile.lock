@@ -56,7 +56,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.17.2)
     multi_json (1.1.0)
-    mysql2 (0.3.11)
+    mysql (2.8.1)
     nokogiri (1.5.0)
     polyglot (0.3.3)
     prototype-rails (3.2.1)
@@ -120,7 +120,7 @@ DEPENDENCIES
   backports
   coffee-rails (~> 3.2.1)
   jquery-rails
-  mysql2
+  mysql
   nokogiri (~> 1.5.0)
   prototype-rails (~> 3.2.1)
   rails (= 3.2.1)
