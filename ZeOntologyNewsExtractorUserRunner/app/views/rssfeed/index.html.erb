@@ -35,7 +35,7 @@ i=1
 			 %>
 			<tr><td><%= item[0] %></td>
 				<td>
-					<%= link_to item[1], "/rssfeed/getOne?element="+item[1],:id => "elem"+i.to_s(), :remote => true %>
+					<%= link_to item[1], "getOne?element="+item[1],:id => "elem"+i.to_s(), :remote => true %>
 <%= javascript_tag do %>
   $("#elem<%=i%>").bind("ajax:complete", function(et, e){
   	$("#elem<%=i.to_s()%>").html(e.responseText); // insert content
