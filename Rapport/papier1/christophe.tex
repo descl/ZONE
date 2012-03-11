@@ -140,6 +140,7 @@
 % Abstract
 %
 \begin{abstract}
+\ch{je ne sais pas comment écrire abstract en francais avec LaTex}
 Le web se révèle aujourd'hui un merveilleux support de diffusion d'informations. Cependant, tandis que les sources se multiplient (flux rss, services web, ..), la quantité d'informations croît et il est difficile de les filtrer en fonction des centres d'intérêts des utilisateurs. Actuellement de nombreux outils qui exploitent les ontologies ou les thésaurus sont mis au point. Ils permettent d'annoter les informations, d'en déduire des critères et d'ensuite obtenir uniquement les informations pertinentes. La composition de ces outils constitue des workflows qui devraient encore s'enrichir grâce à l'apparition de nouvelles ontologies ciblées sur différents domaines et outils de lecture.  Cependant la construction de telles chaînes logicielles n'est pas à la portée de tous. \\
 Dans cet article nous montrons comment de tels workflows ont été construits et présentons nos perspectives en matière de construction automatique de ces workflows en fonction des besoins utilisateur. Ce travail s'appuie sur le projet ANR EMergence Yourcast qui vise à automatiser la diffusion des informations sur de grands écrans, et pour lequel la pertinence des informations diffusées est donc particulièrement pertinent. 
 \end{abstract}
@@ -149,9 +150,9 @@ Internet is becoming today a wonderful medium for disseminating information. Whi
 In this paper we show how these workflows are built and present our approach for automatically building workflows based on user needs. This work is supported by the ANR Emergence Yourcast project dedicated to automate the dissemination of information on large screens, and for which the relevance of the information published is particularly relevant.
 \end{abstract}
 
-%Cath il y a un Résumé et un Abstract, pas 2 abstract, il faut regarder les consignes
-%Chris effectivement on n'a pas vu ce problème, sur la page d'explication ils parlent uniquement d'une introduction. On peut soummetre un abstract sur le site en anglais/francais et mettre sur notre pdf un abstract anglais et notre longue introduction ci-dessous sans mettre l'abstract francais peut etre?
-
+\section{Mots clé}
+Semantic Web, Product Line, Workflow
+\ch{ je ne sais pas comment formaliser les mots clé avec ce template}
 %------------------------------------------------------------------------------
 
 \section{Introduction}
@@ -176,7 +177,7 @@ Nous présentons en section \ref{sect:exemple} le contexte de notre travail que 
 Dans le cadre du projet \Y, nous visons à diffuser sur de grands écrans des informations en provenance de différentes sources en particulier celles issues du web. Or de tels systèmes exigent une adhérence forte aux attentes des utilisateurs et l'adéquation des informations avec les centres d'intérêts des personnes est essentielle à l'acceptation de tels systèmes. 
 
 %\paragraph*{Des sources hétérogènes} <= Supprimé par Catherine
-%Chris{Je prefere qu'on garde les sous titre pour éviter l'effet bloc de texte chiant à lire}
+\ch{Je prefere qu'on garde les sous titre ici cependant Catherine souhaite les enlever : à Mireille de trancher (ca évite selon moi l'effet bloc de texte chiant à lire)}
 
 Il existe aujourd'hui de nombreuses sources d'information disponibles grâce à l'utilisation de flux RSS. Le choix des sources peut être simplement lié au travail ou à l'emplacement géographique de l'écran d'information.
 Dans notre cas, nous avons choisi d'agréger le plus de sources d'informations possible pour couvrir tous les champs d'application des écrans d'accueil. 
@@ -199,7 +200,8 @@ Nous utilisons alors des systèmes d'extraction d'information et d'annotation s�
 
 \section{Annotation et filtrage sémantiques de flux RSS}
 \label{sect:miseEnOuvre}
-Pour répondre aux besoins exprimés dans le cadre du projet \Y nous avons mis au point deux workflows, dont la figure 1 présente  l'architecture générale: un workflow d'enrichissement sémantique des nouvelles (en bleu) et un workflow de filtrage sémantique des nouvelles.
+Pour répondre aux besoins exprimés dans le cadre du projet \Y nous avons mis au point deux workflows, dont la figure 1 présente  l'architecture générale: un workflow d'enrichissement sémantique des nouvelles (en bleu) et un workflow de filtrage sémantique des nouvelles. La scicion en deux workflows est essentielle car elle permet de faire travailler nos workflows de manière asynchrone.
+ \ch{je présente peut etre la notion de workflow asynchrone de manière maladroite?}
 
 \begin{figure}[htb!]
 	\begin{centering}
@@ -216,12 +218,10 @@ Le workflow se base sur la récupération de flux RSS qui sont choisis par l'uti
 
 \subsubsection{Annotation sémantique de nouvelles}
 Pour chaque nouvelle, nous utilisons des services d'annotation pour récupérer les entités nommées intéressantes la concernant: 
-%Chris: cool les itemize ne prennent pas trop de place la (on les avait supprimer pour gagner en place
 \begin{itemize}
-	\item \textbf{OpenCalais}\footnote{http://www.opencalais.com} permet d'identifier dans le texte les entités correspondant à des lieux français ainsi que des noms de personnalités en langue anglaise. Nous lui indiquons en entrée la nouvelle à annoter et récupérons une liste de mots correspondant à nos critères;
-  \item \textbf{WikiMeta}\footnote{http://www.wikimeta.com} fonctionne de la même manière qu'OpenCalais et permet de récupérer directement des entités nommées pointant vers la base de connaissances DBpedia; il peut donc être utilisé seul en tant que service d'annotation principal.
+	\item \textbf{OpenCalais}\footnote{http://www.opencalais.com} permet d'identifier dans le texte les entités correspondant à des lieux français ainsi que des noms de personnalités en langue anglaise. gràce à l'API Java fourni par le projet OpenCalais, nous avons implémenté le code permettant de récupérer les annotations textuelles concernant le texte à annoter;
+  \item \textbf{WikiMeta}\footnote{http://www.wikimeta.com} fonctionne sur le même principe qu'OpenCalais. Cependant le projet ne proposait pas au moment de nos recherche d'API permettant d'effectuer des requêtes et nous avons alors du implémenter l'API Java se connectant à leurs service web. Elle permet de récupérer directement des entités nommées pointant vers la base de connaissances DBpedia; il peut donc être utilisé seul en tant que service d'annotation principal.
 \end{itemize}
-%Chris: pourquoi utiliser des ~ apres DBpedia et OpenCalais?
 
 Nous faisons appel à des services de généralisation qui travaillent en aval des services d'annotation pour ajouter des notions à une annotation :
 \begin{itemize}
@@ -240,13 +240,13 @@ Nous faisons appel à des services de généralisation qui travaillent en aval d
     }
 \end{verbatim}
 
-
+\ch{nous n'avons pas présenté la partie mémorisation, est-ce grave?}
 %\subsubsection{Mémorisation}
 %\mi{je ne sens pas cette partie.. à voir}
 %Nous stockons le contenu des flux RSS et les annotations dans une base de données RDF grâce à l'utilisation de l'application 4Store. 4store est un serveur de triplets RDF fournissant un accès aux données en lecture et écriture. Il nous permet de créer un EndPoint en ligne rapide et puissant. De plus, cela permet une réutilisation de notre travail d'annotations dans d'autres projets aillant besoin d'accéder à des flux annotés. Enfin cette technologie va permettre une excellente connection entre le workflow d'enrichissement et celui de filtrage car de nombreuses APIs existent pour attaquer la base de données dans différents langages.
 
 \subsection{Workflow de filtrage des nouvelles}
-Le workflow de filtrage permet de créer des critères utilisateurs afin de récupérer les données intéressantes sur la base des annotations. Chaque critère est défini par le couple (TypeDeRelation, EntitéeNommée) et permet un choix précis des éléments à récupérer. Nous fournissons une application complète permettant de choisir les critères à appliquer sur la base \cite{Christophe}.
+Le workflow de filtrage permet de créer des critères utilisateurs afin de récupérer les données intéressantes sur la base des annotations. Notre workflow va dans un premier temps transformer les besoins utilisateurs en critères sous forme d'une liste de couples (TypeElement,entiteDescriptive). Ces couples sont ensuite envoyés à l'élément de connection à la base de données qui effectue une requête SPARQL multicritères sur la base de donnée RDF pour récupérer les nouvelles à fournir à l'utilisateur. Enfin le système génère un flux RSS personnalisé pour répondre aux besoins utilisateur et le fourni au client. Ce flux RSS va pouvoir être mémorisé par le client pour récupérer en temps réel les nouvelles informations.
 %on choisi de ne pas détailler ce workflow
 
 %Cath: il faudrait détailler davantage ce workflow, quitte à réduire la partie suivante
@@ -284,40 +284,29 @@ La figure 2 montre ainsi l'aspect \textit{Service d'Annotation} : les produits f
 
 \subsection{Modèle de mise en relation des LPL}
 Notre but est de fournir un outil permettant à un utilisateur final de sélectionner des services cohérents en fonction de ses choix. Cela implique que chaque choix que l'utilisateur fera dans un des FM doit avoir un impact sur les autres concepts du domaine. 
-Nous exprimons donc des relations entre les différents concepts du domaine, relations qui s'expriment par le biais du \textit{Thème} et de la \textit{Langue}. En effet, les systèmes d'annotation sont spécialisés pour certains types d'informations, comme le service MetaMap \cite{MetaMap} et ne traitent que certaines langues. Une relation exprime à la fois qu'un produit (i.e. un service) sera lié à un autre, mais aussi que sélectionner un produit influera sur la sélection d'un autre.
+Nous exprimons donc des relations entre les différents concepts du domaine, relations qui s'expriment par le biais du \textit{Thème} et de la \textit{Langue}. En effet, les systèmes d'annotation sont spécialisés pour certains types d'informations, comme le service MetaMap \footnote{\url{http://metamap.nlm.nih.gov/}} et ne traitent que certaines langues. Une relation exprime à la fois qu'un produit (i.e. un service) sera lié à un autre, mais aussi que sélectionner un produit influera sur la sélection d'un autre.
 
 Par exemple, un \textit{Flux} traitant de politique sera annoté par un ou plusieurs \textit{Services d'annotation} pouvant annoter ce type d'information : les produits seront donc liés. Cependant ce \textit{Flux} ne pourra pas être lié à un \textit{Service d'annotation} parlant d'un thème différent ou traitant une langue différente : la sélection du flux influe directement sur la sélection des \textit{Services d'annotation} à lier.
 
 Pour cela nous définissons et appliquons des opérations de restrictions sur les relations entre les FMs, et ce en cascade. Pour reprendre notre exemple, la sélection d'un flux influe sur la sélection des annotations, en restreignant les services disponibles, ce qui aura également une influence sur les services de généralisation disponibles. 
 
-%\subsection{Vers la génération des codes}
-%\ch{on supprime cette partie la non?}
-%
-%\paragraph{}
-%Lien Asset / FM 
-%
-%\paragraph{}
-%Construction de Workflow à partir du modèle
-%
-%\paragraph{}
-%Lien workflow / code ?
-
-
 %---------------------------------------------------------------
 \section{Conclusion}
 \label{sect:conclusion}
-
-
+Dans cet article nous avons présenté le système d'annotation ZeOntologyNewsExtractor \footnote{\url{https://github.com/descl/ZONE}} dont nous présentons une preuve de concept sur \url{http://zone.zouig.org}. Nous avons explicité l'utilisation de l'ingénierie des connaissances pour enrichir sémantiquement des nouvelles. Puis nous avons présenté la nécessité de faire appel à l'ingénierie du logiciel et particulièrement la mise en place de workflows pour organiser les flux composant notre architecture. Enfin nous avons présenté une amélioration possible de notre approche utilisant la génération de lignes de produits logiciels. 
+\ch{il faut une ouverture que je ne trouve pas}
 
 %------------------------------------------------------------------------------
 % Refs:
 %
+
 \label{sect:bib}
 \bibliographystyle{plain}
 %\bibliographystyle{alpha}
 %\bibliographystyle{unsrt}
 %\bibliographystyle{abbrv}
 \bibliography{christophe}
+\ch{il manque la biblio de simon sur les LDP}
 
 %------------------------------------------------------------------------------
 \appendix
