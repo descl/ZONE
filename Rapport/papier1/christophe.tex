@@ -169,11 +169,11 @@ Cependant la construction de ces workflows reste technique malgré les nouveaux 
 De plus de nouvelles ontologies, sources, systèmes d'annotations apparaissent régulièrement tandis que le web se démocratise \cite{Anderruthy2007} \cite{Bross2010}, ce qui occasionne des mises à jour régulières de ces workflows.
 
 %\mi{et surtout bien le dire}
-Nos objectifs dans le travail présenté ici sont (i) de permettre à un utilisateur non informaticien d'exprimer les thèmes qui l'intéressent et ses critères de sélection et d'automatiquement produire les workflows correspondants, (ii) de prendre en compte l'évolution des outils disponibles. 
-Dans ce contexte, nous abordons dans cet article la construction de ces workflows, puis discutons leur production automatique  à partir d'un ensemble de caractéristiques proposées à l'utilisateur au travers d'une approche basée sur les lignes de produits logiciels. 
+%Nos objectifs dans le travail présenté ici sont (i) de permettre à un utilisateur non informaticien d'exprimer les thèmes qui l'intéressent et ses critères de sélection et d'automatiquement produire les workflows correspondants, (ii) de prendre en compte l'évolution des outils disponibles. 
+Dans ce contexte, nous décrivons dans cet article la construction de ces workflows, puis discutons leur production automatique  à partir d'un ensemble de caractéristiques sélectionnées l'utilisateur au travers d'une approche basée sur les lignes de produits logiciels. 
 
-Nous présentons en section \ref{sect:exemple} le contexte de notre travail qui s'inscrit dans le cadre du projet ANR Emergence \Y qui vise à automatiser la diffusion des informations sur de grands écrans. 
-Nous montrons dans la section \ref{sect:miseEnOuvre} les choix d'architectures  que nous avons fait pour mettre en place les workflows adaptés au projet. Forts de cette expérience, nous proposons en section \ref{sect:perspectives} de produire de tels workflows en utilisant un développement dirigé par les modèles et des modèles de variabilité (\textit{feature models})\cite{Report1990}.  La section \ref{sect:conclusion} conclut cet article. 
+Ce travail s'inscrit dans le cadre du projet ANR Emergence \Y qui vise à automatiser la diffusion des informations sur de grands écrans. Nous présentons ce contexte en section \ref{sect:introduction}.
+Nous montrons dans la section \ref{sect:miseEnOuvre} les choix d'architectures  que nous avons faits pour mettre en place les workflows adaptés au projet. Forts de cette expérience, nous proposons en section \ref{sect:perspectives} de produire de tels workflows en utilisant un développement dirigé par les modèles et des modèles de variabilité (\textit{feature models})\cite{Report1990}.  La section \ref{sect:conclusion} conclut cet article. 
 
 
 %------------------------------------------------------------------------------
@@ -185,7 +185,7 @@ Dans le cadre du projet \Y, nous visons à diffuser sur de grands écrans des in
 %\paragraph*{Des sources hétérogènes} <= Supprimé par Catherine
 %\ch{Je prefere qu'on garde les sous titre ici cependant Catherine souhaite les enlever : à Mireille de trancher (ca évite selon moi l'effet bloc de texte chiant à lire)}
 
-Il existe aujourd'hui de \textit{nombreuses sources d'information} disponibles sous la forme de flux RSS. Ceux-ci sont généralement classés selon leurs thématiques générales (technologies, international, médical, ...). Une première étude nous a conduit à nous intéresser à une vingtaine de flux RSS sur divers sujets. 
+Or de \textit{nombreuses sources d'information} sont aujourd'hui disponibles sous la forme de flux RSS. Ceux-ci sont généralement classés selon leurs thématiques générales (technologies, international, médical, ...). Une première étude nous a conduit à nous intéresser à une vingtaine de flux RSS sur divers sujets. 
 
 
 % peut être simplement lié au travail ou à l'emplacement géographique de l'écran d'information.
@@ -197,9 +197,9 @@ La \textit{sélection des informations} dans ces sources multiples repose alors 
 %Beaucoup de sources d'informations sont agrégeables.
 Ainsi  quelques critères de sélection sont  pré-établis par les fournisseurs de contenus.  Par exemple sur le site de news de Google\footnote{\url{http://news.google.fr}} l'internaute peut accéder à des nouvelles liées à l'économie ou bien des news locales. Cependant il ne peut pas récupérer les nouvelles économiques liées par exemple à la ville de Marseille ou plus largement à la région PACA. Dans notre exploitation des flux RSS nous souhaitons fournir un filtrage multi-critères permettant un tri fin des nouvelles pour par exemple récupérer les nouvelles économiques concernant la région PACA. 
 %\paragraph*{Des critères utilisateurs}
-Pour capturer ces critères il existe actuellement différents systèmes tels que le service \textsl{Google Reader}\footnote{\url{http://www.google.fr/reader/}} ou bien celui \textsl{rssLounge}\footnote{\url{http://rsslounge.aditu.de}}. Cependant ceux-ci ne proposent pas de regroupement des flux ni de filtrage multi-critères de ceux-ci.
+Pour capturer ces critères il existe actuellement différents systèmes tels que le service \textsl{Google Reader}\footnote{\url{http://www.google.fr/reader/}} ou bien celui \textsl{rssLounge}\footnote{\url{http://rsslounge.aditu.de}}. Cependant ceux-ci ne proposent pas de regroupement des flux ni de filtrage multi-critères de ceux-ci. Dans notre cas d'étude nous nous sommes intéressés annotations politiques et géographiques. \si{Vérifier : annotations pol et géo ?}
 
-Or les exigences du  projet \Y sont celles d'un système intuitif qui permet de capturer simplement les besoins utilisateur à la fois en terme de thèmes traités par les sources d'informations et de critères de sélection. %Le choix et l'agrégation des sources d'informations et la mise en place des mécanismes de sélection seront alors automatisés.
+Les exigences du  projet \Y sont celles d'un système intuitif qui permet de capturer simplement les besoins utilisateur à la fois en terme de choix des sources d'informations et de critères de sélection. %Le choix et l'agrégation des sources d'informations et la mise en place des mécanismes de sélection seront alors automatisés.
 
 Pour cela, nous avons choisi d'enrichir des flux d'information en nous basant sur la récupération d'entités nommées présentes dans  un grand nombre de bases de données RDF. Nous utilisons pour cela des systèmes d'extraction d'information et d'annotation sémantique qui permettent d'ajouter des liaisons vers les entités nommées spécifiques.
 
@@ -246,7 +246,7 @@ Ainsi, nous utilisons des \textit{services d'annotation} pour qualifier chaque n
 Nous faisons appel à des \textit{services de généralisation} qui travaillent en aval des services d'annotation pour ajouter des notions à une annotation :
 \begin{itemize}
 	\item \textbf{DBpedia}\footnote{http://dbpedia.org} travaille sur les données provenant du service d'annotation WikiMeta et permet de les enrichir sémantiquement à l'aide de liens vers d'autres ressources liées à l'élément.
-  \item \textbf{INSEE geo} \footnote{\url{http://rdf.insee.fr/geo/}} La base de données RDF de l'INSEE permet de récupérer les ensembles géographiques liés à une entité nommée géographique. Ce service d'annotation géographique s'utilise donc uniquement en aval d'un service d'annotation classique qui récupère des informations géographiques. Il renvoie des URI vers les entités géographiques liées à la nouvelle étudiée. Nous utilisons pour cela une requête SPARQL.
+  \item \textbf{INSEE geo}\footnote{\url{http://rdf.insee.fr/geo/}} La base de données RDF de l'INSEE permet de récupérer les ensembles géographiques liés à une entité nommée géographique. Ce service d'annotation géographique s'utilise donc uniquement en aval d'un service d'annotation classique qui récupère des informations géographiques. Il renvoie des URI vers les entités géographiques liées à la nouvelle étudiée. Nous utilisons pour cela une requête SPARQL.
 %   telle que celle ci-dessous qui permet de retrouver le nom et le type des subdivisions de la ville de Nice :
 \end{itemize}
 
@@ -290,7 +290,7 @@ A l'heure actuelle le workflow d'annotation interroge tous les services d'annota
 \subsection{Lignes de produits de services}
 Les choix que va faire l'utilisateur vont avoir un impact sur les trois concepts inhérents au workflow d'annotations représentés comme des pièces de puzzle dans la figure \ref{fig:WF} : les \textit{Flux d'information}, les \textit{Services d'Annotation} et les \textit{Services de Généralisation}. Chacun de ces concepts peut être vu comme une ligne de produits indépendante, à partir de laquelle l'utilisateur choisira le service qui lui convient. Nous représentons ces lignes de produits par des modèles de variabilité (\textsl{feature models}) notés FM.
 
-La figure \ref{fig:mmFM} montre ainsi le FM \textit{Service d'Annotation} qui permet de caractériser les services d'annotation existants (feature \textit{Produit}), les thèmes (feature \textit{Thème}) et les langues supportées (Feature \textit{Langue}). La sélection d'une langue ou d'un thème influe directement sur le choix du service d'annotation par le jeu des contraintes internes au FM. On voit par exemple dans la figure \ref{fig:mmFM} que la sélection de la feature \textit{Santé} implique forcément la sélection du produit \textit{MetaMap}.
+La figure \ref{fig:mmFM} montre le FM \textit{Service d'Annotation} qui permet de caractériser les services d'annotation existants (feature \textit{Produit}), les thèmes (feature \textit{Thème}) et les langues (Feature \textit{Langue}) supportés. La sélection d'une langue ou d'un thème influe directement sur le choix du service d'annotation par le jeu des contraintes internes au FM. On voit par exemple dans la figure \ref{fig:mmFM} que la sélection de la feature \textit{Santé} implique forcément la sélection du produit \textit{MetaMap}.
 
 %Cath : changer Product en Produit dans la figure
 
@@ -299,7 +299,7 @@ La figure \ref{fig:mmFM} montre ainsi le FM \textit{Service d'Annotation} qui pe
 \begin{figure}[htb!]
 	\begin{centering}
 	\includegraphics[scale=0.4]{FM.png}
-	\caption{FM pour les services d'annotation}
+	\caption{FM simplifié pour les services d'annotation}
 	\label{fig:mmFM}
 	\end{centering}
 \end{figure}
@@ -307,20 +307,20 @@ La figure \ref{fig:mmFM} montre ainsi le FM \textit{Service d'Annotation} qui pe
 %Chacun des FM des différents concepts est une construction réalisée à partir d'une approche bottom-up. Nous partons des produits existants, en les exprimant sous forme de FM individuels, puis nous effectuons la fusion de ces FM afin d'obtenir une SPL modélisant les différents produits disponibles ainsi que leur variabilité \cite{Acher2011}.
 
 \subsection{Modèle de mise en relation des LPL}
-Notre but est de fournir un outil permettant à un utilisateur final de sélectionner des services cohérents en fonction de ses choix. Cela implique que chaque choix que l'utilisateur fera dans un des FM doit avoir un impact sur les autres FM afin de le guider dans la suite de sa sélection.
+Notre but est de fournir un outil permettant à un utilisateur final de sélectionner des services cohérents en fonction de ses choix. Cela implique que certains choix de l'utilisateur dans un des FM ait un impact sur les autres FM.
 
-Nous exprimons donc des relations entre les différents concepts du domaine. Une relation indique à la fois qu'un produit (i.e. un service) sera lié à un autre, mais aussi que sélectionner un produit influera sur la sélection d'un autre. Nous utilisons ici comme critère de relations entre nos concepts le \textit{Thème} et  la \textit{Langue} utilisés par les différents services. En effet, les systèmes d'annotation sont spécialisés pour certains types d'informations, comme le service MetaMap \footnote{\url{http://metamap.nlm.nih.gov/}} spécialisé dans l'annotation de données médicales, et ne traitent que certaines langues.
+Nous exprimons donc des relations entre les différents FM représentants les concepts du domaine. Une relation indique à la fois qu'un produit (i.e. un service) sera lié à un autre, mais aussi que sélectionner un produit influera sur la sélection d'un autre. En effet, les systèmes d'annotation sont spécialisés pour certains types d'informations, comme le service MetaMap\footnote{\url{http://metamap.nlm.nih.gov/}} spécialisé dans l'annotation de données médicales, et ne traitent que certaines langues.
 
-Par exemple, un \textit{Flux} traitant de politique pourra être annoté par un ou plusieurs \textit{Services d'annotation} pouvant enrichir ce type d'information : les services, une fois sélectionnés, seront donc liés à ce flux. Cependant ce \textit{Flux} ne pourra pas être lié à un \textit{Service d'annotation} parlant d'un thème différent ou utilisant une langue différente : la sélection du flux influe directement sur la sélection des \textit{Services d'annotation} à lier, tout simplement en empêchant l'utilisateur de sélectionner un service qui n'est pas compatible selon les critères de \textit{thème} et de \textit{langue}.
+Par exemple, un \textit{Flux} traitant de politique pourra être annoté par un ou plusieurs \textit{Services d'annotation} pouvant enrichir ce type d'information : les services, une fois sélectionnés, seront donc liés à ce flux, par exemple pour l'enrichir en données géographiques ou de santé. Cependant ce \textit{Flux} ne pourra pas être lié à un \textit{Service d'annotation} prenant en charge des langues différentes : la sélection du flux influe directement sur la sélection des \textit{Services d'annotation} à lier, tout simplement en empêchant l'utilisateur de sélectionner un service qui n'est pas compatible selon le critères de \textit{langue}.
 
-Pour cela nous définissons et appliquons des opérations de restrictions sur les relations entre les FMs, et ce en cascade. Pour reprendre notre exemple, la sélection d'un flux influe sur la sélection des annotations, en restreignant les services disponibles, ce qui aura également une influence sur les services de généralisation disponibles. 
+Pour cela nous définissons et appliquons des opérations sur les FM \cite{Acher2011} afin de restreindre les choix de l'utilisateur, et ce en cascade. Pour reprendre notre exemple, la sélection d'un flux influe sur la sélection des annotations, en restreignant les services disponibles, ce qui aura également une influence sur les services de généralisation disponibles. 
 
 %---------------------------------------------------------------
 \section{Conclusion}
 \label{sect:conclusion}
-A l'heure où de plus en plus de services diffusent des flux d'informations sur le Web, il devient indispensable de posséder des outils afin de pouvoir filtrer ses informations. L'utilisation d'un système de filtrage sémantique par annotation des informations semble particulièrement intéressant en permettant à un utilisateur non-informaticien de définir de multiples critères de recherche et de filtrage.
+A l'heure où de plus en plus de services diffusent des flux d'informations sur le Web, il devient indispensable de posséder des outils afin de pouvoir filtrer ces informations. L'utilisation d'un système de filtrage sémantique par annotation des informations semble particulièrement intéressant en permettant à un utilisateur non-informaticien de définir de multiples critères de recherche et de filtrage.
 
-Nous avons présentés dans cet article le système d'annotation ZeOntologyNewsExtractor \footnote{\url{https://github.com/descl/ZONE}} dont une preuve de concept est accessible sur \url{http://zone.zouig.org}. Nous avons explicité l'utilisation de l'ingénierie des connaissances pour enrichir sémantiquement des nouvelles. Puis nous avons présenté la nécessité de faire appel à l'ingénierie du logiciel et particulièrement la mise en place de workflows pour organiser les flux composant notre architecture. Enfin, nous avons présenté une amélioration possible de notre approche utilisant des lignes de produits logiciels afin de construire automatiquement nos workflows d'annotation.
+Nous avons présentés dans cet article le système d'annotation ZeOntologyNewsExtractor\footnote{\url{https://github.com/descl/ZONE}} dont une preuve de concept est accessible sur \url{http://zone.zouig.org}. Nous avons explicité l'utilisation de l'ingénierie des connaissances pour enrichir sémantiquement des nouvelles. Puis nous avons présenté la nécessité de faire appel à l'ingénierie du logiciel et particulièrement la mise en place de workflows pour organiser les flux composant notre architecture. Enfin, nous avons présenté une amélioration possible de notre approche utilisant des lignes de produits logiciels afin de construire automatiquement nos workflows d'annotation.
 
 L'un des objectifs de ce travail est d'être, à terme, intégré au projet \Y. Ce projet a, en effet, pour objectif d'aider à la construction de systèmes de diffusions d'informations et il nous paraît intéressant d'être en mesure de proposer aux usagers un outil de filtrage sémantique d'information.
 
