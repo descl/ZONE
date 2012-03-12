@@ -1,10 +1,4 @@
-\begin{thebibliography}{10}
-
-\bibitem{Acher2011}
-M~Acher.
-\newblock {\em {Managing Multiple Feature Models : Foundations , Language and
-  Applications}}.
-\newblock PhD thesis, Nice-Sophia Antipolis, 2011.
+\begin{thebibliography}{1}
 
 \bibitem{Anderruthy2007}
 Jean-No\"{e}l Anderruthy.
@@ -12,10 +6,10 @@ Jean-No\"{e}l Anderruthy.
 \newblock 2007.
 
 \bibitem{Bouzeghoub2005}
-Mokrane Bouzeghoub, Dimitre Kostadinov, and Others.
-\newblock {Personnalisation de l'information: aper\c{c}u de l'\'{e}tat de l'art
-  et d\'{e}finition d'un mod\`{e}le flexible de profils}.
-\newblock {\em Memorias de CORIA}, page 201, 2005.
+Mokrane Bouzeghoub and Dimitre Kostadinov.
+\newblock Personnalisation de l'information: aper\c{c}u de l'{\'e}tat de l'art
+  et d{\'e}finition d'un mod{\`e}le flexible de profils.
+\newblock In {\em CORIA}, pages 201--218, 2005.
 
 \bibitem{Bross2010}
 Justus Bross, Matthias Quasthoff, Philipp Berger, Patrick Hennig, and Christoph
@@ -24,39 +18,21 @@ Justus Bross, Matthias Quasthoff, Philipp Berger, Patrick Hennig, and Christoph
 \newblock In {\em 2010 24th IEEE International Conference on Advanced
   Information Networking and Applications}, pages 453--460. IEEE, 2010.
 
-\bibitem{Christophe}
-Desclaux Christophe.
-\newblock {ZeOntologyNewsExtractor}.
-
 \bibitem{Floyd2007}
-Ingbert~R Floyd, M~Cameron Jones, Dinesh Rathi, Michael~B Twidale, and
-  Information Science.
-\newblock {Web Mash-ups and Patchwork Prototyping: User-driven technological
-  innovation with Web 2.0 and Open Source Software}.
-\newblock {\em Source}, pages 1--10, 2007.
-
-\bibitem{Lassila}
-Orla Lassila and Swick Ralph.
-\newblock {Resource Description Framework (RDF) Model and Syntax Specification,
-  W3C Recommendation 22 February 1999}.
-\newblock Technical report.
-
-\bibitem{Lee2001}
-TB~Lee, J~Hendler, and O~Lassila.
-\newblock {The semantic web}.
-\newblock {\em Scientific American}, 2001.
+Ingbert~R. Floyd, M.~Cameron Jones, Dinesh Rathi, and Michael~B. Twidale.
+\newblock Web mash-ups and patchwork prototyping: User-driven technological
+  innovation with web 2.0 and open source software.
+\newblock In {\em HICSS}, page~86. IEEE Computer Society, 2007.
 
 \bibitem{Milanovic2004}
 N.~Milanovic and M.~Malek.
 \newblock {Current solutions for Web service composition}.
 \newblock {\em IEEE Internet Computing}, 8(6):51--59, November 2004.
 
-\bibitem{MetaMap}
-{National Library of Medicine}.
-\newblock {MetaMap}.
-
-\bibitem{Winer2005}
-D~Winer.
-\newblock {RSS 2.0 Specification (RSS 2.0 at Harvard Law)}, 2005.
+\bibitem{Report1990}
+Technical Report, Kyo~C Kang, Sholom~G Cohen, James~A Hess, William~E Novak,
+  and A~Spencer Peterson.
+\newblock {Feature-Oriented Domain Analysis (FODA) Feasibility Study}.
+\newblock {\em Distribution}, (November), 1990.
 
 \end{thebibliography}

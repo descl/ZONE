@@ -1,7 +1,7 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
 \BOOKMARK [1][-]{section.2}{Contexte et besoins exprim\351s dans le projet YourCast}{}% 2
 \BOOKMARK [1][-]{section.3}{Annotation et filtrage s\351mantiques de flux RSS}{}% 3
-\BOOKMARK [2][-]{subsection.3.1}{Workflow d'enrichissement s\351mantique des nouvelles}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.1}{Workflow d'annotation s\351mantique des nouvelles}{section.3}% 4
 \BOOKMARK [3][-]{subsubsection.3.1.1}{Lecture de flux RSS}{subsection.3.1}% 5
 \BOOKMARK [3][-]{subsubsection.3.1.2}{Annotation s\351mantique de nouvelles}{subsection.3.1}% 6
 \BOOKMARK [2][-]{subsection.3.2}{Workflow de filtrage des nouvelles}{section.3}% 7
