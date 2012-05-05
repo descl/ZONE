@@ -24,6 +24,11 @@ Justus Bross, Matthias Quasthoff, Philipp Berger, Patrick Hennig, and Christoph
 \newblock In {\em 2010 24th IEEE International Conference on Advanced
   Information Networking and Applications}, pages 453--460. IEEE, 2010.
 
+\bibitem{Charton2011}
+Eric Charton, Michel Gagnon, and Beno\^{\i}t Ozell.
+\newblock Automatic semantic web annotation of named entities.
+\newblock In {\em Canadian Conference on AI}, pages 74--85, 2011.
+
 \bibitem{Floyd2007}
 Ingbert~R. Floyd, M.~Cameron Jones, Dinesh Rathi, and Michael~B. Twidale.
 \newblock Web mash-ups and patchwork prototyping: User-driven technological
@@ -40,5 +45,10 @@ Technical Report, Kyo~C Kang, Sholom~G Cohen, James~A Hess, William~E Novak,
   and A~Spencer Peterson.
 \newblock {Feature-Oriented Domain Analysis (FODA) Feasibility Study}.
 \newblock {\em Distribution}, (November), 1990.
+
+\bibitem{Taddesse2010}
+Fekade~Getahun Tadesse.
+\newblock {\em {Framework de gestion sémantique de flux d‘actualités}}.
+\newblock PhD thesis, Universit\'{e} de Bourgogne, 2011.
 
 \end{thebibliography}
