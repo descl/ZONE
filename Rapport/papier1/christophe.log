@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.29)  5 MAY 2012 14:41
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.29)  7 MAY 2012 13:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -856,7 +856,7 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 LaTeX Font Warning: Font shape `OT1/cmr/bx/sc' undefined
 (Font)              using `OT1/cmr/bx/n' instead on input line 178.
 
-[2] <diagramme-Archi.png, id=105, 797.35252pt x 281.13824pt>
+[2] <diagramme-Archi.png, id=108, 797.35252pt x 281.13824pt>
 File: diagramme-Archi.png Graphic file (type png)
 
 <use diagramme-Archi.png>
@@ -868,7 +868,7 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 218.
- [3 <./diagramme-Archi.png>] [4] <FM.png, id=130, 1006.962pt x 460.119pt>
+ [3 <./diagramme-Archi.png>] [4] <FM.png, id=134, 1006.962pt x 460.119pt>
 File: FM.png Graphic file (type png)
  <use FM.png> [5 <./FM.png>] (./christophe.bbl) AED: lastpage setting LastPage 
 [6]
@@ -882,20 +882,20 @@ Package rerunfilecheck Info: File `christophe.out' has not changed.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
  9250 strings out of 493747
- 134633 string characters out of 3143546
+ 134639 string characters out of 3143546
  234464 words of memory out of 3000000
  12287 multiletter control sequences out of 15000+200000
  16413 words of font info for 64 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  46i,11n,45p,829b,414s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{Hfootnote.9} has been referenced but does not exi
-st, replaced by a fixed one
+pdfTeX warning (dest): name{Hfootnote.10} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Hfootnote.9} has been referenced but does not exist
+, replaced by a fixed one
 
 pdfTeX warning (dest): name{Hfootnote.8} has been referenced but does not exist
 , replaced by a fixed one
@@ -921,9 +921,6 @@ pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exist
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist
 , replaced by a fixed one
 
-pdfTeX warning (dest): name{page.7} has been referenced but does not exist, rep
-laced by a fixed one
-
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><
 /usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></
 usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></us
@@ -940,10 +937,10 @@ e/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive
 0/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2010
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/2010/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on christophe.pdf (6 pages, 359947 bytes).
+Output written on christophe.pdf (6 pages, 360561 bytes).
 PDF statistics:
- 218 PDF objects out of 1000 (max. 8388607)
- 189 compressed objects within 2 object streams
+ 221 PDF objects out of 1000 (max. 8388607)
+ 192 compressed objects within 2 object streams
  42 named destinations out of 1000 (max. 500000)
  99 words of extra memory for PDF output out of 10000 (max. 10000000)
 

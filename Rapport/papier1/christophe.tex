@@ -63,7 +63,7 @@
 %\makeindex
 
 \usepackage{setspace}
-\setstretch{0.95} 
+\setstretch{0.94} 
 
 %% Document
 %%
@@ -164,12 +164,12 @@ In this paper we show how these workflows are built and present our approach for
 Le web se révèle aujourd'hui un merveilleux support de diffusion d'informations. Tandis que les sources se multiplient (flux rss, services web, ..), la quantité des informations croît et il devient essentiel de les filtrer en fonction des centres d'intérêts des utilisateurs \cite{Bouzeghoub2005}. Des outils qui exploitent des ontologies ou des thésaurus ont été mis au point qui permettent d'annoter les informations, d'en déduire des critères et d'ensuite obtenir uniquement les informations pertinentes en formulant des requêtes sémantiques sur les annotations. 
 Il est aujourd'hui possible de construire des workflows mettant en jeu ces différents outils pour d'une part annoter les flux d'informations et pour d'autre part sélectionner les informations pertinentes en fonction de la cible de diffusion. 
 
-Cependant la construction de ces workflows reste technique malgré les nouveaux supports logiciels tels que les mashups \cite{Floyd2007} \cite{Milanovic2004}. En effet, elle se base sur de nombreux critères qui doivent être pris en compte pour assembler les services et le fait que ces services soient hétéroclites ne permet pas une génération aisée des applications. 
-De plus de nouvelles ontologies, sources, systèmes d'annotations apparaissent régulièrement tandis que le web se démocratise \cite{Anderruthy2007} \cite{Bross2010}, ce qui occasionne des mises à jour régulières de ces workflows.
+Cependant la construction de ces workflows reste technique malgré les nouveaux supports logiciels tels que les mashups \cite{Floyd2007,Milanovic2004}. En effet, elle se base sur de nombreux critères qui doivent être pris en compte pour assembler les services et le fait que ces services soient hétéroclites ne permet pas une génération aisée des applications. 
+De plus de nouvelles ontologies, sources, systèmes d'annotations apparaissent régulièrement tandis que le web se démocratise \cite{Anderruthy2007,Bross2010}, ce qui occasionne des mises à jour régulières de ces workflows.
 
 Dans ce contexte, nous décrivons dans cet article la construction de ces workflows, puis discutons leur production automatique  à partir d'un ensemble de caractéristiques sélectionnées par l'utilisateur au travers d'une approche basée sur les lignes de produits logiciels. 
 
-Ce travail s'inscrit dans le cadre du projet ANR Emergence \Y qui vise à automatiser la diffusion des informations sur de grands écrans. Nous présentons ce contexte en section \ref{sect:introduction}.
+Ce travail s'inscrit dans le cadre du projet ANR Emergence \Y\footnote{\url{http://yourcast.unice.fr}} qui vise à automatiser la diffusion des informations sur de grands écrans. Nous présentons ce contexte en section \ref{sect:introduction}.
 Nous montrons dans la section \ref{sect:miseEnOuvre} les choix d'architectures  que nous avons faits pour mettre en place les workflows adaptés au projet. Forts de cette expérience, nous proposons en section \ref{sect:perspectives} de produire de tels workflows en utilisant un développement dirigé par les modèles et des modèles de variabilité (\textit{feature models})\cite{Report1990}.  La section \ref{sect:conclusion} conclut cet article. 
 
 
@@ -216,7 +216,7 @@ Des services enrichissent les nouvelles par des annotations et ces annotations e
 Ainsi, nous utilisons des \textit{services d'annotation} pour qualifier chaque nouvelle par les entités nommées intéressantes la concernant. Les services d'annotation que nous avons utilisés sont : 
 \begin{itemize}
 	\item \textbf{OpenCalais}\footnote{http://www.opencalais.com} permet d'identifier dans le texte les entités correspondant à des lieux français ainsi que des noms de personnalités en langue anglaise. 
-  \item \textbf{WikiMeta}\footnote{http://www.wikimeta.com} fonctionne sur le même principe qu'OpenCalais. Cependant le projet ne proposait pas au moment de nos recherche d'API permettant d'effectuer des requêtes et nous avons alors dû implémenter l'API Java se connectant à leurs services web. Elle permet de récupérer directement des entités nommées pointant vers la base de connaissances DBpedia; il peut donc être utilisé seul en tant que service d'annotation sans utilisation d'un service de généralisation.
+  \item \textbf{WikiMeta}\footnote{http://www.wikimeta.com} fonctionne sur le même principe qu'OpenCalais. Cependant le projet ne proposait pas au moment de nos recherches d'API permettant d'effectuer des requêtes et nous avons alors dû implémenter l'API Java se connectant à leurs services web. Elle permet de récupérer directement des entités nommées pointant vers la base de connaissances DBpedia ; il peut donc être utilisé seul en tant que service d'annotation sans utilisation d'un service de généralisation.
 \end{itemize}
 
 Nous faisons appel à des \textit{services de généralisation} qui travaillent en aval des services d'annotation pour ajouter des notions à une annotation :
@@ -238,7 +238,7 @@ A l'heure actuelle le workflow d'annotation interroge tous les services d'annota
 
 
 \subsection{Lignes de produits de services}
-Les choix que va faire l'utilisateur vont avoir un impact sur les trois concepts inhérents au workflow d'annotations représentés comme des pièces de puzzle dans la figure \ref{fig:WF} : les \textit{Flux d'information}, les \textit{Services d'Annotation} et les \textit{Services de Généralisation}. Chacun de ces concepts peut être vu comme une ligne de produits indépendante, à partir de laquelle l'utilisateur choisira le service qui lui convient. Nous représentons ces lignes de produits par des modèles de variabilité (\textsl{feature models}) notés FM.
+Les choix que va faire l'utilisateur vont avoir un impact sur les trois concepts inhérents au workflow d'annotations représentés comme des pièces de puzzle dans la figure \ref{fig:WF} : les \textit{Flux d'information}, les \textit{Services d'Annotation} et les \textit{Services de Généralisation}. Chacun de ces concepts peut être vu comme une ligne de produits indépendante, à partir de laquelle l'utilisateur choisira le service qui lui convient. Nous représentons ces lignes de produits par des modèles de variabilité (\textsl{feature models}) notés FM \cite{Report1990}.
 
 La figure \ref{fig:mmFM} montre le FM \textit{Service d'Annotation} qui permet de caractériser les services d'annotation existants (feature \textit{Produit}), les thèmes (feature \textit{Thème}) et les langues (Feature \textit{Langue}) supportés. La sélection d'une langue ou d'un thème influe directement sur le choix du service d'annotation par le jeu des contraintes internes au FM. On voit par exemple dans la figure \ref{fig:mmFM} que la sélection de la feature \textit{Santé} implique forcément la sélection du produit \textit{MetaMap}.
 
@@ -273,7 +273,7 @@ Nous avons présenté dans cet article le système d'annotation ZeOntologyNewsEx
 
 L'intégration de ce travail au projet \Y constitue une validation  grande échelle du prototype. Ce projet a, en effet, pour objectif d'aider à la construction de systèmes de diffusion d'informations et il nous paraît intéressant d'être en mesure de proposer aux usagers un outil de filtrage sémantique d'information.
 
-D'autre part des services tel que google ranking pourraient permettre de trier les informations par importance et l'utilisation de processus de regroupement permettrait de lier des news similaires entre elles \cite{Taddesse2010}.
+D'autre part des services tels que google ranking pourraient permettre de trier les informations par importance et l'utilisation de processus de regroupement permettrait de lier des news similaires entre elles \cite{Taddesse2010}.
 
 %------------------------------------------------------------------------------
 % Refs:
