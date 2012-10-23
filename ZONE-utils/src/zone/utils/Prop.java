@@ -1,4 +1,4 @@
-package utils;
+package zone.utils;
 
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;

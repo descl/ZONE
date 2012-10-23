@@ -1,7 +1,7 @@
 /**
  * requests for WikiMeta
  */
-package extractor;
+package zone.plugin.wikimeta;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -19,9 +19,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
-import utils.Config;
-import utils.Item;
-import utils.Prop;
+import zone.utils.Config;
+import zone.utils.Item;
+import zone.utils.Prop;
 
 /**
  *
@@ -30,16 +30,21 @@ import utils.Prop;
 public class WikiMetaRequest {
     public static String EntitiesURI = "http://www.wikimeta.org/Entities#";
     
-    public static ArrayList<Prop> getProperties(Item item){
+    /*public static ArrayList<Prop> getProperties(Item item){
         return getProperties(item.concat());
     }
     
+    */
     public static ArrayList<Prop> getProperties(String texte){
         String f = WikiMetaRequest_API.getResult(Config.getVar("wikiMeta-key"), WikiMetaRequest_API.Format.JSON, texte);
         return analyseWikiMetaResult(f);
     }
     
-    
+    /**
+     * used in debug mode in order to parse a result previously download from WikiMeta
+     * @param file the output of WikiMeta
+     * @return the list of properties
+     */
     public static ArrayList<Prop> getProperties(File file){
         
         String content = "";
@@ -85,7 +90,7 @@ public class WikiMetaRequest {
         //String result = getResult("descl",WikiMetaExtractorJSON.Format.JSON,"Bienvenue à Antibes");
         //System.out.println(result);
         
-        System.out.println(getProperties("Reuters se site dans la ville de Paris"));
+        System.out.println(WikiMetaRequest.getProperties("Reuters se site dans la ville de Paris"));
         //System.out.println(getProperties(new File("resources/examples/WikiMetaOutput_pip.json")));
         //System.out.println(getProperties(new File("resources/examples/WikiMetaOutput_mars.json")));
     }

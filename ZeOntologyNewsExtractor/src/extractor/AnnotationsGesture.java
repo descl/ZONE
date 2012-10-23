@@ -1,9 +1,8 @@
 package extractor;
 
 import java.util.*;
-import utils.Item;
-import utils.MysqlDatabase;
-import utils.Prop;
+import zone.utils.Item;
+import zone.utils.Prop;
 
 /**
  *
@@ -14,15 +13,15 @@ public class AnnotationsGesture {
         ArrayList<Prop> annotations = new ArrayList<Prop>();
         
         //get opencalais annotations
-        ArrayList<Prop> citiesProps = openCalaisExtractor.getCitiesResultProp(item.concat());
+        ArrayList<Prop> citiesProps = zone.plugin.opencalais.ZONEpluginOpenCalais.getProps(item);
         annotations.addAll(citiesProps);
         
         
         //get WikiMeta annotations
-        ArrayList<Prop> WikiMetaProps = WikiMetaRequest.getProperties(item);
+        ArrayList<Prop> WikiMetaProps = zone.plugin.wikimeta.ZONEPluginWikiMeta.getProps(item);
         annotations.addAll(WikiMetaProps);
         
-        //get location annotations using WikiMeta
+        //get location annotations using DBpedia
         /*ArrayList<Prop> DBpediaProps = DBpediaRequest.getProperties(WikiMetaProps);
                    DBpediaProps.addAll(DBpediaRequest.getProperties(citiesProps));
         annotations.addAll(DBpediaProps);
@@ -30,9 +29,9 @@ public class AnnotationsGesture {
         
         //get the grid of locations length using INSEE database
         
-        ArrayList<Prop> InseeProps = InseeSparqlRequest.getProperties(citiesProps);
-        annotations.addAll(InseeProps);
-        return annotations;        
+        //ArrayList<Prop> InseeProps = InseeSparqlRequest.getProperties(citiesProps);
+        //annotations.addAll(InseeProps);
+        return annotations;
     }
     
     public static void addAnnotations(ArrayList<Item> items){
@@ -52,7 +51,7 @@ public class AnnotationsGesture {
     
     
     public static void main(String[] args){
-        Item it = new Item("http://test","bienvenue à Antibes","", new Date());
+        Item it = new Item("http://test","bienvenue à Antibes, Nicolas Sarkozy n'est pas ici aujourd'hui.","", new Date());
         System.out.println(getAllAnnotations(it));
     }
 }

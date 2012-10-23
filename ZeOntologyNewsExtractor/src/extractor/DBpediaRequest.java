@@ -16,7 +16,7 @@ import com.hp.hpl.jena.util.FileManager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import utils.Prop;
+import zone.utils.Prop;
 
 /**
  *

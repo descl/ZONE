@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package extractor;
+package zone.plugin.wikimeta;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,19 +15,19 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Desclaux Christophe <christophe@zouig.org>
+ * @author cdesclau
  */
 public class WikiMetaRequestTest {
     
     public WikiMetaRequestTest() {
     }
-
+    
     @BeforeClass
-    public static void setUpClass() throws Exception {
+    public static void setUpClass() {
     }
-
+    
     @AfterClass
-    public static void tearDownClass() throws Exception {
+    public static void tearDownClass() {
     }
     
     @Before
@@ -72,6 +72,7 @@ public class WikiMetaRequestTest {
         System.out.println(result);
         assertEquals(2,result.size());
     }
+    
     
     @Test
     public void testGetProperties_String_cleaningResult() {

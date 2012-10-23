@@ -1,8 +1,10 @@
+package zone.plugin.opencalais;
+
 /**
  * requests to openCalais webservice
  * not used anymore because need too much time 
  */
-package extractor;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,8 +14,8 @@ import mx.bigdata.jcalais.CalaisClient;
 import mx.bigdata.jcalais.CalaisObject;
 import mx.bigdata.jcalais.CalaisResponse;
 import mx.bigdata.jcalais.rest.CalaisRestClient;
-import utils.Config;
-import utils.Prop;
+import zone.utils.Config;
+import zone.utils.Prop;
 
 /**
  *
@@ -69,8 +71,17 @@ public class openCalaisExtractor {
             list.add(entity.getField("name"));
         }
         return list.toArray(new String[list.size()]);
-    }   
+    }
     
+    public static ArrayList<Prop> getPersonsResultProp(java.lang.String content) {
+        String [] persons = getPersonsResult(content);
+        ArrayList<Prop> result = new ArrayList<Prop>();
+        for(String i : persons){
+            result.add(new Prop(EntitiesURI+"PERSON",i,true));
+        }
+        return result;
+        
+    }
     public static void main(String[] args){
         //String result = getResult("descl",WikiMetaExtractorJSON.Format.JSON,"Bienvenue à Antibes");
         //System.out.println(result);

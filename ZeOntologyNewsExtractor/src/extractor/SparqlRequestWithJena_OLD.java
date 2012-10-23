@@ -12,7 +12,7 @@ import com.hp.hpl.jena.util.FileManager;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-import utils.Prop;
+import zone.utils.Prop;
 
 /**
  *

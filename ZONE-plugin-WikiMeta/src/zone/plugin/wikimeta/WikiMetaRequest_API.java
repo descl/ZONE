@@ -2,7 +2,7 @@
  * This file is a generic WikiMeta request
  * see WikiMetaRequest.java for my use
  */
-package extractor;
+package zone.plugin.wikimeta;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
