@@ -70,7 +70,7 @@ public class WikiMetaRequestTest {
         File file = new File("resources/examples/WikiMetaOutput_mars.json");
         ArrayList result = WikiMetaRequest.getProperties(file);
         System.out.println(result);
-        assertEquals(3,result.size());
+        assertEquals(2,result.size());
     }
     
     @Test

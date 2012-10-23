@@ -46,9 +46,9 @@ public class RDFDatabaseTest {
     @Test
     public void testAddItem() {
         System.out.println("addItem");
-        String uri="http://testURI";
+        String uri="http://testURI.com/#MyURI";
         Item item = new Item(uri);
-        item.addProp(new Prop("title","le titre",true));
+        item.addProp(new Prop("http://purl.org/rss/1.0/title","le titre",true));
         
         
         RDFDatabase.addItem(item);
