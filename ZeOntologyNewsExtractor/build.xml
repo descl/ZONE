@@ -71,4 +71,17 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <target name="-post-jar">
+        <jar jarfile="dist/ZONE-all-withLibs.jar">
+            <zipfileset src="${dist.jar}" excludes="META-INF/*" />
+            <zipgroupfileset dir="lib" includes="*.jar"/>
+            <zipfileset src="../ZONE-utils/dist/ZONE-utils-withLibs.jar" excludes="META-INF/*" />
+            <zipfileset src="../ZONE-plugin-WikiMeta/dist/ZONE-plugin-WikiMeta.jar" excludes="META-INF/*" />
+            <zipfileset src="../ZONE-plugin-OpenCalais/dist/ZONE-plugin-OpenCalais-withLibs.jar" excludes="META-INF/*" />
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
+        </jar>
+
+    </target>
 </project>
