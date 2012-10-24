@@ -71,4 +71,14 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <target name="-post-jar">
+        <jar jarfile="dist/ZONE-plugin-OpenCalais-withLibs.jar">
+            <zipfileset src="${dist.jar}" excludes="META-INF/*" />
+            <zipgroupfileset dir="lib" includes="*.jar"/>
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
+        </jar>
+
+    </target>
 </project>
