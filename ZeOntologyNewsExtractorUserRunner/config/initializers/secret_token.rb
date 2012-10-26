@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-ZeOntologyNewsExtractorUserRunner::Application.config.secret_token = '130e7232ab732803fc9005aeb314cb26f23175d58d699649bbb85e1d0b838c0cd2cf0d6c372d694014c33d8b883ca0024f5ee3996676e9f62189e57ee712cc88'
+ZeOntologyNewsExtractorUserRunner::Application.config.secret_token = '101e5acc183dd64842728d7ca48b6990d1f9d7a8d4325206cc337bc31283d777d77de8baa7cc2dadbeb9fe274f549c3d62c7af951b8783355398f1c2ac3b1f5e'

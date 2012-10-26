@@ -1,11 +1,12 @@
+require '4store-ruby'
 class RssfeedController < ApplicationController
   def getOne
     @itemURI = params[:element]
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @item }
-    end
+    render  :layout => 'empty'
+    #respond_to do |format|
+    #  format.html # show.html.erb
+    #  format.json { render json: @item }
+    #end
   end
   
   def index
@@ -36,37 +37,35 @@ class RssfeedController < ApplicationController
       end
     end
     
-    load 'lib/store.rb'
     query = "SELECT ?concept ?relation ?result ?pubDateTime WHERE {\n"
     query += extendQuery
-    query += "?concept <http://purl.org/rss/1.0/title> ?title. 
-    ?concept <http://purl.org/rss/1.0/pubDateTime> ?pubDateTime. 
-    ?concept ?relation ?result.  
-    
-    } ORDER BY DESC(?pubDateTime) LIMIT 500"
+    query += "?concept <http://purl.org/rss/1.0/title> ?title.
+?concept <http://purl.org/rss/1.0/pubDateTime> ?pubDateTime.
+?concept ?relation ?result.
+} ORDER BY DESC(?pubDateTime) LIMIT 500"
 
-    endpoint = 'http://zouig.org:8081/sparql/'
+    endpoint = 'http://localhost:8080/sparql/'
     puts query
     store = FourStore::Store.new endpoint
     @elements = store.select(query)
 
-#    @result = Array.new
-#    if @elements.length > 0
-#      item = {"concept" => @elements[0]["concept"]}
- #     @result.push item
- #   end
+# @result = Array.new
+# if @elements.length > 0
+# item = {"concept" => @elements[0]["concept"]}
+ # @result.push item
+ # end
 
-#    @elements.each() do |element|
-#      if @result[@result.length-1]["concept"] != element["concept"]
-#        
-#        item = {"concept" => element["concept"]}
-#        @result.push item
-#      end
-#        @result[@result.length-1][element["relation"]] = element["result"]
-#    end
+# @elements.each() do |element|
+# if @result[@result.length-1]["concept"] != element["concept"]
+#
+# item = {"concept" => element["concept"]}
+# @result.push item
+# end
+# @result[@result.length-1][element["relation"]] = element["result"]
+# end
     
-#    @result.delete_if{|x| x["http://purl.org/rss/1.0/pubDateTime"] == nil}
-#    @result.delete_if{|x| x["http://purl.org/rss/1.0/description"] == nil}
+# @result.delete_if{|x| x["http://purl.org/rss/1.0/pubDateTime"] == nil}
+# @result.delete_if{|x| x["http://purl.org/rss/1.0/description"] == nil}
     
     @result = {}
     
@@ -79,16 +78,16 @@ class RssfeedController < ApplicationController
       
       #if @result[@result.length-1]["concept"] != element["concept"]
         
-      #  item = {"concept" => element["concept"]}
-      #  @result.push item
+      # item = {"concept" => element["concept"]}
+      # @result.push item
       #end
-      #  @result[@result.length-1][element["relation"]] = element["result"]
+      # @result[@result.length-1][element["relation"]] = element["result"]
     end
     
     puts @result
     
     #@result.each.delete_if{|x| x["http://purl.org/rss/1.0/link"] == nil}
-    #@result.delete_if{|x| x["http://purl.org/rss/1.0/description"] == nil}    
+    #@result.delete_if{|x| x["http://purl.org/rss/1.0/description"] == nil}
     
   end
 end

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class RssfeedControllerTest < ActionController::TestCase
+class RssFeedControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success

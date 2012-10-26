@@ -2,9 +2,9 @@
 require 'net/http'
 require 'uri'
 require 'json'
-require 'rdf'
-require 'rdf/raptor'  # for RDF/XML support
-require 'rdf/ntriples'
+#require 'rdf'
+#require 'rdf/raptor' # for RDF/XML support
+#require 'rdf/ntriples'
 
 module ApplicationHelper
   def get4StoreNameElem(item)
@@ -23,7 +23,7 @@ module ApplicationHelper
     
     
     query = "SELECT ?a ?name WHERE {<"+item+"> rdfs:label ?name FILTER(lang(?name)='fr') } "
-    params = {:query => query, 
+    params = {:query => query,
              :format => "application/sparql-results+json",
              'default-graph-uri' => "http://dbpedia.org"}
     postData = Net::HTTP.post_form(URI.parse('http://dbpedia.org/sparql'), params)
@@ -48,5 +48,5 @@ module ApplicationHelper
     if result.length > 0
       store.select(query)[0]["nom"]
     end
-  end  
+  end
 end

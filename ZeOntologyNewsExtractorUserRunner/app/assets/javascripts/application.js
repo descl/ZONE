@@ -13,10 +13,3 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
-
-$(document).ready(function() {
-  $('#my-link').click(function(event){
-    alert('Hooray!');
-    event.preventDefault(); // Prevent link from following its href
-  });
-});

@@ -1,20 +1,8 @@
 ZeOntologyNewsExtractorUserRunner::Application.routes.draw do
   get "rssfeed/index"
   get "rssfeed/getOne"
-  get "rss_feed/index"
-
-  resources :items
-
- # get "items/index"
-
-  get "config/list"
-
-  get "config/index"
-
   get "home/index"
 
-
-  root :to => "home#index"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -64,7 +52,8 @@ ZeOntologyNewsExtractorUserRunner::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'rssfeed#index'
+
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
