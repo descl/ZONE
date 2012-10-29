@@ -70,7 +70,7 @@ public class FourStoreDatabase {
 
         String response="";
         try {
-            getStore().insertModel(model, "http://ZONE.zouig.org/data");
+            getStore().insertModel(model, "http://demo.zone-project.org/data");
         } catch (MalformedURLException ex) {
             Logger.getLogger(FourStoreDatabase.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ProtocolException ex) {
