@@ -1,5 +1,5 @@
-/ZeOntologyNewsExtractor/build/
-/ZeOntologyNewsExtractor/resources/geographie/
-/ZeOntologyNewsExtractor/nbproject/private/
-/ZeOntologyNewsExtractor/out/
-/ZeOntologyNewsExtractor/ZONE.conf
+/ZONE-utils/target/
+/ZONE-extractor/target/
+/ZONE-plugin-ExtractArticlesContent/target/
+/ZONE-plugin-OpenCalais/target/
+/ZONE-plugin-WikiMeta/target/

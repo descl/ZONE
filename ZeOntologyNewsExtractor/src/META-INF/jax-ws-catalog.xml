@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="file:/home/descl/Downloads/crip/ConsoleApplicationCalaisCodeSample/ConsoleApplicationCalaisCodeSample/Web%20References/CalaisClient/calais.wsdl" uri="wsdl/calais.wsdl"/>
-</catalog>
