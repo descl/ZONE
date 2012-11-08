@@ -4,3 +4,5 @@
 /ZONE-plugin-OpenCalais/target/
 /ZONE-plugin-WikiMeta/target/
 /ZONE-RSSreader/target/
+/ZONE-extractor/ZONE-RSSreader/target/
+/ZONE-extractor/ZONE-utils/target/
