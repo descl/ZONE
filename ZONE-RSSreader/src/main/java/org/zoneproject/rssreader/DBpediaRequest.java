@@ -2,7 +2,7 @@
  * This class is used to get informations from dbpedia database
  * It use only rdfs files catch from the website of dbpedia
  */
-package org.zoneproject.extractor;
+package org.zoneproject.rssreader;
 
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;

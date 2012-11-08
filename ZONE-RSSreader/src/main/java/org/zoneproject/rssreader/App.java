@@ -1,4 +1,4 @@
-package org.zoneproject.extractor;
+package org.zoneproject.rssreader;
 
 import java.util.ArrayList;
 import org.zoneproject.utils.Config;
@@ -22,10 +22,6 @@ public class App
         
         System.out.println("========= Cleaning flow with already analysed items==================");
         FourStoreDatabase.verifyItemsList(items);
-        
-        System.out.println("========= Starting annotations adding==================");
-        System.out.println("NO! now the plugins do it!");
-        //AnnotationsGesture.addAnnotations(items);
         
         System.out.println("========= Printing result items==================");
         for(int i=0; i< items.size();i++)System.out.println("\n"+items.get(i));

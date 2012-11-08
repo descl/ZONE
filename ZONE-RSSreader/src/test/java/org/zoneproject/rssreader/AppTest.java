@@ -1,4 +1,4 @@
-package org.zoneproject.extractor;
+package org.zoneproject.rssreader;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -1,7 +1,7 @@
 /**
  * class used to parse rss feed
  */
-package org.zoneproject.extractor;
+package org.zoneproject.rssreader;
 
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;

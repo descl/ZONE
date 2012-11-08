@@ -1,5 +1,6 @@
-package org.zoneproject.extractor;
+package org.zoneproject.rssreader;
 
+import org.zoneproject.rssreader.DBpediaRequest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
