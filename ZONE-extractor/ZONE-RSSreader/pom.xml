@@ -17,7 +17,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>org.zoneproject.rssreader.App</mainClass>
+              <mainClass>org.zoneproject.extractor.rssreader.App</mainClass>
             </manifest>
           </archive>
           <descriptorRefs>
@@ -36,7 +36,7 @@
           </execution>  
         </executions>  
         <configuration>  
-          <mainClass>org.zoneproject.rssreader.App</mainClass>
+          <mainClass>org.zoneproject.extractor.rssreader.App</mainClass>
         </configuration>  
       </plugin>  
     </plugins>

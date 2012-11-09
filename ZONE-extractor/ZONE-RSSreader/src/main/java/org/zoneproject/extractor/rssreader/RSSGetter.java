@@ -5,6 +5,7 @@ package org.zoneproject.extractor.rssreader;
 
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 import java.io.File;
@@ -85,8 +86,11 @@ public class RSSGetter {
                 items.add(cur);
             }
         }
-        catch(Exception e) {
-            System.out.println(e);
+        catch(IllegalArgumentException e) {
+            System.out.println("RSS Feed "+e+" not working");
+        }
+        catch(FeedException e) {
+            System.out.println("RSS Feed "+e+" not working");
         }
         return items;
     }
