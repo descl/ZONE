@@ -1,3 +1,3 @@
 In order to run the project:
 mvn compile
-mvn exec:java
+mvn exec:java -pl ZONE-extractor-start

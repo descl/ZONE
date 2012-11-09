@@ -11,6 +11,10 @@ import org.zoneproject.extractor.utils.Item;
  */
 public class App 
 {
+    public App(){
+        String [] tmp = {};
+        App.main(tmp);
+    }
     public static void main( String[] args )
     {
         ArrayList<Item>  items = new ArrayList<Item>();

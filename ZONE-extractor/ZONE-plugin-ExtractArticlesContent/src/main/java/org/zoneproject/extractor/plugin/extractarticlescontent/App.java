@@ -19,10 +19,15 @@ public class App
 {
     public static String PLUGIN_URI = "http://www.zone-project.org/plugins/ExtractArticlesContent";
     public static String PLUGIN_RESULT_URI = "http://www.zone-project.org/plugins/ExtractArticlesContent#result";
-    /**
+    
+    public App(){
+        String [] tmp = {};
+        App.main(tmp);
+    }
+     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws MalformedURLException {
+    public static void main(String[] args) {
         Item[] items = FourStoreDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI);
         System.out.println("ExtractArticlesContent has "+items.length+" items to annotate");
         for(Item item : items){
@@ -36,6 +41,8 @@ public class App
                 FourStoreDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
                 FourStoreDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_RESULT_URI,item.getElement(RSS.description)));
                 Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MalformedURLException ex) {
+                    Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

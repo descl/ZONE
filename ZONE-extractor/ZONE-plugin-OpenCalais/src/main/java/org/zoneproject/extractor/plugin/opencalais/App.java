@@ -16,11 +16,15 @@ import org.zoneproject.extractor.utils.Prop;
 public class App 
 {
     public static String PLUGIN_URI = "http://www.zone-project.org/plugins/OpenCalais";
+    
+    public App(){
+        String [] tmp = {};
+        App.main(tmp);
+    }
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws MalformedURLException {
-        
+    public static void main(String[] args) {
         Item[] items = FourStoreDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI);
         System.out.println("ExtractArticlesContent has "+items.length+" items to annotate");
         for(Item item : items){

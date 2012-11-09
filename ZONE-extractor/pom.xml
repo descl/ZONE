@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.zoneproject.extractor</groupId>
   <artifactId>ZONE-extractor</artifactId>
@@ -12,11 +12,53 @@
     <module>ZONE-plugin-WikiMeta</module>
     <module>ZONE-plugin-ExtractArticlesContent</module>
     <module>ZONE-plugin-OpenCalais</module>
+    <module>ZONE-extractor-start</module>
   </modules>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>org.zoneproject.extractor.App</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+      </plugin>
+      
+      <plugin>  
+        <groupId>org.codehaus.mojo</groupId>  
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>  
+          <execution>  
+            <goals>  
+              <goal>java</goal>  
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>org.zoneproject.extractor.App</mainClass>
+        </configuration>
+      </plugin>
+      
+    </plugins>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources/</directory>
+      </testResource>
+    </testResources>
+  </build>  
+  
   
   <dependencies>
     <dependency>
