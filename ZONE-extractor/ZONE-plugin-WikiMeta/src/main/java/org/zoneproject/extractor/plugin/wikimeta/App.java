@@ -15,7 +15,7 @@ public class App
     public static void main(String[] args) {
 
         Item[] items = FourStoreDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI);
-        System.out.println("ExtractArticlesContent has "+items.length+" items to annotate");
+        System.out.println("WikiMeta has "+items.length+" items to annotate");
         for(Item item : items){
             System.out.println("Add ExtractArticlesContent for item: "+item);
             

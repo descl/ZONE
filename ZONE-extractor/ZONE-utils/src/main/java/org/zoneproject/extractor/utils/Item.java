@@ -87,7 +87,7 @@ public class Item {
     
     @Override
     public String toString(){
-        String content = "Item description:";
+        String content = "Item description:"+this.getUri();
         
         Iterator i = values.iterator();
 
@@ -95,7 +95,12 @@ public class Item {
             Prop me = (Prop)i.next();
             String isL = "Uri";
             if(me.isLiteral()) isL = "Lit";
-            content += "\n\t"+isL+" "+me.getType() + " : " + me.getValue();
+            content += "\n\t"+isL+" "+me.getType() + " : ";
+            if (me.getValue().length() > 100){
+                content+= me.getValue().substring(0,100)+"...";
+            }else{
+                content+= me.getValue();
+            }
         }
         return content;
     }

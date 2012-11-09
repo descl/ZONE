@@ -19,6 +19,7 @@ public class ThreadApp extends TimerTask{
         this.app = app;
     }
     public void run(){
+        System.out.println("Starting annotation process for "+app);
         try {
             Class.forName(app).newInstance();
         } catch (InstantiationException ex) {

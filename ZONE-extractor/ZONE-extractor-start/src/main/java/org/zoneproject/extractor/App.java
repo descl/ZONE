@@ -22,8 +22,7 @@ public class App {
        apps[2] = "org.zoneproject.extractor.plugin.opencalais.App";
        apps[3] = "org.zoneproject.extractor.plugin.wikimeta.App";
        for(String app : apps){
-           System.out.println("Starting annotation process for "+app);
-           timer.scheduleAtFixedRate( new ThreadApp(app),0, 3000); 
+           timer.scheduleAtFixedRate( new ThreadApp(app),0, 30000); 
        
        }
     }

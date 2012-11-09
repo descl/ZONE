@@ -35,14 +35,20 @@ public class openCalaisExtractor {
         catch (mx.bigdata.jcalais.CalaisException ex){
             return openCalaisExtractor.getResult(content);
         }
+        catch (java.net.SocketTimeoutException ex){
+            return openCalaisExtractor.getResult(content);
+        }
         catch (IOException ex) {
-            System.out.println(ex.getClass().toString());
-            Logger.getLogger(openCalaisExtractor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(openCalaisExtractor.class.getName()).log(Level.WARNING, null, ex);
         }
         return  response;
     }
     public static String[] getCitiesResult(java.lang.String content) {
         CalaisResponse response = openCalaisExtractor.getResult(content);
+        if(response == null) {
+            String [] res = new String[0];
+            return res;
+        }
         
         ArrayList<String> list = new ArrayList<String>();
         for (CalaisObject entity : response.getEntities()) {
@@ -64,7 +70,10 @@ public class openCalaisExtractor {
     
     public static String[] getPersonsResult(java.lang.String content) {
         CalaisResponse response = openCalaisExtractor.getResult(content);
-        
+        if(response == null) {
+            String [] res = new String[0];
+            return res;
+        }
         ArrayList<String> list = new ArrayList<String>();
         for (CalaisObject entity : response.getEntities()) {
             if(!entity.getField("_type").equals("Person"))continue;

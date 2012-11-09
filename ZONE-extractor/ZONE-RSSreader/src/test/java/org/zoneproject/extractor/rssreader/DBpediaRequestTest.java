@@ -40,7 +40,7 @@ public class DBpediaRequestTest {
     public void testGetCityNameFromURI_1() {
         System.out.println("getCityNameFromURI");
         String uri = "http://dbpedia.org/page/House_of_Lorraine";
-        String expResult = "House of Lorraine";
+        String expResult = "Maison de Lorraine";
         String result = DBpediaRequest.getCityNameFromURI(uri);
         assertEquals(expResult, result);
     }
@@ -48,7 +48,7 @@ public class DBpediaRequestTest {
     public void testGetCityNameFromURI_2() {
         System.out.println("getCityNameFromURI");
         String uri = "http://dbpedia.org/page/Petit-Couronne";
-        String expResult = "Petit-Couronne";
+        String expResult = "Grand-Couronne";
         String result = DBpediaRequest.getCityNameFromURI(uri);
         assertEquals(expResult, result);
     }
@@ -56,7 +56,7 @@ public class DBpediaRequestTest {
     public void testGetCityNameFromURI_3() {
         System.out.println("getCityNameFromURI");
         String uri = "http://www.dbpedia.org/resource/Pau,_Pyr%C3%A9n%C3%A9es-Atlantiques";
-        String expResult = "Pau_Pyréen";
+        String expResult = "Pau";
         String result = DBpediaRequest.getCityNameFromURI(uri);
         assertEquals(expResult, result);
     }
