@@ -4,6 +4,7 @@
  */
 package org.zoneproject.extractor.utils;
 
+import java.io.IOException;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
 import org.zoneproject.extractor.utils.FourStoreDatabase;
@@ -45,7 +46,7 @@ public class FourStoreDatabaseTest {
      * Test of getStore method, of class FourStoreDatabase.
      */
     @Test
-    public void testAddItem() {
+    public void testAddItem() throws IOException {
         System.out.println("addItem");
         String uri="http://testURI.com/#MyURI";
         Item item = new Item(uri);
@@ -54,12 +55,12 @@ public class FourStoreDatabaseTest {
         
         FourStoreDatabase.addItem(item);
         assertEquals(true,FourStoreDatabase.ItemURIExist(uri));
-        /*FourStoreDatabase.deleteItem(uri);
+        FourStoreDatabase.deleteItem(uri);
         
         assertEquals(false,FourStoreDatabase.ItemURIExist(uri));
         FourStoreDatabase.addItem(item);
         assertEquals(true,FourStoreDatabase.ItemURIExist(uri));
         FourStoreDatabase.deleteItem(uri);
-        assertEquals(false,FourStoreDatabase.ItemURIExist(uri));*/
+        assertEquals(false,FourStoreDatabase.ItemURIExist(uri));
     }
 }

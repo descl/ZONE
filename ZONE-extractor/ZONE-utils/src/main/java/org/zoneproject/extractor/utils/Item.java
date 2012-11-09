@@ -1,6 +1,9 @@
 package org.zoneproject.extractor.utils;
 
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RSS;
 import com.sun.syndication.feed.synd.SyndEntry;
 import java.io.IOException;
@@ -117,6 +120,10 @@ public class Item {
     public String getUri() {
         return uri;
     }
+    
+    public ArrayList<Prop> getElements(){
+        return values;
+    }
 
     public void setUri(String uri) {
         this.uri = uri;
@@ -128,5 +135,19 @@ public class Item {
     
     public void addProps(ArrayList<Prop> props){
         this.values.addAll(props);
+    }
+    
+    public Model getModel(){
+        Model model = ModelFactory.createDefaultModel();
+        Resource itemNode = model.createResource(uri);
+        for(Prop prop : values){
+            if(prop.isLiteral()){
+                itemNode.addLiteral(prop.getType(), model.createLiteral(prop.getValue()));
+            }
+            else{
+                itemNode.addProperty(prop.getType(), model.createResource(prop.getValue()));
+            }
+        }
+        return model;
     }
 }
