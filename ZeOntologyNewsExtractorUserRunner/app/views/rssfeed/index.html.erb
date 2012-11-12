@@ -34,8 +34,8 @@
             <table BORDER="1" style="border: 1px black; border-spacing: 0px;">
                 <% element[1].each do |item|
                 i=i+1
-                next if item[0].match(/^http\:\/\/purl.org/)
-                next if item[0] == 'concept'
+                #next if item[0].match(/^http\:\/\/purl.org/)
+                #next if item[0] == 'concept'
                 %>
                 <tr><td><%= item[0] %></td>
                 <td>
