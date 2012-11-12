@@ -37,17 +37,17 @@ class RssfeedController < ApplicationController
       end
     end
     
-    query = "SELECT ?concept ?relation ?result ?pubDateTime WHERE {\n"
-    query += extendQuery
-    query += "?concept <http://purl.org/rss/1.0/title> ?title.
+    @query = "SELECT ?concept ?relation ?result ?pubDateTime WHERE {\n"
+    @query += extendQuery
+    @query += "?concept <http://purl.org/rss/1.0/title> ?title.
 ?concept <http://purl.org/rss/1.0/pubDateTime> ?pubDateTime.
 ?concept ?relation ?result.
 } ORDER BY DESC(?pubDateTime) LIMIT 500"
 
     endpoint = 'http://localhost:8080/sparql/'
-    puts query
+    puts @query
     store = FourStore::Store.new endpoint
-    @elements = store.select(query)
+    @elements = store.select(@query)
 
 # @result = Array.new
 # if @elements.length > 0
@@ -72,9 +72,9 @@ class RssfeedController < ApplicationController
     @elements.each() do |element|
 
       if @result[element["concept"]] == nil
-        @result[element["concept"]] = {}
+        @result[element["concept"]] = Array.new
       end
-      @result[element["concept"]][element["relation"]] = element["result"]
+      @result[element["concept"]].push([element["relation"],element["result"]])
       
       #if @result[@result.length-1]["concept"] != element["concept"]
         

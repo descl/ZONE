@@ -6,3 +6,7 @@
 /ZONE-RSSreader/target/
 /ZONE-extractor/ZONE-RSSreader/target/
 /ZONE-extractor/ZONE-utils/target/
+/ZONE-extractor/ZONE-plugin-ExtractArticlesContent/target/
+/ZONE-extractor/ZONE-plugin-WikiMeta/target/
+/ZONE-extractor/ZONE-plugin-OpenCalais/target/
+/ZONE-extractor/ZONE-extractor-start/target/

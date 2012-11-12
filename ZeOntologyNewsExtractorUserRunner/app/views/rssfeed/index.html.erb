@@ -24,28 +24,33 @@
     <% i=1; @result.each do |element| %>
 <div class="well">
             <a href= "<%= element[0] %>">
-                <%= element[1]["http://purl.org/rss/1.0/title"] %>
+                <%= ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/title"})[0])[1]%>
             </a>
-            <%= element[1]["http://purl.org/rss/1.0/pubDate"] %>
-            </br>
-            <%= if element[1]["http://purl.org/rss/1.0/description"] != nil
-                element[1]["http://purl.org/rss/1.0/description"].html_safe  end %>
+            <%= ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/pubDate"})[0])[1]%>
+            <br/>
+            <%= if ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/description"})[0])[1] != nil
+                ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/description"})[0])[1].html_safe  end %>
             
             <table BORDER="1" style="border: 1px black; border-spacing: 0px;">
                 <% element[1].each do |item|
                 i=i+1
-                #next if item[0].match(/^http\:\/\/purl.org/)
-                #next if item[0] == 'concept'
+                next if item[0].match(/^http\:\/\/purl.org/)
+                next if item[0] == 'concept'
+                next if item[1] == nil
                 %>
                 <tr><td><%= item[0] %></td>
                 <td>
-                <%= link_to item[1], "getOne?element="+item[1],:id => "elem"+i.to_s(), :remote => true %>
-                <%= javascript_tag do %>
-                  $("#elem<%=i%>").bind("ajax:complete", function(et, e){
-                   $("#elem<%=i.to_s()%>").html(e.responseText); // insert content
-                    event.preventDefault(); // Prevent link from following its href
-                  });
-                <% end %>
+                    <% if item[1].starts_with? 'http://'%>
+                        <%= link_to item[1], "getOne?element="+item[1],:id => "elem"+i.to_s(), :remote => true %>
+                        <%= javascript_tag do %>
+                          $("#elem<%=i%>").bind("ajax:complete", function(et, e){
+                           $("#elem<%=i.to_s()%>").html(e.responseText); // insert content
+                            event.preventDefault(); // Prevent link from following its href
+                          });
+                        <%end%>
+                    <%else%>
+                        <%= item[1]%>
+                    <%end%>
                 </td><td>
                 <%= link_to "Ajouter au filtre", rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}) %></td></tr>
                 <% end%>
