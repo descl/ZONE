@@ -34,6 +34,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class FourStoreDatabase {
     private static Store st = null;
     private static String uri = Config.getVar("FourStore-server");
+    public static String ZONE_URI = "http://demo.zone-project.org/data";
     
     public static Store getStore(){
         try {
@@ -83,7 +84,7 @@ public class FourStoreDatabase {
 
         String response="";
         try {
-            getStore().insertModel(model, "http://demo.zone-project.org/data");
+            getStore().insertModel(model, ZONE_URI);
         } catch (IOException ex) {
             Logger.getLogger(FourStoreDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -177,11 +178,9 @@ public class FourStoreDatabase {
         }
     }
     
-    public static void deleteItem(String uri){
-        throw new NotImplementedException();
+    public static void deleteItem(String uri) throws IOException{
+        Item item = getOneItemByURI(uri);
+        getStore().deleteModel(item.getModel(), ZONE_URI);
     }
 
-    private static Exception NotImplementedException() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
 }
