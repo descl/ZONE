@@ -12,9 +12,9 @@ import org.junit.Test;
  *
  * @author Desclaux Christophe <christophe@zouig.org>
  */
-public class FourStoreDatabaseTest {
+public class VirtuosoStoreDatabaseTest {
     
-    public FourStoreDatabaseTest() {
+    public VirtuosoStoreDatabaseTest() {
     }
     
     @BeforeClass
@@ -43,14 +43,15 @@ public class FourStoreDatabaseTest {
         Item item = new Item(uri);
         item.addProp(new Prop("http://purl.org/rss/1.0/title","le titre",true));
         
-        FourStoreDatabase.addItem(item);
-        assertEquals(true,FourStoreDatabase.ItemURIExist(uri));
-        FourStoreDatabase.deleteItem(uri);
         
-        assertEquals(false,FourStoreDatabase.ItemURIExist(uri));
-        FourStoreDatabase.addItem(item);
-        assertEquals(true,FourStoreDatabase.ItemURIExist(uri));
-        FourStoreDatabase.deleteItem(uri);
-        assertEquals(false,FourStoreDatabase.ItemURIExist(uri));
+        VirtuosoDatabase.addItem(item);
+        assertEquals(true,VirtuosoDatabase.ItemURIExist(uri));
+        VirtuosoDatabase.deleteItem(uri);
+        
+        assertEquals(false,VirtuosoDatabase.ItemURIExist(uri));
+        VirtuosoDatabase.addItem(item);
+        assertEquals(true,VirtuosoDatabase.ItemURIExist(uri));
+        VirtuosoDatabase.deleteItem(uri);
+        assertEquals(false,VirtuosoDatabase.ItemURIExist(uri));
     }
 }
