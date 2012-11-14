@@ -30,16 +30,48 @@
     </resources>
   </build>
 
+  <repositories>
+    <repository>
+      <id>local-repo</id>
+      <url>file://${basedir}/local-repo</url>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
+      <groupId>com.hp.hpl.jena</groupId>
+      <artifactId>arq</artifactId>
+      <version>2.8.6</version>
+    </dependency>
+    <!--<dependency>
       <groupId>org.apache.jena</groupId>
       <artifactId>jena-arq</artifactId>
       <version>2.9.3</version>
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>rome</groupId>
       <artifactId>rome</artifactId>
       <version>0.9</version>
+    </dependency>
+    <dependency>
+      <groupId>com.googlecode.json-simple</groupId>
+      <artifactId>json-simple</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>virt_jena</groupId>
+      <artifactId>virt_jena</artifactId>
+      <version>1.6</version>
+    </dependency>
+    <dependency>
+      <groupId>virtjdbc3</groupId>
+      <artifactId>virtjdbc3</artifactId>
+      <version>1.6</version>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.16</version>
     </dependency>
   </dependencies>
 
