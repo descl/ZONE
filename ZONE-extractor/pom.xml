@@ -13,6 +13,7 @@
     <module>ZONE-plugin-ExtractArticlesContent</module>
     <module>ZONE-plugin-OpenCalais</module>
     <module>ZONE-extractor-start</module>
+    <module>ZONE-plugin-INSEEGeo</module>
   </modules>
   
   <properties>
@@ -27,7 +28,7 @@
           <configuration>
             <source>1.6</source>
             <target>1.6</target>
-            <compilerArgument></compilerArgument>
+            <compilerArgument/>
           </configuration>
         </plugin>
       </plugins>
@@ -47,7 +48,6 @@
           </descriptorRefs>
         </configuration>
       </plugin>
-      
       <plugin>  
         <groupId>org.codehaus.mojo</groupId>  
         <artifactId>exec-maven-plugin</artifactId>
@@ -81,4 +81,36 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <profiles>
+ 
+        <profile>
+            <id>development</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+          <name>environment.type</name>
+          <value>dev</value>
+        </property>
+            </activation>
+            <properties>
+                 <nameHTMLFile>devHTML</nameHTMLFile>
+            </properties>
+        </profile>
+ 
+        <profile>
+            <id>production</id>
+            <activation>
+ 
+            <property>
+          <name>environment.type</name>
+          <value>prod</value>
+        </property>
+            </activation>
+            <properties>
+                <nameHTMLFile>prodHTML</nameHTMLFile>
+            </properties>
+        </profile>
+ 
+    </profiles>
 </project>
