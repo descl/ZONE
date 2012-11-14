@@ -1,16 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.zoneproject.extractor.utils;
 
-import org.zoneproject.extractor.utils.FourStore.Store;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.util.ArrayList;
@@ -20,18 +18,17 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.zoneproject.extractor.utils.FourStore.Store;
 
 /**
  *
- * @author cdesclau
+ * @author Desclaux Christophe <christophe@zouig.org>
  */
-public class FourStoreDatabase {
+public abstract class FourStoreDatabase{
     private static Store st = null;
     private static String uri = Config.getVar("FourStore-server");
     public static String ZONE_URI = "http://demo.zone-project.org/data";
@@ -96,9 +93,13 @@ public class FourStoreDatabase {
      * @return the xml result as a String
      */
     public static String runSPARQLRequest(String queryString){
+        return runSPARQLRequest(queryString, Store.OutputFormat.SPARQL_XML);
+    }
+    
+    public static String runSPARQLRequest(String queryString, Store.OutputFormat format){
         String response="";
         try {
-            return getStore().query(queryString);
+            return getStore().query(queryString, format);
         } catch ( IOException ex) {
             Logger.getLogger(FourStoreDatabase.class.getName()).log(Level.SEVERE, null, ex);
             return "";
@@ -135,8 +136,8 @@ public class FourStoreDatabase {
         }
         return items.toArray(new Item[items.size()]);
     }
-    public static void main(String[] args){
-        System.out.println(getItemsNotAnotatedForOnePlugin("http://www.wikimeta.org/Entities#LOC"));
+    public static void main(String[] args) throws FileNotFoundException, IOException{
+        loadFile("","/home/cdesclau/Work/v2/ZONE-extractor/ZONE-plugin-INSEEGeo/target/resources/arrondissements-06-2011.rdf");
     }
     
     /**
@@ -181,6 +182,44 @@ public class FourStoreDatabase {
     public static void deleteItem(String uri) throws IOException{
         Item item = getOneItemByURI(uri);
         getStore().deleteModel(item.getModel(), ZONE_URI);
+    }
+    
+    public static void loadFolder(String graphURI,String dir){
+        File file = new File(dir);
+        File[] files = file.listFiles();
+        if (files != null) {
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].isFile() == true) {
+                    try {
+                        loadFile(graphURI,files[i].getAbsolutePath());
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(FourStoreDatabase.class.getName()).log(Level.WARNING, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(FourStoreDatabase.class.getName()).log(Level.WARNING, null, ex);
+                    }
+                } else if(files[i].isDirectory() == true){
+                    loadFolder(graphURI,files[i].getAbsolutePath());
+                }
+            }
+        }
+    }
+    
+    public static void loadFile(String graphURI,String uri) throws FileNotFoundException, IOException{
+
+        StringBuilder fileData = new StringBuilder(1000);
+        BufferedReader reader = new BufferedReader(
+                new FileReader(uri));
+        char[] buf = new char[1024];
+        int numRead=0;
+        while((numRead=reader.read(buf)) != -1){
+            String readData = String.valueOf(buf, 0, numRead);
+            fileData.append(readData);
+            buf = new char[1024];
+        }
+        reader.close();
+        getStore().add(graphURI, 
+                fileData.toString(), 
+                Store.InputFormat.XML);
     }
 
 }

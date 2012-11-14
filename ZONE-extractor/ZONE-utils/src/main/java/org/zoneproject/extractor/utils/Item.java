@@ -1,5 +1,7 @@
 package org.zoneproject.extractor.utils;
 
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -16,7 +18,6 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -41,7 +42,20 @@ public class Item {
         this.uri = uri;
         values = new ArrayList<Prop>();
     }
-    
+    public Item(String uri, ResultSet set){
+        this(uri, set,"?s","?p","?o");
+    }
+    public Item(String uri, ResultSet set, String s, String p, String o){
+        this.uri = uri;
+        values = new ArrayList<Prop>();
+
+        while (set.hasNext()) {
+            QuerySolution result = set.nextSolution();
+            String relation = result.get(p).toString();
+            String value = result.get(o).toString();
+            values.add(new Prop(relation,value,result.get(o).isLiteral()));
+        }
+    }
     public Item(String uri, String sparqlResultInfos){
         this.uri = uri;
         values = new ArrayList<Prop>();
@@ -59,11 +73,11 @@ public class Item {
             }
             
         } catch (ParserConfigurationException ex){
-            Logger.getLogger(FourStoreDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex){
-            Logger.getLogger(FourStoreDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex){
-            Logger.getLogger(FourStoreDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public Item(String link, String title, String description, Date datePublication){

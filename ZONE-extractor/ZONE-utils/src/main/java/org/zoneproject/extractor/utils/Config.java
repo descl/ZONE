@@ -1,6 +1,5 @@
 package org.zoneproject.extractor.utils;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -16,7 +15,6 @@ public class Config {
     public static Properties getConfigFile(){
         if(configFile == null){
             try {
-                //configFile = new Properties();
                 configFile = new java.util.Properties();
                 java.net.URL url = Config.class.getClassLoader().getResource("zone.properties");
                 configFile.load(url.openStream());

@@ -1,8 +1,8 @@
 package org.zoneproject.extractor.utils;
 
 /**
- * Hello world!
  *
+ * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class App 
 {

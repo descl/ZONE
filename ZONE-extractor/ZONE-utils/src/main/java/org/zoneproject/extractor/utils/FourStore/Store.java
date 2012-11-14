@@ -312,6 +312,12 @@ public class Store {
         return query(sparql, OutputFormat.SPARQL_XML, Integer.MIN_VALUE);
     }
 
+    public String JSONquery(String sparql) throws MalformedURLException,
+            ProtocolException, IOException {
+        //Integer.MIN_VALUE means no soft-limit specified
+        return query(sparql, OutputFormat.JSON, Integer.MIN_VALUE);
+    }
+
     /**
      * Queries the repository
      *
