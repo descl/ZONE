@@ -3,9 +3,7 @@ package org.zoneproject.extractor.plugin.opencalais;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.zoneproject.extractor.utils.FourStoreDatabase;
+import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
 
@@ -25,7 +23,7 @@ public class App
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Item[] items = FourStoreDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI);
+        Item[] items = Database.getItemsNotAnotatedForOnePlugin(PLUGIN_URI);
         System.out.println("OpenCalais has "+items.length+" items to annotate");
         for(Item item : items){
             System.out.println("Add ExtractArticlesContent for item: "+item);
@@ -33,8 +31,8 @@ public class App
             props.addAll(openCalaisExtractor.getCitiesResultProp(item.concat()));
             props.addAll(openCalaisExtractor.getPersonsResultProp(item.concat()));
 
-            FourStoreDatabase.addAnnotations(item.getUri(), props);
-            FourStoreDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
+            Database.addAnnotations(item.getUri(), props);
+            Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
         }
     }
 }

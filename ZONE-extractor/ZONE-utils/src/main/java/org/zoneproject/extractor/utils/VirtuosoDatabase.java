@@ -80,6 +80,9 @@ public abstract class VirtuosoDatabase {
         return VirtuosoQueryExecutionFactory.create(queryString,getStore()).execSelect() ;
     }
     
+    public static boolean runSPARQLAsk(String queryString){
+        return VirtuosoQueryExecutionFactory.create(queryString,getStore()).execAsk() ;
+    }
     /**
      * get all items which has not been annotated for a plugin
      * @param pluginURI the plugin URI
@@ -109,10 +112,15 @@ public abstract class VirtuosoDatabase {
     }
     
     public static boolean ItemURIExist(String uri){
+        return contains(uri, "http://purl.org/rss/1.0/title");
+    }
+    
+    public static boolean contains(String uri, String prop){
         Model m = ModelFactory.createDefaultModel();
-        Resource r = m.createResource( uri );
-        Property p = m.createProperty( "http://purl.org/rss/1.0/title" );
+        Resource r = m.createResource(uri);
+        Property p = m.createProperty(prop);
         return getStore().contains(r,p);
+        
     }
     
     public static void verifyItemsList(ArrayList<Item> items){
