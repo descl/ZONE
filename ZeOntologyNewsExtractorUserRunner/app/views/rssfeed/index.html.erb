@@ -21,7 +21,11 @@
 <p><%= link_to "Recupérer le flux RSS", params.merge(:format => :rss), :class => "feed_link" %></p>
 
 
-    <% i=1; @result.each do |element| %>
+    <% i=1; @result.each do |element| 
+      next if (element[1].select { |f| f[0] == "http://purl.org/rss/1.0/title"})[0] == nil
+      next if (element[1].select { |f| f[0] == "http://purl.org/rss/1.0/pubDate"})[0] == nil
+      next if (element[1].select { |f| f[0] == "http://purl.org/rss/1.0/description"})[0] == nil%>
+    
 <div class="well">
             <a href= "<%= element[0] %>">
                 <%= ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/title"})[0])[1]%>
@@ -34,9 +38,9 @@
             <table BORDER="1" style="border: 1px black; border-spacing: 0px;">
                 <% element[1].each do |item|
                 i=i+1
-                next if item[0].match(/^http\:\/\/purl.org/)
-                next if item[0] == 'concept'
-                next if item[1] == nil
+                #next if item[0].match(/^http\:\/\/purl.org/)
+                #next if item[0] == 'concept'
+                #next if item[1] == nil
                 %>
                 <tr><td><%= item[0] %></td>
                 <td>

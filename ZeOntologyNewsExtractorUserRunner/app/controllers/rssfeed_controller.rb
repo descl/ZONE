@@ -83,8 +83,7 @@ class RssfeedController < ApplicationController
       #end
       # @result[@result.length-1][element["relation"]] = element["result"]
     end
-    
-    puts @result
+
     
     #@result.each.delete_if{|x| x["http://purl.org/rss/1.0/link"] == nil}
     #@result.delete_if{|x| x["http://purl.org/rss/1.0/description"] == nil}
