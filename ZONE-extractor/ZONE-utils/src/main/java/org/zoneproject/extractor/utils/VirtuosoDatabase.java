@@ -90,7 +90,35 @@ public abstract class VirtuosoDatabase {
      */
     public static Item[] getItemsNotAnotatedForOnePlugin(String pluginURI){
         ArrayList<Item> items = new ArrayList<Item>();
-        String request = "SELECT ?uri WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title  OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined} FILTER (!bound(?pluginDefined)) }";
+        String request = "SELECT DISTINCT ?uri WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title  OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined} FILTER (!bound(?pluginDefined)) }";
+        ResultSet results = runSPARQLRequest(request);
+
+        while (results.hasNext()) {
+            QuerySolution result = results.nextSolution();
+            items.add(getOneItemByURI(result.get("?uri").toString()));
+        }
+        return items.toArray(new Item[items.size()]);
+    }
+
+    /**
+     * get all items which has not been annotated for a plugin
+     * @param pluginURI the plugin URI
+     * @return the items
+     */
+    public static Item[] getItemsNotAnotatedForPluginsWithDeps(String pluginURI, String []deps){
+        ArrayList<Item> items = new ArrayList<Item>();
+        String requestPlugs ="{?uri <"+pluginURI+"> ?pluginDefined. ";
+        int i=0;
+        for(String curPlugin : deps){
+            requestPlugs += "?uri <"+curPlugin+"> ?deps"+i++ +". ";
+        }
+        requestPlugs += "} FILTER (!bound(?pluginDefined) ";
+        while(i > 0){
+            requestPlugs += "&& bound(?deps"+ --i +")";
+        }
+        
+        String request = "SELECT ?uri WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title  OPTIONAL "+requestPlugs+") }";
+        System.out.println(request);
         ResultSet results = runSPARQLRequest(request);
 
         while (results.hasNext()) {
@@ -99,7 +127,7 @@ public abstract class VirtuosoDatabase {
         }
         return items.toArray(new Item[items.size()]);
     }
-    
+
     /**
      * Get an Item from the Database
      * @param uri

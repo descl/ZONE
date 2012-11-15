@@ -15,8 +15,8 @@ import org.zoneproject.extractor.utils.Database;
 public class Install {
     public static void main(String[] args) {
         System.out.println("Loading RDF Files for the INSEE Database");
-        ResultSet r = Database.runSPARQLRequest(" SELECT ?p WHERE { <http://rdf.insee.fr/geo/2011/arrondissements-01-2011.rdf> ?p ?i } LIMIT 10");
-        if(r.getRowNumber() == 0){
+        ResultSet r = Database.runSPARQLRequest(" SELECT ?p WHERE { <http://rdf.insee.fr/geo/2011/COM_10378> ?p ?i } LIMIT 10");
+        if(!r.hasNext()){
             Database.loadFolder("http://rdf.insee.fr/geo/2011/",args[0]);
         }
     }

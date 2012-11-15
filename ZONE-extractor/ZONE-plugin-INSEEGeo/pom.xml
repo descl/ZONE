@@ -73,6 +73,12 @@
   <dependencies>
     <dependency>
       <groupId>org.zoneproject.extractor</groupId>
+      <artifactId>ZONE-plugin-WikiMeta</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.zoneproject.extractor</groupId>
       <artifactId>ZONE-utils</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>compile</scope>
