@@ -20,8 +20,8 @@
 
 <p><%= link_to "Recupérer le flux RSS", params.merge(:format => :rss), :class => "feed_link" %></p>
 
-
-    <% i=1; @result.each do |element| 
+    
+    <% i=1;elementId=0; @result.each do |element| 
       next if (element[1].select { |f| f[0] == "http://purl.org/rss/1.0/title"})[0] == nil
       next if (element[1].select { |f| f[0] == "http://purl.org/rss/1.0/pubDate"})[0] == nil
       next if (element[1].select { |f| f[0] == "http://purl.org/rss/1.0/description"})[0] == nil%>
@@ -31,34 +31,61 @@
                 <%= ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/title"})[0])[1]%>
             </a>
             <%= ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/pubDate"})[0])[1]%>
+
+            <% element[1].each do |item|
+                next if (!item[0].starts_with? 'http://www.opencalais.org/Entities#') && (!item[1].starts_with? 'http://rdf.insee') && (!item[1].starts_with? 'http://www.dbpedia')%>
+                <%= link_to item[1], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-success" %></td></tr>
+            <% end%>
             <br/>
+            
             <%= if ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/description"})[0])[1] != nil
                 ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/description"})[0])[1].html_safe  end %>
             
-            <table BORDER="1" style="border: 1px black; border-spacing: 0px;">
-                <% element[1].each do |item|
-                i=i+1
-                #next if item[0].match(/^http\:\/\/purl.org/)
-                #next if item[0] == 'concept'
-                #next if item[1] == nil
-                %>
-                <tr><td><%= item[0] %></td>
-                <td>
-                    <% if item[1].starts_with? 'http://'%>
-                        <%= link_to item[1], "getOne?element="+item[1],:id => "elem"+i.to_s(), :remote => true %>
-                        <%= javascript_tag do %>
-                          $("#elem<%=i%>").bind("ajax:complete", function(et, e){
-                           $("#elem<%=i.to_s()%>").html(e.responseText); // insert content
-                            event.preventDefault(); // Prevent link from following its href
-                          });
-                        <%end%>
-                    <%else%>
-                        <%= item[1]%>
-                    <%end%>
-                </td><td>
-                <%= link_to "Ajouter au filtre", rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}) %></td></tr>
-                <% end%>
-            </table>
+            
+            
+            
+            <div class="accordion" id="accordion<%= elementId+=1 %>">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion<%= elementId%>" href="#collapse<%= elementId%>">
+                        Voir les annotations
+                        </a>
+                    </div>
+                    <div id="collapse<%= elementId%>" class="accordion-body collapse">
+                        <div class="accordion-inner" style="padding: 0px;">
+                            <table class="table table-striped"><!--BORDER="1" style="border: 1px black; border-spacing: 0px;"-->
+                                <% element[1].each do |item|
+                                i=i+1
+                                %>
+                                <tr><td><%= item[0] %></td>
+                                <td>
+                                    
+                                    <% if item[0].starts_with? 'http://www.zone-project.org/plugins/ExtractArticlesContent#result'%>
+                                        <%= item[1][0..400] %>
+                                        <a href= "<%= element[0] %>">
+                                            (...)
+                                        </a>
+                                    <% elsif (item[1].starts_with? 'http://rdf.insee') || (item[1].starts_with? 'http://www.dbpedia') %>
+                                        <%= link_to item[1], "getOne?element="+item[1],:id => "elem"+i.to_s(), :remote => true %>
+                                        <%= javascript_tag do %>
+                                          $("#elem<%=i%>").bind("ajax:complete", function(et, e){
+                                           $("#elem<%=i.to_s()%>").html(e.responseText); // insert content
+                                            event.preventDefault(); // Prevent link from following its href
+                                          });
+                                        <%end%>
+                                    <%elsif (item[1].starts_with? 'http://')%>
+                                        <%= link_to item[1],item[1] %>
+                                    <%else%>
+                                        <%= item[1]%>
+                                    <%end%>
+                                </td><td>
+                                <%= link_to "Ajouter au filtre", rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-success" %></td></tr>
+                                <% end%>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     </div>
 
