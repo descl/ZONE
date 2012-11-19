@@ -7,10 +7,10 @@
     <artifactId>ZONE-extractor</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <groupId>zone</groupId>
+  <groupId>org.zoneproject.extractor</groupId>
   <artifactId>ZONE-plugin-INSEEGeo</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>ZONE-plugin-INSEEGEo</name>
+  <name>ZONE-plugin-INSEEGeo</name>
 
   <build>
     <plugins>
@@ -73,7 +73,7 @@
   <dependencies>
     <dependency>
       <groupId>org.zoneproject.extractor</groupId>
-      <artifactId>ZONE-plugin-WikiMeta</artifactId>
+      <artifactId>ZONE-plugin-OpenCalais</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>

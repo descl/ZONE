@@ -1,4 +1,6 @@
 package org.zoneproject.extractor.plugin.inseegeo;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -24,12 +26,6 @@ import org.zoneproject.extractor.utils.Database;
 public class InseeSparqlRequest {
     
     
-    public static String request(String queryString){
-        String res = null;
-        //String res = Database.runSPARQLRequest(queryString, Store.OutputFormat.JSON);
-        return res;
-    }
-    
     public static ArrayList<Prop> getDimensions(String[] cities){
         ArrayList<Prop> result = new ArrayList<Prop>();
         for(int i=0; i< cities.length;i++){
@@ -41,29 +37,24 @@ public class InseeSparqlRequest {
     public static ArrayList<Prop> getDimensions(String city){
         String query="PREFIX geo: <http://rdf.insee.fr/geo/>"
           + "\nSELECT  DISTINCT ?nom ?nomEntite ?entite ?type WHERE{"
-          + "\n    ?ville geo:nom '"+city+"'@fr"
-          + "\n    ?entite geo:subdivision* ?ville"
-          + "\n    ?ville geo:nom ?nom"
-          + "\n    ?entite rdf:type ?type"
-          + "\n    ?entite geo:nom ?nomEntite"
+          + "\n    ?ville geo:nom '"+city+"'@fr."
+          //+ "\n    ?entite geo:subdivision* ?ville."
+          + "\n    ?ville geo:nom ?nom."
+          + "\n    ?entite rdf:type ?type."
+          + "\n    ?entite geo:nom ?nomEntite."
           + "\n    FILTER(?type != geo:Pays_ou_Territoire)}";
         System.out.println(query);
         
-        String res = InseeSparqlRequest.request(query);
+        ResultSet res = Database.runSPARQLRequest(query);
         ArrayList<Prop> dims = new ArrayList<Prop>();
         
-        
-        
-        
-        
-        /*for (Enumeration<IResult> en = res.getResults(); en.hasMoreElements();) {
-            IResult r = en.nextElement();
-            //dims.add(new Prop(r.getStringValue("?type"), r.getStringValue("?nomEntite"),true));
-            dims.add(new Prop(r.getStringValue("?type"), r.getStringValue("?entite"),false));
+        while (res.hasNext()) {
+            QuerySolution r = res.nextSolution();
+            dims.add(new Prop(r.get("?type").toString(), r.get("?entite").toString(),false));
+
         }
         
-        return dims;*
-        */ return null;
+        return dims;
     }
     
     public static ArrayList<Prop> getDimensionsTooLong(String[] cities){
@@ -115,3 +106,26 @@ public class InseeSparqlRequest {
         System.out.println("Done");
     }
 }
+
+
+
+PREFIX geo: <http://rdf.insee.fr/geo/>
+SELECT  DISTINCT  ?ville WHERE
+{
+  {
+    SELECT ?ville ?zone WHERE{
+      ?ville geo:nom 'Ajaccio'@fr.
+      ?ville rdf:type ?type.
+      ?ville geo:subdivision ?zone.
+    }
+  }OPTION( TRANSITIVE,
+            t_distinct,
+            t_in(?ville),
+            t_out(?zone),
+            t_min(2),
+            t_max(4),
+            t_step ('step_no') as ?dist ) .
+  FILTER ( ?s = <http://rdf.insee.fr/geo/2011/COM_2A004>)
+}
+
+http://rdf.insee.fr/geo/2011/COM_2A004

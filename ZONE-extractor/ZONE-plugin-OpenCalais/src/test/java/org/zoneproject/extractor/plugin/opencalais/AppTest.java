@@ -48,8 +48,8 @@ public class AppTest{
     @org.junit.Test
     public void testGetPersonsResult() {
         System.out.println("getPersonsResult");
-        String content = "Nicolas Sarkozy est en vacances";
-        String[] expResult = {"Nicolas Sarkozy"};
+        String content = "Nicolas Sarkozy est en vacances et François Fillon est présent!";
+        String[] expResult = {"François Fillon","Nicolas Sarkozy"};
         String[] result = openCalaisExtractor.getPersonsResult(content);
         assertArrayEquals(expResult, result);
     }

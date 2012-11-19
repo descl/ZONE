@@ -95,11 +95,16 @@ public class Item {
     }
     
     public String getElement(Property key){
+        return getElements(key.getURI())[0];
+    }
+    
+    public String[] getElements(String key){
+        ArrayList<String> result = new ArrayList<String>();
         for(int i=0; i < values.size();i++){
-            if(values.get(i).getType().equals(key))
-                return values.get(i).getValue();
+            if(values.get(i).getType().getURI().equals(key))
+                result.add(values.get(i).getValue());
         }
-        return null;
+        return result.toArray(new String[result.size()]);
     }
     
     @Override

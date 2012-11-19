@@ -7,7 +7,7 @@ import org.zoneproject.extractor.utils.Prop;
 
 public class App 
 {
-    public static String PLUGIN_URI = "http://www.zone-project.org/plugins/OpenCalais";
+    public static String PLUGIN_URI = "http://www.zone-project.org/plugins/INSEEGeo";
     
     public App(){
         String [] tmp = {};
@@ -17,14 +17,16 @@ public class App
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        String [] deps = {org.zoneproject.extractor.plugin.wikimeta.App.PLUGIN_URI};
+        String openCalaisPrefix = "http://www.opencalais.org/Entities";
+        String [] deps = {openCalaisPrefix+"#LOC"};
         Item[] items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps);
         System.out.println("INSEEGeo has "+items.length+" items to annotate");
         for(Item item : items){
-         //   System.out.println("Add ExtractArticlesContent for item: "+item);
+            System.out.println("Add ExtractArticlesContent for item: "+item);
             ArrayList<Prop> props = new ArrayList<Prop>();
-            
-            //props.addAll(InseeSparqlRequest.getDimensions());
+            //System.out.println(item.getElements(openCalaisPrefix+"#LOC").length);
+            System.out.println(InseeSparqlRequest.getDimensions(item.getElements(openCalaisPrefix+"#LOC")));
+            //props.addAll(InseeSparqlRequest.getDimensions(item.getElements(org.zoneproject.extractor.plugin.opencalais.App.PLUGIN_URI+"#LOC")));
             //props.addAll(openCalaisExtractor.getCitiesResultProp(item.concat()));
             //props.addAll(openCalaisExtractor.getPersonsResultProp(item.concat()));
 

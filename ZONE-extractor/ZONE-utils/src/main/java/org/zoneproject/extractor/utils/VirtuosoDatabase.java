@@ -107,23 +107,19 @@ public abstract class VirtuosoDatabase {
      */
     public static Item[] getItemsNotAnotatedForPluginsWithDeps(String pluginURI, String []deps){
         ArrayList<Item> items = new ArrayList<Item>();
-        String requestPlugs ="{?uri <"+pluginURI+"> ?pluginDefined. ";
+        String requestPlugs ="";
         int i=0;
         for(String curPlugin : deps){
-            requestPlugs += "?uri <"+curPlugin+"> ?deps"+i++ +". ";
-        }
-        requestPlugs += "} FILTER (!bound(?pluginDefined) ";
-        while(i > 0){
-            requestPlugs += "&& bound(?deps"+ --i +")";
+            requestPlugs += ". ?uri <"+curPlugin+"> ?deps"+i++ +" ";
         }
         
-        String request = "SELECT ?uri WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title  OPTIONAL "+requestPlugs+") }";
+        String request = "SELECT ?uri WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title "+requestPlugs+". OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined.  } FILTER (!bound(?pluginDefined)) }";
         System.out.println(request);
         ResultSet results = runSPARQLRequest(request);
 
         while (results.hasNext()) {
             QuerySolution result = results.nextSolution();
-            items.add(getOneItemByURI(result.get("?uri").asLiteral().getString()));
+            items.add(getOneItemByURI(result.get("?uri").toString()));
         }
         return items.toArray(new Item[items.size()]);
     }
@@ -209,4 +205,3 @@ public abstract class VirtuosoDatabase {
         System.out.println(VirtuosoDatabase.ItemURIExist("http://www.personnes.com#Margot"));
     }
 }
-
