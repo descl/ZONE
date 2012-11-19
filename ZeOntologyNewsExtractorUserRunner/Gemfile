@@ -22,8 +22,9 @@ end
 
 gem 'jquery-rails'
 
-gem "ppe-4store-ruby", "~> 0.0.3"
-
+#gem "ppe-4store-ruby", "~> 0.0.3"
+#gem "rdf-virtuoso", "~> 0.1.0"
+gem "sparql-client", "~> 0.3.1"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -1,5 +1,6 @@
-require '4store-ruby'
+require 'sparql/client'
 class RssfeedController < ApplicationController
+  $endpoint = 'http://localhost:8890/sparql/'
   def getOne
     @itemURI = params[:element]
     render  :layout => 'empty'
@@ -44,10 +45,9 @@ class RssfeedController < ApplicationController
 ?concept ?relation ?result.
 } ORDER BY DESC(?pubDateTime) LIMIT 500"
 
-    endpoint = 'http://localhost:8080/sparql/'
     puts @query
-    store = FourStore::Store.new endpoint
-    @elements = store.select(@query)
+    store = SPARQL::Client.new($endpoint)
+    @elements = store.query(@query)
 
 # @result = Array.new
 # if @elements.length > 0
@@ -69,13 +69,11 @@ class RssfeedController < ApplicationController
     
     @result = {}
     
-    @elements.each() do |element|
-
-      if @result[element["concept"]] == nil
-        @result[element["concept"]] = Array.new
+    @elements.each_solution do |element|
+      if @result[element[:concept].to_s] == nil
+        @result[element[:concept].to_s] = Array.new
       end
-      @result[element["concept"]].push([element["relation"],element["result"]])
-      
+      @result[element[:concept].to_s].push([element[:relation].to_s,element[:result].to_s])
       #if @result[@result.length-1]["concept"] != element["concept"]
         
       # item = {"concept" => element["concept"]}
