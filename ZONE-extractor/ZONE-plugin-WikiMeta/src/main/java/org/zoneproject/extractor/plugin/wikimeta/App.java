@@ -6,12 +6,19 @@ import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
 
 /**
- * Hello world!
  *
+ * @author Desclaux Christophe <christophe@zouig.org>
  */
+
 public class App 
 {
     public static String PLUGIN_URI = "http://www.zone-project.org/plugins/WikiMeta";
+    
+    public App(){
+        String [] tmp = {};
+        App.main(tmp);
+    }
+    
     public static void main(String[] args) {
 
         Item[] items = Database.getItemsNotAnotatedForOnePlugin(PLUGIN_URI);
