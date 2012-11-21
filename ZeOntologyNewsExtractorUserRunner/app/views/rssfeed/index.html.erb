@@ -9,8 +9,8 @@
 </ol>
 <% end %>
 
-
-
+<% @OPEN_CALAIS_URI = 'http://www.opencalais.org/Entities#'%>
+<% @WIKI_META_URI = 'http://www.wikimeta.org/Entities#'%>
 
 
 
@@ -32,16 +32,25 @@
       next if (element[1].select { |f| f[0] == "http://purl.org/rss/1.0/description"})[0] == nil%>
     
 <div class="well">
-            <a href= "%= element[0] %>">
+            <a href= "<%= element[0] %>">
                 <%= ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/title"})[0])[1]%>
             </a>
             <%= ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/pubDate"})[0])[1]%>
-
+            <div class="btn-toolbar">
             <% element[1].each do |item|
-                next if (!item[0].starts_with? 'http://www.opencalais.org/Entities#') && (!item[1].starts_with? 'http://rdf.insee') && (!item[1].starts_with? 'http://www.dbpedia')%>
-                <%= link_to item[1], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-success" %></td></tr>
-            <% end%>
-            <br/>
+                if(item[0].starts_with? @OPEN_CALAIS_URI)%>
+                  <div class="btn-group">
+                    <%=link_to item[0][@OPEN_CALAIS_URI.length,item[0].length], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-success"%>
+                    <%=link_to item[1], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-success"%>
+                  </div>
+                <% elsif(item[0].starts_with? @WIKI_META_URI)%>
+                  <div class="btn-group">
+                    <%=link_to item[0][@WIKI_META_URI.length,item[0].length], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-info"%>
+                    <%=link_to item[1][item[1].rindex('/')+1, item[1].length], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-info"%>
+                  </div>
+                <%end%>
+              <% end%>
+            </div>
             
             <%= if ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/description"})[0])[1] != nil
                 ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/description"})[0])[1].html_safe  end %>
