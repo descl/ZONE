@@ -11,6 +11,7 @@
 
 <% @OPEN_CALAIS_URI = 'http://www.opencalais.org/Entities#'%>
 <% @WIKI_META_URI = 'http://www.wikimeta.org/Entities#'%>
+<% @INSEE_GEO_URI = 'http://rdf.insee.fr/geo/'%>
 
 
 
@@ -47,6 +48,11 @@
                   <div class="btn-group">
                     <%=link_to item[0][@WIKI_META_URI.length,item[0].length], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-info"%>
                     <%=link_to item[1][item[1].rindex('/')+1, item[1].length], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-info"%>
+                  </div>
+                <% elsif(item[0].starts_with? @INSEE_GEO_URI)%>
+                  <div class="btn-group">
+                    <%=link_to item[0][@INSEE_GEO_URI.length,item[0].length], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-warning"%>
+                    <%=link_to item[1][item[1].rindex('/')+1, item[1].length], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-warning"%>
                   </div>
                 <%end%>
               <% end%>
