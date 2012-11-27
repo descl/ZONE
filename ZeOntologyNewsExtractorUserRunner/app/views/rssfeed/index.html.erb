@@ -1,17 +1,15 @@
 <h1>Service de configuration de flux RSS</h1>
 
 <% if @filter.length > 0 %>
-<h3>Votre filtre actuel:</h3>
-<ol>
-<% @filter.each do |element| %>
-<li><%= element %></li>
-<% end %>
-</ol>
+  <h3>Votre filtre actuel:</h3>
+  <% @filter.each do |element| %>
+    <div class="btn-group">
+      <%= raw getButtonForElement([element["type"],element["value"]])%>
+      <%=link_to "x", rssfeed_index_path(:old => removeFilterFromList(@filter, element)), :class => "btn btn-danger"%>
+    </div>
+  <% end %>
 <% end %>
 
-<% @OPEN_CALAIS_URI = 'http://www.opencalais.org/Entities#'%>
-<% @WIKI_META_URI = 'http://www.wikimeta.org/Entities#'%>
-<% @INSEE_GEO_URI = 'http://rdf.insee.fr/geo/'%>
 
 
 
@@ -38,24 +36,11 @@
             </a>
             <%= ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/pubDate"})[0])[1]%>
             <div class="btn-toolbar">
-            <% element[1].each do |item|
-                if(item[0].starts_with? @OPEN_CALAIS_URI)%>
-                  <div class="btn-group">
-                    <%=link_to item[0][@OPEN_CALAIS_URI.length,item[0].length], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-success"%>
-                    <%=link_to item[1], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-success"%>
-                  </div>
-                <% elsif(item[0].starts_with? @WIKI_META_URI)%>
-                  <div class="btn-group">
-                    <%=link_to item[0][@WIKI_META_URI.length,item[0].length], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-info"%>
-                    <%=link_to item[1][item[1].rindex('/')+1, item[1].length], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-info"%>
-                  </div>
-                <% elsif(item[0].starts_with? @INSEE_GEO_URI)%>
-                  <div class="btn-group">
-                    <%=link_to item[0][@INSEE_GEO_URI.length,item[0].length], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-warning"%>
-                    <%=link_to item[1][item[1].rindex('/')+1, item[1].length], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-warning"%>
-                  </div>
-                <%end%>
-              <% end%>
+            <% element[1].each do |item|%>
+                <div class="btn-group">
+                    <%= raw getButtonForElement(item) %>
+                </div>
+            <%end%>
             </div>
             
             <%= if ((element[1].select { |f| f[0] == "http://purl.org/rss/1.0/description"})[0])[1] != nil
