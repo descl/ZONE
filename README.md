@@ -10,6 +10,7 @@ Go to our [demonstration](http://demo.zone-project.org) page, and clic on some f
 #### Run your own server
 
 If you want to have your own aggregating service:
+
     git clone https://github.com/descl/ZONE
     cd ZONE-extractor
     mvn install
@@ -37,14 +38,17 @@ Je me suis appuyé pour la compréhension utilisateur sur le besoin du projet AN
 [Christophe Desclaux](http://desclaux.me)(Polytech'Nice-Sophia, INRIA), from the begining (, to the end)
 
 #### Collaborators
-Bouaziz Ameni - work on SVM integration
 [Blay-Fornarino Mireille](http://users.polytech.unice.fr/~blay/) - Managment of the christophe's end year project and help for papers publication
+
+Bouaziz Ameni - work on SVM integration
+
 El Fouzi Ilhame - work on clustering technologies
+
 [Faron Zucker](http://www.i3s.unice.fr/~faron/) Catherine - Managment of the christophe's end year project
-bley
+
 Urli Simon - co-author of paper "constructing workflows for news semantic filtering"
 
 
 ## Acknowledgements
 This work has been partially funded by:
-  * [INRIA](http://inria.fr), as a full time job for the core dev in the context of [BoostYourCode contest](http://www.inria.fr/actualite/actualites-inria/boost-your-code-2012)
+  * [INRIA](http://inria.fr), as a one year full time job for the core dev in the context of [BoostYourCode contest](http://www.inria.fr/actualite/actualites-inria/boost-your-code-2012), Nov 2012 - Nov 2013
