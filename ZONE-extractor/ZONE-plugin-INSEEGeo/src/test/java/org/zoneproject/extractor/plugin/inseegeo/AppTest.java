@@ -46,6 +46,8 @@ public class AppTest
         ArrayList<Prop> result = InseeSparqlRequest.getDimensions(city);
 
         assertEquals(result.size(), expResult.size());
-        assertEquals(expResult, result);
+        for(Prop p: expResult){
+            assertTrue(result.contains(p));
+        }
     }
 }
