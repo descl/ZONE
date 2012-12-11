@@ -61,7 +61,7 @@ public class WikiMetaRequest_API {
         
         String result = "";
         try {
-            URL url = new URL("http://www.wikimeta.org/perl/semtag.pl");
+            URL url = new URL("http://www.wikimeta.com/wapi/service");
             HttpURLConnection server = (HttpURLConnection)url.openConnection();
             server.setDoInput(true);
             server.setDoOutput(true);
