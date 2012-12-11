@@ -86,7 +86,7 @@ public class WikiMetaRequestTest {
     @Test
     public void testGetProperties_File_2() throws URISyntaxException {
         System.out.println("getProperties");
-        URI fileURI = getClass().getResource("/WikiMetaOutput_mars.json").toURI();
+        URI fileURI = getClass().getResource("/WikiMetaOutput_mars.txt").toURI();
         ArrayList result = WikiMetaRequest.getProperties(new File(fileURI));
         System.out.println(result);
         assertEquals(2,result.size());
