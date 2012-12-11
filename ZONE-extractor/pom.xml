@@ -4,6 +4,35 @@
   <groupId>org.zoneproject.extractor</groupId>
   <artifactId>ZONE-extractor</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <!--<organizationName>ZONE-project</organizationName>apache_v2-->
+  <organization>
+    <name>ZONE-project</name>
+    <url>http://www.zone-project.org</url>
+  </organization>
+  <inceptionYear>2012</inceptionYear>
+  
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  
+  <developers>
+    <developer>
+      <id>descl</id>
+      <name>Desclaux</name>
+      <email>christophe@zone-project.org</email>
+      <url>http://www.desclaux.me</url>
+      <organization>ZONE-pproject</organization>
+      <organizationUrl>http://www.zone-project.org</organizationUrl>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+    </developer>
+  </developers>
   
   <packaging>pom</packaging>
   <modules>
@@ -61,6 +90,20 @@
         </executions>
         <configuration>
           <mainClass>org.zoneproject.extractor.App</mainClass>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <version>1.3</version>
+        <configuration>
+          <verbose>false</verbose>
+          <licenseName>apache_v2</licenseName>
+          <clearAfterOperation>true</clearAfterOperation>
+          <roots>
+            <root>src/main/java</root>
+            <root>src/test</root>
+          </roots>
         </configuration>
       </plugin>
       

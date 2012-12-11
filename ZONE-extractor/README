@@ -1,3 +1,6 @@
 In order to run the project:
 mvn -DskipTests install
 mvn exec:java -pl ZONE-extractor-start
+
+In order to add the licence headers:
+mvn license:update-file-header
