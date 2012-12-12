@@ -43,6 +43,7 @@
     <module>ZONE-plugin-OpenCalais</module>
     <module>ZONE-extractor-start</module>
     <module>ZONE-plugin-INSEEGeo</module>
+    <module>ZONE-plugin-categorization_SVM</module>
   </modules>
   
   <properties>
