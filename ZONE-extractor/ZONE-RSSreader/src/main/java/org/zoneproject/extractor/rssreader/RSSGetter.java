@@ -50,7 +50,7 @@ public class RSSGetter {
         ArrayList<Item> result = new ArrayList<Item>();
         try {
             for(int i=0; i < urls.length;i++){
-                result.addAll(RSSGetter.getFlux(new XmlReader(new URL(urls[i]))));
+                result.addAll(RSSGetter.getFlux(urls[i],new XmlReader(new URL(urls[i]))));
                 
             }
         } catch (Exception ex) {
@@ -66,7 +66,7 @@ public class RSSGetter {
      */
     public static ArrayList<Item> getFlux(String url) {
         try {
-            return RSSGetter.getFlux(new XmlReader(new URL(url)));
+            return RSSGetter.getFlux(url,new XmlReader(new URL(url)));
         } catch (Exception ex) {
             Logger.getLogger(RSSGetter.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -80,14 +80,14 @@ public class RSSGetter {
      */
     public static ArrayList<Item> getFlux(File file) {
         try {
-            return getFlux(new XmlReader(file));
+            return getFlux(file.getAbsoluteFile().toString(),new XmlReader(file));
         } catch (Exception ex) {
             Logger.getLogger(RSSGetter.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
     
-    private static ArrayList<Item> getFlux(XmlReader reader){
+    private static ArrayList<Item> getFlux(String source, XmlReader reader){
         ArrayList<Item> items = new ArrayList<Item>();
         
         SyndFeedInput sfi = new SyndFeedInput();
@@ -100,7 +100,7 @@ public class RSSGetter {
                 SyndEntry entry = (SyndEntry)entries.get(i);
                 
                 //create item
-                Item cur = new Item(entry);
+                Item cur = new Item(source, entry);
                 
                 //add item to list
                 items.add(cur);

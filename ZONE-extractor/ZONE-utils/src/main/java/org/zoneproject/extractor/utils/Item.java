@@ -27,17 +27,21 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RSS;
+import com.sun.syndication.feed.rss.Enclosure;
+import com.sun.syndication.feed.synd.SyndEnclosureImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.jsoup.Jsoup;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -54,8 +58,8 @@ public class Item {
         this("");
     }
     
-    public Item(SyndEntry entry){
-        this(entry.getLink(),entry.getTitle(),entry.getDescription().getValue(),entry.getPublishedDate());
+    public Item(String source, SyndEntry entry){
+        this(source, entry.getLink(),entry.getTitle(),entry.getDescription().getValue(),entry.getPublishedDate(),entry.getEnclosures());
     }
     
     public Item(String uri){
@@ -100,14 +104,28 @@ public class Item {
             Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public Item(String link, String title, String description, Date datePublication){
-        this.uri = link;
-        values = new ArrayList<Prop>();
-        values.add(new Prop(RSS.link,link,true));
-        values.add(new Prop(RSS.title,title));
-        values.add(new Prop(RSS.description,description));
-        values.add(new Prop(RSS.getURI()+"pubDate",datePublication.toString()));
-        values.add(new Prop(RSS.getURI()+"pubDateTime",Long.toString(datePublication.getTime())));
+    
+    public Item(String source, String link, String title, String description, Date datePublication){
+        this(source, link,title,description,datePublication,new ArrayList());
+    }
+    public Item(String source, String link, String title, String description, Date datePublication, List enclosure){
+        try{
+            this.uri = link;
+            values = new ArrayList<Prop>();
+            values.add(new Prop(RSS.link,link,true));
+            values.add(new Prop(RSS.title,title));
+            values.add(new Prop(RSS.description,Jsoup.parse(description).text()));
+            values.add(new Prop(RSS.getURI()+"pubDate",datePublication.toString()));
+            values.add(new Prop(RSS.getURI()+"pubDateTime",Long.toString(datePublication.getTime())));
+
+            for(Object o : enclosure){
+                SyndEnclosureImpl e = (SyndEnclosureImpl)o;
+                values.add(new Prop(RSS.image,e.getUrl(),true));
+            }
+            values.add(new Prop("http://purl.org/rss/1.0/source", source,true));
+        }
+        catch(NullPointerException e){}
+        
     }
     
     public void addElement(String key, String content){
