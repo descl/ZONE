@@ -31,6 +31,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.zoneproject.extractor.utils.Prop;
 
 /**
  *
@@ -64,9 +65,11 @@ public class WikiMetaRequestTest {
     public void testGetProperties_String() {
         System.out.println("getProperties");
         String texte = "Bienvenue à Antibes";
-        ArrayList result = WikiMetaRequest.getProperties(texte);
+        ArrayList<Prop> result = WikiMetaRequest.getProperties(texte);
         System.out.println(result);
         assertEquals(1,result.size());
+        Prop p = new Prop("http://www.wikimeta.org/Entities#loc.admi","http://www.dbpedia.org/resource/Antibes",false);
+        assertEquals(result.get(0), p);
     }
 
     /**

@@ -44,9 +44,9 @@ public class App
         Item[] items = Database.getItemsNotAnotatedForOnePlugin(PLUGIN_URI);
         System.out.println("WikiMeta has "+items.length+" items to annotate");
         for(Item item : items){
-            System.out.println("Add ExtractArticlesContent for item: "+item);
+            System.out.println("Add WikiMeta for item: "+item);
             
-            ArrayList<Prop> content= WikiMetaRequest.getProperties(item.toString());
+            ArrayList<Prop> content= WikiMetaRequest.getProperties(item.concat());
             Database.addAnnotations(item.getUri(), content);
             
             Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
