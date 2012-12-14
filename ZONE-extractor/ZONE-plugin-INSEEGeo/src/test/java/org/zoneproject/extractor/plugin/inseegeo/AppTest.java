@@ -71,4 +71,13 @@ public class AppTest
             assertTrue(result.contains(p));
         }
     }
+
+    @org.junit.Test
+    public void testApp2() {
+        System.out.println("getCitiesResult");
+        String city = "Clermont-L'Hérault";
+        ArrayList<Prop> result = InseeSparqlRequest.getDimensions(city);
+
+        assertEquals(0, result.size());
+    }
 }

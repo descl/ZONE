@@ -58,7 +58,7 @@ public class InseeSparqlRequest {
                 "            t_in(?ville),\n" +
                 "            t_out(?zone),\n" +
                 "            t_min(1)) .\n" +
-                "  FILTER ( ?nom = '"+city+"'@fr)\n" +
+                "  FILTER ( ?nom = \""+city+"\"@fr)\n" +
                 "}";
         System.out.println(query);
         
