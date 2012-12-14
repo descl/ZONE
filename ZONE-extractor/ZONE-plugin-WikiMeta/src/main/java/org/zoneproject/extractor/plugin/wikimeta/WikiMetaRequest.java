@@ -87,12 +87,20 @@ public class WikiMetaRequest {
         for(int i=0; i< namedEntities.size();i++){
             
             LinkedHashMap cur = namedEntities.get(i);
+            if(cur.get("type").toString().equals("AMOUNT")) {
+                continue;
+            }
             if(cur.containsKey("LINKEDDATA")){
-                if(cur.get("LINKEDDATA").equals(""))
-                    continue;
-                Prop p = new Prop(WikiMetaRequest.EntitiesURI+""+cur.get("type").toString(), cur.get("LINKEDDATA").toString(), false);
-                if(!result.contains(p))
+                Prop p;
+                if(cur.get("LINKEDDATA").equals("") || cur.get("LINKEDDATA").equals("null")){
+                    p = new Prop(WikiMetaRequest.EntitiesURI+""+cur.get("type").toString(), cur.get("EN").toString(), true);
+                }
+                else {
+                    p = new Prop(WikiMetaRequest.EntitiesURI+""+cur.get("type").toString(), cur.get("LINKEDDATA").toString(), false);
+                }
+                if(!result.contains(p)) {
                     result.add(p);
+                }
             }
         }
         return result;
