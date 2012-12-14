@@ -122,7 +122,7 @@ public class Item {
                 SyndEnclosureImpl e = (SyndEnclosureImpl)o;
                 values.add(new Prop(RSS.image,e.getUrl(),true));
             }
-            values.add(new Prop("http://purl.org/rss/1.0/source", source,true));
+            values.add(new Prop("http://purl.org/rss/1.0/source", source,false));
         }
         catch(NullPointerException e){}
         
