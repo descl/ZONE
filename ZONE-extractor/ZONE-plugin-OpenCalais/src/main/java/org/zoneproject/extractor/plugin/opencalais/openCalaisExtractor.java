@@ -44,7 +44,15 @@ import org.zoneproject.extractor.utils.Prop;
 public class openCalaisExtractor {
     public static String EntitiesURI = "http://www.opencalais.org/Entities#";
     
+    
     public static CalaisResponse getResult(java.lang.String content) {
+        return getResult(content,10);
+    }
+    public static CalaisResponse getResult(java.lang.String content,int level) {
+        if(level <=0) {
+            return null;
+        }
+        
         String license = Config.getVar("openCalais-key");
         
         CalaisClient client = new CalaisRestClient(license);
@@ -53,10 +61,10 @@ public class openCalaisExtractor {
             response = client.analyze(content);
         }
         catch (mx.bigdata.jcalais.CalaisException ex){
-            return openCalaisExtractor.getResult(content);
+            return openCalaisExtractor.getResult(content,level-1);
         }
         catch (java.net.SocketTimeoutException ex){
-            return openCalaisExtractor.getResult(content);
+            return openCalaisExtractor.getResult(content,level-1);
         }
         catch (IOException ex) {
             Logger.getLogger(openCalaisExtractor.class.getName()).log(Level.WARNING, null, ex);
