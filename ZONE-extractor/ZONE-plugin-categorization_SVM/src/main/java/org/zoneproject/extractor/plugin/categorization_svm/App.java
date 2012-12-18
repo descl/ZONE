@@ -28,7 +28,9 @@ import java.util.logging.Logger;
 import org.zoneproject.extractor.utils.VirtuosoDatabase;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
-
+/*
+ * Start categorization: mvn exe:java -pl :ZONE-plugin-categorization_SVM
+ */
 public class App 
 {
     public static String PLUGIN_URI = "http://www.zone-project.org/plugins/Categorization_SVM";
@@ -38,9 +40,7 @@ public class App
         String [] tmp = {};
         App.main(tmp);
     }
-     /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
         Item[] itemsNotAnnotated = getNotCategorizeItems();
         Item[] allitems = getAllItems();

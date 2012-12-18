@@ -27,16 +27,29 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.2.1</version>
-        <executions>
+        <executions><!--Run-->
           <execution>
             <goals>
-              <goal>java</goal>
+              <goal>exec</goal>
             </goals>
+            <configuration>
+              <mainClass>org.zoneproject.extractor.plugin.categorization_svm.App</mainClass>
+            </configuration>
+          </execution>
+          <execution><!--Install-->
+            <id>install</id>
+            <phase>install</phase>
+            <goals>  
+              <goal>java</goal>  
+            </goals>
+            <configuration>
+              <mainClass>org.zoneproject.extractor.plugin.categorization_svm.Install</mainClass>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <mainClass>org.zoneproject.extractor.plugin.categorization_svm.App</mainClass>
-        </configuration>
+            <configuration>
+              <mainClass>org.zoneproject.extractor.plugin.categorization_svm.App</mainClass>
+            </configuration>
       </plugin>
     </plugins>
     <testResources>
