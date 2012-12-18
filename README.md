@@ -20,7 +20,12 @@ If you want to have your own aggregating service:
     go to http://localhost:3000/
 
 [more infos on install](https://github.com/descl/ZONE/wiki/install)
+
+[contribute](https://github.com/descl/ZONE/wiki/contribute)
+
 [![Build Status](https://secure.travis-ci.org/descl/ZONE.png?branch=master)](https://travis-ci.org/descl/ZONE)
+
+
 ## Licenses
 
 The program can be used under the terms of the [Apache License, 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
