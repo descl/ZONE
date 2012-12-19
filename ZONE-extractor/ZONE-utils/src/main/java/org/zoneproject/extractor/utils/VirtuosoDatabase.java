@@ -147,6 +147,25 @@ public abstract class VirtuosoDatabase {
     }
 
     /**
+     * get all items which has not been annotated for a plugin
+     * @param pluginURI the plugin URI
+     * @return the items
+     */
+    public static Item[] getItemsFromSource(String source){
+        ArrayList<Item> items = new ArrayList<Item>();
+        String requestPlugs ="";
+        
+        String request = "SELECT DISTINCT(?uri) WHERE{?uri <http://purl.org/rss/1.0/source> <"+source+">.}";
+        ResultSet results = runSPARQLRequest(request);
+
+        while (results.hasNext()) {
+            QuerySolution result = results.nextSolution();
+            items.add(getOneItemByURI(result.get("?uri").toString()));
+        }
+        return items.toArray(new Item[items.size()]);
+    }
+
+    /**
      * Get an Item from the Database
      * @param uri
      * @return 
