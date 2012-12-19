@@ -1,5 +1,10 @@
 <h1>Service de configuration de flux RSS</h1>
 
+
+<%= javascript_tag do %>
+  query = '<%= j rssfeed_index_path(:old => @filter) %>';
+<% end %>
+
 <% if @filter.length > 0 %>
   <h3>Votre filtre actuel:</h3>
   <% @filter.each do |element| %>
@@ -9,7 +14,8 @@
     </div>
   <% end %>
 <% end %>
-(<%= @number %> éléments)
+
+(<i class=" icon-refresh" id="number_items_wait"></i><span id='number_items_container'></span> éléments)
 
 
 

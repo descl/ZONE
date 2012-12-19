@@ -22,6 +22,8 @@ end
 
 gem 'jquery-rails'
 
+#parse elements by JS
+gem 'gon' 
 #gem "ppe-4store-ruby", "~> 0.0.3"
 #gem "rdf-virtuoso", "~> 0.1.0"
 gem "sparql-client", "~> 0.3.1"

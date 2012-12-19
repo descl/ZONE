@@ -12,10 +12,10 @@ class RssfeedController < ApplicationController
   end
   
   def index
-    extendQuery = generateFilterRequest(params)
+    @extendQuery = generateFilterRequest(params)
     
     @query = "SELECT ?concept ?relation ?result ?pubDateTime WHERE {\n"
-    @query += extendQuery
+    @query += @extendQuery
     @query += "?concept <http://purl.org/rss/1.0/title> ?title.
 ?concept <http://purl.org/rss/1.0/pubDateTime> ?pubDateTime.
 ?concept ?relation ?result.
@@ -24,7 +24,6 @@ class RssfeedController < ApplicationController
     store = SPARQL::Client.new($endpoint)
     @elements = store.query(@query)
 
-    @number = getNumberForFilter(extendQuery)
 # @result = Array.new
 # if @elements.length > 0
 # item = {"concept" => @elements[0]["concept"]}
@@ -61,7 +60,7 @@ class RssfeedController < ApplicationController
     
     #@result.each.delete_if{|x| x["http://purl.org/rss/1.0/link"] == nil}
     #@result.delete_if{|x| x["http://purl.org/rss/1.0/description"] == nil}
-    
+    gon.filter = rssfeed_getNumberForParams_path(:old => @filter)
   end
   
   
@@ -69,13 +68,17 @@ class RssfeedController < ApplicationController
   
   
   
-  def getNumberForFilter(filter)
+  def getNumberForParams#(params)
+    request = generateFilterRequest(params)
     @query = "SELECT ?number COUNT(DISTINCT ?concept)  WHERE {\n"
-    @query += filter
-    @query += "?concept <http://purl.org/rss/1.0/title> ?title.
-} LIMIT 2"
+    @query += request
+    @query += "?concept <http://purl.org/rss/1.0/title> ?title.} LIMIT 1"
     store = SPARQL::Client.new($endpoint)
-    return store.query(@query)[0]["callret-1"]
+    @number = store.query(@query)[0]["callret-1"]
+    respond_to do |format|
+      format.html {render :inline => "<%= @number %>"}
+    end
+    
   end
   
   def generateFilterRequest(params)
