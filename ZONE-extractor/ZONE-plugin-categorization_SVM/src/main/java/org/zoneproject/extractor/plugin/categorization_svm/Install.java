@@ -30,7 +30,6 @@ import org.zoneproject.extractor.utils.Item;
 
 /*
  * RUN the installer:  mvn install -pl :ZONE-plugin-categorization_SVM
-
  */
 public class Install {
     public static void main(String[] args) {
@@ -39,8 +38,8 @@ public class Install {
         Item[] items = Database.getItemsFromSource(source);
         System.out.println(items.length+" corresponding to Football categorie");
         
-        Item[] allitems = Database.getItemsNotAnotatedForOnePlugin("");
+        Item[] otherItems = Database.getItemsFromSource("http://www.lequipe.fr/rss/actu_rss_Cyclisme.xml");
         
-        System.out.println("Number of items:"+allitems.length);
+        System.out.println("Number of items for others:"+otherItems.length);
     }
 }
