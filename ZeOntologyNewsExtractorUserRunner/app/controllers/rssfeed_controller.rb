@@ -64,17 +64,17 @@ class RssfeedController < ApplicationController
   end
   
   
-  
-  
-  
-  
   def getNumberForParams#(params)
     request = generateFilterRequest(params)
     @query = "SELECT ?number COUNT(DISTINCT ?concept)  WHERE {\n"
     @query += request
     @query += "?concept <http://purl.org/rss/1.0/title> ?title.} LIMIT 1"
     store = SPARQL::Client.new($endpoint)
-    @number = store.query(@query)[0]["callret-1"]
+    if store.query(@query).length == 0
+      @number = '0'
+    else
+      @number = store.query(@query)[0]["callret-1"]
+    end
     respond_to do |format|
       format.html {render :inline => "<%= @number %>"}
     end

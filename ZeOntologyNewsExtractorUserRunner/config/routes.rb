@@ -1,4 +1,6 @@
 ZeOntologyNewsExtractorUserRunner::Application.routes.draw do
+  resources :sources
+
   get "rssfeed/index"
   get "rssfeed/getOne"
   get "rssfeed/getNumberForParams"
