@@ -42,7 +42,20 @@
             image=((element[1].select { |f| f[0] == 'http://purl.org/rss/1.0/image'})[0])[1].html_safe  end %>
         <% if image != nil %>
             <div class="span3">
-                <img src="<%= image%>" class="img-polaroid">
+                <% if image.end_with?("flv") || image.end_with?("mp4") %>
+<div id="<%=image%>">Loading the player...</div>
+<script type="text/javascript">
+jwplayer("<%=image%>").setup({
+    file: "<%=image%>",
+    width: "100%"
+});
+</script>
+                <%else%>
+                
+                
+                    <img src="<%= image%>" class="img-polaroid">
+                <%end%>
+                
             </div>
             <div class="span9">
         <%else%>
