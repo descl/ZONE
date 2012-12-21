@@ -111,8 +111,11 @@ public abstract class VirtuosoDatabase {
      * @return the items
      */
     public static Item[] getItemsNotAnotatedForOnePlugin(String pluginURI){
+        return getItemsNotAnotatedForOnePlugin(pluginURI,10000000);
+    }
+    public static Item[] getItemsNotAnotatedForOnePlugin(String pluginURI, int limit){
         ArrayList<Item> items = new ArrayList<Item>();
-        String request = "SELECT DISTINCT ?uri WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title  OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined} FILTER (!bound(?pluginDefined)) }";
+        String request = "SELECT DISTINCT ?uri WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title  OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined} FILTER (!bound(?pluginDefined)) } LIMIT "+limit;
         ResultSet results = runSPARQLRequest(request);
 
         while (results.hasNext()) {
