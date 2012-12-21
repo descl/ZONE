@@ -29,7 +29,7 @@ import org.zoneproject.extractor.utils.Item;
  */
 
 /*
- * RUN the installer:  mvn install -pl :ZONE-plugin-categorization_SVM
+ * RUN the installer:  mvn install -pl ZONE-plugin-categorization_SVM
  */
 public class Install {
     public static void main(String[] args) {

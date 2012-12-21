@@ -24,7 +24,7 @@ import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
 import org.zoneproject.extractor.utils.VirtuosoDatabase;
 /*
- * Start categorization: mvn exec:java -pl :ZONE-plugin-categorization_SVM
+ * Start categorization: mvn exec:java -pl ZONE-plugin-categorization_SVM
  */
 public class App 
 {
