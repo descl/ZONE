@@ -34,11 +34,19 @@ import org.zoneproject.extractor.utils.Item;
 public class Install {
     public static void main(String[] args) {
         System.out.println("Training the SVM");
-        String source = "http://www.lequipe.fr/rss/actu_rss_Football.xml";
-        Item[] items = Database.getItemsFromSource(source);
-        System.out.println(items.length+" corresponding to Football categorie");
         
-        Item[] otherItems = Database.getItemsFromSource("http://www.lequipe.fr/rss/actu_rss_Cyclisme.xml");
+        //get all items corresponding to the sport category
+        String source = "http://fr.news.yahoo.com/rss/sports";
+        Item[] items = Database.getItemsFromSource(source);
+        
+        //retreive the news content for SVM
+        for(Item i: items)
+            System.out.println("Article text:"+i.concat());
+        
+        System.out.println(items.length+" corresponding to sport category");
+        
+        //get all item corresponding to an other category
+        Item[] otherItems = Database.getItemsFromSource("http://fr.news.yahoo.com/monde/?format=rss");
         
         System.out.println("Number of items for others:"+otherItems.length);
     }

@@ -20,14 +20,9 @@ package org.zoneproject.extractor.plugin.categorization_svm;
  * #L%
  */
 
-import com.hp.hpl.jena.vocabulary.RSS;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.zoneproject.extractor.utils.VirtuosoDatabase;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
+import org.zoneproject.extractor.utils.VirtuosoDatabase;
 /*
  * Start categorization: mvn exec:java -pl :ZONE-plugin-categorization_SVM
  */
@@ -42,18 +37,35 @@ public class App
     }
     
     public static void main(String[] args) {
-        Item[] itemsNotAnnotated = getNotCategorizeItems();
-        Item[] allitems = getAllItems();
+        //retreive all items not annotated
         
-        System.out.println("Number of items:"+allitems.length);
+        //set the items number limit
+        int limit = 100;
+        Item[] itemsNotAnnotated = getNotCategorizeItems(limit);
         System.out.println("Number of items not annotated:"+itemsNotAnnotated.length);
+        
+        for(Item item : itemsNotAnnotated){
+            String itemContent = item.concat();
+            //you should run classification on itemContent
+            
+            boolean result = true;//here replace true with the result of your algo
+            Prop newAnnotation;
+            if(result == true){
+                newAnnotation = new Prop(PLUGIN_RESULT_URI+"/sport", "true",true);
+            }
+            else{
+                newAnnotation = new Prop(PLUGIN_RESULT_URI+"/sport", "false",true);
+
+            }
+            System.out.println("the item: "+itemContent+" has new annotation:"+ newAnnotation);
+        }
         
     }
     
     public static Item[] getAllItems(){
         return VirtuosoDatabase.getItemsNotAnotatedForOnePlugin("");
     }
-    public static Item[] getNotCategorizeItems(){
-        return VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI);
+    public static Item[] getNotCategorizeItems(int limit){
+        return VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI, limit);
     }
 }
