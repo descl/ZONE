@@ -1,0 +1,21 @@
+<h1>Listing filters</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @filters.each do |filter| %>
+  <tr>
+    <td><%= link_to 'Show', filter %></td>
+    <td><%= link_to 'Edit', edit_filter_path(filter) %></td>
+    <td><%= link_to 'Destroy', filter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Filter', new_filter_path %>

@@ -1,0 +1,41 @@
+<h1>Service de configuration de flux RSS</h1>
+
+
+<%= javascript_tag do %>
+  query = '<%= j items_path(:old => @filter) %>';
+<% end %>
+
+<% if @filter.length > 0 %>
+  <h3>Votre filtre actuel:</h3>
+  <% @filter.each do |element| %>
+    <div class="btn-group">
+      <%= raw getButtonForElement([element["type"],element["value"]])%>
+      <%=link_to "x", rssfeed_index_path(:old => removeFilterFromList(@filter, element)), :class => "btn btn-danger"%>
+    </div>
+  <% end %>
+<% end %>
+
+(<i class=" icon-refresh" id="number_items_wait"></i><span id='number_items_container'></span> éléments)
+
+
+
+
+<%= javascript_tag do %>
+  $("#load-more2").bind("ajax:complete", function(et, e){
+   $("#load-more2").html(e.responseText); // insert content
+    event.preventDefault(); // Prevent link from following its href
+  });
+<% end %>
+
+
+<p><%= link_to "Recupérer le flux RSS", params.merge(:format => :rss), :class => "feed_link" %></p>
+
+
+
+<% @items.each do |item| %>
+  <div class="well">
+    <div class="row-fluid">
+      
+    </div>
+  </div>
+<% end %>
