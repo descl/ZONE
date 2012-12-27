@@ -1,25 +1,23 @@
-<%= elementId = 0 %>
+<div class="row-fluid">
 
     <% if @item["http://purl.org/rss/1.0/image"] != nil
         image=@item["http://purl.org/rss/1.0/image"].html_safe  end %>
+    
     <% if image != nil %>
         <div class="span3">
-            <% if image.end_with?("flv") || image.end_with?("mp4") %>
-<div id="<%=image%>">Loading the player...</div>
-<script type="text/javascript">
-jwplayer("<%=image%>").setup({
-file: "<%=image%>",
-width: "100%"
-});
-</script>
-            <%else%>
-            
-            
-                <img src="<%= image%>" class="img-polaroid">
-            <%end%>
-            
+          <% if image.end_with?("flv") || image.end_with?("mp4") %>
+            <div id="<%=image%>">Loading the player...</div>
+            <script type="text/javascript">
+                jwplayer("<%=image%>").setup({
+                file: "<%=image%>",
+                width: "100%"
+                });
+            </script>
+          <%else%>
+              <img src="<%= image%>" class="img-polaroid">
+          <%end%>
         </div>
-        <div class="span9">
+    <div class="span9">
     <%else%>
         <div class="span12">
     <%end%>
@@ -28,30 +26,55 @@ width: "100%"
         </a>
         <%= @item["http://purl.org/rss/1.0/pubDate"]%>
         <div class="btn-toolbar">
-        <% @item.each do |item|%>
-            <div class="btn-group">
-                <%= raw getButtonForElement(item) %>
-            </div>
-        <%end%>
+            <% @item.each do |item|%>
+                <div class="btn-group">
+                    <%= raw getButtonForElement(item) %>
+                </div>
+            <%end%>
         </div>
-        
-        <%= @item["http://purl.org/rss/1.0/description"].html_safe %>
+            
+        <%= if @item["http://purl.org/rss/1.0/description"] != nil
+             @item["http://purl.org/rss/1.0/description"].html_safe end %>
     </div>
 </div>
         
-        
-<div class="accordion" id="accordion<%= elementId %>" style="margin-bottom: 0px;">
+<div class="accordion" id="accordion-<%= @uri %>" style="margin-bottom: 0px;">
     <div class="accordion-group">
         <div class="accordion-heading">
-            <a class="accordion-toggle btn btn-mini" data-toggle="collapse" data-parent="#accordion<%= elementId%>" href="#collapse<%= elementId%>">
+            <a class="accordion-toggle btn btn-mini" data-toggle="collapse" data-parent="#accordion-<%= @uri%>" href="#collapse-<%= @uri%>">
             Voir les annotations
             </a>
         </div>
-        <div id="collapse<%= elementId%>" class="accordion-body collapse">
+        <div id="collapse-<%= @uri%>" class="accordion-body collapse">
             <div class="accordion-inner" style="padding: 0px;">
                 <table class="table table-striped"><!--BORDER="1" style="border: 1px black; border-spacing: 0px;"-->
-                
-                
+                   <% i=0; @item.each do |prop,value|
+                        i=i+1
+                        %>
+                        <tr><td><%= prop %></td>
+                        <td>
+                            
+                            <% if prop.starts_with? 'http://www.zone-project.org/plugins/ExtractArticlesContent#result'%>
+                                <%= value[0..400] %>
+                                <a href= "<%= @uri %>">
+                                    (...)
+                                </a>
+                            <% elsif (prop.starts_with? 'http://rdf.insee') || (prop.starts_with? 'http://www.dbpedia') %>
+                                <%= link_to value, "getOne?element="+value,:id => "elem"+i.to_s(), :remote => true %>
+                                <%= javascript_tag do %>
+                                  $("#elem<%=i%>").bind("ajax:complete", function(et, e){
+                                   $("#elem<%=i.to_s()%>").html(e.responseText); // insert content
+                                    event.preventDefault(); // Prevent link from following its href
+                                  });
+                                <%end%>
+                            <%elsif (value.starts_with? 'http://')%>
+                                <%= link_to value,value %>
+                            <%else%>
+                                <%= value %>
+                            <%end%>
+                        </td><td>
+                        <%= link_to "Ajouter au filtre", items_path(:old => @filter,:new => {:type => prop, :value => value}), :class => "btn btn-success" %></td></tr>
+                        <% end%>
                 </table>
             </div>
         </div>

@@ -17,7 +17,7 @@ class Item# < ActiveRecord::Base
         RSS:title ?title;
         RSS:pubDateTime ?pubDateTime.
       
-    }ORDER BY DESC(?pubDateTime) LIMIT 10"
+    }ORDER BY DESC(?pubDateTime) LIMIT 3"
 
     store = SPARQL::Client.new($endpoint)
     items = Array.new
@@ -29,11 +29,16 @@ class Item# < ActiveRecord::Base
   end
   
   def self.find(param)
+    require 'cgi'
+    require 'uri'
+    uri = CGI.unescape(URI.escape(CGI.unescape(param)))
+    
+    
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT ?prop ?value 
     FROM <http://demo.zone-project.org/data>
-    WHERE { <#{param}> ?prop ?value.}"
-    
+    WHERE { <#{uri}> ?prop ?value.}"
+    puts query
     store = SPARQL::Client.new($endpoint)
     params = Hash.new
     store.query(query).each do |prop|
@@ -48,7 +53,7 @@ class Item# < ActiveRecord::Base
   end
   
   def to_param
-    require 'uri'
-    URI.escape(@uri.to_s)
+    require 'cgi'
+    CGI.escape(@uri.to_s)
   end
 end

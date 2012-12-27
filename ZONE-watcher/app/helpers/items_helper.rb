@@ -9,12 +9,12 @@ module ItemsHelper
       item[1] = "/null"
     end
     if(item[0].starts_with? @OPEN_CALAIS_URI)
-      res= link_to item[0][@OPEN_CALAIS_URI.length,item[0].length], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-success"
-      res+= link_to item[1], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-success"
+      res= link_to item[0][@OPEN_CALAIS_URI.length,item[0].length], items_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-success"
+      res+= link_to item[1], items_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-success"
     elsif(item[0].starts_with? @WIKI_META_URI)
       res=link_to item[0][@WIKI_META_URI.length,item[0].length], items_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-info"
       if(item[1].rindex('/') == nil)
-        res+=link_to item[1], rssfeed_index_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-info"
+        res+=link_to item[1], items_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-info"
 
       else
         res+=link_to item[1][item[1].rindex('/')+1, item[1].length], items_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-info"

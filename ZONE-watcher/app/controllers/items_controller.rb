@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  include ERB::Util
   # GET /items
   # GET /items.json
   def index
@@ -19,6 +20,13 @@ class ItemsController < ApplicationController
     @items = Item.all
     
 
+    gonItems = Array.new
+    @items.each do |element|
+      gonItems << url_encode(element.uri)
+    end
+    gon.items = gonItems
+    
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @items }
@@ -28,7 +36,8 @@ class ItemsController < ApplicationController
   # GET /items/1
   # GET /items/1.json
   def show
-    @uri = params[:id].insert 5 , "/"
+    require 'cgi'
+    @uri = CGI.escape(params[:id])
     @item = Item.find(@uri)
     render  :layout => 'empty'
   end

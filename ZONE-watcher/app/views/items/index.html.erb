@@ -32,10 +32,10 @@
 
 
 
-<% @items.each do |item| %>
+<% id=0; @items.each do |item| %>
   <div class="well">
-    <div class="row-fluid">
-      
-    </div>
+      <div class="item_container" sourceid="<%= id %>"></div>
+      <i class="item_wait icon-refresh" sourceid="<%= id%>"></i>
   </div>
-<% end %>
+  
+<% id+=1; end %>
