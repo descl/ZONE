@@ -37,15 +37,15 @@
              @item["http://purl.org/rss/1.0/description"].html_safe end %>
     </div>
 </div>
-        
-<div class="accordion" id="accordion-<%= @uri %>" style="margin-bottom: 0px;">
+
+<div class="accordion" id="accordion-<%= @uriHash %>" style="margin-bottom: 0px;">
     <div class="accordion-group">
         <div class="accordion-heading">
-            <a class="accordion-toggle btn btn-mini" data-toggle="collapse" data-parent="#accordion-<%= @uri%>" href="#collapse-<%= @uri%>">
+            <a class="accordion-toggle btn btn-mini" data-toggle="collapse" data-parent="#accordion-<%= @uriHash%>" href="#collapse-<%= @uriHash%>">
             Voir les annotations
             </a>
         </div>
-        <div id="collapse-<%= @uri%>" class="accordion-body collapse">
+        <div id="collapse-<%= @uriHash%>" class="accordion-body collapse">
             <div class="accordion-inner" style="padding: 0px;">
                 <table class="table table-striped"><!--BORDER="1" style="border: 1px black; border-spacing: 0px;"-->
                    <% i=0; @item.each do |prop,value|
