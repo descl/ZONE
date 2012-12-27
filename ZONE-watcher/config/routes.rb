@@ -8,6 +8,7 @@ ZONEWatcher::Application.routes.draw do
   
   root :to => "home#index"
   
-  match 'items/:id' => 'items#show', :constraints => {:id => /.*/}
+  #match 'items/:id/:filter' => 'items#show'
+  match 'items/:id' => 'items#show', :constraints  =>  {:id => /[^\/]+/} 
   
 end

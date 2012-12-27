@@ -17,7 +17,7 @@ class Item# < ActiveRecord::Base
         RSS:title ?title;
         RSS:pubDateTime ?pubDateTime.
       
-    }ORDER BY DESC(?pubDateTime) LIMIT 3"
+    }ORDER BY DESC(?pubDateTime) LIMIT 10"
 
     store = SPARQL::Client.new($endpoint)
     items = Array.new

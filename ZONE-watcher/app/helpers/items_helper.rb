@@ -27,4 +27,10 @@ module ItemsHelper
       res+=link_to item[1], items_path(:old => @filter,:new => {:type => item[0], :value => item[1]}), :class => "btn btn-primary"
     end
   end
+
+  def removeFilterFromList(list, filter)
+    puts list.class
+    listCopy = list.clone
+    return listCopy.delete_if{|element| element == filter}
+  end
 end

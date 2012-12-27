@@ -3,14 +3,14 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(document).ready ->
-  $.get gon.filter, (data) ->
+  $.get gon.uriForItemsNumber, (data) ->
     $('#number_items_wait').detach()
     $('#number_items_container').append(data)
 
 
 $(document).ready ->
-  for id,uri of gon.items
-    $.ajax "/items/"+uri,
+  for id,uri of gon.gonItemsFiltersUri
+    $.ajax uri,
       async: false
       success: (data) ->
         $('[class=item_container][sourceid="'+id+'"]').append(data)

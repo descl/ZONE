@@ -11,14 +11,13 @@ class ItemsController < ApplicationController
     @items = Item.all
     
 
-    gonItems = Array.new
+    gonItemsFiltersUri = Array.new
     @items.each do |element|
-      gonItems << url_encode(element.uri)
+      gonItemsFiltersUri << item_path(:id => element, :old => @filter)
     end
-    gon.items = gonItems
+    gon.gonItemsFiltersUri = gonItemsFiltersUri
     
-    gon.filter = filters_getNumber_path(:old => @filter)
-    
+    gon.uriForItemsNumber = filters_getNumber_path(:old => @filter)
     
     respond_to do |format|
       format.html # index.html.erb
@@ -34,6 +33,9 @@ class ItemsController < ApplicationController
     @uri = CGI.escape(params[:id])
     @uriHash = Digest::SHA1.hexdigest(@uri)
     @item = Item.find(@uri)
+    
+    @filter = parseFilterParams(params)
+    
     render  :layout => 'empty'
   end
   
