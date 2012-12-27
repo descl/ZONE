@@ -1,4 +1,5 @@
 class FiltersController < ApplicationController
+  include ApplicationHelper
   # GET /filters
   # GET /filters.json
   def index
@@ -23,61 +24,23 @@ class FiltersController < ApplicationController
 
   # GET /filters/new
   # GET /filters/new.json
-  def new
-    @filter = Filter.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @filter }
+  def getNumber
+    @filter = parseFilterParams(params)
+    request = generateFilterSPARQLRequest(@filter)
+    @query = "SELECT ?number COUNT(DISTINCT ?concept)  WHERE {\n"
+    @query += request
+    @query += "?concept <http://purl.org/rss/1.0/title> ?title.} LIMIT 1"
+    store = SPARQL::Client.new($endpoint)
+    if store.query(@query).length == 0
+      @number = '0'
+    else
+      @number = store.query(@query)[0]["callret-1"]
     end
-  end
-
-  # GET /filters/1/edit
-  def edit
-    @filter = Filter.find(params[:id])
-  end
-
-  # POST /filters
-  # POST /filters.json
-  def create
-    @filter = Filter.new(params[:filter])
-
     respond_to do |format|
-      if @filter.save
-        format.html { redirect_to @filter, notice: 'Filter was successfully created.' }
-        format.json { render json: @filter, status: :created, location: @filter }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @filter.errors, status: :unprocessable_entity }
-      end
+      format.html {render :inline => "<%= @number %>"}
     end
+    
   end
-
-  # PUT /filters/1
-  # PUT /filters/1.json
-  def update
-    @filter = Filter.find(params[:id])
-
-    respond_to do |format|
-      if @filter.update_attributes(params[:filter])
-        format.html { redirect_to @filter, notice: 'Filter was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @filter.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /filters/1
-  # DELETE /filters/1.json
-  def destroy
-    @filter = Filter.find(params[:id])
-    @filter.destroy
-
-    respond_to do |format|
-      format.html { redirect_to filters_url }
-      format.json { head :no_content }
-    end
-  end
+  
 end

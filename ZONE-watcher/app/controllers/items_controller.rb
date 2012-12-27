@@ -1,20 +1,11 @@
 class ItemsController < ApplicationController
   include ERB::Util
+  include ApplicationHelper
   # GET /items
   # GET /items.json
   def index
-    @filter = Array.new
-    if(params.length > 1)
-      if params[:old] != nil
-        params[:old].each do |cur|
-          @filter.push cur
-        end
-      end
-      
-      if params[:new] != nil
-        @filter.push params[:new]
-      end
-    end
+    
+    @filter = parseFilterParams(params)
     
     
     @items = Item.all
@@ -25,6 +16,8 @@ class ItemsController < ApplicationController
       gonItems << url_encode(element.uri)
     end
     gon.items = gonItems
+    
+    gon.filter = filters_getNumber_path(:old => @filter)
     
     
     respond_to do |format|
@@ -43,4 +36,6 @@ class ItemsController < ApplicationController
     @item = Item.find(@uri)
     render  :layout => 'empty'
   end
+  
+
 end
