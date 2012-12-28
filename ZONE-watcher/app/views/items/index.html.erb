@@ -2,20 +2,21 @@
 
 
 <%= javascript_tag do %>
-  query = '<%= j items_path(:old => @filter) %>';
+  query = '<%= j items_path(:old => @filters) %>';
 <% end %>
 
-<% if @filter.length > 0 %>
+<% if @filters.length > 0 %>
   <h3>Votre filtre actuel:</h3>
-  <% @filter.each do |element| %>
+  <% @filters.each do |filter| %>
     <div class="btn-group">
-      <%= raw getButtonForElement([element["type"],element["value"]])%>
-      <%=link_to "x", rssfeed_index_path(:old => removeFilterFromList(@filter, element)), :class => "btn btn-danger"%>
+      <%= raw getButtonForFilter(filter)%>
+      <%=link_to "x", items_path(:old => removeFilterFromList(@filters, filter)), :class => "btn btn-danger"%>
     </div>
   <% end %>
+<br/></br/>
 <% end %>
 
-(<i class=" icon-refresh" id="number_items_wait"></i><span id='number_items_container'></span> éléments)
+(<a href= "<%=@uriForItemsNumber%>"><i class=" icon-refresh" id="number_items_wait"></i></a><span id='number_items_container'></span> éléments)
 
 
 
@@ -35,7 +36,11 @@
 <% id=0; @items.each do |item| %>
   <div class="well">
       <div class="item_container" sourceid="<%= id %>"></div>
-      <i class="item_wait icon-refresh" sourceid="<%= id%>"></i>
+      <div class="item_wait" sourceid="<%= id%>">
+          <a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
+          <a href="<%= item.uri%>"><%= item.title%></a>
+          
+      </div>
   </div>
   
 <% id+=1; end %>

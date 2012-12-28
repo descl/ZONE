@@ -5,19 +5,21 @@ class ItemsController < ApplicationController
   # GET /items.json
   def index
     
-    @filter = parseFilterParams(params)
+    @filters = parseFilterParams(params)
     
     
-    @items = Item.all
+    @items = Item.all(generateFilterSPARQLRequest(@filters))
     
 
     gonItemsFiltersUri = Array.new
     @items.each do |element|
-      gonItemsFiltersUri << item_path(:id => element, :old => @filter)
+      element.localURI = item_path(:id => element, :old => @filters)
+      gonItemsFiltersUri << element.localURI
     end
     gon.gonItemsFiltersUri = gonItemsFiltersUri
     
-    gon.uriForItemsNumber = filters_getNumber_path(:old => @filter)
+    @uriForItemsNumber = filters_getNumber_path(:old => @filters)
+    gon.uriForItemsNumber = @uriForItemsNumber
     
     respond_to do |format|
       format.html # index.html.erb
@@ -32,9 +34,10 @@ class ItemsController < ApplicationController
     require 'digest'
     @uri = CGI.escape(params[:id])
     @uriHash = Digest::SHA1.hexdigest(@uri)
+    
     @item = Item.find(@uri)
     
-    @filter = parseFilterParams(params)
+    @filters = parseFilterParams(params)
     
     render  :layout => 'empty'
   end

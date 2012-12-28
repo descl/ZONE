@@ -1,30 +1,28 @@
 module ApplicationHelper
   def parseFilterParams(params)
-    filter = Array.new
-    if(params.length > 2)
-      if params[:old] != nil
-        params[:old].each do |cur|
-          filter.push cur
-        end
-      end
-    end
-      
+    filters = Array.new
     if params[:new] != nil
-      filter.push params[:new]
+      filters << Filter.new(eval(params[:new]))
     end
     
-    filter
+    if params[:old] != nil
+      params[:old].each do |cur|
+        filters << Filter.new(eval(cur))
+      end
+    end
+    
+    filters
   end
   
   def generateFilterSPARQLRequest(filter)
     extendQuery = ""
       
     filter.each do |cur|
-      if cur["value"].match(/^http\:\/\//)
+      if cur.value.match(/^http\:\/\//)
         #URI
-        extendQuery += "?concept <"+cur["type"]+"> <"+cur["value"]+">. \n"
+        extendQuery += "?concept <"+cur.prop+"> <"+cur.value+">. \n"
       else
-        extendQuery += "?concept <"+cur["type"]+"> '"+cur["value"]+"'. \n"
+        extendQuery += "?concept <"+cur.prop+"> '"+cur.value+"'. \n"
       end
     end
     extendQuery

@@ -1,7 +1,7 @@
 <div class="row-fluid">
 
-    <% if @item["http://purl.org/rss/1.0/image"] != nil
-        image=@item["http://purl.org/rss/1.0/image"].html_safe  end %>
+    <% if @item.props["http://purl.org/rss/1.0/image"] != nil
+        image=@item.props["http://purl.org/rss/1.0/image"].html_safe  end %>
     
     <% if image != nil %>
         <div class="span3">
@@ -21,20 +21,20 @@
     <%else%>
         <div class="span12">
     <%end%>
-        <a href= "%= element[0] %>">
-            <%= @item["http://purl.org/rss/1.0/title"]%>
+        <a href= "<%= @item.uri %>">
+            <%= @item.props["http://purl.org/rss/1.0/title"]%>
         </a>
-        <%= @item["http://purl.org/rss/1.0/pubDate"]%>
+        <%= @item.props["http://purl.org/rss/1.0/pubDate"]%>
         <div class="btn-toolbar">
-            <% @item.each do |item|%>
+            <% @item.props.each do |item|%>
                 <div class="btn-group">
-                    <%= raw getButtonForElement(item) %>
+                    <%= raw getButtonForFilter(Filter.new(:prop => item[0], :value => item[1])) %>
                 </div>
             <%end%>
         </div>
             
-        <%= if @item["http://purl.org/rss/1.0/description"] != nil
-             @item["http://purl.org/rss/1.0/description"].html_safe end %>
+        <%= if @item.props["http://purl.org/rss/1.0/description"] != nil
+             @item.props["http://purl.org/rss/1.0/description"].html_safe end %>
     </div>
 </div>
 
@@ -48,7 +48,7 @@
         <div id="collapse-<%= @uriHash%>" class="accordion-body collapse">
             <div class="accordion-inner" style="padding: 0px;">
                 <table class="table table-striped"><!--BORDER="1" style="border: 1px black; border-spacing: 0px;"-->
-                   <% i=0; @item.each do |prop,value|
+                   <% i=0; @item.props.each do |prop,value|
                         i=i+1
                         %>
                         <tr><td><%= prop %></td>
@@ -73,7 +73,7 @@
                                 <%= value %>
                             <%end%>
                         </td><td>
-                        <%= link_to "Ajouter au filtre", items_path(:old => @filter,:new => {:type => prop, :value => value}), :class => "btn btn-success" %></td></tr>
+                        <%= link_to "Ajouter au filtre", items_path(:old => @filters,:new => Filter.new({:prop =>prop, :value => value})), :class => "btn btn-success" %></td></tr>
                         <% end%>
                 </table>
             </div>

@@ -6,50 +6,56 @@ class Item# < ActiveRecord::Base
   $endpoint = 'http://localhost:8890/sparql/'
 
 
-  attr_accessor :uri, :title
+  attr_accessor :uri, :title, :props, :description, :date, :localURI
 
-  def self.all
+  def self.all(param = "")
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
-    SELECT ?news ?title 
+    SELECT ?concept ?title 
     FROM <http://demo.zone-project.org/data>
     WHERE {
-      ?news
+      ?concept
         RSS:title ?title;
         RSS:pubDateTime ?pubDateTime.
+      #{param}
       
-    }ORDER BY DESC(?pubDateTime) LIMIT 10"
+    }ORDER BY DESC(?pubDateTime) LIMIT 60"
 
     store = SPARQL::Client.new($endpoint)
     items = Array.new
     store.query(query).each do |item|
-      items << Item.new(item.news.to_s, item.title)
+      items << Item.new(item.concept.to_s, item.title)
     end
     return items
-    
   end
   
   def self.find(param)
     require 'cgi'
     require 'uri'
+    
     uri = CGI.unescape(URI.escape(CGI.unescape(param)))
     
-    
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
-    SELECT ?prop ?value 
+    SELECT ?prop ?value
     FROM <http://demo.zone-project.org/data>
     WHERE { <#{uri}> ?prop ?value.}"
     puts query
     store = SPARQL::Client.new($endpoint)
+    result = store.query(query)
+    
     params = Hash.new
-    store.query(query).each do |prop|
+    result.each do |prop|
       params[prop.prop.to_s] = prop.value.to_s
     end
-    return params
+    
+    item = Item.new(uri, params["http://purl.org/rss/1.0/title"])
+    item.props = params
+    return item
   end
   
   def initialize(uri,title)
     @uri = uri
     @title = title
+    @filters = Hash.new
   end
   
   def to_param

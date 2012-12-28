@@ -26,8 +26,8 @@ class FiltersController < ApplicationController
   # GET /filters/new.json
 
   def getNumber
-    @filter = parseFilterParams(params)
-    request = generateFilterSPARQLRequest(@filter)
+    @filters = parseFilterParams(params)
+    request = generateFilterSPARQLRequest(@filters)
     @query = "SELECT ?number COUNT(DISTINCT ?concept)  WHERE {\n"
     @query += request
     @query += "?concept <http://purl.org/rss/1.0/title> ?title.} LIMIT 1"
