@@ -1,5 +1,7 @@
 class FiltersController < ApplicationController
   include ApplicationHelper
+  $endpoint = 'http://localhost:8890/sparql/'
+
   # GET /filters
   # GET /filters.json
   def index
