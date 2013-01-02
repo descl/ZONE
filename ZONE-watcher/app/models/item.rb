@@ -38,7 +38,6 @@ class Item# < ActiveRecord::Base
     SELECT ?prop ?value
     FROM <http://demo.zone-project.org/data>
     WHERE { <#{uri}> ?prop ?value.}"
-    puts query
     store = SPARQL::Client.new($endpoint)
     result = store.query(query)
     
