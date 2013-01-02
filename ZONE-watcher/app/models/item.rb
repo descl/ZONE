@@ -18,7 +18,7 @@ class Item# < ActiveRecord::Base
         RSS:pubDateTime ?pubDateTime.
       #{param}
       
-    }ORDER BY DESC(?pubDateTime) LIMIT 60"
+    }ORDER BY DESC(?pubDateTime) LIMIT 50"
 
     store = SPARQL::Client.new($endpoint)
     items = Array.new
@@ -53,6 +53,9 @@ class Item# < ActiveRecord::Base
   end
   
   def initialize(uri,title)
+      if ! uri.start_with? 'http://'
+        uri = 'http://'+uri
+      end
     @uri = uri
     @title = title
     @filters = Hash.new
@@ -60,6 +63,6 @@ class Item# < ActiveRecord::Base
   
   def to_param
     require 'cgi'
-    CGI.escape(@uri.to_s)
+    CGI.escape(@uri.to_s.sub("http://",""))
   end
 end

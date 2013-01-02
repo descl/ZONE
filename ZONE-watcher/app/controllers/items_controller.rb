@@ -33,6 +33,9 @@ class ItemsController < ApplicationController
     require 'cgi'
     require 'digest'
     @uri = CGI.escape(params[:id])
+    if ! @uri.start_with? 'http://'
+      @uri = 'http://'+@uri
+    end
     @uriHash = Digest::SHA1.hexdigest(@uri)
     
     @item = Item.find(@uri)
