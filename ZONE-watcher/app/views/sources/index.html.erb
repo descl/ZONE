@@ -1,0 +1,24 @@
+<h1>Listing sources</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+<%= @result%>
+<% @sources.each do |source| %>
+  <tr>
+    <td>
+      <div class="btn-group">
+        <%= link_to "source", items_path(:new => source), :class => "btn btn-primary"%>
+        <%= link_to source.value, items_path(:new => source), :class => "btn btn-primary" %>
+      </div>
+    </td>
+    <td>
+      (<span class="number_items_wait"><a href="<%=filters_getNumber_path(:old => [source])%>"><i class="number_items_wait icon-refresh" sourceId="<%=source%>" ></i></a></span><span class='number_items_container' sourceId="<%=source%>"></span> éléments)
+
+    </td>
+  </tr>
+<% end %>
+</table>
