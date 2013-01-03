@@ -68,63 +68,56 @@ public class TextExtraction {
         return fileData.toString();
     }
 
-    public void extractLemmaFromText(Text file) throws Exception {
-        try {
-            StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+    public void extractLemmaFromText(Text file) {
+        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-            // read some text in the text variable
-            String text = file.item.concat(); // Add your text here!
+        // read some text in the text variable
+        String text = file.item.concat(); // Add your text here!
 
-            // create an empty Annotation just with the given text
-            Annotation document = new Annotation(text);
+        // create an empty Annotation just with the given text
+        Annotation document = new Annotation(text);
 
-            // run all Annotators on this text
-            pipeline.annotate(document);
+        // run all Annotators on this text
+        pipeline.annotate(document);
 
 
-            // these are all the sentences in this document
-            // a CoreMap is essentially a Map that uses class objects as keys and has values with custom types
-            List<CoreMap> sentences = document.get(SentencesAnnotation.class);
+        // these are all the sentences in this document
+        // a CoreMap is essentially a Map that uses class objects as keys and has values with custom types
+        List<CoreMap> sentences = document.get(SentencesAnnotation.class);
 
-            Map<String, Integer> lemmaMap = new HashMap<String, Integer>();
+        Map<String, Integer> lemmaMap = new HashMap<String, Integer>();
 
-            int nbLemmainText = 0;
+        int nbLemmainText = 0;
 
-            for (CoreMap sentence : sentences) {
-                // traversing the words in the current sentence
-                // a CoreLabel is a CoreMap with additional token-specific methods
-                for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
+        for (CoreMap sentence : sentences) {
+            // traversing the words in the current sentence
+            // a CoreLabel is a CoreMap with additional token-specific methods
+            for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
 
-                    String lemma = token.get(LemmaAnnotation.class);
-                    nbLemmainText++;
+                String lemma = token.get(LemmaAnnotation.class);
+                nbLemmainText++;
 
-                    if (lemmaMap.containsKey(lemma)) {
-                        int lemmaValue = lemmaMap.get(lemma) + 1;
-                        lemmaMap.put(lemma, lemmaValue);
-                    } else {
-                        lemmaMap.put(lemma, 1);
-                    }
-
+                if (lemmaMap.containsKey(lemma)) {
+                    int lemmaValue = lemmaMap.get(lemma) + 1;
+                    lemmaMap.put(lemma, lemmaValue);
+                } else {
+                    lemmaMap.put(lemma, 1);
                 }
 
-
             }
 
-            file.nbToTMots = nbLemmainText;
-            Set<String> keys = lemmaMap.keySet();
-            for (String iter : keys) {
-                Mot mot = new Mot();
-                mot.Lemma = iter;
-                mot.nbOccuences = lemmaMap.get(iter);
-                mot.text = file;
-                file.mots.add(mot);
-            }
 
-        } catch (Exception e) {
-            throw e;
         }
 
-
+        file.nbToTMots = nbLemmainText;
+        Set<String> keys = lemmaMap.keySet();
+        for (String iter : keys) {
+            Mot mot = new Mot();
+            mot.Lemma = iter;
+            mot.nbOccuences = lemmaMap.get(iter);
+            mot.text = file;
+            file.mots.add(mot);
+        }
     }
 
     @Override

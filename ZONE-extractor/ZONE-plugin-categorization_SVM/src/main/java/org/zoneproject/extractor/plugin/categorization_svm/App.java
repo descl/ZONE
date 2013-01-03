@@ -20,6 +20,15 @@ package org.zoneproject.extractor.plugin.categorization_svm;
  * #L%
  */
 
+import java.util.Properties;
+import org.zoneproject.extractor.plugin.categorization_svm.model.Corpus;
+import org.zoneproject.extractor.plugin.categorization_svm.model.Dictionnaire;
+import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
+import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.TextExtraction;
+import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.weight.TF_IDF;
+import org.zoneproject.extractor.plugin.categorization_svm.svm.SVMClassify;
+import org.zoneproject.extractor.plugin.categorization_svm.svm.TrainingDataPreparation;
+import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
 import org.zoneproject.extractor.utils.VirtuosoDatabase;
@@ -37,17 +46,32 @@ public class App
     }
     
     public static void main(String[] args) {
-        //retreive all items not annotated
+        //init the SVM
+        SVMClassify.readModel();
+        Dictionnaire.readDictionnaireFromFile();
+        Corpus.readCorpusFromFile();
+        Properties props = new Properties();
+        props.put("annotators", "tokenize, ssplit, pos, lemma");
+        TextExtraction Te = new TextExtraction();
+        Te.setProps(props);
         
+        
+        //retreive all items not annotated
         //set the items number limit
-        int limit = 100;
-        Item[] itemsNotAnnotated = getNotCategorizeItems(limit);
+        //int limit = 100;
+        //Item[] itemsNotAnnotated = getNotCategorizeItems(limit);
+        Item[] itemsNotAnnotated = Database.getItemsFromSource("http://www.leparisien.fr/actualites-a-la-une.rss.xml");
         System.out.println("Number of items not annotated:"+itemsNotAnnotated.length);
         
         for(Item item : itemsNotAnnotated){
             String itemContent = item.concat();
             //you should run classification on itemContent
-            
+            Text t = new Text(item);
+            Te.extractLemmaFromText(t);
+            TF_IDF.computeWeight(t);
+            TrainingDataPreparation.prepareFeatureVector(t);
+
+            SVMClassify.classifyText(t);
             boolean result = true;//here replace true with the result of your algo
             Prop newAnnotation;
             if(result == true){
@@ -57,7 +81,7 @@ public class App
                 newAnnotation = new Prop(PLUGIN_RESULT_URI+"/sport", "false",true);
 
             }
-            System.out.println("the item: "+itemContent+" has new annotation:"+ newAnnotation);
+            System.out.println("the item: "+itemContent+"\n "+t+"\n "+ newAnnotation+"\n");
         }
         
     }

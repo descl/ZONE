@@ -34,7 +34,7 @@ public class SVMClassify {
 
     public static void readModel() {
         try {
-            model = SVMLightModel.readSVMLightModelFromURL(new java.io.File("svm/jni_model.dat").toURI().toURL());
+            model = SVMLightModel.readSVMLightModelFromURL(new java.io.File("resources/jni_model.dat").toURI().toURL());
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -44,50 +44,39 @@ public class SVMClassify {
         }
     }
 
-    public static void classifyText(Text text) throws Exception {
-        try {
+    public static void classifyText(Text text) {
+        // Sort all feature vectors in ascedending order of feature dimensions
+        // before training the model
+        SVMLightInterface.SORT_INPUT_VECTORS = true;
 
+        // Store dimension/value pairs in new LabeledFeatureVector object
 
-
-            // Sort all feature vectors in ascedending order of feature dimensions
-            // before training the model
-            SVMLightInterface.SORT_INPUT_VECTORS = true;
-
-            // Store dimension/value pairs in new LabeledFeatureVector object
-
-            int[] dim = new int[text.nbMotsInDictionnaire];
-            double[] value = new double[text.nbMotsInDictionnaire];
-            int j = 0;
-            for (Mot f : text.mots) {
-                if (f.rankInDic != 0) {
-                    dim[j] = f.rankInDic;
-                    value[j] = f.weight;
-                    j++;
-                }
+        int[] dim = new int[text.nbMotsInDictionnaire];
+        double[] value = new double[text.nbMotsInDictionnaire];
+        int j = 0;
+        for (Mot f : text.mots) {
+            if (f.rankInDic != 0) {
+                dim[j] = f.rankInDic;
+                value[j] = f.weight;
+                j++;
             }
-
-
-            FeatureVector data = new FeatureVector(dim, value);
-            // Use cosine similarities (LinearKernel with L2-normalized input vectors)
-            data.normalizeL2();
-
-
-
-
-            //SVMLightInterface classifier = new SVMLightInterface();
-            //double d = classifier.classifyNative(data);
-            double d = model.classify(data);
-            if (d > 0) {
-                text.categorie = 1;
-            } else {
-                text.categorie = -1;
-            }
-
-
-        } catch (Exception e) {
-            throw e;
         }
 
 
+        FeatureVector data = new FeatureVector(dim, value);
+        // Use cosine similarities (LinearKernel with L2-normalized input vectors)
+        data.normalizeL2();
+
+
+
+
+        //SVMLightInterface classifier = new SVMLightInterface();
+        //double d = classifier.classifyNative(data);
+        double d = model.classify(data);
+        if (d > 0) {
+            text.categorie = 1;
+        } else {
+            text.categorie = -1;
+        }
     }
 }

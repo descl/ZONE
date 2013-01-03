@@ -73,7 +73,7 @@ public class Corpus {
     public static void readCorpusFromFile() {
         try {
             // ouverture d'un flux d'entrée depuis le fichier "personne.serial"
-            FileInputStream fis = new FileInputStream("svm/Corpus");
+            FileInputStream fis = new FileInputStream("resources/Corpus");
             // création d'un "flux objet" avec le flux fichier
             ObjectInputStream ois = new ObjectInputStream(fis);
             try {
