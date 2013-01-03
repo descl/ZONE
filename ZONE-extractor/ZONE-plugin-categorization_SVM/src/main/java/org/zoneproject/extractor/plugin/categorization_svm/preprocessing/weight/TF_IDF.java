@@ -40,7 +40,11 @@ public class TF_IDF {
 				
 			}
 		}
-
+		
+		if(nbTextMot == 0){
+			return -1;		
+		}
+		
 		return  Math.log((double)Corpus.getCorpus().size()/nbTextMot );
 		 
 		

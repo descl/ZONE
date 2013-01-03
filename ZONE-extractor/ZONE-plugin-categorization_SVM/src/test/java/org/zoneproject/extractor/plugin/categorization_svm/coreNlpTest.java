@@ -48,6 +48,7 @@ import java.io.FileOutputStream;
 import java.util.Properties;
 
 import org.zoneproject.extractor.plugin.categorization_svm.model.Corpus;
+import org.zoneproject.extractor.plugin.categorization_svm.model.Dictionnaire;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.TextExtraction;
 import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.weight.TF;
@@ -86,107 +87,71 @@ public class coreNlpTest
     @org.junit.Test
     public void testApp1() throws Exception {
         try{	     
-            Properties props = new Properties();
-        //    props.put("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
-            props.put("annotators", "tokenize, ssplit, pos, lemma");
-            TextExtraction Te = new TextExtraction();
-            Te.setProps(props);
-
-            SVMLearn svmL = new SVMLearn();
-
-            File dir = new File("svm/learn/cocoa");
-            File [] files = dir.listFiles();
-
-            for(File f : files){
-
-                Text t = new Text(f.getAbsolutePath());
-                Corpus.getCorpus().add(t);
-                t.categorie = 1;
-                t.isLearning = true;
-                Te.extractLemmaFromText(t);
-                TF.computeWeight(t);
-                TrainingDataPreparation.prepareFeatureVector(t);
-                svmL.addFeaturedText(t);
-
-            }
-
-            File dir2 = new File("svm/learn/cotton");
-            File [] files2 = dir2.listFiles();
-
-            for(File f : files2){
-
-                Text t = new Text(f.getAbsolutePath());
-                Corpus.getCorpus().add(t);
-                t.categorie = -1;
-                t.isLearning = true;
-                Te.extractLemmaFromText(t);
-                TF.computeWeight(t);
-                TrainingDataPreparation.prepareFeatureVector(t);
-                svmL.addFeaturedText(t);
-
-            }
-           /* System.out.println(Corpus.getCorpus().size());
-           for (Text t: Corpus.getCorpus()){
-                   TF_IDF.computeWeight(t);
-           }*/
-
-            svmL.learn();
-
-
-            //effacer les fichiers dans le dossier classed
-            File dirClassedCocoa = new File("svm/classed/cocoa");
-            File [] fileClassedCocoa = dirClassedCocoa.listFiles();
-            for(File f : fileClassedCocoa){
-                f.delete();
-            }
-
-            File dirClassedcotton = new File("svm/classed/cotton");
-            File [] fileClassedcotton = dirClassedcotton.listFiles();
-            for(File f : fileClassedcotton){
-                f.delete();
-            }
-
-            //classification
-
-            File dirToClass = new File("svm/toClass");
-            File [] filesToClass = dirToClass.listFiles();
-            for(File f : filesToClass){
-
-                Text t = new Text(f.getAbsolutePath());
-                Te.extractLemmaFromText(t);
-                TF.computeWeight(t);
-                TrainingDataPreparation.prepareFeatureVector(t);
-
-                SVMClassify.classifyText(t);
-
-                FileInputStream filesource = new FileInputStream(f.getAbsolutePath());
-                FileOutputStream  fileDestination = null;
-
-                if(t.categorie == 1){
-                         fileDestination = new FileOutputStream("svm/classed/cocoa/" + f.getName());
-                }
-                else{
-                        fileDestination= new FileOutputStream("svm/classed/cotton/" + f.getName());
-                }
-
-                byte buffer[]=new byte[512*1024];
-
-                int nblecture;
-        while((nblecture=filesource.read(buffer))!=-1){
-           fileDestination.write(buffer,0,nblecture);
-       }
-            }
-            File dirReferencedCocoa = new File("svm/References/cocoa");
-            int x= Verification.countTextInDirectory(dirReferencedCocoa);
-                System.out.println("ref "+ x);
-                int z= Verification.countTextInDirectory(dirClassedCocoa);
-                System.out.println("classed "+ z);
-                int y=Verification.countTextCorrectInDirectory(dirReferencedCocoa, dirClassedCocoa);
-                System.out.println("correct"+ y);
-                double precision = Verification.computePrecision(y,z);
-                double recall = Verification.computeRecall(y, x);
-                System.out.println("precision=" + precision);
-                System.out.println("recall=" + recall);
+			SVMClassify.readModel();
+			Dictionnaire.readDictionnaireFromFile();
+			Corpus.readCorpusFromFile();
+			
+		    Properties props = new Properties();
+			//    props.put("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
+			    props.put("annotators", "tokenize, ssplit, pos, lemma");
+			    TextExtraction Te = new TextExtraction();
+			    Te.setProps(props);
+				 
+			    //effacer les fichiers dans le dossier classed
+			    File dirClassedCocoa = new File("svm/classed/money-fx");
+			    File [] fileClassedCocoa = dirClassedCocoa.listFiles();
+			    for(File f : fileClassedCocoa){
+			    	f.delete();
+			    }
+			    
+			    File dirClassedcotton = new File("svm/classed/notInclude");
+			    File [] fileClassedcotton = dirClassedcotton.listFiles();
+			    for(File f : fileClassedcotton){
+			    	f.delete();
+			    }
+			  
+			    //classification
+			    		    
+			    File dirToClass = new File("svm/toClass");
+			    File [] filesToClass = dirToClass.listFiles();
+			    for(File f : filesToClass){
+			    	
+			    	Text t = new Text(f.getAbsolutePath());
+			    	Te.extractLemmaFromText(t);
+			    	TF_IDF.computeWeight(t);
+			    	TrainingDataPreparation.prepareFeatureVector(t);
+			   
+			    	SVMClassify.classifyText(t);
+			    	
+			    	FileInputStream filesource = new FileInputStream(f.getAbsolutePath());
+			    	FileOutputStream  fileDestination = null;
+			    	
+			    	if(t.categorie == 1){
+			      		 fileDestination = new FileOutputStream("svm/classed/money-fx/" + f.getName());
+			    	}
+			    	else{
+			    		fileDestination= new FileOutputStream("svm/classed/notInclude/" + f.getName());
+			    	}
+		         
+			    	byte buffer[]=new byte[512*1024];
+		          
+			    	int nblecture;
+		            while((nblecture=filesource.read(buffer))!=-1){
+		               fileDestination.write(buffer,0,nblecture);
+		           }
+			    }
+			    File dirReferencedCocoa = new File("svm/References/money-fx");
+			    int x= Verification.countTextInDirectory(dirReferencedCocoa);
+				System.out.println("ref "+ x);
+				int z= Verification.countTextInDirectory(dirClassedCocoa);
+				System.out.println("classed "+ z);
+				int y=Verification.countTextCorrectInDirectory(dirReferencedCocoa, dirClassedCocoa);
+				System.out.println("correct"+ y);
+				double precision = Verification.computePrecision(y,z);
+				double recall = Verification.computeRecall(y, x);
+				System.out.println("precision=" + precision);
+				System.out.println("recall=" + recall);
+		   
         }catch(Exception e){
                 throw e;
         }        

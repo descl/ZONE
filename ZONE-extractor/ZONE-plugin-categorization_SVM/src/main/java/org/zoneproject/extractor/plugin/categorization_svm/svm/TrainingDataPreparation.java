@@ -27,6 +27,7 @@ import org.zoneproject.extractor.plugin.categorization_svm.model.Dictionnaire;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Mot;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 
+
 public class TrainingDataPreparation {
 
 	public static void prepareFeatureVector(Text t){
@@ -42,9 +43,11 @@ public class TrainingDataPreparation {
 	    			if (dicEntry.getValue().equals(iter.Lemma)){
 	    				
 	    				iter.rankInDic = dicEntry.getKey();
+	    				t.nbMotsInDictionnaire++;
 	    				break;
 	    			}
 	    		}
+	    		
 	    		
 	    		
 	    	}

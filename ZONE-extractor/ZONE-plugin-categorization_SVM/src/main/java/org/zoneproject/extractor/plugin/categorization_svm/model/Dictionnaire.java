@@ -20,23 +20,83 @@ package org.zoneproject.extractor.plugin.categorization_svm.model;
  * #L%
  */
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class Dictionnaire {
 	
-	private static HashMap<Integer, String> dic;
+    private static HashMap<Integer, String> dic;
 	
 	private Dictionnaire(){
+
+	}
+	
+	public static Map<Integer, String> getDictionnaire(){
+		//Dictionnaire d = new Dictionnaire();
 		if (dic == null){
 			dic = new HashMap<Integer, String>();
 			dic.put(0, "***************************");
 		}
+		return dic;
 	}
 	
-	public static Map<Integer, String> getDictionnaire(){
-		Dictionnaire d = new Dictionnaire();
-		return d.dic;
+	public static void writeDictionnaireIntoFile() throws IOException{
+		try {
+			FileOutputStream fos = new FileOutputStream("svm/Dic");
+			ObjectOutputStream oos= new ObjectOutputStream(fos);
+			try {
+				// sérialisation : écriture de l'objet dans le flux de sortie
+				oos.writeObject(dic); 
+				// on vide le tampon
+				oos.flush();
+				
+			} finally {
+				//fermeture des flux
+				try {
+					oos.close();
+				} finally {
+					fos.close();
+				}
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static void readDictionnaireFromFile(){
+		try {
+			// ouverture d'un flux d'entrée depuis le fichier "personne.serial"
+			FileInputStream fis = new FileInputStream("svm/Dic");
+			// création d'un "flux objet" avec le flux fichier
+			ObjectInputStream ois= new ObjectInputStream(fis);
+			try {	
+				// désérialisation : lecture de l'objet depuis le flux d'entrée
+				dic = (HashMap<Integer, String>) ois.readObject(); 
+			} finally {
+				// on ferme les flux
+				try {
+					ois.close();
+				} finally {
+					fis.close();
+				}
+			}
+		} catch(IOException ioe) {
+			ioe.printStackTrace();
+		} catch(ClassNotFoundException cnfe) {
+			cnfe.printStackTrace();
+		}
+		
+	}
+
 
 }

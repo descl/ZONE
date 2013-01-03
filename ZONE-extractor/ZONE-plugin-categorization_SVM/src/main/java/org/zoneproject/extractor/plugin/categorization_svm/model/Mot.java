@@ -21,7 +21,14 @@ package org.zoneproject.extractor.plugin.categorization_svm.model;
  */
 
 
-public class Mot {
+import java.io.Serializable;
+
+public class Mot implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public String Lemma;
 	
@@ -32,5 +39,11 @@ public class Mot {
 	public int rankInDic;
 	
 	public double weight;
+	
+	public Mot(){
+		this.nbOccuences = 0;
+		this.rankInDic =0;
+		this.weight =0;
+	}
 
 	}

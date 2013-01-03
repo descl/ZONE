@@ -20,6 +20,9 @@ package org.zoneproject.extractor.plugin.categorization_svm.svm;
  * #L%
  */
 
+import java.net.MalformedURLException;
+import java.text.ParseException;
+
 import jnisvmlight.FeatureVector;
 import jnisvmlight.SVMLightInterface;
 import jnisvmlight.SVMLightModel;
@@ -27,6 +30,20 @@ import org.zoneproject.extractor.plugin.categorization_svm.model.Mot;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 
 public class SVMClassify {
+	
+	private static SVMLightModel model;
+	
+	public static void readModel(){
+		try {
+			 model = SVMLightModel.readSVMLightModelFromURL(new java.io.File("svm/jni_model.dat").toURI().toURL());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	
 	public static void classifyText(Text text) throws Exception{
@@ -40,27 +57,28 @@ public class SVMClassify {
 		    
 		      // Store dimension/value pairs in new LabeledFeatureVector object
 
-	    	int[] dim= new int[text.mots.size()];
-	    	double[] value= new double[text.mots.size()];
+	    	int[] dim= new int[text.nbMotsInDictionnaire];
+	    	double[] value= new double[text.nbMotsInDictionnaire];
 	    	int j=0;
 	    	for(Mot f : text.mots){
-	    		dim[j] = f.rankInDic;
-	    		value[j] = f.weight;
-	    		j++;
-	
+	    		if (f.rankInDic != 0){
+	    			dim[j] = f.rankInDic;
+		    		value[j] = f.weight;
+		    		j++;
+	    		}
 	    	}
+	
 	    
 	    	FeatureVector data = new FeatureVector(dim, value);
 	        // Use cosine similarities (LinearKernel with L2-normalized input vectors)
 	    	data.normalizeL2();
 	    	
 	    	
-	    	SVMLightModel model = SVMLightModel.readSVMLightModelFromURL(new java.io.File("svm/jni_model.dat").toURI().toURL());
+	    	
 	    	
 		    //SVMLightInterface classifier = new SVMLightInterface();
 	    	//double d = classifier.classifyNative(data);
 	    	double d = model.classify(data);
-	    	
 	    	if (d > 0 ){
 	    		text.categorie = 1;
 	    	}
@@ -78,4 +96,3 @@ public class SVMClassify {
 	}
 }
 	
-

@@ -20,10 +20,16 @@ package org.zoneproject.extractor.plugin.categorization_svm.model;
  * #L%
  */
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Text {
+public class Text implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public int categorie;
 	
@@ -33,7 +39,9 @@ public class Text {
 	
 	public List<Mot> mots ;
 	
-	public int nbToTMots; 
+	public int nbToTMots;
+	
+	public int nbMotsInDictionnaire;
 	
 	public Text(String path ){
 		
@@ -41,6 +49,7 @@ public class Text {
 		this.categorie = 0;
 		this.isLearning = false;
 		this.nbToTMots = 0;
+		this.nbMotsInDictionnaire = 0;
 		mots = new ArrayList<Mot>();
 	}
 	
