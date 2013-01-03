@@ -19,40 +19,41 @@ package org.zoneproject.extractor.plugin.categorization_svm.preprocessing.weight
  * limitations under the License.
  * #L%
  */
-
 import org.zoneproject.extractor.plugin.categorization_svm.model.Corpus;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Mot;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 
-
 public class TF_IDF {
-	
-	private  static double computeIDF(Mot mot){ 
-		int nbTextMot = 0;
-		for (Text t: Corpus.getCorpus()){
-			
-			for(Mot m: t.mots){
-				
-				if(m.Lemma.equals(mot.Lemma) ){
-					nbTextMot++;
-					break;
-				}
-				
-			}
-		}
 
-		return  Math.log((double)Corpus.getCorpus().size()/nbTextMot );
-		 
-		
-	}
+    private static double computeIDF(Mot mot) {
+        int nbTextMot = 0;
+        for (Text t : Corpus.getCorpus()) {
 
-	public static void computeWeight(Text t){
+            for (Mot m : t.mots) {
 
-		for (Mot m: t.mots){
-			
-			double tf= (double) m.nbOccuences / t.nbToTMots;
-			m.weight = tf * computeIDF(m);
-		}
-	}
+                if (m.Lemma.equals(mot.Lemma)) {
+                    nbTextMot++;
+                    break;
+                }
 
+            }
+        }
+
+        if (nbTextMot == 0) {
+            return -1;
+        }
+
+        return Math.log((double) Corpus.getCorpus().size() / nbTextMot);
+
+
+    }
+
+    public static void computeWeight(Text t) {
+
+        for (Mot m : t.mots) {
+
+            double tf = (double) m.nbOccuences / t.nbToTMots;
+            m.weight = tf * computeIDF(m);
+        }
+    }
 }

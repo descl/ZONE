@@ -19,18 +19,27 @@ package org.zoneproject.extractor.plugin.categorization_svm.model;
  * limitations under the License.
  * #L%
  */
+import java.io.Serializable;
 
+public class Mot implements Serializable {
 
-public class Mot {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    public String Lemma;
+    public int nbOccuences;
+    public Text text;
+    public int rankInDic;
+    public double weight;
 
-	public String Lemma;
-	
-	public int nbOccuences;
-	
-	public Text text;
-	
-	public int rankInDic;
-	
-	public double weight;
+    public Mot() {
+        this.nbOccuences = 0;
+        this.rankInDic = 0;
+        this.weight = 0;
+    }
 
-	}
+    public String toString() {
+        return "{mot:  Lemma=" + Lemma + ", weight=" + weight + ", nbOccuences=" + nbOccuences + "}";
+    }
+}

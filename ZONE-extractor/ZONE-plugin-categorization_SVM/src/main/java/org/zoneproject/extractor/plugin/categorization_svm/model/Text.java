@@ -19,29 +19,41 @@ package org.zoneproject.extractor.plugin.categorization_svm.model;
  * limitations under the License.
  * #L%
  */
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.zoneproject.extractor.utils.Item;
 
-public class Text {
+public class Text implements Serializable {
 
-	public int categorie;
-	
-	public String path;
-	
-	public boolean isLearning;
-	
-	public List<Mot> mots ;
-	
-	public int nbToTMots; 
-	
-	public Text(String path ){
-		
-		this.path = path;
-		this.categorie = 0;
-		this.isLearning = false;
-		this.nbToTMots = 0;
-		mots = new ArrayList<Mot>();
-	}
-	
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    public int categorie;
+    public transient Item item;
+    public boolean isLearning;
+    public List<Mot> mots;
+    public int nbToTMots;
+    public int nbMotsInDictionnaire;
+
+    public Text(Item i) {
+        this(i, 0, false);
+    }
+
+    public Text(Item i, int categorie, boolean isLearning) {
+
+        this.item = i;
+        this.categorie = categorie;
+        this.isLearning = isLearning;
+        this.nbToTMots = 0;
+        this.nbMotsInDictionnaire = 0;
+        mots = new ArrayList<Mot>();
+    }
+
+    @Override
+    public String toString() {
+        return "{Text: {categorie=" + this.categorie + ", text=" + item.concat() + ", "
+                + "mots=" + mots + "}}";
+    }
 }

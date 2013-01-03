@@ -19,7 +19,6 @@ package org.zoneproject.extractor.plugin.categorization_svm.svm;
  * limitations under the License.
  * #L%
  */
-
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -29,33 +28,32 @@ import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 
 public class TrainingDataPreparation {
 
-	public static void prepareFeatureVector(Text t){
-		
-	   
-	    Map<Integer, String> dic = Dictionnaire.getDictionnaire();
-	    
-	    
-	    for (Mot iter : t.mots){
-	    	if (dic.containsValue(iter.Lemma)){
-	    		
-	    		for (Entry<Integer, String> dicEntry : dic.entrySet()){
-	    			if (dicEntry.getValue().equals(iter.Lemma)){
-	    				
-	    				iter.rankInDic = dicEntry.getKey();
-	    				break;
-	    			}
-	    		}
-	    		
-	    		
-	    	}
-	    	else if (t.isLearning){
-	    		dic.put(dic.size(),iter.Lemma);
-	    		iter.rankInDic = dic.size() - 1;
-	    	}
-	    }
-	    
+    public static void prepareFeatureVector(Text t) {
 
-	}
-	
-	
+
+        Map<Integer, String> dic = Dictionnaire.getDictionnaire();
+
+
+        for (Mot iter : t.mots) {
+            if (dic.containsValue(iter.Lemma)) {
+
+                for (Entry<Integer, String> dicEntry : dic.entrySet()) {
+                    if (dicEntry.getValue().equals(iter.Lemma)) {
+
+                        iter.rankInDic = dicEntry.getKey();
+                        t.nbMotsInDictionnaire++;
+                        break;
+                    }
+                }
+
+
+
+            } else if (t.isLearning) {
+                dic.put(dic.size(), iter.Lemma);
+                iter.rankInDic = dic.size() - 1;
+            }
+        }
+
+
+    }
 }

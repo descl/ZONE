@@ -27,4 +27,18 @@ module ApplicationHelper
     end
     extendQuery
   end
+  
+  def calculateNumber(params)
+    filters = parseFilterParams(params)
+    request = generateFilterSPARQLRequest(filters)
+    query = "SELECT ?number COUNT(DISTINCT ?concept)  WHERE {\n"
+    query += request
+    query += "?concept <http://purl.org/rss/1.0/title> ?title.} LIMIT 1"
+    store = SPARQL::Client.new($endpoint)
+    if store.query(query).length == 0
+      return '0'
+    else
+      return store.query(query)[0]["callret-1"]
+    end
+  end
 end

@@ -8,7 +8,7 @@ class Item# < ActiveRecord::Base
 
   attr_accessor :uri, :title, :props, :description, :date, :localURI
 
-  def self.all(param = "")
+  def self.all(param = "",start=0,per_page=10)
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT ?concept ?title 
     FROM <http://demo.zone-project.org/data>
@@ -18,7 +18,7 @@ class Item# < ActiveRecord::Base
         RSS:pubDateTime ?pubDateTime.
       #{param}
       
-    }ORDER BY DESC(?pubDateTime) LIMIT 20"
+    }ORDER BY DESC(?pubDateTime) LIMIT #{per_page} OFFSET #{start}"
 
     store = SPARQL::Client.new($endpoint)
     items = Array.new
