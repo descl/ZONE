@@ -29,3 +29,5 @@ gem "sparql-client", "~> 0.3.1"
 
 #for variables parsing other javascript
 gem "gon"
+
+gem "will_paginate"
