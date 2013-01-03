@@ -19,7 +19,6 @@ package org.zoneproject.extractor.plugin.categorization_svm.svm;
  * limitations under the License.
  * #L%
  */
-
 import java.net.MalformedURLException;
 import java.text.ParseException;
 
@@ -30,69 +29,65 @@ import org.zoneproject.extractor.plugin.categorization_svm.model.Mot;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 
 public class SVMClassify {
-	
-	private static SVMLightModel model;
-	
-	public static void readModel(){
-		try {
-			 model = SVMLightModel.readSVMLightModelFromURL(new java.io.File("svm/jni_model.dat").toURI().toURL());
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
-	
-	public static void classifyText(Text text) throws Exception{
-		try{
+    private static SVMLightModel model;
 
-	
+    public static void readModel() {
+        try {
+            model = SVMLightModel.readSVMLightModelFromURL(new java.io.File("svm/jni_model.dat").toURI().toURL());
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
-		    // Sort all feature vectors in ascedending order of feature dimensions
-		    // before training the model
-		    SVMLightInterface.SORT_INPUT_VECTORS = true;
-		    
-		      // Store dimension/value pairs in new LabeledFeatureVector object
+    public static void classifyText(Text text) throws Exception {
+        try {
 
-	    	int[] dim= new int[text.nbMotsInDictionnaire];
-	    	double[] value= new double[text.nbMotsInDictionnaire];
-	    	int j=0;
-	    	for(Mot f : text.mots){
-	    		if (f.rankInDic != 0){
-	    			dim[j] = f.rankInDic;
-		    		value[j] = f.weight;
-		    		j++;
-	    		}
-	    	}
-	
-	    
-	    	FeatureVector data = new FeatureVector(dim, value);
-	        // Use cosine similarities (LinearKernel with L2-normalized input vectors)
-	    	data.normalizeL2();
-	    	
-	    	
-	    	
-	    	
-		    //SVMLightInterface classifier = new SVMLightInterface();
-	    	//double d = classifier.classifyNative(data);
-	    	double d = model.classify(data);
-	    	if (d > 0 ){
-	    		text.categorie = 1;
-	    	}
-	    	else{
-	    		text.categorie = -1;
-	    	}
 
-			
-		}catch(Exception e)
-		{
-			throw e;
-		}
 
-		
-	}
+            // Sort all feature vectors in ascedending order of feature dimensions
+            // before training the model
+            SVMLightInterface.SORT_INPUT_VECTORS = true;
+
+            // Store dimension/value pairs in new LabeledFeatureVector object
+
+            int[] dim = new int[text.nbMotsInDictionnaire];
+            double[] value = new double[text.nbMotsInDictionnaire];
+            int j = 0;
+            for (Mot f : text.mots) {
+                if (f.rankInDic != 0) {
+                    dim[j] = f.rankInDic;
+                    value[j] = f.weight;
+                    j++;
+                }
+            }
+
+
+            FeatureVector data = new FeatureVector(dim, value);
+            // Use cosine similarities (LinearKernel with L2-normalized input vectors)
+            data.normalizeL2();
+
+
+
+
+            //SVMLightInterface classifier = new SVMLightInterface();
+            //double d = classifier.classifyNative(data);
+            double d = model.classify(data);
+            if (d > 0) {
+                text.categorie = 1;
+            } else {
+                text.categorie = -1;
+            }
+
+
+        } catch (Exception e) {
+            throw e;
+        }
+
+
+    }
 }
-	

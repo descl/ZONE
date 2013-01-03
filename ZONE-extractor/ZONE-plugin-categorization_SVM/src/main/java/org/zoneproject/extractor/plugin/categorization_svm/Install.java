@@ -19,7 +19,18 @@ package org.zoneproject.extractor.plugin.categorization_svm;
  * limitations under the License.
  * #L%
  */
-
+import java.io.File;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.zoneproject.extractor.plugin.categorization_svm.model.Corpus;
+import org.zoneproject.extractor.plugin.categorization_svm.model.Dictionnaire;
+import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
+import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.TextExtraction;
+import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.weight.TF_IDF;
+import org.zoneproject.extractor.plugin.categorization_svm.svm.SVMLearn;
+import org.zoneproject.extractor.plugin.categorization_svm.svm.TrainingDataPreparation;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 
@@ -36,18 +47,58 @@ public class Install {
         System.out.println("Training the SVM");
         
         //get all items corresponding to the sport category
-        String source = "http://fr.news.yahoo.com/rss/sports";
-        Item[] items = Database.getItemsFromSource(source);
-        
-        //retreive the news content for SVM
-        for(Item i: items)
-            System.out.println("Article text:"+i.concat());
-        
-        System.out.println(items.length+" corresponding to sport category");
+        Item[] itemsSport = Database.getItemsFromSource("http://fr.news.yahoo.com/rss/sports");
+        System.out.println(itemsSport.length+" corresponding to sport category");
         
         //get all item corresponding to an other category
         Item[] otherItems = Database.getItemsFromSource("http://fr.news.yahoo.com/monde/?format=rss");
-        
         System.out.println("Number of items for others:"+otherItems.length);
+        
+        //we start the learning process
+        Properties props = new Properties();
+        props.put("annotators", "tokenize, ssplit, pos, lemma");
+        TextExtraction Te = new TextExtraction();
+        Te.setProps(props);
+
+        SVMLearn svmL = new SVMLearn();
+
+        //retreive the news content for SVM
+        for(Item i: itemsSport) {
+            Text t = new Text(i,1,true);
+            Corpus.getCorpus().add(t);
+            try {
+                Te.extractLemmaFromText(t);
+            } catch (Exception ex) {
+                Logger.getLogger(Install.class.getName()).log(Level.WARNING, null, ex);
+            }
+        }
+
+        for(Item i: otherItems) {
+            Text t = new Text(i,-1,true);
+            Corpus.getCorpus().add(t);
+            try {
+                Te.extractLemmaFromText(t);
+            } catch (Exception ex) {
+                Logger.getLogger(Install.class.getName()).log(Level.WARNING, null, ex);
+            }
+        }
+        
+        //get the weights for each words 
+        for (Text t: Corpus.getCorpus()){
+            TF_IDF.computeWeight(t);
+            TrainingDataPreparation.prepareFeatureVector(t);
+            svmL.addFeaturedText(t);
+        }
+        
+        //save the corpus and dictionary
+        try {
+            Dictionnaire.writeDictionnaireIntoFile();
+            Corpus.writeCorpusIntoFile();
+        } catch (IOException ex) {
+            Logger.getLogger(Install.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //start svm model generation
+        svmL.learn();
     }
 }

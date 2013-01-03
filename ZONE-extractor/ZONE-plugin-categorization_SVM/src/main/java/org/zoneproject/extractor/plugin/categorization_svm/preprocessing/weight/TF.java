@@ -19,16 +19,15 @@ package org.zoneproject.extractor.plugin.categorization_svm.preprocessing.weight
  * limitations under the License.
  * #L%
  */
-
 import org.zoneproject.extractor.plugin.categorization_svm.model.Mot;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 
 public class TF {
 
-		public static void computeWeight(Text t){
-			
-			for (Mot m: t.mots){
-				m.weight = (double) m.nbOccuences / t.nbToTMots;
-			}
-		}
+    public static void computeWeight(Text t) {
+
+        for (Mot m : t.mots) {
+            m.weight = (double) m.nbOccuences / t.nbToTMots;
+        }
+    }
 }

@@ -19,9 +19,6 @@ package org.zoneproject.extractor.plugin.categorization_svm.svm;
  * limitations under the License.
  * #L%
  */
-
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,72 +30,69 @@ import org.zoneproject.extractor.plugin.categorization_svm.model.Mot;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 
 public class SVMLearn {
-	
-	private List<Text> featuredTexts;
-	
-	public SVMLearn(){
-		featuredTexts = new ArrayList<Text>();
-	}
-	
 
-	public List<Text> getFeaturedTexts() {
-		return featuredTexts;
-	}
+    private List<Text> featuredTexts;
 
-	public void setFeaturedTexts(List<Text> featuredTexts) {
-		this.featuredTexts = featuredTexts;
-	}
-	
-	public void addFeaturedText(Text Tx){
-		this.featuredTexts.add(Tx);
-	}
-	
-	public void learn(){
-		
-	    // The trainer interface with the native communication to the SVM-light 
-	    // shared libraries
-	    SVMLightInterface trainer = new SVMLightInterface();
+    public SVMLearn() {
+        featuredTexts = new ArrayList<Text>();
+    }
 
-	    // The training data
-	    LabeledFeatureVector[] traindata = new LabeledFeatureVector[featuredTexts.size()];
+    public List<Text> getFeaturedTexts() {
+        return featuredTexts;
+    }
 
-	    // Sort all feature vectors in ascedending order of feature dimensions
-	    // before training the model
-	    SVMLightInterface.SORT_INPUT_VECTORS = true;
-	    
-	      // Store dimension/value pairs in new LabeledFeatureVector object
-	    int i =0;
-	    for(Text iter: featuredTexts){
-	    	int[] dim= new int[iter.mots.size()];
-	    	double[] value= new double[iter.mots.size()];
-	    	int j=0;
-	    	for(Mot iterMot: iter.mots){
-	    		dim[j] = iterMot.rankInDic;
-	    		value[j] = iterMot.weight;
-	    		j++;
-		    
-	    	}
-	    	traindata[i] = new LabeledFeatureVector(iter.categorie, dim, value);
-	        // Use cosine similarities (LinearKernel with L2-normalized input vectors)
-	        traindata[i].normalizeL2();
-	 	    i++;
-	    }
-	    
-	    
-	    // Initialize a new TrainingParamteres object with the default SVM-light
-	    // values
-	    TrainingParameters tp = new TrainingParameters();
+    public void setFeaturedTexts(List<Text> featuredTexts) {
+        this.featuredTexts = featuredTexts;
+    }
 
-	    // Switch on some debugging output
-	    tp.getLearningParameters().verbosity = 1;
-	    
-	    System.out.println("\nTRAINING SVM-light MODEL ..");
-	    SVMLightModel model = trainer.trainModel(traindata, tp);
-	    System.out.println(" DONE.");
-	    
-	    model.writeModelToFile("svm/jni_model.dat");
-	     
-	}
+    public void addFeaturedText(Text Tx) {
+        this.featuredTexts.add(Tx);
+    }
+
+    public void learn() {
+
+        // The trainer interface with the native communication to the SVM-light 
+        // shared libraries
+        SVMLightInterface trainer = new SVMLightInterface();
+
+        // The training data
+        LabeledFeatureVector[] traindata = new LabeledFeatureVector[featuredTexts.size()];
+
+        // Sort all feature vectors in ascedending order of feature dimensions
+        // before training the model
+        SVMLightInterface.SORT_INPUT_VECTORS = true;
+
+        // Store dimension/value pairs in new LabeledFeatureVector object
+        int i = 0;
+        for (Text iter : featuredTexts) {
+            int[] dim = new int[iter.mots.size()];
+            double[] value = new double[iter.mots.size()];
+            int j = 0;
+            for (Mot iterMot : iter.mots) {
+                dim[j] = iterMot.rankInDic;
+                value[j] = iterMot.weight;
+                j++;
+
+            }
+            traindata[i] = new LabeledFeatureVector(iter.categorie, dim, value);
+            // Use cosine similarities (LinearKernel with L2-normalized input vectors)
+            traindata[i].normalizeL2();
+            i++;
+        }
 
 
+        // Initialize a new TrainingParamteres object with the default SVM-light
+        // values
+        TrainingParameters tp = new TrainingParameters();
+
+        // Switch on some debugging output
+        tp.getLearningParameters().verbosity = 1;
+
+        System.out.println("\nTRAINING SVM-light MODEL ..");
+        SVMLightModel model = trainer.trainModel(traindata, tp);
+        System.out.println(" DONE.");
+
+        model.writeModelToFile("resources/jni_model.dat");
+
+    }
 }

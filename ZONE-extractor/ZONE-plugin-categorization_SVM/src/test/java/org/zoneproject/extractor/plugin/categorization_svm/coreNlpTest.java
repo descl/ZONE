@@ -57,6 +57,7 @@ import org.zoneproject.extractor.plugin.categorization_svm.svm.SVMClassify;
 import org.zoneproject.extractor.plugin.categorization_svm.svm.SVMLearn;
 import org.zoneproject.extractor.plugin.categorization_svm.svm.TrainingDataPreparation;
 import org.zoneproject.extractor.plugin.categorization_svm.svm.Verification;
+import org.zoneproject.extractor.utils.Item;
 
 /**
  *
@@ -116,7 +117,7 @@ public class coreNlpTest
 			    File [] filesToClass = dirToClass.listFiles();
 			    for(File f : filesToClass){
 			    	
-			    	Text t = new Text(f.getAbsolutePath());
+			    	Text t = new Text(new Item(f.getAbsolutePath()));
 			    	Te.extractLemmaFromText(t);
 			    	TF_IDF.computeWeight(t);
 			    	TrainingDataPreparation.prepareFeatureVector(t);

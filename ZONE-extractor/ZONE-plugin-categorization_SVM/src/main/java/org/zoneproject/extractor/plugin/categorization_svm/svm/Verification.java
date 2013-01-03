@@ -21,49 +21,45 @@ package org.zoneproject.extractor.plugin.categorization_svm.svm;
  */
 import java.io.File;
 
-
-
 public class Verification {
-	
-	public static int countTextInDirectory (File dir){
-		 
-		    File [] filesToClass = dir.listFiles();
-		    
-		  int nbOfTexts = filesToClass.length;
-		return nbOfTexts;
-		
-	}
-	public static int countTextCorrectInDirectory (File dirRef, File dirClas)
-	{
-		 File [] filesRef = dirRef.listFiles();
-		 File [] filesClas = dirClas.listFiles();
-		 int nbOfCorrectText = 0;
-		 for(File f : filesClas){
-			 
-			 for(File f1 : filesRef){
-				 
-				 if(f1.getName().equals(f.getName())){
-					 
-					nbOfCorrectText++;
-					break;
-				 }
-			    	
-			    }
-		    	
-		    }
-		return  nbOfCorrectText;
-	}
-	
-	public static double computeRecall (int nbTextCorrect, int nbTextTot){
-		
-		return (double)nbTextCorrect/nbTextTot;
-		
-	}
-	public static double computePrecision(int nbTextCorrect, int nbTextInCat){
-		
-		return (double)nbTextCorrect/nbTextInCat;
-}
-	
 
-	
+    public static int countTextInDirectory(File dir) {
+
+        File[] filesToClass = dir.listFiles();
+
+        int nbOfTexts = filesToClass.length;
+        return nbOfTexts;
+
+    }
+
+    public static int countTextCorrectInDirectory(File dirRef, File dirClas) {
+        File[] filesRef = dirRef.listFiles();
+        File[] filesClas = dirClas.listFiles();
+        int nbOfCorrectText = 0;
+        for (File f : filesClas) {
+
+            for (File f1 : filesRef) {
+
+                if (f1.getName().equals(f.getName())) {
+
+                    nbOfCorrectText++;
+                    break;
+                }
+
+            }
+
+        }
+        return nbOfCorrectText;
+    }
+
+    public static double computeRecall(int nbTextCorrect, int nbTextTot) {
+
+        return (double) nbTextCorrect / nbTextTot;
+
+    }
+
+    public static double computePrecision(int nbTextCorrect, int nbTextInCat) {
+
+        return (double) nbTextCorrect / nbTextInCat;
+    }
 }
