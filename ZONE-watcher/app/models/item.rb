@@ -9,6 +9,9 @@ class Item# < ActiveRecord::Base
   attr_accessor :uri, :title, :props, :description, :date, :localURI
 
   def self.all(param = "",start=0,per_page=10)
+    if start > (10000 - per_page)
+      return Array.new
+    end
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT ?concept ?title 
     FROM <http://demo.zone-project.org/data>

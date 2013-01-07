@@ -13,8 +13,11 @@ class ItemsController < ApplicationController
     current_page = 1 if current_page == nil
     current_page = Integer(current_page)
     per_page = 10
-
-    @items = WillPaginate::Collection.create(current_page, per_page, calculateNumber(params)) do |pager|
+    pageNumber = calculateNumber(params)
+    if pageNumber > (10000 - per_page +1)
+      pageNumber = (10000 - per_page +1)
+    end
+    @items = WillPaginate::Collection.create(current_page, per_page, pageNumber) do |pager|
       start = (current_page-1)*per_page # assuming current_page is 1 based.
       pager.replace(Item.all(generateFilterSPARQLRequest(@filters),start,per_page))
     end
