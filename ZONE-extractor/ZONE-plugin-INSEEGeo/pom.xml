@@ -21,7 +21,7 @@
             <executions>
                     <execution>
                             <id>install-inseeGEO</id>
-                            <phase>install</phase>
+                            <phase>compile</phase>
                             <goals>
                                     <goal>wget</goal>
                             </goals>
@@ -40,7 +40,7 @@
         <version>1.2.1</version>
         <executions>  
           <execution>
-            <phase>install</phase>
+            <phase>compile</phase>
             <goals>  
               <goal>java</goal>  
             </goals>
