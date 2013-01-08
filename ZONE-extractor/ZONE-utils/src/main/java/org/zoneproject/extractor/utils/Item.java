@@ -31,6 +31,7 @@ import com.sun.syndication.feed.rss.Enclosure;
 import com.sun.syndication.feed.synd.SyndEnclosureImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,7 +51,8 @@ import org.xml.sax.SAXException;
  *
  * @author Desclaux Christophe <christophe@zouig.org>
  */
-public class Item {
+public class Item implements Serializable{
+    private static final long serialVersionUID = 1L;
     public String uri;
     public ArrayList<Prop> values;
 

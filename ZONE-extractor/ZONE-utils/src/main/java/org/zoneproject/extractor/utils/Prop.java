@@ -22,12 +22,17 @@ package org.zoneproject.extractor.utils;
 
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  *
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class Prop {
+    private static final long serialVersionUID = 1L;
     private Property type=null;
     private String value=null;
     private boolean isLiteral;
@@ -108,5 +113,4 @@ public class Prop {
         hash = 31 * hash + (this.isLiteral ? 1 : 0);
         return hash;
     }
-
 }
