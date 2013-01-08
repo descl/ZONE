@@ -62,7 +62,7 @@ public class InseeSparqlRequest {
                 "}";
         System.out.println(query);
         
-        ResultSet res = Database.runSPARQLRequest(query);
+        ResultSet res = Database.runSPARQLRequest(query,"http://rdf.insee.fr/geo/2011/");
         ArrayList<Prop> dims = new ArrayList<Prop>();
         while (res.hasNext()) {
             QuerySolution r = res.nextSolution();
