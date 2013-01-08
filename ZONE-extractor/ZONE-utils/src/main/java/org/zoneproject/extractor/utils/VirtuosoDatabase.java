@@ -57,7 +57,9 @@ public abstract class VirtuosoDatabase {
         }
         return st;
     }
-    
+    public static Model getStore(String graph){
+        return VirtModel.openDatabaseModel(graph, VIRTUOSO_SERVER, VIRTUOSO_USER, VIRTUOSO_PASS);
+    }
     public static void addItems(ArrayList<Item> items){
         addItems(items.toArray(new Item[items.size()]));
     }
@@ -102,6 +104,15 @@ public abstract class VirtuosoDatabase {
         return VirtuosoQueryExecutionFactory.create(queryString,getStore()).execSelect() ;
     }
     
+    /**
+     * Run a SPARQL request on the EndPoint
+     * @param queryString the SPARQL request
+     * @param graphUri the Graph in which work
+     * @return the set of results
+     */
+    public static ResultSet runSPARQLRequest(String queryString, String graphUri){
+        return VirtuosoQueryExecutionFactory.create(queryString,getStore(graphUri)).execSelect() ;
+    }
     public static boolean runSPARQLAsk(String queryString){
         return VirtuosoQueryExecutionFactory.create(queryString,getStore()).execAsk() ;
     }
@@ -228,8 +239,7 @@ public abstract class VirtuosoDatabase {
     public static void loadFile(String graphURI,String path) throws FileNotFoundException, IOException{
         Model model = ModelFactory.createDefaultModel();
         FileManager.get().readModel(model,path);
-        
-        getStore().add(model, true);
+        getStore(graphURI).add(model, true);
     }
     
     public static void main(String[] args) throws FileNotFoundException, IOException{
