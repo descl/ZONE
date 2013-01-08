@@ -30,3 +30,5 @@ gem "sparql-client", "~> 0.3.1"
 gem "gon"
 
 gem "will_paginate"
+
+gem 'devise'

@@ -1,4 +1,6 @@
 ZONEWatcher::Application.routes.draw do
+  devise_for :users
+
   resources :sources
 
   get "home/index"

@@ -17,29 +17,30 @@
 <body>
 
 
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="/">Zone - DEMO</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="/">Home</a></li>
-              <li><a href="/sources">Sources List</a></li>
-            </ul>
-          </div>
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="/">Zone - DEMO</a>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/sources">Sources List</a></li>
+          </ul>
         </div>
+        <%= render 'layouts/login' %>
       </div>
     </div>
+  </div>
 
 
-    <div class="container">
-<%= yield %>
-</div>
+  <div class="container">
+    <%= yield %>
+  </div>
 
 </body>
 </html>
