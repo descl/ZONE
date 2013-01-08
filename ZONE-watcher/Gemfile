@@ -32,3 +32,5 @@ gem "gon"
 gem "will_paginate"
 
 gem 'devise'
+gem 'omniauth'
+gem 'omniauth-twitter'
