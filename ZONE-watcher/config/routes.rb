@@ -1,9 +1,8 @@
 ZONEWatcher::Application.routes.draw do
-  resources :authentications
+  #resources :authentications
 
-  devise_for :users
-  
-  match '/auth/:provider/callback' => 'authentications#create'
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  #match '/auth/:provider/callback' => 'authentications#create'
 
   resources :sources
 
@@ -18,6 +17,6 @@ ZONEWatcher::Application.routes.draw do
   get "items/index", :action => "index", :controller => "items"
   #match 'items/:id/:filter' => 'items#show'
   match 'items/:id' => 'items#show', :constraints  =>  {:id =>  /.*/ } 
-
+  
 
 end
