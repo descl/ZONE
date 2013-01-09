@@ -41,4 +41,17 @@ module ApplicationHelper
       return store.query(query)[0]["callret-1"]
     end
   end
+  
+  #devise spefific helpers
+  def resource_name
+    :user
+  end
+
+  def resource
+    @resource ||= User.new
+  end
+
+  def devise_mapping
+    @devise_mapping ||= Devise.mappings[:user]
+  end
 end
