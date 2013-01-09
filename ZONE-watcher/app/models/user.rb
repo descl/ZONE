@@ -22,10 +22,8 @@ class User < ActiveRecord::Base
   end
   
   def self.new_with_session(params, session)
-    puts "RRRRRRRRRRRRRRRRRRRRRRRRRRRR"
     super.tap do |user|
       if data = session["devise.twitter_data"] && session["devise.twitter_data"]["extra"]["raw_info"]
-        puts 'TTTTTTTTTTTTTTTTTTTTTTTTTTT'
         user.email = data["email"] if user.email.blank?
         user.provider = session["devise.twitter_data"].provider
         user.uid = session["devise.twitter_data"].uid
