@@ -1,4 +1,8 @@
+== Compile the assets
 rake assets:precompile
+
+== Add session table
+
 
 
 
