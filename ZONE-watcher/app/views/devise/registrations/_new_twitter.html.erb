@@ -10,7 +10,7 @@
   <div><%= f.label :login %><br />
   <%= f.text_field :login, :value => session["devise.twitter_data"]["info"].nickname.to_s %></div>
 
-  <div><%= f.label "Compte twitter: " %>
+  <div><%= f.label "Twitter account: " %>
       <b><%= session["devise.twitter_data"]["info"].nickname.to_s %></b>
   </div>
   

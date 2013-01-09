@@ -1,5 +1,9 @@
 <% if session["devise.twitter_data"] != nil %>
 <%= render 'new_twitter'%> 
+<% elsif session["devise.github_data"] != nil%>
+<%= render 'new_github'%>
+<% elsif session["devise.google_data"] != nil%>
+<%= render 'new_google'%>
 <%else%>
 
 <h2>Sign up</h2>
