@@ -2,6 +2,9 @@
 <ul class="nav pull-right">
   <% if user_signed_in? %>
     <li>
+        <%= link_to 'Edit account', edit_user_registration_path %>
+    </li>
+    <li>
         <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
     </li>
   <% else %>
@@ -23,25 +26,13 @@
           <div>
             <%= f.submit "Sign in", :class => "btn btn-primary", :style => "clear: left; width: 100%; height: 32px; font-size: 13px;" %>
           </div>
+          <%= link_to raw('Sign in with <b>Zone</b>'), new_user_registration_path, :class=>"btn-auth" %>
           <%= link_to raw("Sign in with <b>Github</b>"), user_omniauth_authorize_path(:github), :class=>"btn-auth btn-github" %>
           <%= link_to raw("Sign in with <b>Twitter</b>"), user_omniauth_authorize_path(:twitter), :class=>"btn-auth btn-twitter" %>
           <%= link_to raw("Sign in with <b>Google</b>"), user_omniauth_authorize_path(:google_oauth2), :class=>"btn-auth btn-google" %>
 
-        
         <% end %>
-
-
       </div>
-    </li>
-
-  <% end %>
-  <% if user_signed_in? %>
-    <li>
-        <%= link_to 'Edit account', edit_user_registration_path %>
-    </li>
-  <% else %>
-    <li>
-        <%= link_to 'Sign up', new_user_registration_path %>
     </li>
   <% end %>
 </ul>
