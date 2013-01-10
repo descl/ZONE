@@ -31,7 +31,7 @@ class ItemsController < ApplicationController
     
     @uriForItemsNumber = filters_getNumber_path(:old => @filters)
     gon.uriForItemsNumber = @uriForItemsNumber
-    
+        
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @items }
@@ -43,8 +43,11 @@ class ItemsController < ApplicationController
   def show
     require 'cgi'
     require 'digest'
-    
-    @uri = URI.escape(CGI.unescape(params[:id]))
+    @uri = params[:id]
+    if params[:format] != nil
+      @uri = @uri+"."+params[:format]
+    end
+    @uri = URI.escape(CGI.unescape(@uri))
     if @uri[6] != '/'
       @uri = @uri.insert(6,'/')
     end
