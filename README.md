@@ -28,7 +28,7 @@ If you want to have your own aggregating service:
 
 ## Licenses
 
-The program can be used under the terms of the [Apache License, 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
+The program can be used under the terms of the [GNU Affero General Public License , 3.0](http://www.gnu.org/licenses/agpl-3.0.html).
 
 The documentation on this website is shared as [Creative Commons Attribution-ShareAlike 3.0 Unported License](http://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License)
 
