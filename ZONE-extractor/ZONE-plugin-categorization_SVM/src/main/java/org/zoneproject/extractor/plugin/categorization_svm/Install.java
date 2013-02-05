@@ -22,6 +22,7 @@ package org.zoneproject.extractor.plugin.categorization_svm;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Corpus;
@@ -40,12 +41,41 @@ import org.zoneproject.extractor.utils.Item;
  */
 
 /*
- * RUN the installer:  mvn install -pl ZONE-plugin-categorization_SVM
+    * RUN the installer:  mvn install -pl ZONE-plugin-categorization_SVM
  */
 public class Install {
-    public static void main(String[] args) {
-        System.out.println("Training the SVM");
+    public
+            
+            static void main(String[] args) {
+        //System.setProperty("java.library.path", System.getProperty("java.library.path") + ":/home/cdesclau/Work/v2/ZONE-extractor/ZONE-plugin-categorization_SVM/libs/");
+
+        //System.out.println(System.getProperty("java.library.path"));
+        //System.out.println(System.getProperty("ld.library.path"));
+        System.out.println(System.getProperty("java.library.path"));
+        System.setProperty("java.library.path",System.getProperty("java.library.path")+":/home/cdesclau/Work/v2/ZONE-extractor/ZONE-plugin-categorization_SVM/libs/" );
+        System.out.println(System.getProperty("java.library.path"));
+        //System.setProperty("LD_LIBRARY_PATH", "/home/cdesclau/Work/v2/ZONE-extractor/ZONE-plugin-categorization_SVM/libs/");
+        //System.out.println(System.getProperty("LD_LIBRARY_PATH"));
+
         
+        //System.load("/home/cdesclau/Work/v2/ZONE-extractor/ZONE-plugin-categorization_SVM/libs/libsvmlight.so");
+        System.loadLibrary("svmlight");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //get all items corresponding to the sport category
         Item[] itemsSport = Database.getItemsFromSource("http://fr.news.yahoo.com/rss/sports");
         System.out.println(itemsSport.length+" corresponding to sport category");
@@ -69,7 +99,7 @@ public class Install {
             try {
                 Te.extractLemmaFromText(t);
             } catch (Exception ex) {
-                Logger.getLogger(Install.class.getName()).log(Level.WARNING, null, ex);
+               Logger.getLogger(Install.class.getName()).log(Level.WARNING, null, ex);
             }
         }
 

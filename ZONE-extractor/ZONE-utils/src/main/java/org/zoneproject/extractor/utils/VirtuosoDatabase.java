@@ -49,7 +49,7 @@ public abstract class VirtuosoDatabase {
     private static String VIRTUOSO_SERVER = Config.getVar("Virtuoso-server-uri");
     private static String VIRTUOSO_USER = Config.getVar("Virtuoso-server-user");
     private static String VIRTUOSO_PASS = Config.getVar("Virtuoso-server-pass");
-    public static String ZONE_URI = "http://demo.zone-project.org/data";
+    public static String ZONE_URI = ZoneOntology.GRAPH_NEWS;
     
     public static Model getStore(){
         if(st == null){

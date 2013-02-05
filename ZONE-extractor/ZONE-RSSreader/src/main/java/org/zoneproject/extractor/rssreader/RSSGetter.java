@@ -23,6 +23,8 @@ package org.zoneproject.extractor.rssreader;
  * #L%
  */
 
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
@@ -34,7 +36,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
+import org.zoneproject.extractor.utils.Prop;
+import org.zoneproject.extractor.utils.ZoneOntology;
 
 /**
  *
@@ -115,6 +120,16 @@ public class RSSGetter {
         return items;
     }
     
+    public static String [] getSources(){
+        String query = "SELECT *  WHERE {?uri rdf:type <"+ZoneOntology.SOURCES_TYPE+">.}";
+        ResultSet res = Database.runSPARQLRequest(query, ZoneOntology.GRAPH_SOURCES);
+        ArrayList<String> sources = new ArrayList<String>();
+        while (res.hasNext()) {
+            QuerySolution r = res.nextSolution();
+            sources.add(r.get("?uri").toString());
+        }
+        return sources.toArray(new String[sources.size()]);
+    }
     
     public static void main(String[] args){
         

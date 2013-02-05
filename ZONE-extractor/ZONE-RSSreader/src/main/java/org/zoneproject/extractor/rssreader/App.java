@@ -38,7 +38,7 @@ public class App
     public static void main( String[] args )
     {
         ArrayList<Item>  items = new ArrayList<Item>();
-        String [] fluxLinks = Config.getVar("rssFeeds").split(",");
+        String [] fluxLinks = RSSGetter.getSources();
         
         System.out.println("========= Starting rss downloading==================");
         ArrayList<Item> it = RSSGetter.getFlux(fluxLinks);
@@ -52,7 +52,6 @@ public class App
         
         System.out.println("========= saving to 4Store database==================");
         Database.addItems(items);
-        
         System.out.println("Done");
     }
 }

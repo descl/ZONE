@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
+import org.zoneproject.extractor.utils.ZoneOntology;
 
 /**
  *
@@ -32,7 +33,7 @@ import org.zoneproject.extractor.utils.Prop;
 
 public class App 
 {
-    public static String PLUGIN_URI = "http://www.zone-project.org/plugins/WikiMeta";
+    public static String PLUGIN_URI = ZoneOntology.PLUGIN_WIKIMETA;
     
     public App(){
         String [] tmp = {};

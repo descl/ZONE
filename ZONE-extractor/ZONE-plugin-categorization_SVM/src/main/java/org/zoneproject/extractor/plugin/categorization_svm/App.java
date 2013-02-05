@@ -32,13 +32,14 @@ import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
 import org.zoneproject.extractor.utils.VirtuosoDatabase;
+import org.zoneproject.extractor.utils.ZoneOntology;
 /*
  * Start categorization: mvn exec:java -pl ZONE-plugin-categorization_SVM
  */
 public class App 
 {
-    public static String PLUGIN_URI = "http://www.zone-project.org/plugins/Categorization_SVM";
-    public static String PLUGIN_RESULT_URI = "http://www.zone-project.org/plugins/Categorization_SVM#result";
+    public static String PLUGIN_URI = ZoneOntology.PLUGIN_SVM;
+    public static String PLUGIN_RESULT_URI = ZoneOntology.PLUGIN_SVM_RES;
     
     public App(){
         String [] tmp = {};

@@ -51,7 +51,7 @@ import org.zoneproject.extractor.utils.FourStore.Store;
 public abstract class FourStoreDatabase{
     private static Store st = null;
     private static String uri = Config.getVar("FourStore-server");
-    public static String ZONE_URI = "http://demo.zone-project.org/data";
+    public static String ZONE_URI = ZoneOntology.GRAPH_NEWS;
     
     public static Store getStore(){
         try {

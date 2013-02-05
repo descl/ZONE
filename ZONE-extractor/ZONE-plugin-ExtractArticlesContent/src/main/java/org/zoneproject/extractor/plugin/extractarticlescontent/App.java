@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 import org.zoneproject.extractor.utils.VirtuosoDatabase;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
+import org.zoneproject.extractor.utils.ZoneOntology;
 
 /**
  *
@@ -37,8 +38,8 @@ import org.zoneproject.extractor.utils.Prop;
  */
 public class App 
 {
-    public static String PLUGIN_URI = "http://www.zone-project.org/plugins/ExtractArticlesContent";
-    public static String PLUGIN_RESULT_URI = "http://www.zone-project.org/plugins/ExtractArticlesContent#result";
+    public static String PLUGIN_URI = ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT;
+    public static String PLUGIN_RESULT_URI = ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_RES;
     
     public App(){
         String [] tmp = {};
