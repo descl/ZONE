@@ -19,40 +19,30 @@ package org.zoneproject.extractor.plugin.categorization_svm.preprocessing;
  * limitations under the License.
  * #L%
  */
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.zoneproject.extractor.plugin.categorization_svm.model.LemmeDictionnaire;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Mot;
+import org.zoneproject.extractor.plugin.categorization_svm.model.StopWords;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 
-import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.ValueAnnotation;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
-import org.zoneproject.extractor.utils.Item;
 
 public class TextExtraction {
 
-    public static final int FILE_SIZE = 1000000;
-    public Properties props;
-
-    public void setProps(Properties props) {
-        this.props = props;
-    }
-
-    public Properties getProps() {
-        return props;
-    }
-
-    private static String readFileAsString(String filePath)
+    //public static final int FILE_SIZE = 1000000;
+     /*private static String readFileAsString(String filePath)
             throws java.io.IOException {
 
         StringBuffer fileData = new StringBuffer(FILE_SIZE);
@@ -66,62 +56,108 @@ public class TextExtraction {
         }
         reader.close();
         return fileData.toString();
-    }
+    }*/
 
+	private String getLemmaFromMot(String mot){
+		mot=mot.toLowerCase();
+  	  if(mot.length()>2 && mot.charAt(1)== '\''){
+  		  mot=mot.substring(2);
+  	  }
+  	  
+  	  String lemma=LemmeDictionnaire.getLemmaMap().get(mot);
+  	  if(lemma == null){
+  		  return null;
+  	  }
+  	  if (lemma.equals("=")){
+  		  lemma = mot;
+  	  }
+  	  
+  	  return lemma;
+	}
+	
+	
+	public boolean isStopWorld(String lemma) throws IOException{
+
+		
+		if(StopWords.getStopWordList().contains(lemma)){			
+			return true;
+		}
+		   
+		else
+		{
+			return false;
+		}
+		
+		
+	}
+	
     public void extractLemmaFromText(Text file) {
-        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+    	try{
+        	Properties props = new Properties();
+    		props.put("pos.model", "resources/french.tagger");
+    		props.put("annotators", "tokenize, ssplit, pos");
+    		StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+    		
+    		// read some text in the text variable
+            String text = file.item.concat(); // Add your text here!
 
-        // read some text in the text variable
-        String text = file.item.concat(); // Add your text here!
+            // create an empty Annotation just with the given text
+            Annotation document = new Annotation(text);
 
-        // create an empty Annotation just with the given text
-        Annotation document = new Annotation(text);
-
-        // run all Annotators on this text
-        pipeline.annotate(document);
+            // run all Annotators on this text
+            pipeline.annotate(document);
 
 
-        // these are all the sentences in this document
-        // a CoreMap is essentially a Map that uses class objects as keys and has values with custom types
-        List<CoreMap> sentences = document.get(SentencesAnnotation.class);
+            // these are all the sentences in this document
+            // a CoreMap is essentially a Map that uses class objects as keys and has values with custom types
+            List<CoreMap> sentences = document.get(SentencesAnnotation.class);
 
-        Map<String, Integer> lemmaMap = new HashMap<String, Integer>();
+            Map<String, Integer> textLemmaMap = new HashMap<String, Integer>();
 
-        int nbLemmainText = 0;
+            int nbLemmainText = 0;
 
-        for (CoreMap sentence : sentences) {
-            // traversing the words in the current sentence
-            // a CoreLabel is a CoreMap with additional token-specific methods
-            for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
+            for (CoreMap sentence : sentences) {
+                // traversing the words in the current sentence
+                // a CoreLabel is a CoreMap with additional token-specific methods
+                for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
 
-                String lemma = token.get(LemmaAnnotation.class);
-                nbLemmainText++;
+                	String mot = token.get(ValueAnnotation.class);
+                    String lemma = getLemmaFromMot(mot);
+                    if(lemma == null){
+                    	continue;
+                    }
+                    
+                    if(isStopWorld(lemma) == true){
+                       	continue;
+                    }
+                    nbLemmainText++;
 
-                if (lemmaMap.containsKey(lemma)) {
-                    int lemmaValue = lemmaMap.get(lemma) + 1;
-                    lemmaMap.put(lemma, lemmaValue);
-                } else {
-                    lemmaMap.put(lemma, 1);
+                    if (textLemmaMap.containsKey(lemma)) {
+                        int lemmaValue = textLemmaMap.get(lemma) + 1;
+                        textLemmaMap.put(lemma, lemmaValue);
+                    } else {
+                    	textLemmaMap.put(lemma, 1);
+                    }
+
                 }
+
 
             }
 
-
+            file.nbToTMots = nbLemmainText;
+            Set<String> keys = textLemmaMap.keySet();
+            for (String iter : keys) {
+                Mot mot = new Mot();
+                mot.Lemma = iter;
+                mot.nbOccuences = textLemmaMap.get(iter);
+                mot.text = file;
+                file.mots.add(mot);
+            }
         }
-
-        file.nbToTMots = nbLemmainText;
-        Set<String> keys = lemmaMap.keySet();
-        for (String iter : keys) {
-            Mot mot = new Mot();
-            mot.Lemma = iter;
-            mot.nbOccuences = lemmaMap.get(iter);
-            mot.text = file;
-            file.mots.add(mot);
-        }
+    	catch (IOException e){
+    		
+    	}
+    	
     }
 
-    @Override
-    public String toString() {
-        return props.toString();
-    }
 }

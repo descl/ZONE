@@ -23,6 +23,8 @@ package org.zoneproject.extractor.plugin.categorization_svm;
 import java.util.Properties;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Corpus;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Dictionnaire;
+import org.zoneproject.extractor.plugin.categorization_svm.model.LemmeDictionnaire;
+import org.zoneproject.extractor.plugin.categorization_svm.model.StopWords;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.TextExtraction;
 import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.weight.TF_IDF;
@@ -50,11 +52,13 @@ public class App
         SVMClassify.readModel();
         Dictionnaire.readDictionnaireFromFile();
         Corpus.readCorpusFromFile();
-        Properties props = new Properties();
-        props.put("annotators", "tokenize, ssplit, pos, lemma");
+        //prepare dictionnaire des lemmes
+        LemmeDictionnaire.readFileToMap();
+        //preparer les mot d'arrêts
+        StopWords.readFileToList();
+
         TextExtraction Te = new TextExtraction();
-        Te.setProps(props);
-        
+   
         
         //retreive all items not annotated
         //set the items number limit
