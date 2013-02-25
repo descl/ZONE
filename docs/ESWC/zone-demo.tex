@@ -1,3 +1,5 @@
+%max: 5pages
+
 \documentclass{llncs}
 %
 \usepackage{makeidx}  % allows for indexgeneration
@@ -44,7 +46,7 @@ Filters allow users to see only news that are relevant. For instance users can r
 %using at least 70 and at most 150 words. It will be set in 9-point
 %font size and be inset 1.0 cm from the right and left margins.
 %There will be two blank lines before and after the Abstract. \dots
-\keywords{linked data, data aggregation}
+\keywords{linked data, data aggregation, RSS}
 \end{abstract}
 %
 \section{Motivation}
@@ -57,26 +59,40 @@ The second solution is to make news forecasting using \textsl{Twitter}\footnote{
 
 The last revelant solution that you can use is \textsl{Yahoo Pipes} \footnote{\url{http://pipes.yahoo.com/pipes/}}, this tool allows the mixing of popular data feeds to create data filtering via a visual editor. It ue pipes as workflows which will help users to sort feeds.
 
-Explication du problème de ces solutions!
-
 With the study of this three solutions I have extract some main challenges that good aggregators need to work on.
 \begin{itemize}
   \item \textbf{filtering capacities} he need to sort all information according to [critères fins]
   \item \textbf{lot of informations} the tool need to have access to all news present on internet 
+  \item \textbf{privacy} users need to use the solution independently of any source provider.
 \end{itemize}
 
+Technicals solutions exists in order to solve this challenges, Google solve this problem using [article de Larry Page sur l'aggregation par mots clés] but this solution is not much efficient because it work on words instead of working on meaning. The solution to use is to use aggregation based on semantic web. 
 
-Linked open data is THE solution in order to have a good filtering capacity
-
-For the big amount of informations that we need to work on, we can use a Ligne de Produits... [référence article de l'an passé
+We will first present in this article how work our solution called Zone with explications about the annotation workflow, the ontologie used and the use of datamining solutions. The we will present a demonstration of the application and finally conclude and talk about future work.
 
 %
-
-
-
 \section{Application: Zone}
+
+
+\subsection{the workflow}
 %
-Sur quelles recherches on se base
+In order to have a selection more efficient of news according to their semantic relevance, we have create two sort of workflows, according to the following figure \ref{fig:WF} which show the general architecture: a semantic annotation workflow of news and a filtering workflow. The distinction between the two workflows is [very very] important in order to work [de manère asynchrone].
+
+
+\begin{figure}[htb!]
+	\begin{centering}
+	\includegraphics[width=1\textwidth]{diagramArchi.png}
+	\caption{Workflows d'annotation et de filtrage sémantique de nouvelles}
+	\label{fig:WF}
+	\end{centering}
+\end{figure}
+
+\subsubsection{The semantic annotation workflow}
+The annotation workflow crawled the web extracting all news and storing them in database next to semantic annotations.
+In order to make the news retreival we use RSS feeds technologies and will not present them in details. The storage of the news is made 
+We will present more in details the annotation procesus and the use of links with linkedOpenDatas, for the news retreival we ue techno
+
+\subsubsection{The filtering workflow}
 
 %
 \subsection{The ontologie}
@@ -85,13 +101,10 @@ basée sur RSS
 on a ajouté un schéma RDFs spécialisé
 on se base aussi sur l'ontologie de wikimeta/insee
 %
-\subsection{the workflow}
+
 %
- \includegraphics[scale=0.5]{diagramArchi.png}
- Courte explication du graphe.
- => vooir article précédent.
-%
-%
+\subsection{Using datamining}
+section d'Ameni
 
 \section{Demonstration}
 %
