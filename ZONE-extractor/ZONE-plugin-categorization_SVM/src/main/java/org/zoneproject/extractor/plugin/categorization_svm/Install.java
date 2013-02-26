@@ -21,12 +21,15 @@ package org.zoneproject.extractor.plugin.categorization_svm;
  */
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Corpus;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Dictionnaire;
+import org.zoneproject.extractor.plugin.categorization_svm.model.LemmeDictionnaire;
+import org.zoneproject.extractor.plugin.categorization_svm.model.StopWords;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.TextExtraction;
 import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.weight.TF_IDF;
@@ -84,11 +87,15 @@ public class Install {
         Item[] otherItems = Database.getItemsFromSource("http://fr.news.yahoo.com/monde/?format=rss");
         System.out.println("Number of items for others:"+otherItems.length);
         
+        //prepare dictionnaire des lemmes
+        LemmeDictionnaire.readFileToMap();
+        
+        //preparer les mot d'arrêts
+        StopWords.readFileToList();
+        
         //we start the learning process
-        Properties props = new Properties();
-        props.put("annotators", "tokenize, ssplit, pos, lemma");
         TextExtraction Te = new TextExtraction();
-        Te.setProps(props);
+
 
         SVMLearn svmL = new SVMLearn();
 
