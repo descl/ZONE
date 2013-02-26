@@ -32,9 +32,11 @@ import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 public class SVMLearn {
 
     private List<Text> featuredTexts;
+    private String categorie;
 
-    public SVMLearn() {
+    public SVMLearn(String iCat) {
         featuredTexts = new ArrayList<Text>();
+        categorie = iCat;
     }
 
     public List<Text> getFeaturedTexts() {
@@ -93,7 +95,7 @@ public class SVMLearn {
         SVMLightModel model = trainer.trainModel(traindata, tp);
         System.out.println(" DONE.");
 
-        model.writeModelToFile("resources/jni_model.dat");
+        model.writeModelToFile("resources/jni_model_"+categorie+".dat");
 
     }
 }
