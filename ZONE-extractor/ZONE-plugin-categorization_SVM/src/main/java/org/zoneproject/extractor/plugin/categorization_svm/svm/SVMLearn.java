@@ -87,6 +87,7 @@ public class SVMLearn {
 
         // Switch on some debugging output
         tp.getLearningParameters().verbosity = 1;
+        tp.getLearningParameters().svm_costratio = 10;
 
         System.out.println("\nTRAINING SVM-light MODEL ..");
         SVMLightModel model = trainer.trainModel(traindata, tp);

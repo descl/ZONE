@@ -56,7 +56,7 @@ public class SVMClassify {
         int j = 0;
         for (Mot f : text.mots) {
             if (f.rankInDic != 0) {
-                dim[j] = f.rankInDic;
+            	dim[j] = f.rankInDic;
                 value[j] = f.weight;
                 j++;
             }

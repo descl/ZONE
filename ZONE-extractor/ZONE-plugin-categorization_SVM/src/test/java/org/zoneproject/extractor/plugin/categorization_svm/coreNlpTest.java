@@ -49,6 +49,7 @@ import java.util.Properties;
 
 import org.zoneproject.extractor.plugin.categorization_svm.model.Corpus;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Dictionnaire;
+import org.zoneproject.extractor.plugin.categorization_svm.model.LemmeDictionnaire;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.TextExtraction;
 import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.weight.TF;
@@ -58,6 +59,8 @@ import org.zoneproject.extractor.plugin.categorization_svm.svm.SVMLearn;
 import org.zoneproject.extractor.plugin.categorization_svm.svm.TrainingDataPreparation;
 import org.zoneproject.extractor.plugin.categorization_svm.svm.Verification;
 import org.zoneproject.extractor.utils.Item;
+
+import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
 
 /**
  *
@@ -91,12 +94,12 @@ public class coreNlpTest
 			SVMClassify.readModel();
 			Dictionnaire.readDictionnaireFromFile();
 			Corpus.readCorpusFromFile();
-			
-		    Properties props = new Properties();
+			LemmeDictionnaire.readFileToMap();
+		  //  Properties props = new Properties();
 			//    props.put("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
-			    props.put("annotators", "tokenize, ssplit, pos, lemma");
+		
 			    TextExtraction Te = new TextExtraction();
-			    Te.setProps(props);
+		
 				 
 			    //effacer les fichiers dans le dossier classed
 			    File dirClassedCocoa = new File("svm/classed/money-fx");
