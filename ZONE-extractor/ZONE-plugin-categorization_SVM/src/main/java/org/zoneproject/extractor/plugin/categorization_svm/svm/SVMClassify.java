@@ -29,12 +29,17 @@ import org.zoneproject.extractor.plugin.categorization_svm.model.Mot;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 
 public class SVMClassify {
+	
+	public SVMClassify(String iCat){
+		categorie = iCat;
+	}
 
-    private static SVMLightModel model;
+    private String categorie;
+	private SVMLightModel model;
 
-    public static void readModel() {
+    public void readModel() {
         try {
-            model = SVMLightModel.readSVMLightModelFromURL(new java.io.File("resources/jni_model.dat").toURI().toURL());
+            model = SVMLightModel.readSVMLightModelFromURL(new java.io.File("resources/jni_model_"+categorie+".dat").toURI().toURL());
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -44,7 +49,7 @@ public class SVMClassify {
         }
     }
 
-    public static void classifyText(Text text) {
+    public double classifyText(Text text) {
         // Sort all feature vectors in ascedending order of feature dimensions
         // before training the model
         SVMLightInterface.SORT_INPUT_VECTORS = true;
@@ -56,7 +61,7 @@ public class SVMClassify {
         int j = 0;
         for (Mot f : text.mots) {
             if (f.rankInDic != 0) {
-                dim[j] = f.rankInDic;
+            	dim[j] = f.rankInDic;
                 value[j] = f.weight;
                 j++;
             }
@@ -73,10 +78,12 @@ public class SVMClassify {
         //SVMLightInterface classifier = new SVMLightInterface();
         //double d = classifier.classifyNative(data);
         double d = model.classify(data);
-        if (d > 0) {
+       /* if (d > 0) {
             text.categorie = 1;
         } else {
             text.categorie = -1;
-        }
+        }*/
+        
+        return d;
     }
 }

@@ -21,12 +21,20 @@ package org.zoneproject.extractor.plugin.categorization_svm;
  */
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Corpus;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Dictionnaire;
+import org.zoneproject.extractor.plugin.categorization_svm.model.LemmeDictionnaire;
+import org.zoneproject.extractor.plugin.categorization_svm.model.StopWords;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.TextExtraction;
 import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.weight.TF_IDF;
@@ -44,39 +52,86 @@ import org.zoneproject.extractor.utils.Item;
     * RUN the installer:  mvn install -pl ZONE-plugin-categorization_SVM
  */
 public class Install {
-    public
-            
-            static void main(String[] args) {
-        //System.setProperty("java.library.path", System.getProperty("java.library.path") + ":/home/cdesclau/Work/v2/ZONE-extractor/ZONE-plugin-categorization_SVM/libs/");
-
-        //System.out.println(System.getProperty("java.library.path"));
-        //System.out.println(System.getProperty("ld.library.path"));
-        System.out.println(System.getProperty("java.library.path"));
-        System.setProperty("java.library.path",System.getProperty("java.library.path")+":/home/cdesclau/Work/v2/ZONE-extractor/ZONE-plugin-categorization_SVM/libs/" );
-        System.out.println(System.getProperty("java.library.path"));
-        //System.setProperty("LD_LIBRARY_PATH", "/home/cdesclau/Work/v2/ZONE-extractor/ZONE-plugin-categorization_SVM/libs/");
-        //System.out.println(System.getProperty("LD_LIBRARY_PATH"));
-
+    public static void main(String[] args) {
+        Map<String, String> UrlCategories = new HashMap<String, String>();
+        UrlCategories.put("informatique", "http://rss.feedsportal.com/c/629/f/502199/index.rss");
+        UrlCategories.put("sport", "http://fr.news.yahoo.com/rss/sports");
+        UrlCategories.put("medecine", "http://www.tv5.org/TV5Site/rss/actualites.php?rub=15");
+        UrlCategories.put("economie", "http://www.france24.com/fr/economie/rss");
+        UrlCategories.put("science", "http://www.tv5.org/TV5Site/rss/actualites.php?rub=14");
+       // UrlCategories.put("science", "http://fr.news.yahoo.com/monde/?format=rss");
         
-        //System.load("/home/cdesclau/Work/v2/ZONE-extractor/ZONE-plugin-categorization_SVM/libs/libsvmlight.so");
-        System.loadLibrary("svmlight");
+        //prepare dictionnaire des lemmes
+        LemmeDictionnaire.readFileToMap();
+        
+        //preparer les mot d'arrêts
+        StopWords.readFileToList();
+        
+        //we start the learning process
+        TextExtraction Te = new TextExtraction();
 
+        Map<String, List<Text>> CatTextMap = new HashMap<String, List<Text>>();
+        
+        //extraction des données
+        for (Entry<String, String> urlCat : UrlCategories.entrySet()){
+        	 Item[] itemsCat = Database.getItemsFromSource(urlCat.getValue());
+        	 System.out.println(itemsCat.length+" corresponding to "+ urlCat.getKey() +" category");
 
+             //retreive the news content for SVM
+        	 List<Text> texts = new ArrayList<Text>();
+             for(Item i: itemsCat) {
+                 Text t = new Text(i,1,true);
+                 Corpus.getCorpus().add(t);
+                 try {
+                     Te.extractLemmaFromText(t);
+                 } catch (Exception ex) {
+                     Logger.getLogger(Install.class.getName()).log(Level.WARNING, null, ex);
+                 }
+                 texts.add(t);
+             }
+             
+        	 CatTextMap.put(urlCat.getKey(), texts);
+        }
+        
+        //get the weights for each words 
+        for (Text t: Corpus.getCorpus()){
+            TF_IDF.computeWeight(t);
+            TrainingDataPreparation.prepareFeatureVector(t);
+        }
+        
+        //save the corpus and dictionary
+        try {
+            Dictionnaire.writeDictionnaireIntoFile();
+            Corpus.writeCorpusIntoFile();
+        } catch (IOException ex) {
+            Logger.getLogger(Install.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        for (Entry<String, List<Text>> catTexts: CatTextMap.entrySet()){
+        
+        	SVMLearn svmL = new SVMLearn(catTexts.getKey());
+        	
+        	for (Entry<String, List<Text>> catTextsInternal: CatTextMap.entrySet()){
+            	
+        		for (Text t : catTextsInternal.getValue()){
+            		
+        			if (catTextsInternal.getKey() == catTexts.getKey()){
+            			t.categorie = 1;
+            		}
+            		else{
+            			t.categorie = -1;
+            		}
+        			
+            		svmL.addFeaturedText(t);
+            	}
+        	}
+        	svmL.learn();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //get all items corresponding to the sport category
+        }
+        
+        
+   /*     //get all items corresponding to the sport category
         Item[] itemsSport = Database.getItemsFromSource("http://fr.news.yahoo.com/rss/sports");
         System.out.println(itemsSport.length+" corresponding to sport category");
         
@@ -84,11 +139,7 @@ public class Install {
         Item[] otherItems = Database.getItemsFromSource("http://fr.news.yahoo.com/monde/?format=rss");
         System.out.println("Number of items for others:"+otherItems.length);
         
-        //we start the learning process
-        Properties props = new Properties();
-        props.put("annotators", "tokenize, ssplit, pos, lemma");
-        TextExtraction Te = new TextExtraction();
-        Te.setProps(props);
+
 
         SVMLearn svmL = new SVMLearn();
 
@@ -129,6 +180,6 @@ public class Install {
         }
 
         //start svm model generation
-        svmL.learn();
+        svmL.learn();*/
     }
 }

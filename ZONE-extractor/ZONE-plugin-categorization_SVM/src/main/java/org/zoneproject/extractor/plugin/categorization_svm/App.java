@@ -20,9 +20,14 @@ package org.zoneproject.extractor.plugin.categorization_svm;
  * #L%
  */
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Corpus;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Dictionnaire;
+import org.zoneproject.extractor.plugin.categorization_svm.model.LemmeDictionnaire;
+import org.zoneproject.extractor.plugin.categorization_svm.model.StopWords;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.TextExtraction;
 import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.weight.TF_IDF;
@@ -41,21 +46,43 @@ public class App
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_SVM;
     public static String PLUGIN_RESULT_URI = ZoneOntology.PLUGIN_SVM_RES;
     
+    public static final int informatique = 1;
+    public static final int sport = 2;
+    public static final int medecine = 3;
+    public static final int economie = 4;
+    public static final int science = 5;
+    
     public App(){
         String [] tmp = {};
         App.main(tmp);
     }
     
+    
     public static void main(String[] args) {
+    	
+        
         //init the SVM
-        SVMClassify.readModel();
+    	Map<Integer, SVMClassify> classiferMap = new HashMap<Integer, SVMClassify>();
+    	classiferMap.put(informatique, new SVMClassify("informatique"));
+    	classiferMap.put(sport, new SVMClassify("sport"));
+    	classiferMap.put(medecine, new SVMClassify("medecine"));
+    	classiferMap.put(economie, new SVMClassify("economie"));
+    	classiferMap.put(science, new SVMClassify("science"));
+    	
+    	        
+    	for (Entry<Integer, SVMClassify> cm : classiferMap.entrySet()){
+    		cm.getValue().readModel();    		
+    	}
+        
         Dictionnaire.readDictionnaireFromFile();
         Corpus.readCorpusFromFile();
-        Properties props = new Properties();
-        props.put("annotators", "tokenize, ssplit, pos, lemma");
+        //prepare dictionnaire des lemmes
+        LemmeDictionnaire.readFileToMap();
+        //preparer les mot d'arrêts
+        StopWords.readFileToList();
+
         TextExtraction Te = new TextExtraction();
-        Te.setProps(props);
-        
+   
         
         //retreive all items not annotated
         //set the items number limit
@@ -72,7 +99,14 @@ public class App
             TF_IDF.computeWeight(t);
             TrainingDataPreparation.prepareFeatureVector(t);
 
-            SVMClassify.classifyText(t);
+            double d = -100;
+            for (Entry<Integer, SVMClassify> cm : classiferMap.entrySet()){
+            	double newd = cm.getValue().classifyText(t);
+            	if( d < newd){
+            		d = newd;
+            		t.categorie = cm.getKey();
+            	}
+            }
             boolean result = true;//here replace true with the result of your algo
             Prop newAnnotation;
             if(result == true){
