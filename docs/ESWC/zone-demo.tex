@@ -36,10 +36,12 @@
 \maketitle
 
 \begin{abstract}%
-Nowadays we can use RSS feeds, Twitter, Google Reader, Yahoo Pipes or aggregators to keep up with news. Though those solutions do not guarantee data privacy and rather manage news by origin. The zone project proposes an innovative solution to overcome those issues using the power of Semantic Web and group related informations together.
-ZONE-project provides a new, innovative way to follow news. At its core, the system is aggregating news items from various RSS feeds.
-Using the power of semantic web we are able to efficiently tag and annotate each news. Those tags are the basis of filters.
-Filters allow users to see only news that are relevant. For instance users can retrieve all news containing a tag, or on the contrary never see news containing specific tags.
+Nowadays we can use RSS feeds, Twitter, Google Reader, Yahoo Pipes or aggregators to keep up with news. However those solutions do not guarantee data privacy and usually manage news by origin. 
+The zone project proposes an innovative solution to overcome those issues using the power of Semantic Web to group related informations together.
+ZONE-project provides a new, innovative way to follow news. 
+At its core, the system is aggregating news items from various RSS feeds.
+Using semantic web we are able to efficiently tag and annotate each news. 
+Those tags are the basis of filters to allow users to see only news that are relevant.
 
 
 %The abstract should summarize the contents of the paper
@@ -51,24 +53,26 @@ Filters allow users to see only news that are relevant. For instance users can r
 %
 \section{Motivation}
 %
-A lot of news are published every day on internet, the number of news websites has increased significantly. People and organization are now building news aggregators in order to sort all this information. This systems are really important in order to clean all the amount of information.
+A lot of news are published every day on internet, the number of news websites has increased significantly. People and organizations are now building news aggregators in order to sort all this information. This systems are really important in order to clean all the amount of information.
 
-Solutions exists, you can for example use \textsl{Google news} \footnote{\url{http://news.google.fr}} like a trusted provider of information, but in this web application your are only a consumer and don't have a lot of interaction with the system. 
+Solutions exist, for instance one can use \textsl{Google news} \footnote{\url{http://news.google.fr}} like a trusted provider of information, but in this web application your are only a consumer and don't have a lot of interactions with the system. 
 
-The second solution is to make news forecasting using \textsl{Twitter}\footnote{\url{http://www.twitter.com}}, it's a  solution in which you have the hand on your sources. You can clearly choose the users you want to follow. But you can't have a selection on sources and on topics and you have a lot of noise around goods informations.
+The second solution is to make news forecasting using \textsl{Twitter}\footnote{\url{http://www.twitter.com}}, it's a  solution in which one can control the sources he follows. But you can't have a selection on sources and on topics and you have a lot of noise around goods informations.
+***************** oui, les recherches par mots tags ne permettent pas de supprimer les bruit liés à l'utilisation de mêmes hashtags sur différents sujets distincts **************************
 
-The last revelant solution that you can use is \textsl{Yahoo Pipes} \footnote{\url{http://pipes.yahoo.com/pipes/}}, this tool allows the mixing of popular data feeds to create data filtering via a visual editor. It ue pipes as workflows which will help users to sort feeds.
 
-With the study of this three solutions I have extract some main challenges that good aggregators need to work on.
+The last relevant solution that one can use is \textsl{Yahoo Pipes} \footnote{\url{http://pipes.yahoo.com/pipes/}}, this tool allows the mixing of popular data feeds to create data filtering via a visual editor. It uses pipes as workflows which will help users to sort feeds.
+
+From these three types of approaches we can identify some main challenges that good aggregators need to work on.
 \begin{itemize}
-  \item \textbf{filtering capacities} he need to sort all information according to [critères fins]
-  \item \textbf{lot of informations} the tool need to have access to all news present on internet 
+  \item \textbf{filtering capacities} we need to be able to select and sort information according to precise criteria.
+  \item \textbf{lots of informations} the tool needs to have access to a maximum of news present on internet 
   \item \textbf{privacy} users need to use the solution independently of any source provider.
 \end{itemize}
 
-Technicals solutions exists in order to solve this challenges, Google solve this problem using [article de Larry Page sur l'aggregation par mots clés] but this solution is not much efficient because it work on words instead of working on meaning. The solution to use is to use aggregation based on semantic web. 
+Technicals solutions exists in order to solve this challenges, Google solve this problem using [article de Larry Page sur l'aggregation par mots clés] but this solution is not very efficient because it works on words instead of working on meaning. The solution we propose is an aggregation based on semantic web frameworks. 
 
-We will first present in this article how work our solution called Zone with explications about the annotation workflow, the ontologie used and the use of datamining solutions. The we will present a demonstration of the application and finally conclude and talk about future work.
+We will first present in this article how our solution called Zone. We will explain the annotation workflow, the ontology used and the use of data-mining solutions. The we will present a demonstration of the application and finally conclude and talk about future work.
 
 %
 \section{Application: Zone}
@@ -76,9 +80,6 @@ We will first present in this article how work our solution called Zone with exp
 
 \subsection{the workflow}
 %
-In order to have a selection more efficient of news according to their semantic relevance, we have create two sort of workflows, according to the following figure \ref{fig:WF} which show the general architecture: a semantic annotation workflow of news and a filtering workflow. The distinction between the two workflows is [very very] important in order to work [de manère asynchrone].
-
-
 \begin{figure}[htb!]
 	\begin{centering}
 	\includegraphics[width=1\textwidth]{diagramArchi.png}
@@ -87,20 +88,32 @@ In order to have a selection more efficient of news according to their semantic 
 	\end{centering}
 \end{figure}
 
+In order to have a selection more efficient of news according to their semantic relevance, we have created two sort of workflows, figure \ref{fig:WF} shows the general architecture: a semantic annotation workflow of news and a filtering workflow. The distinction between the two workflows is extremely important in order to work in an asynchronous way.
+
+
+
+
 \subsubsection{The semantic annotation workflow}
-The annotation workflow crawled the web extracting all news and storing them in database next to semantic annotations.
+He crawled the web extracting all news and storing them in database next to semantic annotations.
 In order to make the news retreival we use RSS feeds technologies and will not present them in details. The storage of the news is made 
 We will present more in details the annotation procesus and the use of links with linkedOpenDatas, for the news retreival we ue techno
 
-\subsubsection{The filtering workflow}
+%\subsubsubsection{Annotators}
+********************citer les différents et comment ils marchent et aussi le ExtractArticleContent********************
 
+\subsubsection{The filtering workflow}
+He is giving the user the possibility to access all datas organized by the annotation workflow. He is organized as a web application using the web framework RubyOnRails \footnote{\url{http://rubyonrails.org}} which help us to build the web application. In order to create the SPARQL requests on database we ask with examples to the user which annotations he want to follow. He can make some tests of filters on the website in order to see what will be the result of the filter. Last he can create a RSS feed based on this filters.
 %
 \subsection{The ontologie}
 %
-basée sur RSS
+**************basée sur RSS
 on a ajouté un schéma RDFs spécialisé
-on se base aussi sur l'ontologie de wikimeta/insee
+on se base aussi sur l'ontologie de wikimeta/insee***************
 %
+
+%
+\subsection{Using generalisators}
+*******parler de l'insee********
 
 %
 \subsection{Using datamining}
@@ -108,9 +121,11 @@ section d'Ameni
 
 \section{Demonstration}
 %
-On va sur l'application, on séléctionne les entitées nommées qui nous interessent dans la liste des articles présents, ca génère ce qu'on a envie de voir...
-Comment se déroule la démo, captures
-%
+The web application is designed for all kind of news feed like technological, medical or general news feed. You can install the application according to your needs and the AGPL licence. We also propose a web application for general news feed on \url{http://demo.zone-project.org} which is the main test platform for the application.
+
+The demo starts with the listing of all recent news on \url{http://demo.zone-project.org}. Then we create a filter according to some criteria in order to show to the audience the different kind of filters present and their links to the news. Finally, when the good filter is chosen, we export it to an external RSS feed aggregator showing that our web application can be use in combination of other tools.
+
+Then we propose an other usage of ZONE-project, according to twitter. We go on the demo application and make a quick demonstration of news filtering on the hashtag #eswc2013.
 
 \section{Conclusion and futur work}
 %
@@ -121,6 +136,7 @@ Challenges qui restent à résoudre :
 
 \section{Acknowledgments}
 %
+This project has been started in 2011 according to an and of ingeneering school project and has been 
 Description du contexte de travail=> se passe à l'inria BYC... équipe wimmics qui bosse sur semantic web
 
 %
