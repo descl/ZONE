@@ -1,0 +1,130 @@
+#
+# makefile for svm_light 
+#
+# Thorsten Joachims, 2002
+#
+# Thanks to Ralf Herbrich for the initial version.
+#
+
+# SET THIS TO YOUR JAVA HOME DIRECTORY
+JAVAHOME =/usr/lib/j2sdk-1.4.2
+
+# CFLAGS=   -g -Wall -pedantic  # debugging C-Compiler flags
+CC=gcc
+CFLAGS=-O3 -Wall -I$(JAVAHOME)/include -I$(JAVAHOME)/include/linux
+LD=gcc
+LFLAGS=-O3 -I$(JAVAHOME)/include -I$(JAVAHOME)/include/linux
+LIBS=-L. -lm
+
+
+all: svm_learn_hideo svm_classify svm_shared_lib
+
+tidy: 
+	rm -f *.o 
+	rm -f donlp2/*.o
+	rm -f donlp2_c/*.o
+	rm -f pr_loqo/*.o
+
+clean:	tidy
+	rm -f svm_learn
+	rm -f svm_classify
+
+help:   info
+
+info:
+	@echo
+	@echo "make for SVM-light               Thorsten Joachims, 1998"
+	@echo
+	@echo "Thanks to Ralf Herbrich for the initial version."
+	@echo 
+	@echo "USAGE: make [svm_learn | svm_learn_loqo | svm_learn_hideo | "
+	@echo "             svm_classify | all | clean | tidy]"
+	@echo 
+	@echo "    svm_learn           builds the learning module (prefers HIDEO)"
+	@echo "    svm_learn_hideo     builds the learning module using HIDEO"
+	@echo "    svm_learn_loqo      builds the learning module using PR_LOQO"
+	@echo "    svm_classify        builds the classfication module"
+	@echo "    all (default)       builds svm_learn + svm_classify"
+	@echo "    clean               removes .o and target files"
+	@echo "    tidy                removes .o files"
+	@echo
+
+
+svm_learn_hideo_noexe: svm_learn_main.o svm_learn.o svm_common.o svm_hideo.o 
+
+svm_learn_hideo: svm_learn_main.o svm_learn.o svm_common.o svm_hideo.o 
+	$(LD) $(LFLAGS) svm_learn_main.o svm_learn.o svm_common.o svm_hideo.o -o linux-svm_learn $(LIBS)
+
+svm_learn_loqo_noexe: svm_learn_main.o svm_learn.o svm_common.o svm_loqo.o loqo
+
+svm_learn_loqo: svm_learn_main.o svm_learn.o svm_common.o svm_loqo.o loqo
+	$(LD) $(LFLAGS) svm_learn_main.o svm_learn.o svm_common.o svm_loqo.o pr_loqo/pr_loqo.o -o linux-svm_learn $(LIBS)
+
+
+svm_hideo.o: svm_hideo.c
+	$(CC) -c $(CFLAGS) svm_hideo.c -o svm_hideo.o 
+
+svm_loqo.o: svm_loqo.c 
+	$(CC) -c $(CFLAGS) svm_loqo.c -o svm_loqo.o 
+
+svm_common.o: svm_common.c svm_common.h kernel.h svm_learn.h
+	$(CC) -c $(CFLAGS) svm_common.c -o svm_common.o 
+
+svm_learn.o: svm_learn.c svm_common.h
+	$(CC) -c $(CFLAGS) svm_learn.c -o svm_learn.o 
+
+svm_learn_main.o: svm_learn_main.c svm_learn.h svm_common.h
+	$(CC) -c $(CFLAGS) svm_learn_main.c -o svm_learn_main.o 
+
+svm_jni.o: svm_jni.c svm_learn.h svm_common.h 
+	$(CC) -c $(CFLAGS) svm_jni.c -o svm_jni.o
+
+svm_classify: svm_classify.o svm_common.o
+	$(LD) $(LFLAGS) $(LIBS) svm_classify.o svm_common.o -o linux-svm_classify
+
+svm_classify.o: svm_classify.c svm_common.h kernel.h
+	$(CC) -c $(CFLAGS) svm_classify.c -o svm_classify.o
+
+
+
+
+sl_svm_hideo.o: svm_hideo.c
+	$(CC) -fPIC -c $(CFLAGS) svm_hideo.c -o sl_svm_hideo.o 
+
+sl_svm_loqo.o: svm_loqo.c 
+	$(CC) -fPIC -c $(CFLAGS) svm_loqo.c -o sl_svm_loqo.o 
+
+sl_svm_common.o: svm_common.c svm_common.h kernel.h svm_learn.h
+	$(CC) -fPIC -c $(CFLAGS) svm_common.c -o sl_svm_common.o 
+
+sl_svm_learn.o: svm_learn.c svm_common.h
+	$(CC) -fPIC -c $(CFLAGS) svm_learn.c -o sl_svm_learn.o 
+
+sl_svm_learn_main.o: svm_learn_main.c svm_learn.h svm_common.h
+	$(CC) -fPIC -c $(CFLAGS) svm_learn_main.c -o sl_svm_learn_main.o 
+
+sl_svm_jni.o: svm_jni.c svm_learn.h svm_common.h svm_learn_main.o
+	$(CC) -fPIC -c $(CFLAGS) svm_jni.c -o sl_svm_jni.o
+
+sl_svm_classify.o: svm_classify.c svm_common.h kernel.h
+	$(CC) -fPIC -c $(CFLAGS) svm_classify.c -o sl_svm_classify.o
+
+
+svm_static_lib: svm_classify.o svm_learn.o svm_learn_main.o svm_hideo.o svm_common.o svm_jni.o
+	ar rcs svmlight.a svm_classify.o svm_learn.o svm_learn_main.o svm_hideo.o svm_common.o svm_jni.o
+
+svm_shared_lib: sl_svm_classify.o sl_svm_learn.o sl_svm_learn_main.o sl_svm_hideo.o sl_svm_common.o sl_svm_jni.o
+	gcc -fPIC -Wall -c svm_classify.c
+	gcc -L. -lm -shared -Wl,-soname,libsvmlight.so.0 \
+	    -o libsvmlight.so sl_svm_learn.o sl_svm_learn_main.o sl_svm_hideo.o sl_svm_common.o sl_svm_jni.o -lc 
+	cp -vf libsvmlight.so ../../lib/.
+#	/sbin/ldconfig -n ../../lib/.
+#	ln -sf libsvmlight.so.0 ../../lib/libsvmlight.so
+	echo "done."
+
+
+loqo: pr_loqo/pr_loqo.o
+
+pr_loqo/pr_loqo.o: pr_loqo/pr_loqo.c
+	$(CC) -c $(CFLAGS) pr_loqo/pr_loqo.c -o pr_loqo/pr_loqo.o
+

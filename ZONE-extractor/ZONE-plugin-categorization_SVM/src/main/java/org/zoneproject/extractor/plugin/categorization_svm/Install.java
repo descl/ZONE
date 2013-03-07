@@ -54,11 +54,11 @@ import org.zoneproject.extractor.utils.Item;
 public class Install {
     public static void main(String[] args) {
         Map<String, String> UrlCategories = new HashMap<String, String>();
-        UrlCategories.put("informatique", "http://rss.feedsportal.com/c/629/f/502199/index.rss");
+        UrlCategories.put("informatique", "http://www.france24.com/fr/informatique/rss");
         UrlCategories.put("sport", "http://fr.news.yahoo.com/rss/sports");
-        UrlCategories.put("medecine", "http://www.tv5.org/TV5Site/rss/actualites.php?rub=15");
+        UrlCategories.put("medecine", "http://www.france24.com/fr/sante/rss");
         UrlCategories.put("economie", "http://www.france24.com/fr/economie/rss");
-        UrlCategories.put("science", "http://www.tv5.org/TV5Site/rss/actualites.php?rub=14");
+        UrlCategories.put("science", "http://www.france24.com/fr/science/rss");
        // UrlCategories.put("science", "http://fr.news.yahoo.com/monde/?format=rss");
         
         //prepare dictionnaire des lemmes

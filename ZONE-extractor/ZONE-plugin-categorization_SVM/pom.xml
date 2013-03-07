@@ -19,8 +19,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.3.2</version>
         <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>1.7</source>
+          <target>1.7</target>
         </configuration>
       </plugin>
      <plugin>
@@ -36,6 +36,7 @@
               <mainClass>org.zoneproject.extractor.plugin.categorization_svm.App</mainClass>
             </configuration>
           </execution>
+          
           <execution><!--Install-->
             <id>install</id>
             <phase>install</phase>
@@ -43,14 +44,44 @@
               <goal>java</goal>  
             </goals>
             <configuration>
+                                <tasks>
+                        <echo>cccccccccccccccccccccccccccouuuuccccouuu</echo>
+                </tasks>
               <mainClass>org.zoneproject.extractor.plugin.categorization_svm.Install</mainClass>
+
+
+              <environmentVariables>
+                <LD_LIBRARY_PATH>${env.LD_LIBRARY_PATH}:${project.build.directory}/libs</LD_LIBRARY_PATH>
+                <DYLD_LIBRARY_PATH>${env.DYLD_LIBRARY_PATH}:${project.build.directory}/libs</DYLD_LIBRARY_PATH>
+              </environmentVariables>
             </configuration>
           </execution>
         </executions>
             <configuration>
-              <mainClass>org.zoneproject.extractor.plugin.categorization_svm.App</mainClass>
-            </configuration>
+          <mainClass>org.zoneproject.extractor.plugin.categorization_svm.App</mainClass>
+        </configuration>
       </plugin>
+      
+
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>org.zoneproject.extractor.App</mainClass>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>target/lib/</classpathPrefix>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+      </plugin>
+
+      
     </plugins>
     <testResources>
       <testResource>
@@ -90,8 +121,21 @@
     <dependency>
       <groupId>jnisvmlight</groupId>
       <artifactId>jnisvmlight</artifactId>
-      <version>1.0</version>
+      <version>2.0</version>
+      
+          
     </dependency>
+    <dependency>
+	<groupId>org.cleartk</groupId>
+	<artifactId>cleartk-ml-svmlight</artifactId>
+	<version>1.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.cleartk</groupId>
+      <artifactId>cleartk-ml-opennlp-maxent</artifactId>
+      <version>1.1.0</version>
+    </dependency>
+
   </dependencies>
   
 

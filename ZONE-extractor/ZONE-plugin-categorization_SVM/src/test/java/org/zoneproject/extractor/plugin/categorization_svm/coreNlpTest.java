@@ -89,7 +89,7 @@ public class coreNlpTest
 
 
     @org.junit.Test
-    public void testApp1() throws Exception {
+    public void testApp1() throws Exception {/*
         try{	     
 			SVMClassify.readModel();
 			Dictionnaire.readDictionnaireFromFile();
@@ -158,6 +158,6 @@ public class coreNlpTest
 		   
         }catch(Exception e){
                 throw e;
-        }        
+        }        */
     }
 }

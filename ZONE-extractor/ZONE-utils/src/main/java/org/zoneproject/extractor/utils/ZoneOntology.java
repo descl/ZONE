@@ -24,6 +24,10 @@ public class ZoneOntology {
     public static String SOURCES_THEME = SOURCES_PREFIX+"#theme";
     public static String SOURCES_OWNER = SOURCES_PREFIX+"#owner";
     
+    public static String SOURCES_TWITTER_TYPE = SOURCES_PREFIX+"#twitterTimeline";
+    public static String SOURCES_TWITTER_TOKEN = SOURCES_PREFIX+"#twitterToken";
+    public static String SOURCES_TWITTER_TOKEN_SECRET = SOURCES_PREFIX+"#twitterSecretToken";
+    
     public static String GRAPH_NEWS = "http://zone-project.org/datas/items";
     public static String GRAPH_SOURCES = "http://zone-project.org/datas/sources";
     

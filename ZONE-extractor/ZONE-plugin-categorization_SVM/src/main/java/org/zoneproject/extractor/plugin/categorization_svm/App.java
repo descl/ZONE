@@ -62,15 +62,15 @@ public class App
     	
         
         //init the SVM
-    	Map<Integer, SVMClassify> classiferMap = new HashMap<Integer, SVMClassify>();
-    	classiferMap.put(informatique, new SVMClassify("informatique"));
-    	classiferMap.put(sport, new SVMClassify("sport"));
-    	classiferMap.put(medecine, new SVMClassify("medecine"));
-    	classiferMap.put(economie, new SVMClassify("economie"));
-    	classiferMap.put(science, new SVMClassify("science"));
+    	Map<String, SVMClassify> classiferMap = new HashMap<String, SVMClassify>();
+    	classiferMap.put("informatique", new SVMClassify("informatique"));
+    	classiferMap.put("sport", new SVMClassify("sport"));
+    	classiferMap.put("sante", new SVMClassify("medecine"));
+    	classiferMap.put("economie", new SVMClassify("economie"));
+    	classiferMap.put("science", new SVMClassify("science"));
     	
     	        
-    	for (Entry<Integer, SVMClassify> cm : classiferMap.entrySet()){
+    	for (Entry<String, SVMClassify> cm : classiferMap.entrySet()){
     		cm.getValue().readModel();    		
     	}
         
@@ -88,7 +88,7 @@ public class App
         //set the items number limit
         //int limit = 100;
         //Item[] itemsNotAnnotated = getNotCategorizeItems(limit);
-        Item[] itemsNotAnnotated = Database.getItemsFromSource("http://www.leparisien.fr/actualites-a-la-une.rss.xml");
+        Item[] itemsNotAnnotated = Database.getItemsFromSource("http://www.france24.com/fr/la_une/rss");
         System.out.println("Number of items not annotated:"+itemsNotAnnotated.length);
         
         for(Item item : itemsNotAnnotated){
@@ -100,23 +100,18 @@ public class App
             TrainingDataPreparation.prepareFeatureVector(t);
 
             double d = -100;
-            for (Entry<Integer, SVMClassify> cm : classiferMap.entrySet()){
-            	double newd = cm.getValue().classifyText(t);
-            	if( d < newd){
-            		d = newd;
-            		t.categorie = cm.getKey();
-            	}
+            Prop newAnnotation = null;
+            for (Entry<String, SVMClassify> cm : classiferMap.entrySet()){
+                double newd = cm.getValue().classifyText(t);
+                if( d < newd){
+                    d = newd;
+                    newAnnotation = new Prop(ZoneOntology.PLUGIN_SVM_RES,cm.getKey(),true);
+                }
             }
-            boolean result = true;//here replace true with the result of your algo
-            Prop newAnnotation;
-            if(result == true){
-                newAnnotation = new Prop(PLUGIN_RESULT_URI+"/sport", "true",true);
-            }
-            else{
-                newAnnotation = new Prop(PLUGIN_RESULT_URI+"/sport", "false",true);
-
-            }
-            System.out.println("the item: "+itemContent+"\n "+t+"\n "+ newAnnotation+"\n");
+            if(d != -100)
+                VirtuosoDatabase.addAnnotation(item.getUri(), newAnnotation);
+            
+            //System.out.println("the item: "+itemContent+"\n "+t+"\n "+ newAnnotation+"\n");
         }
         
     }

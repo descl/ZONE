@@ -99,7 +99,11 @@ public class TextExtraction {
     		StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
     		
     		// read some text in the text variable
-            String text = file.item.concat(); // Add your text here!
+                String text = file.item.concat();
+                String[] textElements = file.item.getElements("http://zone-project.org/model/plugins/ExtractArticlesContent#result");
+                if(textElements.length > 0) {
+                    text += "\n"+textElements;
+                }
 
             // create an empty Annotation just with the given text
             Annotation document = new Annotation(text);

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="JNI_SVMLight" default="main" basedir=".">
+
+	<!-- properties -->
+	<property name="jnisvmlightjar" location="../../lib/jnisvmlight.jar" />
+
+	<!--<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>   -->
+
+	<description>Build file for JNI_SVMLight project.</description>
+	<target name="main" depends="compile, jar, testclass">
+		<echo message="ANT done!" />
+	</target>
+
+	<!-- ################################### Jar ############################################# -->
+
+	<target name="jar" depends="jarjnisvmlight">
+		<echo message="Jar done!" />
+	</target>
+	<target name="jarjnisvmlight" depends="compile">
+		<jar destfile="${jnisvmlightjar}" includes="**/*.*" basedir="../../classes" />
+	</target>
+
+	<!-- ################################### Compile ################################### -->
+
+	<target name="compile" depends="jnisvmlight">
+		<echo message="Compile done!" />
+	</target>
+
+	<target name="delete">
+		<delete dir="../../classes/jnisvmlight" />
+		<delete file="${jnisvmlightjar}" />
+		<delete>
+			<fileset dir="../../." includes="**/*.class" />
+		</delete>
+		<echo message="delete done!" />
+	</target>
+
+	<target name="jnisvmlight" depends="delete">
+		<javac srcdir="." includes="*.java" destdir="../../classes" />
+	</target>
+
+	<target name="testclass" depends="jar">
+		<javac srcdir="../../" destdir="../../" includes="*.java" classpathref="classpath" />
+	</target>
+
+
+	<path id="classpath">
+		<pathelement location="../../lib/jnisvmlight.jar" />
+	</path>
+	<path id=".">
+		<pathelement location="." />
+	</path>
+
+</project>

@@ -15,13 +15,13 @@
 
 \mainmatter              % start of the contributions
 %
-\title{Zone-project: towards a better news feed using semantic web}
+\title{Zone-project: towards a better news feed using semantic web SR je separerais en titre, sous titre SR}
 %
 \titlerunning{Zone-project}  % abbreviated title (for running head)
 %                                     also used for the TOC unless
 %                                     \toctitle is used
 %
-\author{Christophe Desclaux\inst{1}}
+\author{Christophe Desclaux\inst{1}\and Ameni Bouaziz \inst{2}  SR Rajouter vos titres et mentionner BYC SR}
 %
 \authorrunning{Christophe Desclaux} % abbreviated author list (for running head)
 %
@@ -39,6 +39,10 @@
 The zone project proposes an innovative solution to address the traditional issues of news feed management using the resources of Semantic Web to group related informations together.
 It provides a new way to follow feeds by aggregating items from various RSS feeds, tagging and annotating each one of them. Those tags then provide a basis for filters allowing users to see only relevant news.
 
+SR 
+je rajouterai quelque chose sur e fait que votre projet recupere une grande masse de données grace aux utilisateurs , donnant la possibilité grace à la masse, d'obtenir d'autant de résultats pertinant. bla bla.
+de plus, tu ne parles que de RSS, et les autres sources? je ne sais pas si cela a du sens de parler de twitter? non? ;-) 
+SR
 
 %The abstract should summarize the contents of the paper
 %using at least 70 and at most 150 words. It will be set in 9-point
@@ -49,26 +53,24 @@ It provides a new way to follow feeds by aggregating items from various RSS feed
 %
 \section{Motivation}
 %
-A lot of news are published every day on the internet and the number of news websites has increased significantly. People and organizations are now building news aggregators in order to filter and sort all this information.
+An important amount of news and data are published every day on the internet and the number of news websites has increased significantly. The abundance of theses sources able people and organisation to access a incredible knowledge database but how to manage such abundance. More and more people are facing the same issue, how to retrieve, gather, organize and filter these sources in order to retrieve only the pertinent information?
 
-Solutions exist, for instance one can use \textsl{Google news} \footnote{\url{http://news.google.fr}} like a trusted provider of information, but in this web application your are only a consumer and you don't have a lot of interactions with the system. 
+Solutions exist, for instance one can use \textsl{Google news} \footnote{\url{http://news.google.fr}} like a trusted provider of information. This service can be very helpful but in practice limitations appears, you are only a consumer and you can't have many interaction with the service proposed.
 
 A second kind of solutions is to make news forecasting using for instance \textsl{Twitter}\footnote{\url{http://www.twitter.com}}. It's a solution in which one can control the sources he follows. But you can't select precisely on sources and on topics at the same time and a lot of noise remains around good information. Even the hash-tags provide a limited solution since they suffer from collision.  
-***************** oui, les recherches par mots tags ne permettent pas de supprimer les bruit liés à l'utilisation de mêmes hashtags sur différents sujets distincts **************************
 
+The last family of relevant solutions one can use is aggregators like \textsl{Yahoo Pipes} \footnote{\url{http://pipes.yahoo.com/pipes/}}. This service allows merging popular data feeds and data filtering using a visual editor. Pipes are then defined as workflows to help users to sort feeds.
 
-The last family of relevant solutions one can use is aggregators like \textsl{Yahoo Pipes} \footnote{\url{http://pipes.yahoo.com/pipes/}}. This tool allows the mixing of popular data feeds to create data filtering via a visual editor. It uses pipes as workflows which will help users sort feeds.
-
-From these three types of approaches we can identify some main challenges that good aggregators need to work on:
+From these three kind of approaches, different important challenges can be identify
 \begin{itemize}
-  \item \textbf{filtering capacities}: we need to be able to select and sort information according to precise criteria.
-  \item \textbf{open pool of sources}: the tool needs to have access to a maximum of news present on internet and allow the user to add new ones.
-  \item \textbf{independence}: users need to use the solution independently of any provider.
+  \item \textbf{filtering capabilities}: select and sort information according to precise criteria.
+  \item \textbf{open pool sources}: access a maximum of news present on internet and allow users to add new ones.
+  \item \textbf{independence}: propose a solution independent from a service providers.
 \end{itemize}
 
-Technicals solutions exists in order to solve these challenges. Google solves the filtering problem using [article de Larry Page sur l'aggregation par mots clés] but this solution is not very efficient because it works on words instead of working on meaning. The solution we propose is an aggregation based on semantic web frameworks. 
+Solutions exists to overcome these challenges; Googles solves the filtering problem using PageRank and search by keywords \cite{page:brin} however this method is not efficient as it works on words rather than working on meaning. The Zone project proposed in this paper aim to build a solution based on aggregation approach and semantic web framework where users are not only consumers but built an important database of news and share their filtering results.
 
-We will first present in this article our solution called Zone. We will explain the annotation workflow, the ontology used and the use of data-mining solutions. We will also present the script of the demonstration of the application.
+In the following section, this paper describes our solution called Zone. We will explain the annotation workflow, the ontology used and the use of data-mining solutions. We will also present the script of the demonstration of the application.
 
 %
 \section{Application: Zone}
@@ -84,21 +86,22 @@ We will first present in this article our solution called Zone. We will explain 
 	\end{centering}
 \end{figure}
 
-In order to have a more efficient news selection according to their semantic relevance, we have created two kinds of workflows. Figure \ref{fig:WF} shows the general architecture: a semantic annotation workflow of news and a filtering workflow. The distinction between the two workflows is extremely important in order to work in an asynchronous way.
-
+In order to improve news selection according to their semantic relevance, two kinds of workflows are proposed. Figure \ref{fig:WF} shows the general architecture: a semantic annotation workflow of news and a filtering workflow. The distinction between these two workflows is extremely important as processes needs to work in an asynchronous way \cite{desclaux:urli}.
 
 \subsubsection{The semantic annotation workflow}
-First, Zone crawls the web extracting all news and storing them in database.
-Two annotators extract semantic annotations from the textual content of the news: one calls Wikimeta to create links to Wikipedia resources and the other calls OpenCalais takes care of the geographical references.
-New content and semantic annotations are then stored together in a triple store (Vituoso).
+First, Zone crawls the web extracting news and storing them in database.
+
+Two annotators extract semantic annotations from the textual content of the news: the first one is called Wikimeta \footnote{\url{http://www.wikimeta.com}}. It allows our system to create links to Wikipedia resources. The second one is called OpenCalais \footnote{\url{http://www.opencalais.com}} and provides geographical references.
+
+New content and semantic annotations are stored together in a triple store (Vituoso \footnote{\url{http://virtuoso.openlinksw.com}}). 
 
 \subsubsection{The filtering workflow}
-Zone gives the user the possibility to access all data organized by the annotation workflow. It is designed as a web application using the web framework RubyOnRails \footnote{\url{http://rubyonrails.org}}. Starting from news samples the user can build filters that are stored and applied as SPARQL queries. These queries are then performed over the triple store fed by the annotation workflow. From these selection queries the user can publish an RSS feed of results.
+Users can then access their data categorized by the annotation workflow. The results are concentrated in a web application using the web framework RubyOnRails \footnote{\url{http://rubyonrails.org}}. Users build filters that are stored and applied as SPARQL queries. These queries are then performed over the triple store fed by the annotation workflow. Finally, these results queries can be published by any users as an RSS feed.
 
 %
 \subsection{The Zone News Ontology}
 %
-
+[En cours de rédaction....]
 % link to other news ontologies
 % // event media ontology etc.
 
@@ -113,6 +116,7 @@ on se base aussi sur l'ontologie de wikimeta/insee***************
 
 %
 \subsection{Using generalisators}
+[En cours de rédaction....]
 *******parler de l'insee********
 Currently the generalisators focus on saturating the annotations with the transitive closure of geographical inclusion (e.g. from an annotation insee:Paris we will add insee:France). 
 In the future we intend to add ...
@@ -121,68 +125,73 @@ In the future we intend to add ...
 
 %
 \subsection{Using datamining}
-section d'Ameni
+
+In order to introduce data mining in the classification process of news, supervised learning algorithm based on the support vector machine (SVM) are used. SVM are binary classifiers, they analyse data and recognize patterns based on a learnt model with a set of training data. Given two categories, SVM construct a hyperplane that separates them, this hyperplane is chosen to maximise the distance between the categories.
+
+SR In order to introduce data mining in our classification process, we decided to use a supervised learning algorithm based on the support vector machine (SVM). SVM are binary classifiers which analyse data and recognize patterns based on a learnt model with a set of training data. Given two categories, SVM construct a hyperplane that separates them, this hyperplane is chosen to maximise the distance between the categories.
+je vois tout a fait le truc, cela me rappelle des osuvenirs sur les stats et la vision mais honnetement les phraes sont a revoir, un poil lourde.. mais bon ;-) SR
+
+Java Native Interface SVM Light \footnote{\url{http://www.mpi-inf.mpg.de/~mtb/}} is used to implement the SVM classification with the SVM Light library \cite{joachim:svmlight} on top. SVM light offers a learning procedure that construct the classification model starting from the set of training data and a second procedure to do the real classification based on the previously constructed model
+
+SR Both of them procedure??? ca revoir cette phrase! SR
+Both of them procedure take as entry a feature vector. This feature vector is prepared during the preprocessing step, it is done as follows: for each text we use the Stanford CoreNlp libraries \footnote{\url{http://nlp.stanford.edu/software/corenlp.shtml}} for the tokenization and lemmatization, at this step all stop words (punctuation, common words like I, he, she, what, have, be …) are removed to not influence the classification; then all the lemmas of the training set are used to build a dictionary of all known words. Then we use TF-IDF algorithm to calculate the weight of each known lemma in the texts. The feature vector is afterwards built as pairs of rank of the lemma in the dictionary and its weight. For the training data, the feature vector is labelled +1 if the corresponding text belongs to the studied category and -1 if it doesn't.
+SR revoir ce paragraphe -> evite le "we", "then", sinon cest bien ! SR
+
+First test were made on the English test corpus Reuters -21578 \cite{lewis:reuters}, we tested the algorithm on the 10 most important categories (money-fx, earn, acq, grain, crude, trade, interest, ship, wheat, corn) the recall obtained on the corpus varied from 0.63 to 0.96 depending on the category. The best recall was obtained for the 'earn' class which has the most training texts.
+
+SR Thanks to our first successfully results SR Then algorithm was adapt to work on french text classification in order to be integrated in ZONE. As test corpus, we considered 5 categories (sport, economy, science, health and computer science). These categories were filled by RSS feeds specialized in each category and we split this data in a learning corpus and a test corpus. An SVM classifier was created for each category and the classification was made on the test corpus. The recall obtained on this data reached 0.97 for the sport category which is the best represented in the training set. For the other categories we obtained 0.78 for computer science and 0.52 for health. The values obtained for economy and science were too low, the small size of the training set may explain these values.
 
 \section{Demonstration}
 %
-The web application is designed for all kinds of news feeds be them about technology, medicine or general news. You can install the application according to your needs under the AGPL licence. We also propose a public service for general news feed at \url{http://demo.zone-project.org} which is the main test platform for the application.
+\begin{figure}[h]
+	\includegraphics[width=0.5\columnwidth]{zone-screenshot.png}
+	\caption{Capture of zone project solution}
+	\label{fig:DEMO}
+\end{figure}
+
+SR revoir le paragraphe ci dessous .. on peut faire mieux ;-) SR
+The web application is designed for all kinds of news feeds be them about technology, medicine or general news. You can install the application according to your needs under the AGPL licence \footnote{\url{https://github.com/descl/ZONE}}. We also propose a public service for general news feed at \url{http://demo.zone-project.org} which is the main test platform for the application.
 
 The demo will start with the listing of all recent news on \url{http://demo.zone-project.org}. Then we will create a filter according to some criteria in order to show to the audience the different kinds of filters present and their links to the news. Once the good filter is chosen, we will show how to export it as an external RSS feed aggregator demonstrating that our web application can be used in combination to other tools.
 
-Then we will propose another usage of ZONE-project this time based on Twitter. With another demo application we will make a quick demonstration of news filtering on the hashtag #eswc2013.
+Then we will propose another usage of ZONE-project this time based on Twitter. With another demo application we will make a quick demonstration of news filtering on the hashtag \#eswc2013.
 
 \section{Conclusion and future work}
 %
-Challenges qui restent à résoudre :
-	*tech : faire des liens vers openData et du raisoning
-	*com : trouver moyen de pérenniser le projet
-%
+The goal of our demonstration is to show an efficient solution to extract meaning in news. The actual use of few annotators enhance the fact that we are able to use a lot of distinct annotators for each domains. With more and more annotators we are able to have huge filtering capacities. The utilisation of workflows show that we manage to sort a huge quantity of news and last, the user is free to install this solution on his architecture and that he is able to choose by himself sources to manage.
+
+
+SR reovir le rest des phrases, on peut faire mieux! SR
+
+For now, the filters extraction process is created and is working. We will now work on the interactions with users . It's an important part of the project and we need to find a way to help easily the user to create filter which will be translate to SPARQL requests. SR revoir ces phrases SR
+
+SR dans la conclusion, il faut reprend du texte de l'intro, re expliquer rapidement la solution, ce qu'elle apporte, re expliquer vos resultats successfull sur le jeu de données puis parler que vous etes a presnet a une etape et que les procahines sont bla bla... SR
 
 \section{Acknowledgments}
 %
-This project has been started in 2011 according to an and of ingeneering school project and has been 
-Description du contexte de travail=> se passe à l'inria BYC... équipe wimmics qui bosse sur semantic web
+ZONE project has been started in 2011 according to an and of engineering school project made in collaboration with the Modalis (CNRS) team and Wimmics (INRIA) team by Christophe Desclaux. During this project we worked on the architecture of the project using workflows and software product lines \cite{desclaux:urli}. Then Christophe Desclaux won an Inria contest called BoostYourCode which result in a one year full time work on the ZONE project. He is now working in the Wimmics team on the project and has been joined by Ameni Bouaziz who has work on the integration of data meaning solutions in the application as her end of year engineering project.
 
-%
-
-
-
-
-
+SR 
+ZONE project started in 2011 from an engineering school project made in collaboration with the Modalis (CNRS) team and Wimmics (INRIA) team by Christophe Desclaux. During this project he worked on the software architecture using workflows and software product lines \cite{desclaux:urli}. (je comprends pas le mot product lines) In 2012, Christophe Desclaux won the Inria contest called BoostYourCode which propose to a student the possibility to work, one year, as a full time engineer, on the project selected. As a consequence, Christophe is now working at Inria in the Wimmics team.  Recently, Ameni Bouaziz has joined the Zone project and work actively on the integration of data meaning solutions in the application.
+SR
 %
 % ---- Bibliography ----
 %
 \begin{thebibliography}{5}
 %
-\bibitem {clar:eke}
-Clarke, F., Ekeland, I.:
-Nonlinear oscillations and
-boundary-value problems for Hamiltonian systems.
-Arch. Rat. Mech. Anal. 78, 315--333 (1982)
+\bibitem {page:brin}
+Page, L., Brin, S., Motwani, R., \& Winograd, T. (1999). The PageRank citation ranking: bringing order to the web.
 
-\bibitem {clar:eke:2}
-Clarke, F., Ekeland, I.:
-Solutions p\'{e}riodiques, du
-p\'{e}riode donn\'{e}e, des \'{e}quations hamiltoniennes.
-Note CRAS Paris 287, 1013--1015 (1978)
+\bibitem {desclaux:urli}
+Desclaux, C., Urli, S., Blay-Fornarino, M., \& Zucker, C. F (2012). Vers la construction de workflows pour le filtrage sémantique de nouvelles.
 
-\bibitem {mich:tar}
-Michalek, R., Tarantello, G.:
-Subharmonic solutions with prescribed minimal
-period for nonautonomous Hamiltonian systems.
-J. Diff. Eq. 72, 28--55 (1988)
+\bibitem {joachim:svmlight}
+T. Joachims, B. Schölkopf and C. Burges and A. Smola (ed.) (1999). Making large-Scale SVM Learning Practical. Advances in Kernel Methods - Support Vector Learning, MIT-Press. 
 
-\bibitem {tar}
-Tarantello, G.:
-Subharmonic solutions for Hamiltonian
-systems via a $\bbbz_{p}$ pseudoindex theory.
-Annali di Matematica Pura (to appear)
-
-\bibitem {rab}
-Rabinowitz, P.:
-On subharmonic solutions of a Hamiltonian system.
-Comm. Pure Appl. Math. 33, 609--633 (1980)
-
+\bibitem{lewis:reuters}
+Lewis, D. et al. (1987). Reuters-21578.
+\url{http://www.daviddlewis.com/resources/testcollections/reuters21578}
+.
 \end{thebibliography}
 
 \clearpage

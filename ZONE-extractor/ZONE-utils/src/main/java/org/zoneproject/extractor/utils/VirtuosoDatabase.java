@@ -21,9 +21,12 @@ package org.zoneproject.extractor.utils;
  */
 
 import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -31,7 +34,10 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.util.FileManager;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -116,6 +122,11 @@ public abstract class VirtuosoDatabase {
     public static boolean runSPARQLAsk(String queryString){
         return VirtuosoQueryExecutionFactory.create(queryString,getStore()).execAsk() ;
     }
+    
+    public static ResultSet getRelationsForURI(String uri, String graphUri){
+        String query = "SELECT DISTINCT ?relation ?object { <"+uri+"> ?relation ?object.}";
+        return runSPARQLRequest(query,graphUri);
+    }
     /**
      * get all items which has not been annotated for a plugin
      * @param pluginURI the plugin URI
@@ -186,6 +197,7 @@ public abstract class VirtuosoDatabase {
      */
     public static Item getOneItemByURI(String uri){
         String request = "SELECT ?relation ?value WHERE{  <"+uri+"> ?relation ?value}";
+        System.out.println(uri);
         ResultSet results = runSPARQLRequest(request);
         return new Item(uri,results,uri,"relation","?value");
     }
@@ -243,6 +255,7 @@ public abstract class VirtuosoDatabase {
     }
     
     public static void main(String[] args) throws FileNotFoundException, IOException{
+        /*
         loadFile("","./test.rdf");
         ResultSet r = runSPARQLRequest("SELECT ?x ?t WHERE {?x rdf:type ?t} ");
         System.out.println(r.getResourceModel());
@@ -257,5 +270,31 @@ public abstract class VirtuosoDatabase {
         VirtuosoDatabase.deleteItem(uri);
         System.out.println(VirtuosoDatabase.ItemURIExist(uri));
         System.out.println(VirtuosoDatabase.ItemURIExist("http://www.personnes.com#Margot"));
+        * */
+        extractDB();
+    }
+    
+    public static void extractDB(){
+        FileOutputStream fout;
+        try {
+            fout = new FileOutputStream("dbExtract_monde.rdf");
+            //CONSTRUCT{?uri ?prop ?value} WHERE {  ?uri <http://purl.org/rss/1.0/source> <http://www.tv5.org/TV5Site/rss/actualites.php?rub=12>. ?uri ?prop ?value}
+            
+            String queryString ="CONSTRUCT{?uri ?prop ?source} WHERE {  ?uri <http://purl.org/rss/1.0/source> ?source}";
+            //Query query = QueryFactory.create(queryString) ;
+            QueryExecution qexec = QueryExecutionFactory.create(queryString, getStore()) ;
+            Model results = qexec.execConstruct() ;
+            results.write(System.out);
+            //results.write(fout, "RDF/XML");
+            //ResultSetFormatter.out(System.out, results, query) ;
+
+            
+            //ResultSet r =VirtuosoQueryExecutionFactory.create(queryString,getStore()).execSelect();
+            //Model m = ModelFactory.createDefaultModel();
+            //Model m = ResultSetFormatter.toModel(results) ;
+            //m.write(fout);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
