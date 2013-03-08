@@ -105,10 +105,10 @@ Users can then access their data categorized by the annotation workflow. The res
 
 %
 \subsection{The Zone-project News Ontology}
-Work for formalize the ontology used to store news in the triple store has been done in order to reuse a maximum of other ontology. 
-NewsML \footnote{\url{http://www.iptc.org/site/News\_Exchange\_Formats/NewsML-G2/}} is one of this solution held by news agencies to address news in a semantic context. We decided to use a smaller ontology and to extend this one by our one specialized in annotations processing. 
+The work to formalize the ontology used to store news has been done reusing a maximum of other ontology. 
+First we have take a look at news ontologies such as NewsML \footnote{\url{http://www.iptc.org/site/News\_Exchange\_Formats/NewsML-G2/}}. It' a solution held by news agencies to address datas in a semantic context. But this ontology was not efficient in our context, we decided to use a smaller one RSS \footnote{\url{http://web.resource.org/rss/1.0/spec}} which is much more used in news web services and which is an important part of our input news format. 
 
-Our ontology is logically based on RSS formalism \footnote{\url{http://web.resource.org/rss/1.0/spec}}  which is used for a large part of news we are extracting, on which we added annotations.
+Finaly on top news are stored under the RSS formalism, annotations are stored under the Wikimeta and OpenCalais ***********ref*************** ontologies and we added markers on each news in order to say if a news has already been annotated for a specific annotator. The sources followed by the system are also stored on the triple store in order to enable the annotators to use them.
 
 %
 %[En cours de rédaction....]
@@ -131,7 +131,8 @@ In order to introduce data mining in our classification process, we decided to u
 
 Java Native Interface SVM Light \footnote{\url{http://www.mpi-inf.mpg.de/~mtb/}} is used to implement the SVM classification with the SVM Light library \cite{joachim:svmlight} on top. SVM light offers a learning step that construct the classification model starting from the set of training data and a second step to do the real classification based on the previously constructed model.
 
-These two steps take as entry a feature vector. This feature vector is prepared during the preprocessing step, it is done as follows: for each text we use the Stanford CoreNlp libraries \footnote{\url{http://nlp.stanford.edu/software/corenlp.shtml}} for the tokenization and lemmatization, at this step all stop words (punctuation, common words like I, he, she, what, have, be …) are removed to not influence the classification; then all the lemmas of the training set are used to build a dictionary of all known words. Then we use TF-IDF algorithm to calculate the weight of each known lemma in the texts. The feature vector is afterwards built as pairs of rank of the lemma in the dictionary and its weight. For the training data, the feature vector is labelled +1 if the corresponding text belongs to the studied category and -1 if it doesn't.
+These two steps take as entry a feature vector which is prepared during the preprocessing step. For preprocessing phase we used Stanford CoreNlp libraries \footnote{\url{http://nlp.stanford.edu/software/corenlp.shtml}} for the tokenization and lemmatization and Java code for stop words removing (punctuation, common words like I, he, she, what, have, be …).
+All lemmas are used to build a dictionary of all known words. Then we use TF-IDF algorithm to calculate the weight of each known lemma in the texts. The feature vector is afterwards built as pairs of rank of the lemma in the dictionary and its weight. For the training data, the feature vector is labelled +1 if the corresponding text belongs to the studied category and -1 if it doesn't.
 
 Thanks to our first successfully results made on the English test corpus Reuters -21578 \cite{lewis:reuters}, we tested the algorithm on the 10 most important categories (money-fx, earn, acq, grain, crude, trade, interest, ship, wheat, corn) the recall obtained on the corpus varied from 0.63 to 0.96 depending on the category. The best recall was obtained for the 'earn' class which has the most training texts.
 
