@@ -23,7 +23,7 @@
 %                                     also used for the TOC unless
 %                                     \toctitle is used
 %
-\author{Christophe Desclaux\inst{1}\and Ameni Bouaziz \inst{2}}
+\author{Christophe Desclaux\inst{1}, Ameni Bouaziz \inst{2}\and Fabien Gandon \inst{1}}
 %
 \authorrunning{Christophe Desclaux} % abbreviated author list (for running head)
 %
@@ -70,7 +70,7 @@ From these three kind of approaches, different important challenges can be ident
   \item \textbf{independence}: propose a solution independent from a service providers.
 \end{itemize}
 
-Solutions exists to overcome these challenges; Googles solves the filtering problem using PageRank and search by keywords \cite{page:brin} however this method is not efficient as it works on words rather than working on meaning. The Zone project proposed in this paper aim to build a solution based on aggregation approach and semantic web framework where users are not only consumers but built an important database of news and share their filtering results.
+Solutions exists to overcome these challenges; Google solves the filtering problem using PageRank and search by keywords \cite{page:brin} however this method is not efficient as it works on words rather than working on meaning. The Zone project proposed in this paper aim to build a solution based on aggregation approach and semantic web framework where users are not only consumers but built an important database of news and share their filtering results.
 
 In the following section, this paper describes our solution called Zone. We will explain the annotation workflow, the ontology used and the use of data-mining solutions. We will also present the scenario of the demonstration of the application.
 
@@ -90,31 +90,26 @@ In the following section, this paper describes our solution called Zone. We will
 
 In order to improve news selection according to their semantic relevance, two kinds of workflows are proposed. Figure \ref{fig:WF} shows the general architecture: a semantic annotation workflow of news and a filtering workflow. The distinction between these two workflows is extremely important as processes needs to work in an asynchronous way \cite{desclaux:urli}.
 
-\subsubsection{The semantic annotation workflow}
+\subsubsection{The semantic annotation workflow.}
 First, Zone crawls the web extracting news and storing them in database.
 
 Two annotators extract semantic annotations from the textual content of the news: the first one is called Wikimeta \footnote{\url{http://www.wikimeta.com}}. It allows our system to create links to Wikipedia resources. The second one is called OpenCalais \footnote{\url{http://www.opencalais.com}} and provides geographical references.
 The system also use others RDF database surch as DBpedia \footnote{\url{http://dbpedia.org}} and INSEEGeo \footnote{\url{http://rdf.insee.fr/geo}} in order to add more annotations for some elements (countries, people...).
 
-New content and semantic annotations are stored together in a triple store (Virtuoso \footnote{\url{http://virtuoso.openlinksw.com}}). 
+News content and semantic annotations are stored together in a triple store (Virtuoso \footnote{\url{http://virtuoso.openlinksw.com}}). 
 
 
  
-\subsubsection{The filtering workflow}
-Users can then access their data categorized by the annotation workflow. The results are concentrated in a web application using the web framework RubyOnRails \footnote{\url{http://rubyonrails.org}}. Users build filters that are stored and applied as SPARQL queries. These queries are then performed over the triple store fed by the annotation workflow. Finally, these results queries can be published by any users as a RSS feed containing only relevant news.
+\subsubsection{The filtering workflow.}
+Users can then access their data categorized by the annotation workflow. The results are concentrated in a web application using the web framework RubyOnRails. Users build filters that are stored and applied as SPARQL queries. These queries are then performed over the triple store fed by the annotation workflow. Finally, these results queries can be published by any users as a RSS feed containing only relevant news.
 
 %
 \subsection{The Zone-project News Ontology}
 The work to formalize the ontology used to store news has been done reusing a maximum of other ontology. 
 First we have take a look at news ontologies such as NewsML \footnote{\url{http://www.iptc.org/site/News\_Exchange\_Formats/NewsML-G2/}}. It' a solution held by news agencies to address datas in a semantic context. But this ontology was not efficient in our context, we decided to use a smaller one RSS \footnote{\url{http://web.resource.org/rss/1.0/spec}} which is much more used in news web services and which is an important part of our input news format. 
 
-Finaly on top news are stored under the RSS formalism, annotations are stored under the Wikimeta and OpenCalais ***********ref*************** ontologies and we added markers on each news in order to say if a news has already been annotated for a specific annotator. The sources followed by the system are also stored on the triple store in order to enable the annotators to use them.
-
-%
-%[En cours de rédaction....]
-% link to other news ontologies
-% // event media ontology etc.
-
+On top news are stored under the RSS formalism, annotations are stored under the Wikimeta \cite{charton:nlgbase} and
+ OpenCalais \footnote{\url{http://www.opencalais.com/documentation/opencalais\-web\-service\-api/calais\-ontology\-owl}} ontologies and we added markers on each news in order to say if a news has already been annotated for a specific annotator. The sources followed by the system are also stored on the triple store in order to enable the annotators to use them. Finaly the draft of the ontology is published on \url{http://ns.inria.fr/zoneproject/}.
 % graph of the ontology
 % publish on ns.inria.fr 
 % textual description of core classes and properties.
@@ -127,26 +122,28 @@ Finaly on top news are stored under the RSS formalism, annotations are stored un
 %
 \subsection{Using datamining}
 
-In order to introduce data mining in our classification process, we decided to use a supervised learning algorithm based on the support vector machine (SVM). SVM are binary classifiers which analyse data and recognize patterns based on a learnt model with a set of training data. Given two categories, SVM construct a hyperplane that separates them, this hyperplane is chosen to maximise the distance between the categories.
+In order to introduce data mining in our classification process, we decided to use a supervised learning algorithm based on the support vector machine (SVM). SVM are binary classifiers which analyse data and recognize patterns based on a learnt model with a set of training data. Given two categories, SVM construct a hyperplane that separates them.
 
-Java Native Interface SVM Light \footnote{\url{http://www.mpi-inf.mpg.de/~mtb/}} is used to implement the SVM classification with the SVM Light library \cite{joachim:svmlight} on top. SVM light offers a learning step that construct the classification model starting from the set of training data and a second step to do the real classification based on the previously constructed model.
+SVM Light library \cite{joachim:svmlight} is used in our project for the classification. SVM light offers a learning step that construct the classification model starting from the set of training data and a second step to do the real classification based on the previously constructed model.
 
-These two steps take as entry a feature vector which is prepared during the preprocessing step. For preprocessing phase we used Stanford CoreNlp libraries \footnote{\url{http://nlp.stanford.edu/software/corenlp.shtml}} for the tokenization and lemmatization and Java code for stop words removing (punctuation, common words like I, he, she, what, have, be …).
-All lemmas are used to build a dictionary of all known words. Then we use TF-IDF algorithm to calculate the weight of each known lemma in the texts. The feature vector is afterwards built as pairs of rank of the lemma in the dictionary and its weight. For the training data, the feature vector is labelled +1 if the corresponding text belongs to the studied category and -1 if it doesn't.
+These two steps take as entry a feature vector which is prepared during the preprocessing step. For preprocessing phase we used Stanford CoreNlp libraries \footnote{\url{http://nlp.stanford.edu/software/corenlp.shtml}} and  Java code for stop words removing (punctuation, common words like I, he, she, what, have, be …).
+Lemmas obtained are used to build a dictionary of all known words. Then we use TF-IDF algorithm to calculate the weight of each known lemma in the texts. The feature vector is afterwards built as pairs of rank of the lemma in the dictionary and its weight.
 
-Thanks to our first successfully results made on the English test corpus Reuters -21578 \cite{lewis:reuters}, we tested the algorithm on the 10 most important categories (money-fx, earn, acq, grain, crude, trade, interest, ship, wheat, corn) the recall obtained on the corpus varied from 0.63 to 0.96 depending on the category. The best recall was obtained for the 'earn' class which has the most training texts.
+Thanks to our first successfully results made on the English test corpus "Reuters 21578" \cite{lewis:reuters}, we tested the algorithm on the 10 most important categories (money-fx, earn, acq, grain, crude, trade, interest, ship, wheat, corn) the recall obtained on the corpus varied from 0.63 to 0.96 depending on the category.
 
-Then algorithm was adapt to work on french text classification in order to be integrated in ZONE. As test corpus, we considered 5 categories (sport, economy, science, health and computer science). These categories were filled by RSS feeds specialized in each category and we split this data in a learning corpus and a test corpus. An SVM classifier was created for each category and the classification was made on the test corpus. The recall obtained on this data reached 0.97 for the sport category which is the best represented in the training set. For the other categories we obtained 0.78 for computer science and 0.52 for health. The values obtained for economy and science were too low, the small size of the training set may explain these values.
+Then algorithm was adapt to work on french text classification in order to be integrated in ZONE. As validation corpus, we considered 5 categories (sport, economy, science, health and computer science). These categories were filled by RSS feeds specialized in each category and we split this data in a learning and a test corpus. A SVM classifier was created for each category and the classification was made on the test corpus. The recall obtained on this validation corpus reached 0.97 for the sport category which is the best represented in the training set. Then we obtain 0.78 for computer science and 0.52 for health. The values obtained for economy and science were too low, the small size of the training set may explain these values.
 \begin{wrapfigure}{l}{0.48\textwidth}
   %\begin{left}
+  \vspace{15pt}
 	\includegraphics[width=0.48\textwidth]{zone-screenshot.png}
 	%\caption{Capture of zone project solution}
 	\label{fig:DEMO}
   %\end{left}
+  \vspace{-60pt}
 \end{wrapfigure}
+
 \section{Demonstration}
 %
-
 The web application is designed for all kinds of news feeds like technology, medicine or general news. You can install the application according to your needs under the AGPL licence \footnote{\url{https://github.com/descl/ZONE}}. An experimental platform is also provided for general news feed at \url{http://demo.zone-project.org}.
 
 
@@ -174,11 +171,15 @@ Page, L., Brin, S., Motwani, R., \& Winograd, T. (1999). The PageRank citation r
 \bibitem {desclaux:urli}
 Desclaux, C., Urli, S., Blay-Fornarino, M., \& Zucker, C. F (2012). Vers la construction de workflows pour le filtrage sémantique de nouvelles.
 
+\bibitem {charton:nlgbase}
+Charton, E., Torres-Moreno, J. (2010). NLGbAse: a free linguistic resource for Natural Language Processing systems.
+
+
 \bibitem {joachim:svmlight}
-T. Joachims, B. Schölkopf and C. Burges and A. Smola (ed.) (1999). Making large-Scale SVM Learning Practical. Advances in Kernel Methods - Support Vector Learning, MIT-Press. 
+Joachims, T., Schölkopf, T. and al. (1999). Making large-Scale SVM Learning Practical. Advances in Kernel Methods - Support Vector Learning, MIT-Press. 
 
 \bibitem{lewis:reuters}
-Lewis, D. et al. (1987). Reuters-21578.
+Lewis, D. and al. (1987). Reuters-21578.\\
 \url{http://www.daviddlewis.com/resources/testcollections/reuters21578}
 .
 \end{thebibliography}
