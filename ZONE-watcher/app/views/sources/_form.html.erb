@@ -1,0 +1,41 @@
+<%= form_for(@source) do |f| %>
+  <% if @source.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@source.errors.count, "error") %> prohibited this source from being saved:</h2>
+
+      <ul>
+      <% @source.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :uri %><br />
+    <%= f.text_field :uri %>
+  </div>
+  <div class="field">
+    <%= f.label :label %><br />
+    <%= f.text_field :label %>
+  </div>
+  <div class="field">
+    <%= f.label :lang %><br />
+    <%= f.text_field :lang %>
+  </div>
+  <div class="field">
+    <%= f.label :owner %><br />
+    <%= f.text_field :owner %>
+  </div>
+  <div class="field">
+    <%= f.label :thumb %><br />
+    <%= f.text_field :thumb %>
+  </div>
+  <div class="field">
+    <%= f.label :theme %><br />
+    <%= f.text_field :theme %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

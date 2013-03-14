@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Uri:</b>
+  <%= @source.uri %>
+</p>
+
+<p>
+  <b>Label:</b>
+  <%= @source.label %>
+</p>
+
+<p>
+  <b>Lang:</b>
+  <%= @source.lang %>
+</p>
+
+<p>
+  <b>Licence:</b>
+  <%= @source.licence %>
+</p>
+
+<p>
+  <b>Owner:</b>
+  <%= @source.owner %>
+</p>
+
+
+<%= link_to 'Edit', edit_source_path(@source) %> |
+<%= link_to 'Back', sources_path %>
