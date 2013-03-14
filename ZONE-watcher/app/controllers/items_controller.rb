@@ -5,10 +5,20 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    
-    @filters = parseFilterParams(params)
-    
-    
+    #if params[:timeline] != nil
+    #  source = Source.find("https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=#{current_user.login}")
+    #  if source == nil
+    #    flash[:error] = "Your timeline is not currently recorded in the extractor."
+    #    render "twitter/addtimeline"
+    #    return
+    #  end
+    #  puts source.to_json
+    #  @filters = Array.new
+    #  @filters.push(Filter.new(:prop => "http://purl.org/rss/1.0/source",:value=> "https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=#{current_user.login}"))
+    #else
+      @filters = parseFilterParams(params)
+    #end
+
     current_page = params[:page]
     current_page = 1 if current_page == nil
     current_page = Integer(current_page)
