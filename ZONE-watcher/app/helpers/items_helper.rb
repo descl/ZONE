@@ -4,6 +4,7 @@ module ItemsHelper
     @WIKI_META_URI = 'http://www.wikimeta.org/Entities#'
     @INSEE_GEO_URI = 'http://rdf.insee.fr/geo/'
     @RSS_URI = 'http://purl.org/rss/1.0/'
+    @SVM_PLUGIN_URI = 'http://zone-project.org/model/plugins/Categorization_SVM#result'
 
     if(filter.value == "null")
       filter.value = "/null"
@@ -26,6 +27,9 @@ module ItemsHelper
     elsif(filter.prop.start_with? @RSS_URI+"source")
       res=link_to filter.prop[@RSS_URI.length,filter.prop.length], itemURI, :class => "btn btn-primary"
       res+=link_to filter.value, itemURI, :class => "btn btn-primary"
+    elsif(filter.prop.start_with? @SVM_PLUGIN_URI)
+      res=link_to "category", itemURI, :class => "btn btn-danger"
+      res+=link_to filter.value, itemURI, :class => "btn btn-danger"
     end
   end
 

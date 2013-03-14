@@ -13,8 +13,8 @@ class Item# < ActiveRecord::Base
       return Array.new
     end
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
-    SELECT ?concept ?title 
-    FROM <http://demo.zone-project.org/data>
+    SELECT ?concept ?title
+    FROM <#{ZoneOntology::GRAPH_ITEMS}>
     WHERE {
       ?concept
         RSS:title ?title;
@@ -39,14 +39,17 @@ class Item# < ActiveRecord::Base
     
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT ?prop ?value
-    FROM <http://demo.zone-project.org/data>
+    FROM <#{ZoneOntology::GRAPH_ITEMS}>
     WHERE { <#{uri}> ?prop ?value.}"
     store = SPARQL::Client.new($endpoint)
     result = store.query(query)
     
     params = Hash.new
     result.each do |prop|
-      params[prop.prop.to_s] = prop.value.to_s
+      if params[prop.prop.to_s] == nil
+          params[prop.prop.to_s] = Array.new
+      end
+      params[prop.prop.to_s] << prop.value.to_s
     end
     
     item = Item.new(uri, params["http://purl.org/rss/1.0/title"])

@@ -1,7 +1,7 @@
 <div class="row-fluid">
 
     <% if @item.props["http://purl.org/rss/1.0/image"] != nil
-        image=@item.props["http://purl.org/rss/1.0/image"].html_safe
+        image=@item.props["http://purl.org/rss/1.0/image"][0].html_safe
     elsif @item.uri.starts_with?('http://twitter.com')
         image="assets/twitter.png"
     end
@@ -26,19 +26,22 @@
         <div class="span12">
     <%end%>
         <a href= "<%= @item.uri %>">
-            <%= @item.props["http://purl.org/rss/1.0/title"]%>
+            <%= @item.props["http://purl.org/rss/1.0/title"][0]%>
         </a>
-        <%= @item.props["http://purl.org/rss/1.0/pubDate"]%>
+        <%= @item.props["http://purl.org/rss/1.0/pubDate"][0]%>
         <div class="btn-toolbar">
-            <% @item.props.each do |item|%>
+            <% @item.props.each do |item|
+               item[1].each do |value|
+            %>
+
                 <div class="btn-group">
-                    <%= raw getButtonForFilter(Filter.new(:prop => item[0], :value => item[1])) %>
+                    <%= raw getButtonForFilter(Filter.new(:prop => item[0], :value => value)) %>
                 </div>
-            <%end%>
+            <%end end%>
         </div>
             
         <%= if @item.props["http://purl.org/rss/1.0/description"] != nil
-             @item.props["http://purl.org/rss/1.0/description"].html_safe end %>
+             @item.props["http://purl.org/rss/1.0/description"][0].html_safe end %>
     </div>
 </div>
 
@@ -52,14 +55,14 @@
         <div id="collapse-<%= @uriHash%>" class="accordion-body collapse">
             <div class="accordion-inner" style="padding: 0px;">
                 <table class="table table-striped"><!--BORDER="1" style="border: 1px black; border-spacing: 0px;"-->
-                   <% i=0; @item.props.each do |prop,value|
+                   <% i=0; @item.props.each do |prop,values|
+                      values.each do |value|
                         i=i+1
                         %>
                         <tr><td><%= prop %></td>
                         <td>
-                            
-                            <% if prop.starts_with? 'http://www.zone-project.org/plugins/ExtractArticlesContent#result'%>
-                                <%= value[0..400] %>
+                            <% if prop.starts_with? ZoneOntology::PLUGIN_EXTRACT_ARTICLES_CONTENT_RES %>
+                                <%= value %>
                                 <a href= "<%= @uri %>">
                                     (...)
                                 </a>
@@ -79,6 +82,7 @@
                         </td><td>
                         <%= link_to "Ajouter au filtre", items_path(:old => @filters,:new => Filter.new({:prop =>prop, :value => value})), :class => "btn btn-success" %></td></tr>
                         <% end%>
+                      <%end%>
                 </table>
             </div>
         </div>
