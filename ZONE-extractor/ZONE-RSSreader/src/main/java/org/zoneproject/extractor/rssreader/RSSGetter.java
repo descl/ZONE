@@ -47,6 +47,8 @@ import org.zoneproject.extractor.utils.ZoneOntology;
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class RSSGetter {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(RSSGetter.class);
+    
     /**
      * transform a list of rss feeds links to a list of items
      * @param urls pointing to the rss feeds
@@ -113,10 +115,10 @@ public class RSSGetter {
             }
         }
         catch(IllegalArgumentException e) {
-            System.out.println("RSS Feed "+e+" not working");
+            logger.warn("RSS Feed "+e+" not working");
         }
         catch(FeedException e) {
-            System.out.println("RSS Feed "+e+" not working");
+            logger.warn("RSS Feed "+e+" not working");
         }
         return items;
     }
@@ -136,6 +138,6 @@ public class RSSGetter {
         
         String fileURI = "http://europe1.fr.feedsportal.com/c/32376/f/546041/index.rss";
         ArrayList result = RSSGetter.getFlux(fileURI);
-        System.out.println(result);
+        logger.info(result);
     }
 }

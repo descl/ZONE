@@ -31,6 +31,7 @@ import org.zoneproject.extractor.utils.Item;
  */
 public class App 
 {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public App(){
         String [] tmp = {};
         App.main(tmp);
@@ -38,20 +39,20 @@ public class App
     public static void main(String args[]){
         ArrayList<Item>  items = new ArrayList<Item>();
         String [] feeds = TwitterApi.getSources();
-        System.out.println("========= Starting twitter timeline downloading==================");
+        logger.info("========= Starting twitter timeline downloading==================");
         
         ArrayList<Item> it = TwitterApi.getFlux(feeds);
         items.addAll(it);
         
-        System.out.println("========= Cleaning flow with already analysed items==================");
+        logger.info("========= Cleaning flow with already analysed items==================");
           Database.verifyItemsList(items);
         
-        System.out.println("========= Printing result items==================");
-        for(int i=0; i< items.size();i++)System.out.println("\n"+items.get(i));
+        logger.info("========= Printing result items==================");
+        for(int i=0; i< items.size();i++)logger.info("\n"+items.get(i));
         
-        System.out.println("========= saving to database==================");
+        logger.info("========= saving to database==================");
         Database.addItems(items);
-        System.out.println("Done");
+        logger.info("Done");
 
     System.exit(0);
   }

@@ -31,12 +31,13 @@ import java.util.logging.Logger;
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class ThreadApp extends TimerTask{
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(ThreadApp.class);
     String app;
     public ThreadApp(String app) {
         this.app = app;
     }
     public void run(){
-        System.out.println("Starting annotation process for "+app);
+        logger.info("Starting annotation process for "+app);
         try {
             Class.forName(app).newInstance();
         } catch (InstantiationException ex) {

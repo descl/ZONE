@@ -40,6 +40,7 @@ import static org.junit.Assert.*;
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class RSSGetterTest {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(RSSGetterTest.class);
     
     public RSSGetterTest() {
     }
@@ -65,10 +66,10 @@ public class RSSGetterTest {
      */
     @Test
     public void testGetFlux_File() throws URISyntaxException {
-        System.out.println("getFlux");
+        logger.info("getFlux");
         URI fileURI = getClass().getResource("/europe1.rss").toURI();
         ArrayList result = RSSGetter.getFlux(new File(fileURI));
-        System.out.println(result.size());
+        logger.info(result.size());
         assertEquals(result.size(), 1);
     }
     
@@ -77,10 +78,10 @@ public class RSSGetterTest {
      */
     @Test
     public void testGetFlux_URI() {
-        System.out.println("getFlux");
+        logger.info("getFlux");
         String fileURI = "http://europe1.fr.feedsportal.com/c/32376/f/546041/index.rss";
         ArrayList result = RSSGetter.getFlux(fileURI);
-        System.out.println(result.size());
+        logger.info(result.size());
         assertEquals(result.size(), 25);
     }
 }

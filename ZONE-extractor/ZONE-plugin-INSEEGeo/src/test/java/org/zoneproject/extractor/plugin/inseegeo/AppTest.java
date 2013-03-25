@@ -36,6 +36,7 @@ import org.zoneproject.extractor.utils.Prop;
 public class AppTest 
     extends TestCase
 {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(AppTest.class);
     /**
      * Create the test case
      *
@@ -57,7 +58,7 @@ public class AppTest
 
     @org.junit.Test
     public void testApp1() {
-        System.out.println("getCitiesResult");
+        logger.info("getCitiesResult");
         String city = "Toulon";
         ArrayList<Prop> expResult = new ArrayList<Prop>();
         expResult.add(new Prop("http://rdf.insee.fr/geo/Arrondissement","http://rdf.insee.fr/geo/2011/ARR_832",false));
@@ -75,7 +76,7 @@ public class AppTest
 
     @org.junit.Test
     public void testApp2() {
-        System.out.println("getCitiesResult");
+        logger.info("getCitiesResult");
         String city = "Clermont-L'Hérault";
         ArrayList<Prop> result = InseeSparqlRequest.getDimensions(city);
 

@@ -34,6 +34,7 @@ import org.zoneproject.extractor.utils.ZoneOntology;
 
 public class App 
 {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_WIKIMETA;
     
     public App(){
@@ -44,9 +45,9 @@ public class App
     public static void main(String[] args) {
 
         Item[] items = Database.getItemsNotAnotatedForOnePlugin(PLUGIN_URI);
-        System.out.println("WikiMeta has "+items.length+" items to annotate");
+        logger.info("WikiMeta has "+items.length+" items to annotate");
         for(Item item : items){
-            System.out.println("Add WikiMeta for item: "+item);
+            logger.info("Add WikiMeta for item: "+item);
             
             ArrayList<Prop> content= WikiMetaRequest.getProperties(item.concat());
             Database.addAnnotations(item.getUri(), content);

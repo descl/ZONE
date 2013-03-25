@@ -59,7 +59,7 @@ public class FourStoreDatabaseTest {
      */
     @Test
     public void testAddItem() throws IOException {
-        /*System.out.println("addItem");
+        /*logger.info("addItem");
         String uri="http://testURI.com/#MyURI";
         Item item = new Item(uri);
         item.addProp(new Prop("http://purl.org/rss/1.0/title","le titre",true));

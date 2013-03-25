@@ -35,6 +35,7 @@ import org.zoneproject.extractor.utils.ZoneOntology;
  */
 public class App 
 {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_OPENCALAIS;
     
     public App(){
@@ -46,9 +47,9 @@ public class App
      */
     public static void main(String[] args) {
         Item[] items = Database.getItemsNotAnotatedForOnePlugin(PLUGIN_URI);
-        System.out.println("OpenCalais has "+items.length+" items to annotate");
+        logger.info("OpenCalais has "+items.length+" items to annotate");
         for(Item item : items){
-            System.out.println("Add ExtractArticlesContent for item: "+item);
+            logger.info("Add ExtractArticlesContent for item: "+item);
             ArrayList<Prop> props = new ArrayList<Prop>();
             props.addAll(openCalaisExtractor.getCitiesResultProp(item.concat()));
             props.addAll(openCalaisExtractor.getPersonsResultProp(item.concat()));

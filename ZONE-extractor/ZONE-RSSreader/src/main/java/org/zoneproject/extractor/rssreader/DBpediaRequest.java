@@ -40,6 +40,7 @@ import org.zoneproject.extractor.utils.Prop;
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class DBpediaRequest {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(DBpediaRequest.class);
     
     public static ArrayList<Prop> filter(ArrayList <Prop> props, String filter){
         ArrayList <Prop> result = new ArrayList<Prop>();
@@ -82,12 +83,12 @@ public class DBpediaRequest {
      * @return the canton name of label pointing to the resource
      */
     public static String getCityNameFromURI(String uri){
-        System.out.println("looking for"+uri);
+        logger.info("looking for"+uri);
         Model model;
         try {
             model = DBpediaRequest.getRDFSchemaFromRDF_URI(uri);
         } catch (IOException ex) {
-            System.out.println("DBpedia resource error for "+uri+"\n Error:"+ex.getMessage());
+            logger.info("DBpedia resource error for "+uri+"\n Error:"+ex.getMessage());
             return getNameResource(uri);
         }
         
@@ -185,15 +186,15 @@ public class DBpediaRequest {
      * @param args 
      */
     public static void main(String[] args){
-        System.out.println(DBpediaRequest.getCityNameFromURI("http://www.dbpedia.org/resource/Antwerp"));
-        /*System.out.println(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/page/House_of_Lorraine"));
-        System.out.println(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/page/Petit-Couronne"));
-        System.out.println(DBpediaRequest.getCityNameFromURI("http://www.dbpedia.org/resource/Pau,_Pyr%C3%A9n%C3%A9es-Atlantiques"));
-        System.out.println(DBpediaRequest.getCityNameFromURI("http://www.dbpedia.org/resource/Pau,_Pyr%C3%A9n%C3%A9es-Atlantiques"));
-        System.out.println(DBpediaRequest.getCityNameFromURI("http://www.dbpedia.org/resource/Pau"));
-        System.out.println(DBpediaRequest.getCityNameFromURI("http://www.dbpedia.org/resource/Dinaric_Alps"));
-        System.out.println(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/page/Pau,_Pyr%C3%A9n%C3%A9es-Atlantiques"));
-        System.out.println(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/page/Port-la-Nouvelle"));
-        System.out.println(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/data/Quimper.rdf"));*/
+        logger.info(DBpediaRequest.getCityNameFromURI("http://www.dbpedia.org/resource/Antwerp"));
+        /*logger.info(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/page/House_of_Lorraine"));
+        logger.info(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/page/Petit-Couronne"));
+        logger.info(DBpediaRequest.getCityNameFromURI("http://www.dbpedia.org/resource/Pau,_Pyr%C3%A9n%C3%A9es-Atlantiques"));
+        logger.info(DBpediaRequest.getCityNameFromURI("http://www.dbpedia.org/resource/Pau,_Pyr%C3%A9n%C3%A9es-Atlantiques"));
+        logger.info(DBpediaRequest.getCityNameFromURI("http://www.dbpedia.org/resource/Pau"));
+        logger.info(DBpediaRequest.getCityNameFromURI("http://www.dbpedia.org/resource/Dinaric_Alps"));
+        logger.info(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/page/Pau,_Pyr%C3%A9n%C3%A9es-Atlantiques"));
+        logger.info(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/page/Port-la-Nouvelle"));
+        logger.info(DBpediaRequest.getCityNameFromURI("http://dbpedia.org/data/Quimper.rdf"));*/
     }    
 }

@@ -32,6 +32,7 @@ import org.zoneproject.extractor.utils.Item;
  */
 public class App 
 {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public App(){
         String [] tmp = {};
         App.main(tmp);
@@ -41,18 +42,18 @@ public class App
         ArrayList<Item>  items = new ArrayList<Item>();
         String [] fluxLinks = RSSGetter.getSources();
         
-        System.out.println("========= Starting rss downloading==================");
+        logger.info("========= Starting rss downloading==================");
         ArrayList<Item> it = RSSGetter.getFlux(fluxLinks);
         items.addAll(it);
         
-        System.out.println("========= Cleaning flow with already analysed items==================");
+        logger.info("========= Cleaning flow with already analysed items==================");
         Database.verifyItemsList(items);
         
-        System.out.println("========= Printing result items==================");
-        for(int i=0; i< items.size();i++)System.out.println("\n"+items.get(i));
+        logger.info("========= Printing result items==================");
+        for(int i=0; i< items.size();i++)logger.info("\n"+items.get(i));
         
-        System.out.println("========= saving to 4Store database==================");
+        logger.info("========= saving to 4Store database==================");
         Database.addItems(items);
-        System.out.println("Done");
+        logger.info("Done");
     }
 }

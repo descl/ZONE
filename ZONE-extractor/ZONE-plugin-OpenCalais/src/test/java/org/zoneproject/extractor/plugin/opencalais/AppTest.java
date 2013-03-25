@@ -33,6 +33,7 @@ import static org.junit.Assert.*;
  * Unit test for simple App.
  */
 public class AppTest{
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(AppTest.class);
      
     @BeforeClass
     public static void setUpClass() {
@@ -56,7 +57,7 @@ public class AppTest{
      */
     @org.junit.Test
     public void testGetCitiesResult() {
-        System.out.println("getCitiesResult");
+        logger.info("getCitiesResult");
         String content = "Reuters se site dans la ville de Paris";
         String[] expResult = {"Paris"};
         String[] result = openCalaisExtractor.getCitiesResult(content);
@@ -68,7 +69,7 @@ public class AppTest{
      */
     @org.junit.Test
     public void testGetPersonsResult() {
-        System.out.println("getPersonsResult");
+        logger.info("getPersonsResult");
         String content = "Nicolas Sarkozy est en vacances et François Fillon est présent!";
         String[] expResult = {"François Fillon","Nicolas Sarkozy"};
         String[] result = openCalaisExtractor.getPersonsResult(content);

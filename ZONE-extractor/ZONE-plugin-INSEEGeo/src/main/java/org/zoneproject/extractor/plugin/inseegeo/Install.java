@@ -30,8 +30,9 @@ import org.zoneproject.extractor.utils.Database;
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class Install {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(Install.class);
     public static void main(String[] args) {
-        System.out.println("Loading RDF Files for the INSEE Database");
+        logger.info("Loading RDF Files for the INSEE Database");
         ResultSet r = Database.runSPARQLRequest(" SELECT ?p WHERE { <http://rdf.insee.fr/geo/2011/COM_10378> ?p ?i } LIMIT 10","http://rdf.insee.fr/geo/2011/");
         if(!r.hasNext()){
             Database.loadFolder("http://rdf.insee.fr/geo/2011/",args[0]);

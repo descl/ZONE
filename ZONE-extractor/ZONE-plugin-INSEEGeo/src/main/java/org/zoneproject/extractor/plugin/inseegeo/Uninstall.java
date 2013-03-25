@@ -29,8 +29,9 @@ import org.zoneproject.extractor.utils.Database;
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class Uninstall {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(Uninstall.class);
     public static void main(String[] args) {
-        System.out.println("Remove the INSEE Database");
+        logger.info("Remove the INSEE Database");
         String q= "DELETE { ?a ?b ?c }WHERE  { ?a ?b ?c. FILTER ( regex(?a, 'rdf.insee.fr') )  }";
         Database.runSPARQLRequest(q,"http://rdf.insee.fr/geo/2011/");
         Database.runSPARQLRequest(q);

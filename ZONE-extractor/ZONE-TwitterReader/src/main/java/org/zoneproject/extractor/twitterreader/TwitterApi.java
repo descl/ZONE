@@ -26,6 +26,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.zoneproject.extractor.utils.Config;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.ZoneOntology;
@@ -41,6 +42,7 @@ import twitter4j.auth.AccessToken;
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class TwitterApi {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(TwitterApi.class);
     /**
      * Get all the items from twitter for an user timeline list
      * @param sources the list of sources URIs
@@ -53,7 +55,7 @@ public class TwitterApi {
         for(String sourceUri : sources){
             AccessToken userToken = TwitterApi.getAccessToken(sourceUri);
             Twitter twitter = factory.getInstance();
-            twitter.setOAuthConsumer("gUJnCSOMPcgk8QEAekEqA", "RVNIXZx7fzgUr6tMEFh1tRtNtGUezCYhuKHZ3dnbc");
+            twitter.setOAuthConsumer(Config.getVar("Twitter-OAuth-customer"),Config.getVar("Twitter-OAuth-customerKey"));
             twitter.setOAuthAccessToken(userToken);
             ResponseList<Status> status;
             try {
@@ -102,7 +104,7 @@ public class TwitterApi {
     
     public static String [] getSources(){
         String query = "SELECT *  WHERE {?uri rdf:type <"+ZoneOntology.SOURCES_TWITTER_TYPE+">.}";
-        System.out.println(query);
+        logger.info(query);
         ResultSet res = Database.runSPARQLRequest(query, ZoneOntology.GRAPH_SOURCES);
         ArrayList<String> sources = new ArrayList<String>();
         while (res.hasNext()) {

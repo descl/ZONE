@@ -34,6 +34,7 @@ import org.junit.Test;
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class VirtuosoStoreDatabaseTest {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     
     public VirtuosoStoreDatabaseTest() {
     }
@@ -59,7 +60,7 @@ public class VirtuosoStoreDatabaseTest {
      */
     @Test
     public void testAddItem() throws IOException {
-        System.out.println("addItem");
+        logger.info("addItem");
         String uri="http://testURI.com/#MyURI";
         Item item = new Item(uri);
         item.addProp(new Prop("http://purl.org/rss/1.0/title","le titre",true));

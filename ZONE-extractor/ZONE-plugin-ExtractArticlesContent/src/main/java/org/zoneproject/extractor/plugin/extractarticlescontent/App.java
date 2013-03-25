@@ -39,6 +39,7 @@ import org.zoneproject.extractor.utils.ZoneOntology;
  */
 public class App 
 {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT;
     public static String PLUGIN_RESULT_URI = ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_RES;
     
@@ -51,10 +52,10 @@ public class App
      */
     public static void main(String[] args) {
         Item[] items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI);
-        System.out.println("ExtractArticlesContent has "+items.length+" items to annotate");
+        logger.info("ExtractArticlesContent has "+items.length+" items to annotate");
         for(Item item : items){
             try {
-                System.out.println("Add ExtractArticlesContent for item: "+item);
+                logger.info("Add ExtractArticlesContent for item: "+item);
                 URL url = new URL(item.getUri());
                 String content= ArticleExtractor.INSTANCE.getText(url);
                 VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_RESULT_URI,content));

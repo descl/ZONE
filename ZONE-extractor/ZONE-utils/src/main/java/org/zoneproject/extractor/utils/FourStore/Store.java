@@ -48,7 +48,7 @@ import java.net.URLEncoder;
  *
  */
 public class Store {
-
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(Store.class);
     /**
      * Enumeration of allowed import formats and their mime types
      *
@@ -478,7 +478,7 @@ public class Store {
                 .openStream()));
         String response;
         while ((response = in.readLine()) != null)
-            System.out.println(response);
+            logger.info(response);
         in.close();
         return response;
     }

@@ -1,5 +1,7 @@
 package org.zoneproject.extractor.utils;
 
+import org.apache.log4j.Logger;
+
 /*
  * #%L
  * ZONE-utils
@@ -21,7 +23,7 @@ package org.zoneproject.extractor.utils;
  * #L%
  */
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 /**
  *
@@ -30,6 +32,8 @@ import org.apache.log4j.Logger;
 
 public class TestLogger {
     private static final Logger  logger = Logger.getLogger(TestLogger.class);
+    //org.zoneproject.extractor.utils.Logger.log.warn("titi");
+    //Logger.log.debug("eee");
     public static void main(String[] args) {
         for(int i=1 ; i<10; i++) {
             System.out.println("Counter = " + i);

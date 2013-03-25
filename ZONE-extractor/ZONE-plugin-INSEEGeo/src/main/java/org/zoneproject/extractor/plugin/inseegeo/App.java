@@ -33,6 +33,7 @@ import org.zoneproject.extractor.utils.ZoneOntology;
  */
 public class App 
 {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_INSEEGEO;
     
     public App(){
@@ -44,9 +45,9 @@ public class App
         String openCalaisPrefix = "http://www.opencalais.org/Entities";
         String [] deps = {openCalaisPrefix+"#LOC"};
         Item[] items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps);
-        System.out.println("INSEEGeo has "+items.length+" items to annotate");
+        logger.info("INSEEGeo has "+items.length+" items to annotate");
         for(Item item : items){
-            System.out.println("Add INSEEGeo for item: "+item);
+            logger.info("Add INSEEGeo for item: "+item);
             ArrayList<Prop> props;
             props = InseeSparqlRequest.getDimensions(item.getElements(openCalaisPrefix+"#LOC"));
             Database.addAnnotations(item.getUri(), props);

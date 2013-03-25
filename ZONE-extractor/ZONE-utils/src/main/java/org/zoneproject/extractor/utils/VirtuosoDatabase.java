@@ -52,6 +52,7 @@ import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
  */
 
 public abstract class VirtuosoDatabase {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     private static Model st = null;
     private static String VIRTUOSO_SERVER = Config.getVar("Virtuoso-server-uri");
     private static String VIRTUOSO_USER = Config.getVar("Virtuoso-server-user");
@@ -162,7 +163,7 @@ public abstract class VirtuosoDatabase {
         }
         
         String request = "SELECT ?uri WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title "+requestPlugs+". OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined.  } FILTER (!bound(?pluginDefined)) }";
-        System.out.println(request);
+        logger.info(request);
         ResultSet results = runSPARQLRequest(request);
 
         while (results.hasNext()) {
@@ -198,7 +199,7 @@ public abstract class VirtuosoDatabase {
      */
     public static Item getOneItemByURI(String uri){
         String request = "SELECT ?relation ?value WHERE{  <"+uri+"> ?relation ?value}";
-        System.out.println(uri);
+        logger.info(uri);
         ResultSet results = runSPARQLRequest(request);
         return new Item(uri,results,uri,"relation","?value");
     }
@@ -259,9 +260,9 @@ public abstract class VirtuosoDatabase {
         /*
         loadFile("","./test.rdf");
         ResultSet r = runSPARQLRequest("SELECT ?x ?t WHERE {?x rdf:type ?t} ");
-        System.out.println(r.getResourceModel());
+        logger.info(r.getResourceModel());
         
-        System.out.println("addItem");
+        logger.info("addItem");
         String uri="http://testURI.com/#MyURI";
         Item item = new Item(uri);
         item.addProp(new Prop("http://purl.org/rss/1.0/title","le titre",true));
@@ -269,8 +270,8 @@ public abstract class VirtuosoDatabase {
         
         VirtuosoDatabase.addItem(item);
         VirtuosoDatabase.deleteItem(uri);
-        System.out.println(VirtuosoDatabase.ItemURIExist(uri));
-        System.out.println(VirtuosoDatabase.ItemURIExist("http://www.personnes.com#Margot"));
+        logger.info(VirtuosoDatabase.ItemURIExist(uri));
+        logger.info(VirtuosoDatabase.ItemURIExist("http://www.personnes.com#Margot"));
         * */
         extractDB();
     }

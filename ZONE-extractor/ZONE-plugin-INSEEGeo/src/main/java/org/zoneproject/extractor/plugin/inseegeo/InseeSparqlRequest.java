@@ -32,7 +32,7 @@ import org.zoneproject.extractor.utils.Prop;
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class InseeSparqlRequest {
-    
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(InseeSparqlRequest.class);
     
     public static ArrayList<Prop> getDimensions(String[] cities){
         ArrayList<Prop> result = new ArrayList<Prop>();
@@ -61,7 +61,7 @@ public class InseeSparqlRequest {
                 "            t_min(1)) .\n" +
                 "  FILTER ( ?nom = \""+city+"\"@fr)\n" +
                 "}";
-        System.out.println(query);
+        logger.info(query);
         
         ResultSet res = Database.runSPARQLRequest(query,"http://rdf.insee.fr/geo/2011/");
         ArrayList<Prop> dims = new ArrayList<Prop>();
@@ -93,13 +93,13 @@ public class InseeSparqlRequest {
                 "            t_min(1)) .\n" +
                 "  FILTER (regex(str(?nom), '"+city+"', 'i'))\n" +
                 "}";
-        System.out.println(query);
+        logger.info(query);
         
         ResultSet res = Database.runSPARQLRequest(query);
         ArrayList<Prop> dims = new ArrayList<Prop>();
         while (res.hasNext()) {
             QuerySolution r = res.nextSolution();
-            System.out.println(r);
+            logger.info(r);
             dims.add(new Prop(r.get("?type").toString(), r.get("?zone").toString(),false));
         }
         
@@ -117,9 +117,9 @@ public class InseeSparqlRequest {
     }
     
     public static void main(String[] args){
-        System.out.println((new Date()).toString());
-        System.out.println(getDimensions("Toulon"));
-        System.out.println((new Date()).toString());
-        System.out.println("Done");
+        logger.info((new Date()).toString());
+        logger.info(getDimensions("Toulon"));
+        logger.info((new Date()).toString());
+        logger.info("Done");
     }
 }

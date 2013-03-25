@@ -39,6 +39,7 @@ import org.zoneproject.extractor.utils.Prop;
  * @author cdesclau
  */
 public class WikiMetaRequestTest {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     
     public WikiMetaRequestTest() {
     }
@@ -64,10 +65,10 @@ public class WikiMetaRequestTest {
      */
     @Test
     public void testGetProperties_String() {
-        System.out.println("getProperties");
+        logger.info("getProperties");
         String texte = "Bienvenue à Antibes";
         ArrayList<Prop> result = WikiMetaRequest.getProperties(texte);
-        System.out.println(result);
+        logger.info(result);
         assertEquals(1,result.size());
         Prop p = new Prop("http://www.wikimeta.org/Entities#loc.admi","http://www.dbpedia.org/resource/Antibes",false);
         assertEquals(result.get(0), p);
@@ -78,7 +79,7 @@ public class WikiMetaRequestTest {
      */
     @Test
     public void testGetProperties_File() throws URISyntaxException {
-        System.out.println("getProperties");
+        logger.info("getProperties");
         URI fileURI = getClass().getResource("/WikiMetaOutput_pip.json").toURI();
         ArrayList result = WikiMetaRequest.getProperties(new File(fileURI));
         assertEquals(result.size(), 0);
@@ -89,7 +90,7 @@ public class WikiMetaRequestTest {
      */
     @Test
     public void testGetProperties_File_2() throws URISyntaxException {
-        System.out.println("getProperties");
+        logger.info("getProperties");
         URI fileURI = getClass().getResource("/WikiMetaOutput_mars.txt").toURI();
         ArrayList result = WikiMetaRequest.getProperties(new File(fileURI));
         ArrayList<Prop> expRes = new ArrayList<Prop>();
@@ -107,19 +108,19 @@ public class WikiMetaRequestTest {
     
     @Test
     public void testGetProperties_String_cleaningResult() {
-        System.out.println("getProperties");
+        logger.info("getProperties");
         String texte = "Arnaud Montebourg est Arnaud Montebourg";
         ArrayList result = WikiMetaRequest.getProperties(texte);
-        System.out.println(result);
+        logger.info(result);
         assertEquals(1,result.size());
     }
     
     @Test
     public void testGetProperties_String_NullStrangeError(){
-        System.out.println("getProperties");
+        logger.info("getProperties");
         String texte = " Sur la Toile, il se faisait appeler Jack Morg";
         ArrayList result = WikiMetaRequest.getProperties(texte);
-        System.out.println(result);
+        logger.info(result);
         ArrayList<Prop> expRes = new ArrayList<Prop>();
         expRes.add(new Prop("http://www.wikimeta.org/Entities#LOC","Toile",true));
         expRes.add(new Prop("http://www.wikimeta.org/Entities#PERS","Jack Morg",true));
