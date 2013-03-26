@@ -1,7 +1,12 @@
 ZONEWatcher::Application.routes.draw do
   get "twitter/addtimeline", :action => "add_timeline", :controller => "twitter"
   get "twitter", :action => "index", :controller => "twitter"
+
+  get "sources/langs", :action => "langs", :controller => "sources"
+  get "sources/themes", :action => "themes", :controller => "sources"
+
   resources :sources
+  match 'sources/:id/edit' => 'sources#edit', :constraints  =>  {:id =>  /.*/ }
 
   #resources :authentications
 

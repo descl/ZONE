@@ -6,8 +6,8 @@
     <th>Elements number</th>
     <th>Label</th>
     <th>Lang</th>
-    <th>Licence</th>
     <th>Owner</th>
+    <th>Theme</th>
   </tr>
 
 <% @sources.each do |source| %>
@@ -27,8 +27,9 @@
     </td>
     <td><%= source.label %></td>
     <td><%= source.lang %></td>
-    <td><%= source.licence %></td>
     <td><%= source.owner %></td>
+    <td><%= source.theme %></td>
+    <td><%= link_to "edit",edit_source_path(source)   %></td>
   </tr>
 <% end %>
 </table>

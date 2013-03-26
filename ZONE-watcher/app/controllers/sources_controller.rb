@@ -24,6 +24,13 @@ class SourcesController < ApplicationController
   # GET /sources/new
   # GET /sources/new.json
   def new
+    if !user_signed_in?
+      flash[:error] = 'You are not logged in'
+      redirect_to :back
+      return
+    end
+    @themes = Filter.all(:prop => ZoneOntology::SOURCES_THEME)
+    @langs = Filter.all(:prop => ZoneOntology::SOURCES_LANG)
     @source = Source.new
 
     respond_to do |format|
@@ -32,19 +39,58 @@ class SourcesController < ApplicationController
     end
   end
 
+  def langs
+    @langs = FilterText.all(:prop => ZoneOntology::SOURCES_LANG)
+    @result = []
+    @langs.each{|p|
+      @result << {'text' => p.value, :value => p.value}
+    }
+
+    respond_to do |format|
+      format.json { render json: @result
+      }
+    end
+    #render :json => { @langs.as_json }
+  end
+
+  def themes
+    @themes = Filter.all(:prop => ZoneOntology::SOURCES_THEME)
+    @result = []
+    @themes.each{|p|
+      @result << {'text' => p.value, :value => p.value}
+    }
+    respond_to do |format|
+      format.json { render json: @result }
+    end
+  end
+
   # GET /sources/1/edit
   def edit
+    if !user_signed_in?
+      flash[:error] = 'You are not logged in'
+      redirect_to :back
+      return
+    end
     @source = Source.find(params[:id])
   end
 
   # POST /sources
   # POST /sources.json
   def create
-    @source = Source.new(params[:source][:uri],params[:source])
-    puts @source.to_json
+    if !user_signed_in?
+      flash[:error] = 'You are not logged in'
+      redirect_to :back
+      return
+    end
+    @source = Source.new(params[:source][:uri],{
+        :label => params[:source][:label],
+        :lang => params[:lang],
+        :theme => params[:theme],
+        :owner => current_user.id
+    })
     respond_to do |format|
-      if @source.save
-        format.html { redirect_to @source, notice: 'Source was successfully created.' }
+      if @source.valid? && @source.save
+       format.html { redirect_to @source, notice: 'Source was successfully created.' }
         format.json { render json: @source, status: :created, location: @source }
       else
         format.html { render action: "new" }
@@ -56,8 +102,13 @@ class SourcesController < ApplicationController
   # PUT /sources/1
   # PUT /sources/1.json
   def update
+    if !user_signed_in?
+      flash[:error] = 'You are not logged in'
+      redirect_to :back
+      return
+    end
     @source = Source.find(params[:id])
-
+    #TODO: should use the destroy method
     respond_to do |format|
       if @source.update_attributes(params[:source])
         format.html { redirect_to @source, notice: 'Source was successfully updated.' }
