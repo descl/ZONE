@@ -29,7 +29,12 @@
     <td><%= source.lang %></td>
     <td><%= source.owner %></td>
     <td><%= source.theme %></td>
-    <td><%= link_to "edit",edit_source_path(source)   %></td>
+    <td>
+      <span class="btn-group">
+        <%= link_to "edit",edit_source_path(source) , :class => 'btn btn-warning btn'  %>
+        <a class="btn btn-danger btn" href="/sources/<%=source.to_param%>/delete">delete</a>
+      </span>
+    </td>
   </tr>
 <% end %>
 </table>
@@ -37,3 +42,4 @@
 <br />
 
 <%= link_to 'New Source', new_source_path %>
+

@@ -115,17 +115,17 @@ class Source
   end
 
   def destroy
-    #TODO: need to work!!!
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT ?prop ?value
     FROM <#{ZoneOntology::GRAPH_SOURCES}>
     WHERE { <#{@uri}> ?prop ?value.}"
     store = SPARQL::Client.new($endpoint)
     result = store.query(query)
-
-    source = Source.new(uri)
+    graph = RDF::URI.new(ZoneOntology::GRAPH_SOURCES)
+    subject = RDF::URI.new(@uri)
     result.each do |prop|
-
+      $repo.delete(RDF::Virtuoso::Query.delete_data([subject,prop.prop,prop.value]).graph(graph))
     end
+    return true
   end
 end

@@ -1,17 +1,23 @@
 ZONEWatcher::Application.routes.draw do
+
+  #Twitter managment
   get "twitter/addtimeline", :action => "add_timeline", :controller => "twitter"
   get "twitter", :action => "index", :controller => "twitter"
 
+  #Sources managment
   get "sources/langs", :action => "langs", :controller => "sources"
   get "sources/themes", :action => "themes", :controller => "sources"
 
-  resources :sources
   match 'sources/:id/edit' => 'sources#edit', :constraints  =>  {:id =>  /.*/ }
+  match 'sources/:id/delete' => 'sources#destroy', :constraints  =>  {:id =>  /.*/ }
 
-  #resources :authentications
+  resources :sources
 
+
+  #users managment
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   #match '/auth/:provider/callback' => 'authentications#create'
+
 
   resources :oldsources
 

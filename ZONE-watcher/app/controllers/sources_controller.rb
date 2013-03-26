@@ -124,8 +124,11 @@ class SourcesController < ApplicationController
   # DELETE /sources/1.json
   def destroy
     @source = Source.find(params[:id])
-    @source.destroy
-
+    if @source.destroy
+      flash[:notice] = 'Source destroyed'
+    else
+      flash[:error] = 'Problem occured while removing source'
+    end
     respond_to do |format|
       format.html { redirect_to sources_url }
       format.json { head :no_content }
