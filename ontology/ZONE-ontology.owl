@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rdf [
+   <!ENTITY zone_source   "http://zone-project.org/model/"> 
+   <!ENTITY rdfs     "http://www.w3.org/2000/01/rdf-schema#">
+   <!ENTITY owl  "http://www.w3.org/2002/07/owl#" >
+   <!ENTITY xsd  "http://www.w3.org/2001/XMLSchema#" >
+    ]>
+
+<rdf:RDF  
+  xmlns     ="&zone;" 
+  xml:base  ="&zone;" 
+  xmlns:rdf ="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+  xmlns:rdfs="&rdfs;"
+  xmlns:owl ="&owl;"
+  xmlns:xsd = "&xsd;">
+
+  <owl:Ontology>
+    <owl:imports>
+      <owl:Ontology rdf:about="addressbook.rdf"/>
+    </owl:imports>
+  </owl:Ontology>
+
+
+<owl:Class rdf:ID="sources#Source">
+  <rdfs:label xml:lang="en">source</rdfs:label>
+  <rdfs:comment xml:lang="en">a source used by the application.</rdfs:comment>
+</owl:Class>
+
+
+<owl:Class rdf:ID="sources#Lang">
+  <rdfs:label xml:lang="en">lang</rdfs:label>
+  <rdfs:comment xml:lang="en">define a lang.</rdfs:comment>
+</owl:Class>
+<owl:ObjectProperty rdf:ID="sources#lang">
+  <domain rdf:resource="sources#Source"/>
+  <range rdf:resource="sources#Lang"/>
+  <rdfs:label xml:lang="en">source lang</rdfs:label>
+  <rdfs:comment xml:lang="en">the lang of a source.</rdfs:comment>
+</owl:ObjectProperty> 
+
+<owl:Class rdf:ID="sources#Theme">
+  <rdfs:label xml:lang="en">theme</rdfs:label>
+  <rdfs:comment xml:lang="en">define a theme.</rdfs:comment>
+</owl:Class>
+<owl:ObjectProperty rdf:ID="sources#theme">
+  <domain rdf:resource="sources#Source"/>
+  <range rdf:resource="sources#Theme"/>
+  <rdfs:label xml:lang="en">source theme</rdfs:label>
+  <rdfs:comment xml:lang="en">the theme of a source.</rdfs:comment>
+</owl:ObjectProperty> 
+
+<owl:ObjectProperty rdf:ID="sources#thumb">
+  <domain rdf:resource="sources#Source"/>
+  <rdfs:label xml:lang="en">thumbnail</rdfs:label>
+</owl:ObjectProperty> 
+
+<owl:ObjectProperty rdf:ID="sources#owner">
+  <domain rdf:resource="sources#Source"/>
+  <rdfs:label xml:lang="en">owner</rdfs:label>
+</owl:ObjectProperty>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<owl:Class rdf:ID="Item">
+  <rdfs:subClassOf rdf:resource="#Animal"/>
+  <rdfs:label xml:lang="en">male</rdfs:label>
+  <rdfs:comment xml:lang="en">an animal that produces gametes (spermatozoa) that can fertilize female gametes (ova).</rdfs:comment>
+  <rdfs:label xml:lang="fr">mâle</rdfs:label>
+  <rdfs:comment xml:lang="fr">individu appartenant au sexe qui possède le pouvoir de fécondation.</rdfs:comment>
+
+		<owl:disjointWith rdf:resource="#Female"/>
+
+
+		<owl:Restriction>
+		  <owl:onProperty rdf:resource="#hasSpouse" />
+		  <owl:hasValue rdf:resource="#Female" />
+		</owl:Restriction>
+	      <owl:Restriction>
+		<owl:onProperty rdf:resource="#hasSpouse" />
+		<owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+	      </owl:Restriction>
+
+</owl:Class>
+
+<owl:Class rdf:ID="Female">
+  <rdfs:subClassOf rdf:resource="#Animal"/>
+  <rdfs:label xml:lang="en">female</rdfs:label>
+  <rdfs:comment xml:lang="en"> an animal that produces gametes (ova) that can be fertilized by male gametes (spermatozoa).</rdfs:comment>
+  <rdfs:label xml:lang="fr">femelle</rdfs:label>
+  <rdfs:comment xml:lang="fr">animal appartenant au sexe apte à produire des ovules.</rdfs:comment>
+
+
+		<owl:Restriction>
+		  <owl:onProperty rdf:resource="#hasSpouse" />
+		  <owl:hasValue rdf:resource="#Male" />
+		</owl:Restriction>
+	      <owl:Restriction>
+		<owl:onProperty rdf:resource="#hasSpouse" />
+		<owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+	      </owl:Restriction>
+
+
+
+
+
+
+
+</owl:Class>
+
+<owl:Class rdf:ID="Man">
+  <rdfs:subClassOf rdf:resource="#Person"/>
+  <rdfs:subClassOf rdf:resource="#Male"/>
+  <rdfs:label xml:lang="en">man</rdfs:label>
+  <rdfs:comment xml:lang="en">an adult male person</rdfs:comment>
+  <rdfs:label xml:lang="fr">homme</rdfs:label>
+  <rdfs:comment xml:lang="fr">mâle adulte de l'espèce humaine.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:ID="Person">
+  <rdfs:subClassOf rdf:resource="#Animal"/>
+  <rdfs:label xml:lang="en">person</rdfs:label>
+  <rdfs:label xml:lang="en">human being</rdfs:label>
+  <rdfs:label xml:lang="en">human</rdfs:label>
+  <rdfs:comment xml:lang="en">a member of the human species</rdfs:comment>
+  <rdfs:label xml:lang="fr">personne</rdfs:label>
+  <rdfs:label xml:lang="fr">être humain</rdfs:label>
+  <rdfs:label xml:lang="fr">humain</rdfs:label>
+  <rdfs:label xml:lang="fr">homme</rdfs:label>
+  <rdfs:comment xml:lang="fr">un membre de l'espèce humaine.</rdfs:comment>
+
+
+
+
+	      <owl:Restriction>
+		<owl:onProperty rdf:resource="#hasParent" />
+		<owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
+	      </owl:Restriction>
+	      <owl:Restriction>
+		<owl:onProperty rdf:resource="#hasParent" />
+	        <owl:hasValue rdf:resource="#Woman" />
+	      </owl:Restriction>
+
+
+</owl:Class>
+
+<owl:Class rdf:ID="Lecturer">
+  <rdfs:subClassOf rdf:resource="#Person"/>
+  <rdfs:label xml:lang="en">lecturer</rdfs:label>
+  <rdfs:comment xml:lang="en">someone who lectures professionally</rdfs:comment>
+  <rdfs:label xml:lang="fr">professeur</rdfs:label>
+  <rdfs:comment xml:lang="fr">personne qui enseigne une discipline, une technique, un art.</rdfs:comment>
+</owl:Class>
+
+
+
+<owl:Class rdf:ID="Researcher">
+  <rdfs:subClassOf rdf:resource="#Person"/>
+  <rdfs:label xml:lang="en">researcher</rdfs:label>
+  <rdfs:label xml:lang="en">scientist</rdfs:label>
+  <rdfs:comment xml:lang="en">a person who devotes himself to doing research</rdfs:comment>
+  <rdfs:label xml:lang="fr">chercheur</rdfs:label>
+  <rdfs:label xml:lang="fr">scientifique</rdfs:label>
+  <rdfs:comment xml:lang="fr">personne adonnée à des recherches spécialisées.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:ID="Woman">
+  <rdfs:subClassOf rdf:resource="#Person"/>
+  <rdfs:subClassOf rdf:resource="#Female"/>
+  <rdfs:label xml:lang="en">woman</rdfs:label>
+  <rdfs:comment xml:lang="en">an adult female person</rdfs:comment>
+  <rdfs:label xml:lang="fr">femme</rdfs:label>
+  <rdfs:comment xml:lang="fr">femelle adulte de l'espèce humaine.</rdfs:comment>
+
+
+</owl:Class>
+
+<owl:TransitiveProperty rdf:about="#hasAncestor">
+  <rdfs:domain rdf:resource="#Animal"/>
+  <rdfs:range rdf:resource="#Animal"/>
+  <rdfs:label xml:lang="en">has for ancestor</rdfs:label>
+  <rdfs:comment xml:lang="en">relation between an animal and another animal from which it is descended.</rdfs:comment>
+  <rdfs:label xml:lang="fr">a pour ancêtre</rdfs:label>
+  <rdfs:comment xml:lang="fr">relation entre un animal et un autre animal duquel il descend.</rdfs:comment>
+</owl:TransitiveProperty>
+
+<owl:ObjectProperty rdf:ID="hasParent">
+  <rdfs:subPropertyOf rdf:resource="#hasAncestor"/>
+  <rdfs:label xml:lang="en">has for parent</rdfs:label>
+  <rdfs:comment xml:lang="en">relation between an animal and another animal which gave birth to it.</rdfs:comment>
+  <rdfs:label xml:lang="fr">a pour parent</rdfs:label>
+  <rdfs:comment xml:lang="fr">relation entre un animal et un autre animal qui lui a donné naissance.</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:ID="hasChild">
+  <rdfs:label xml:lang="en">has for child</rdfs:label>
+  <rdfs:comment xml:lang="en">relation between an animal and another animal to which it gave birth.</rdfs:comment>
+  <rdfs:label xml:lang="fr">a pour enfant</rdfs:label>
+  <rdfs:comment xml:lang="fr">relation entre un animal et un autre animal auquel il a donné naissance.</rdfs:comment>
+		<owl:inverseOf rdf:resource="#hasParent"/> 
+</owl:ObjectProperty> 
+
+<owl:ObjectProperty rdf:ID="hasFather">
+  <rdfs:subPropertyOf rdf:resource="#hasParent"/>
+  <rdfs:range rdf:resource="#Male"/>
+  <rdfs:label xml:lang="en">has for father</rdfs:label>
+  <rdfs:comment xml:lang="en">to have for parent a male.</rdfs:comment>
+  <rdfs:label xml:lang="fr">a pour père</rdfs:label>
+  <rdfs:comment xml:lang="fr">avoir pour parent un mâle.</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:ID="hasMother">
+  <rdfs:subPropertyOf rdf:resource="#hasParent"/>
+  <rdfs:range rdf:resource="#Female"/>
+  <rdfs:label xml:lang="en">has for mother</rdfs:label>
+  <rdfs:comment xml:lang="en">to have for parent a female.</rdfs:comment>
+  <rdfs:label xml:lang="fr">a pour mère</rdfs:label>
+  <rdfs:comment xml:lang="fr">avoir pour parent un femmelle.</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:ID="hasBrother">
+  <rdfs:domain rdf:resource="#Animal"/>
+  <rdfs:range rdf:resource="#Male"/>
+  <rdfs:label xml:lang="en">has for brother</rdfs:label>
+  <rdfs:comment xml:lang="en">relation with a male who has the same parents.</rdfs:comment>
+  <rdfs:label xml:lang="fr">a pour frère</rdfs:label>
+  <rdfs:comment xml:lang="fr">relation avec un mâle ayant les mêmes parents.</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:ID="hasSister">
+  <rdfs:domain rdf:resource="#Animal"/>
+  <rdfs:range rdf:resource="#Female"/>
+  <rdfs:label xml:lang="en">has for sister</rdfs:label>
+  <rdfs:comment xml:lang="en">relation with a female who has the same parents.</rdfs:comment>
+  <rdfs:label xml:lang="fr">a pour soeur</rdfs:label>
+  <rdfs:comment xml:lang="fr">relation avec une femelle ayant les mêmes parents.</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:SymmetricProperty rdf:ID="hasFriend">
+  <rdfs:domain rdf:resource="#Person"/>
+  <rdfs:range rdf:resource="#Person"/>
+  <rdfs:label xml:lang="en">has for friend</rdfs:label>
+  <rdfs:comment xml:lang="en">relation between a person and another person he or she knows well and regards with affection and trust.</rdfs:comment>
+  <rdfs:label xml:lang="fr">a pour ami</rdfs:label>
+  <rdfs:comment xml:lang="fr">relation entre une personne et une autre personne qui est l'objet d'un attachement privilégié.</rdfs:comment>
+</owl:SymmetricProperty>
+
+<owl:ObjectProperty rdf:ID="name">
+  <rdfs:label xml:lang="en">name</rdfs:label>
+  <rdfs:label xml:lang="fr">nom</rdfs:label>
+  <rdfs:comment xml:lang="en">designation of something.</rdfs:comment>
+  <rdfs:comment xml:lang="fr">désignation de quelque chose.</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:ID="shoesize">
+  <rdfs:domain rdf:resource="#Person"/>
+  <rdfs:label xml:lang="en">shoe size</rdfs:label>
+  <rdfs:label xml:lang="en">size</rdfs:label>
+  <rdfs:label xml:lang="fr">pointure</rdfs:label>
+  <rdfs:comment xml:lang="en">express in some way the approximate length of the shoes for a person.</rdfs:comment>
+  <rdfs:comment xml:lang="fr">taille, exprimée en points, des chaussures d'une personne.</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:ID="age">
+  <rdfs:label xml:lang="en">age</rdfs:label>
+  <rdfs:label xml:lang="fr">âge</rdfs:label>
+  <rdfs:comment xml:lang="en">complete existence duration.</rdfs:comment>
+  <rdfs:comment xml:lang="fr">durée complète d'existence.</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:ID="shirtsize">
+  <domain rdf:resource="#Person"/>
+  <rdfs:label xml:lang="en">shirt size</rdfs:label>
+  <rdfs:label xml:lang="en">size</rdfs:label>
+  <rdfs:label xml:lang="fr">taille de chemise</rdfs:label>
+  <rdfs:label xml:lang="fr">taille</rdfs:label>
+  <rdfs:comment xml:lang="en">express in some way the approximate dimensions of the shirts of a person.</rdfs:comment>
+  <rdfs:comment xml:lang="fr">dimensions approximatives des chemises portées par une personne.</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:ID="trouserssize">
+  <rdfs:domain rdf:resource="#Person"/>
+  <rdfs:label xml:lang="en">trousers size</rdfs:label>
+  <rdfs:label xml:lang="en">size</rdfs:label>
+  <rdfs:label xml:lang="fr">taille de pantalon</rdfs:label>
+  <rdfs:label xml:lang="fr">taille</rdfs:label>
+  <rdfs:comment xml:lang="en">express in some way the approximate dimensions of the trousers of a person.</rdfs:comment>
+  <rdfs:comment xml:lang="fr">dimensions approximatives des pantalons portés par une personne.</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:SymmetricProperty rdf:ID="hasSpouse">
+  <rdfs:domain rdf:resource="#Person"/>
+  <rdfs:range rdf:resource="#Person"/>
+  <rdfs:label xml:lang="en">has for spouse</rdfs:label>
+  <rdfs:label xml:lang="fr">est en ménage avec</rdfs:label>
+  <rdfs:comment xml:lang="en">a person's partner in marriage.</rdfs:comment>
+  <rdfs:comment xml:lang="fr">le partenaire d'une personne dans un mariage.</rdfs:comment>
+</owl:SymmetricProperty>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<owl:Class rdf:ID="Professor">
+  <rdfs:label xml:lang="en">Professor</rdfs:label>
+  <rdfs:comment xml:lang="en">someone who makes good courses</rdfs:comment>
+  <rdfs:label xml:lang="fr">professeur</rdfs:label>
+  <rdfs:comment xml:lang="fr">personne qui enseigne une discipline, une technique, un art.</rdfs:comment>
+	 <owl:intersectionOf rdf:parseType="Collection">
+            <owl:Class rdf:about="#Researcher"/>
+            <owl:Class rdf:about="#Lecturer"/>
+	 </owl:intersectionOf>
+</owl:Class>
+<owl:Class rdf:ID="Academic">
+	  <owl:unionOf rdf:parseType="Collection">
+            <owl:Class rdf:about="#Researcher"/>
+            <owl:Class rdf:about="#Lecturer"/>
+	  </owl:unionOf>
+</owl:Class>
+
+<owl:Class rdf:ID="Academic">
+  <owl:unionOf rdf:parseType="Collection">
+    <owl:Class rdf:about="#Researcher"/>
+    <owl:Class rdf:about="#Lecturer"/>
+  </owl:unionOf>
+</owl:Class>
+
+
+</rdf:RDF>
+
