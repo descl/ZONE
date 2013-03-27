@@ -74,7 +74,6 @@ public class App
     
     public static void main(String[] args) {
         //init the SVM
-        System.out.println(App.getCategories());
         
     	Map<String, SVMClassify> classiferMap = new HashMap<String, SVMClassify>();
         for( String cat : App.getCategories()){

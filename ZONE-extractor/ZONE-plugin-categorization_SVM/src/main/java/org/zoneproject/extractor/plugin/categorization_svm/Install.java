@@ -67,7 +67,6 @@ public class Install {
                 "    ?source <http://zone-project.org/model/sources#theme> ?theme. " +
                 "    FILTER(str(?theme) != \"\") " +
                 "}";
-        System.out.println(request);
         ResultSet sources = Database.runSPARQLRequest(request, ZoneOntology.GRAPH_SOURCES);
         while (sources.hasNext()) {
             QuerySolution result = sources.nextSolution();
@@ -79,9 +78,6 @@ public class Install {
             urlCategories.get(theme).add(uri);
         }
         
-        System.out.println(urlCategories);
-        
-
         //we clean the datas comming from previous learning phase
         Install.supressInstallfiles();
         
@@ -94,8 +90,6 @@ public class Install {
         for (Entry<String, ArrayList> urlCat : urlCategories.entrySet()){
             ArrayList<Item> itemsCat = new ArrayList<Item>();
             for(Object source : urlCat.getValue()){
-                System.out.println(source.toString());
-                System.out.println(source.getClass());
                 ArrayList<Item> aa = Database.getItemsFromSource(source.toString());
                 itemsCat.addAll(aa);
             }
@@ -164,7 +158,6 @@ public class Install {
         };
             File installDir = new File(Install.class.getResource("/").getFile());
 
-            
             for (String fileName : installDir.list(filefilter)) {
                 Logger.getLogger(Install.class.getName()).log(Level.INFO, null, "delete datas file "+installDir+"/"+fileName);
                 new File(installDir+"/"+fileName).delete();
