@@ -25,14 +25,19 @@ package org.zoneproject.extractor.plugin.categorization_svm.model;
  * THE SOFTWARE.
  * #L%
  */
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Corpus {
 
@@ -45,14 +50,21 @@ public class Corpus {
         //Corpus c = new Corpus();
         if (allTexts == null) {
             allTexts = new ArrayList<Text>();
+            Corpus.readCorpusFromFile();
         }
         return allTexts;
 
     }
 
-    public static void writeCorpusIntoFile() throws IOException {
+    public static void writeCorpusIntoFile(){
         try {
-            FileOutputStream fos = new FileOutputStream("resources/Corpus");
+            URL outFile = Corpus.class.getResource("/Corpus.dat");
+            if(outFile == null) {
+                File f = new File(Corpus.class.getResource("/").getPath()+"Corpus.dat");
+                f.createNewFile();
+                outFile = Corpus.class.getResource("/Corpus.dat");
+            } 
+            FileOutputStream fos = new FileOutputStream(new File(outFile.toURI()));
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             try {
                 // sérialisation : écriture de l'objet dans le flux de sortie
@@ -68,18 +80,19 @@ public class Corpus {
                     fos.close();
                 }
             }
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (URISyntaxException | IOException e) {
+            Logger.getLogger(Corpus.class.getName()).log(Level.SEVERE, null, e);
         }
 
     }
 
     @SuppressWarnings("unchecked")
-    public static void readCorpusFromFile() {
+    private static void readCorpusFromFile(){
         try {
+            if(Corpus.class.getResource("/Corpus.dat") == null)
+                return;
             // ouverture d'un flux d'entrée depuis le fichier "personne.serial"
-            FileInputStream fis = new FileInputStream("resources/Corpus");
+            FileInputStream fis = new FileInputStream(new File(Corpus.class.getResource("/Corpus.dat").toURI()));
             // création d'un "flux objet" avec le flux fichier
             ObjectInputStream ois = new ObjectInputStream(fis);
             try {
@@ -93,7 +106,7 @@ public class Corpus {
                     fis.close();
                 }
             }
-        } catch (IOException ioe) {
+        } catch (IOException | URISyntaxException ioe) {
             ioe.printStackTrace();
         } catch (ClassNotFoundException cnfe) {
             cnfe.printStackTrace();

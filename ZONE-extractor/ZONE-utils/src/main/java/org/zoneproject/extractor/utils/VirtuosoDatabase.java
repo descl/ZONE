@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import virtuoso.jena.driver.VirtGraph;
 import virtuoso.jena.driver.VirtModel;
 import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 
@@ -61,7 +62,9 @@ public abstract class VirtuosoDatabase {
     
     public static Model getStore(){
         if(st == null){
-            st = VirtModel.openDatabaseModel(ZONE_URI, VIRTUOSO_SERVER, VIRTUOSO_USER, VIRTUOSO_PASS);
+            VirtGraph vgraph = new VirtGraph(VIRTUOSO_SERVER, VIRTUOSO_USER, VIRTUOSO_PASS);
+            vgraph.setReadFromAllGraphs(true);
+            st = new VirtModel(vgraph);
         }
         return st;
     }
@@ -163,7 +166,6 @@ public abstract class VirtuosoDatabase {
         }
         
         String request = "SELECT ?uri WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title "+requestPlugs+". OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined.  } FILTER (!bound(?pluginDefined)) }";
-        logger.info(request);
         ResultSet results = runSPARQLRequest(request);
 
         while (results.hasNext()) {
@@ -178,7 +180,7 @@ public abstract class VirtuosoDatabase {
      * @param pluginURI the plugin URI
      * @return the items
      */
-    public static Item[] getItemsFromSource(String source){
+    public static ArrayList<Item> getItemsFromSource(String source){
         ArrayList<Item> items = new ArrayList<Item>();
         String requestPlugs ="";
         
@@ -189,7 +191,7 @@ public abstract class VirtuosoDatabase {
             QuerySolution result = results.nextSolution();
             items.add(getOneItemByURI(result.get("?uri").toString()));
         }
-        return items.toArray(new Item[items.size()]);
+        return items;
     }
 
     /**

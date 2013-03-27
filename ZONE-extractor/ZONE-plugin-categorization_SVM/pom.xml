@@ -113,6 +113,19 @@
         <directory>src/test/resources/</directory>
       </testResource>
     </testResources>
+    <resources>
+      <resource>
+        <directory>resources/</directory>
+        
+        <includes>
+          <include>*.dat</include>
+          <include>*.tagger</include>
+          <include>*.txt</include>
+          <include>*.props</include>
+        </includes>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
   </build>
   
   <dependencies>

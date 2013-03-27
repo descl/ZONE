@@ -44,44 +44,31 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.zoneproject.extractor.plugin.categorization_svm.svm.SVMLearn;
 
 public class TextExtraction {
 
-    //public static final int FILE_SIZE = 1000000;
-     /*private static String readFileAsString(String filePath)
-            throws java.io.IOException {
-
-        StringBuffer fileData = new StringBuffer(FILE_SIZE);
-        BufferedReader reader = new BufferedReader(new FileReader(filePath));
-        char[] buf = new char[1024];
-        int numRead = 0;
-        while ((numRead = reader.read(buf)) != -1) {
-            String readData = String.valueOf(buf, 0, numRead);
-            fileData.append(readData);
-            buf = new char[1024];
+        private static StanfordCoreNLP pipeline;
+        static { 
+        	Properties props = new Properties();
+    		//props.put("pos.model", "/resources/french.tagger");
+                props.put("pos.model", TextExtraction.class.getResource("/")+"../../resources/french.tagger");
+    		props.put("annotators", "tokenize, ssplit, pos");
+    		pipeline = new StanfordCoreNLP(props);
         }
-        reader.close();
-        return fileData.toString();
-    }*/
-
+        
 	private String getLemmaFromMot(String mot){
-		mot=mot.toLowerCase();
-  	  if(mot.length()>2 && mot.charAt(1)== '\''){
-  		  mot=mot.substring(2);
-  	  }
-  	  
-  	  String lemma=LemmeDictionnaire.getLemmaMap().get(mot);
-  	  if(lemma == null){
-  		  return null;
-  	  }
-  	  if (lemma.equals("=")){
-  		  lemma = mot;
-  	  }
-  	  
-  	  return lemma;
-	}
-	
-	
+            mot=mot.toLowerCase();
+            if(mot.length()>2 && mot.charAt(1)== '\''){
+                mot=mot.substring(2);
+            }
+            
+            //search for the lemmatized word
+            return LemmeDictionnaire.getLematizedWord(mot);
+        }
+
 	public boolean isStopWorld(String lemma) throws IOException{
 
 		
@@ -89,8 +76,7 @@ public class TextExtraction {
 			return true;
 		}
 		   
-		else
-		{
+		else{
 			return false;
 		}
 		
@@ -99,17 +85,12 @@ public class TextExtraction {
 	
     public void extractLemmaFromText(Text file) {
     	try{
-        	Properties props = new Properties();
-    		props.put("pos.model", "resources/french.tagger");
-    		props.put("annotators", "tokenize, ssplit, pos");
-    		StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
-    		
-    		// read some text in the text variable
-                String text = file.item.concat();
-                String[] textElements = file.item.getElements("http://zone-project.org/model/plugins/ExtractArticlesContent#result");
-                if(textElements.length > 0) {
-                    text += "\n"+textElements;
-                }
+            // read some text in the text variable
+            String text = file.item.concat();
+            String[] textElements = file.item.getElements("http://zone-project.org/model/plugins/ExtractArticlesContent#result");
+            if(textElements.length > 0) {
+                text += "\n"+textElements[0];
+            }
 
             // create an empty Annotation just with the given text
             Annotation document = new Annotation(text);
@@ -131,7 +112,7 @@ public class TextExtraction {
                 // a CoreLabel is a CoreMap with additional token-specific methods
                 for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
 
-                	String mot = token.get(ValueAnnotation.class);
+                    String mot = token.get(ValueAnnotation.class);
                     String lemma = getLemmaFromMot(mot);
                     if(lemma == null){
                     	continue;
@@ -153,7 +134,6 @@ public class TextExtraction {
 
 
             }
-
             file.nbToTMots = nbLemmainText;
             Set<String> keys = textLemmaMap.keySet();
             for (String iter : keys) {
@@ -164,8 +144,8 @@ public class TextExtraction {
                 file.mots.add(mot);
             }
         }
-    	catch (IOException e){
-    		
+    	catch ( IOException e){
+    		Logger.getLogger(SVMLearn.class.getName()).log(Level.SEVERE, null, e);
     	}
     	
     }

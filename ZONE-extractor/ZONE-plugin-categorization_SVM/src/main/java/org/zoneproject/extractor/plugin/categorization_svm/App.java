@@ -26,10 +26,17 @@ package org.zoneproject.extractor.plugin.categorization_svm;
  * #L%
  */
 
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Corpus;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Dictionnaire;
 import org.zoneproject.extractor.plugin.categorization_svm.model.LemmeDictionnaire;
@@ -49,6 +56,7 @@ import org.zoneproject.extractor.utils.ZoneOntology;
  */
 public class App 
 {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_SVM;
     public static String PLUGIN_RESULT_URI = ZoneOntology.PLUGIN_SVM_RES;
     
@@ -65,40 +73,40 @@ public class App
     
     
     public static void main(String[] args) {
-    	
-        
         //init the SVM
+        System.out.println(App.getCategories());
+        
     	Map<String, SVMClassify> classiferMap = new HashMap<String, SVMClassify>();
-    	classiferMap.put("informatique", new SVMClassify("informatique"));
-    	classiferMap.put("sport", new SVMClassify("sport"));
-    	classiferMap.put("sante", new SVMClassify("medecine"));
-    	classiferMap.put("economie", new SVMClassify("economie"));
-    	classiferMap.put("science", new SVMClassify("science"));
-    	
-    	        
+        for( String cat : App.getCategories()){
+            classiferMap.put(cat, new SVMClassify(cat));
+        }
+
     	for (Entry<String, SVMClassify> cm : classiferMap.entrySet()){
     		cm.getValue().readModel();    		
     	}
-        
-        Dictionnaire.readDictionnaireFromFile();
-        Corpus.readCorpusFromFile();
-        //prepare dictionnaire des lemmes
-        LemmeDictionnaire.readFileToMap();
-        //preparer les mot d'arrêts
-        StopWords.readFileToList();
 
         TextExtraction Te = new TextExtraction();
-   
-        
+
         //retreive all items not annotated
-        //set the items number limit
-        //int limit = 100;
-        //Item[] itemsNotAnnotated = getNotCategorizeItems(limit);
-        Item[] itemsNotAnnotated = Database.getItemsFromSource("http://www.france24.com/fr/la_une/rss");
-        System.out.println("Number of items not annotated:"+itemsNotAnnotated.length);
+        ArrayList<Item> itemsNotAnnotated = new ArrayList<Item>();
+        String request = "SELECT ?uri WHERE{"
+                + "?uri <http://purl.org/rss/1.0/title> ?title. "
+                + "?uri <"+ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT+"> ?dependance. "
+                + "?uri <http://purl.org/rss/1.0/source> ?source. "
+                + "GRAPH <"+ZoneOntology.GRAPH_SOURCES+"> {?source <"+ZoneOntology.SOURCES_THEME+"> ?theme. }"
+                + "OPTIONAL {?uri <"+PLUGIN_URI+"> ?pluginDefined.  "
+                + "} FILTER (!bound(?pluginDefined) && str(?theme) = \"\") }";
+        logger.info(request);
+        ResultSet results = Database.runSPARQLRequest(request);
+
+        while (results.hasNext()) {
+            QuerySolution result = results.nextSolution();
+            itemsNotAnnotated.add(Database.getOneItemByURI(result.get("?uri").toString()));
+        }
         
+        logger.info("Number of items not annotated:"+itemsNotAnnotated.size());
+
         for(Item item : itemsNotAnnotated){
-            String itemContent = item.concat();
             //you should run classification on itemContent
             Text t = new Text(item);
             Te.extractLemmaFromText(t);
@@ -114,18 +122,30 @@ public class App
                     newAnnotation = new Prop(ZoneOntology.PLUGIN_SVM_RES,cm.getKey(),true);
                 }
             }
-            if(d != -100)
-                VirtuosoDatabase.addAnnotation(item.getUri(), newAnnotation);
-            
-            //System.out.println("the item: "+itemContent+"\n "+t+"\n "+ newAnnotation+"\n");
+            if(d != -100){
+                Database.addAnnotation(item.getUri(), newAnnotation);
+            }
+            Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
         }
-        
     }
     
     public static Item[] getAllItems(){
-        return VirtuosoDatabase.getItemsNotAnotatedForOnePlugin("");
+        return Database.getItemsNotAnotatedForOnePlugin("");
     }
     public static Item[] getNotCategorizeItems(int limit){
         return VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI, limit);
+    }
+    private static String[] getCategories() {
+        FilenameFilter filefilter = new FilenameFilter() {
+            public boolean accept(File dir, String name) {
+                return name.endsWith(".dat") && name.startsWith("svm_model");
+            }
+        };
+        File installDir = new File(Install.class.getResource("/").getFile());
+        ArrayList <String> categories= new ArrayList<String>();
+        for (String fileName : installDir.list(filefilter)) {
+            categories.add(fileName.substring("svm_model".length()+1,fileName.length() -  ".dat".length()));
+        }
+        return categories.toArray(new String[categories.size()]);
     }
 }

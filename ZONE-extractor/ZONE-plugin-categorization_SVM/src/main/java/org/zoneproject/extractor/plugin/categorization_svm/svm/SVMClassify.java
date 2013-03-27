@@ -26,6 +26,7 @@ package org.zoneproject.extractor.plugin.categorization_svm.svm;
  * #L%
  */
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 
 import jnisvmlight.FeatureVector;
@@ -43,14 +44,16 @@ public class SVMClassify {
     private String categorie;
 	private SVMLightModel model;
 
-    public void readModel() {
+    public void readModel(){
         try {
-            model = SVMLightModel.readSVMLightModelFromURL(new java.io.File("resources/jni_model_"+categorie+".dat").toURI().toURL());
+            model = SVMLightModel.readSVMLightModelFromURL(SVMClassify.class.getResource("/svm_model_"+categorie+".dat").toURI().toURL());
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (ParseException e) {
             // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (URISyntaxException e){
             e.printStackTrace();
         }
     }

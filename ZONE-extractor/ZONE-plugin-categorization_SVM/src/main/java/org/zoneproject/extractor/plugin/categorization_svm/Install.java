@@ -25,21 +25,20 @@ package org.zoneproject.extractor.plugin.categorization_svm;
  * THE SOFTWARE.
  * #L%
  */
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Corpus;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Dictionnaire;
-import org.zoneproject.extractor.plugin.categorization_svm.model.LemmeDictionnaire;
 import org.zoneproject.extractor.plugin.categorization_svm.model.StopWords;
 import org.zoneproject.extractor.plugin.categorization_svm.model.Text;
 import org.zoneproject.extractor.plugin.categorization_svm.preprocessing.TextExtraction;
@@ -48,6 +47,7 @@ import org.zoneproject.extractor.plugin.categorization_svm.svm.SVMLearn;
 import org.zoneproject.extractor.plugin.categorization_svm.svm.TrainingDataPreparation;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
+import org.zoneproject.extractor.utils.ZoneOntology;
 
 /**
  *
@@ -58,20 +58,32 @@ import org.zoneproject.extractor.utils.Item;
     * RUN the installer:  mvn install -pl ZONE-plugin-categorization_SVM
  */
 public class Install {
-    public static void main(String[] args) {
-        Map<String, String> UrlCategories = new HashMap<String, String>();
-        UrlCategories.put("informatique", "http://www.france24.com/fr/informatique/rss");
-        UrlCategories.put("sport", "http://fr.news.yahoo.com/rss/sports");
-        UrlCategories.put("medecine", "http://www.france24.com/fr/sante/rss");
-        UrlCategories.put("economie", "http://www.france24.com/fr/economie/rss");
-        UrlCategories.put("science", "http://www.france24.com/fr/science/rss");
-       // UrlCategories.put("science", "http://fr.news.yahoo.com/monde/?format=rss");
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
+    public static void main(String[] args) throws IOException {
+        Map<String, ArrayList> urlCategories = new HashMap<String, ArrayList>();
+        String request =
+                " Select DISTINCT ?source ?theme { " +
+                "    ?source rdf:type  <http://zone-project.org/model/sources#Source>.  " +
+                "    ?source <http://zone-project.org/model/sources#theme> ?theme. " +
+                "    FILTER(str(?theme) != \"\") " +
+                "}";
+        System.out.println(request);
+        ResultSet sources = Database.runSPARQLRequest(request, ZoneOntology.GRAPH_SOURCES);
+        while (sources.hasNext()) {
+            QuerySolution result = sources.nextSolution();
+            String theme = result.get("?theme").toString();
+            String uri = result.get("?source").toString();
+            if(!urlCategories.containsKey(theme)){
+                urlCategories.put(theme, new ArrayList<String>());
+            }
+            urlCategories.get(theme).add(uri);
+        }
         
-        //prepare dictionnaire des lemmes
-        LemmeDictionnaire.readFileToMap();
+        System.out.println(urlCategories);
         
-        //preparer les mot d'arrêts
-        StopWords.readFileToList();
+
+        //we clean the datas comming from previous learning phase
+        Install.supressInstallfiles();
         
         //we start the learning process
         TextExtraction Te = new TextExtraction();
@@ -79,9 +91,16 @@ public class Install {
         Map<String, List<Text>> CatTextMap = new HashMap<String, List<Text>>();
         
         //extraction des données
-        for (Entry<String, String> urlCat : UrlCategories.entrySet()){
-        	 Item[] itemsCat = Database.getItemsFromSource(urlCat.getValue());
-        	 System.out.println(itemsCat.length+" corresponding to "+ urlCat.getKey() +" category");
+        for (Entry<String, ArrayList> urlCat : urlCategories.entrySet()){
+            ArrayList<Item> itemsCat = new ArrayList<Item>();
+            for(Object source : urlCat.getValue()){
+                System.out.println(source.toString());
+                System.out.println(source.getClass());
+                ArrayList<Item> aa = Database.getItemsFromSource(source.toString());
+                itemsCat.addAll(aa);
+            }
+            
+            logger.info(itemsCat.size()+" corresponding to "+ urlCat.getKey() +" category");
 
              //retreive the news content for SVM
         	 List<Text> texts = new ArrayList<Text>();
@@ -120,9 +139,9 @@ public class Install {
         	
         	for (Entry<String, List<Text>> catTextsInternal: CatTextMap.entrySet()){
             	
-        		for (Text t : catTextsInternal.getValue()){
+                    for (Text t : catTextsInternal.getValue()){
             		
-        			if (catTextsInternal.getKey() == catTexts.getKey()){
+        		if (catTextsInternal.getKey() == catTexts.getKey()){
             			t.categorie = 1;
             		}
             		else{
@@ -130,62 +149,25 @@ public class Install {
             		}
         			
             		svmL.addFeaturedText(t);
-            	}
+                    }
         	}
         	svmL.learn();
 
         }
-        
-        
-   /*     //get all items corresponding to the sport category
-        Item[] itemsSport = Database.getItemsFromSource("http://fr.news.yahoo.com/rss/sports");
-        System.out.println(itemsSport.length+" corresponding to sport category");
-        
-        //get all item corresponding to an other category
-        Item[] otherItems = Database.getItemsFromSource("http://fr.news.yahoo.com/monde/?format=rss");
-        System.out.println("Number of items for others:"+otherItems.length);
-        
+    }
 
-
-        SVMLearn svmL = new SVMLearn();
-
-        //retreive the news content for SVM
-        for(Item i: itemsSport) {
-            Text t = new Text(i,1,true);
-            Corpus.getCorpus().add(t);
-            try {
-                Te.extractLemmaFromText(t);
-            } catch (Exception ex) {
-               Logger.getLogger(Install.class.getName()).log(Level.WARNING, null, ex);
+    private static void supressInstallfiles() {
+        FilenameFilter filefilter = new FilenameFilter() {
+            public boolean accept(File dir, String name) {
+                return name.endsWith(".dat");
             }
-        }
+        };
+            File installDir = new File(Install.class.getResource("/").getFile());
 
-        for(Item i: otherItems) {
-            Text t = new Text(i,-1,true);
-            Corpus.getCorpus().add(t);
-            try {
-                Te.extractLemmaFromText(t);
-            } catch (Exception ex) {
-                Logger.getLogger(Install.class.getName()).log(Level.WARNING, null, ex);
+            
+            for (String fileName : installDir.list(filefilter)) {
+                Logger.getLogger(Install.class.getName()).log(Level.INFO, null, "delete datas file "+installDir+"/"+fileName);
+                new File(installDir+"/"+fileName).delete();
             }
-        }
-        
-        //get the weights for each words 
-        for (Text t: Corpus.getCorpus()){
-            TF_IDF.computeWeight(t);
-            TrainingDataPreparation.prepareFeatureVector(t);
-            svmL.addFeaturedText(t);
-        }
-        
-        //save the corpus and dictionary
-        try {
-            Dictionnaire.writeDictionnaireIntoFile();
-            Corpus.writeCorpusIntoFile();
-        } catch (IOException ex) {
-            Logger.getLogger(Install.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //start svm model generation
-        svmL.learn();*/
     }
 }

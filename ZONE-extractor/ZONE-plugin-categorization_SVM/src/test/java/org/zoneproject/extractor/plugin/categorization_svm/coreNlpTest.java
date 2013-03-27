@@ -152,15 +152,15 @@ public class coreNlpTest
 			    }
 			    File dirReferencedCocoa = new File("svm/References/money-fx");
 			    int x= Verification.countTextInDirectory(dirReferencedCocoa);
-				System.out.println("ref "+ x);
+				logger.info("ref "+ x);
 				int z= Verification.countTextInDirectory(dirClassedCocoa);
-				System.out.println("classed "+ z);
+				logger.info("classed "+ z);
 				int y=Verification.countTextCorrectInDirectory(dirReferencedCocoa, dirClassedCocoa);
-				System.out.println("correct"+ y);
+				logger.info("correct"+ y);
 				double precision = Verification.computePrecision(y,z);
 				double recall = Verification.computeRecall(y, x);
-				System.out.println("precision=" + precision);
-				System.out.println("recall=" + recall);
+				logger.info("precision=" + precision);
+				logger.info("recall=" + recall);
 		   
         }catch(Exception e){
                 throw e;

@@ -4,3 +4,6 @@ mvn exec:java -pl ZONE-extractor-start
 
 In order to add the licence headers:
 mvn license:update-file-header
+
+In order to have SVM classification working 
+export LD_LIBRARY_PATH=/home/cdesclau/Work/v2/ZONE-extractor/ZONE-plugin-categorization_SVM/local-repo/jnisvmlight/jnisvmlight/1.0/

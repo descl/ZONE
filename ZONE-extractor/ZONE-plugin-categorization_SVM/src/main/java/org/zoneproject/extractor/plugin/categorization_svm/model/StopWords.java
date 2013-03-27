@@ -29,6 +29,7 @@ package org.zoneproject.extractor.plugin.categorization_svm.model;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -46,20 +47,20 @@ public class StopWords {
 	public static List<String> getStopWordList(){
 		if(StopWordList == null){
 			StopWordList = new ArrayList<String>();
+                        StopWords.readFileToList();
 		}
 		
 		return StopWordList;
 	}
 	
 	
-public static void readFileToList(){
+        private static void readFileToList(){
 		
 		
 		try{
-			StopWords.getStopWordList();
 			  // Open the file that is the first 
 			  // command line parameter
-			  FileInputStream fstream = new FileInputStream("resources/FR_StopWords");
+			  FileInputStream fstream = new FileInputStream(new File(StopWords.class.getResource("/french_stopwords.txt").toURI()));
 			  // Get the object of DataInputStream
 			  DataInputStream in = new DataInputStream(fstream);
 			  BufferedReader br = new BufferedReader(new InputStreamReader(in));
