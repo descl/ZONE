@@ -1,5 +1,7 @@
 ZONEWatcher::Application.routes.draw do
 
+  resources :test_descls
+
   #Twitter managment
   get "twitter/addtimeline", :action => "add_timeline", :controller => "twitter"
   get "twitter", :action => "index", :controller => "twitter"
@@ -10,7 +12,8 @@ ZONEWatcher::Application.routes.draw do
 
   match 'sources/:id/edit' => 'sources#edit', :constraints  =>  {:id =>  /.*/ }
   match 'sources/:id/delete' => 'sources#destroy', :constraints  =>  {:id =>  /.*/ }
-
+  match 'sources/new' => 'sources#new', :constraints  =>  {:id =>  /.*/ }
+  match 'sources/:id' => 'sources#update', :constraints  =>  {:id =>  /.*/ }
   resources :sources
 
 

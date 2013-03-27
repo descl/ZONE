@@ -28,14 +28,14 @@
     <div class="control-group">
       <label for="ajax-combo" class="control-label">Lang:</label>
       <div class="controls">
-        <div id="ajax-container-theme"></div>
+        <div id="ajax-container-lang"></div>
       </div>
     </div>
 
     <div class="control-group">
       <label for="ajax-combo" class="control-label">Theme:</label>
       <div class="controls">
-        <div id="ajax-container-lang"></div>
+        <div id="ajax-container-theme"></div>
       </div>
     </div>
 
@@ -49,14 +49,14 @@
         name: "theme",
         id: "source_theme",
         container: "#ajax-container-theme",
-        url: "/sources/langs.json",
+        url: "/sources/themes.json?selected=<%=@source.theme%>",
         suffix: ""
     });
     $.sexyCombo.create({
         name: "lang",
         id: "ajax-container-lang",
         container: "#ajax-container-lang",
-        url: "/sources/themes.json",
+        url: "/sources/langs.json?selected=<%=@source.lang%>",
         suffix: ""
 
     });

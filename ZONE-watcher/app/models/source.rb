@@ -7,7 +7,7 @@ class Source
   require 'rubygems'
   require 'rest_client'
 
-  attr_accessor :uri, :label, :lang, :licence, :owner, :thumb, :theme, :attrs
+  attr_accessor :id, :uri, :label, :lang, :licence, :owner, :thumb, :theme, :attrs
   attr_reader   :errors
 
   validates_format_of :uri, :with => URI::regexp(%w(http https))
@@ -44,6 +44,7 @@ class Source
     require 'uri'
 
     uri = CGI.unescape(URI.escape(CGI.unescape(param)))
+    id = uri
     
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT ?prop ?value
@@ -73,6 +74,7 @@ class Source
 
   def initialize(uri="",attributes = {})  
     @uri = uri
+    @id = uri
     attributes.each do |name, value|  
       send("#{name}=", value)  
     end
@@ -85,7 +87,8 @@ class Source
   end
   
   def persisted?
-    false
+    return false if @uri == nil
+    return Source.find(@uri.to_s) != nil
   end 
   
   def save

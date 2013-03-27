@@ -40,10 +40,12 @@ class SourcesController < ApplicationController
   end
 
   def langs
-    @langs = FilterText.all(:prop => ZoneOntology::SOURCES_LANG)
+    @langs = Filter.all(:prop => ZoneOntology::SOURCES_LANG)
     @result = []
     @langs.each{|p|
-      @result << {'text' => p.value, :value => p.value}
+      item =  {'text' => p.value, :value => p.value}
+      item[:selected] = true if item[:value] == params[:selected]
+      @result << item
     }
 
     respond_to do |format|
@@ -57,7 +59,9 @@ class SourcesController < ApplicationController
     @themes = Filter.all(:prop => ZoneOntology::SOURCES_THEME)
     @result = []
     @themes.each{|p|
-      @result << {'text' => p.value, :value => p.value}
+      item =  {'text' => p.value, :value => p.value}
+      item[:selected] = true if item[:value] == params[:selected]
+      @result << item
     }
     respond_to do |format|
       format.json { render json: @result }
@@ -76,7 +80,7 @@ class SourcesController < ApplicationController
 
   # POST /sources
   # POST /sources.json
-  def create
+  def create(update=false)
     if !user_signed_in?
       flash[:error] = 'You are not logged in'
       redirect_to :back
@@ -90,7 +94,12 @@ class SourcesController < ApplicationController
     })
     respond_to do |format|
       if @source.valid? && @source.save
-       format.html { redirect_to @source, notice: 'Source was successfully created.' }
+        if update == true
+          message = 'Source was successfully updated.'
+        else
+          message = 'Source was successfully created.'
+        end
+        format.html { redirect_to "/sources", notice: message }
         format.json { render json: @source, status: :created, location: @source }
       else
         format.html { render action: "new" }
@@ -108,16 +117,9 @@ class SourcesController < ApplicationController
       return
     end
     @source = Source.find(params[:id])
-    #TODO: should use the destroy method
-    respond_to do |format|
-      if @source.update_attributes(params[:source])
-        format.html { redirect_to @source, notice: 'Source was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @source.errors, status: :unprocessable_entity }
-      end
-    end
+
+    @source.destroy
+    return create(true)
   end
 
   # DELETE /sources/1
