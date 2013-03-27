@@ -53,6 +53,8 @@ class Item# < ActiveRecord::Base
     end
     
     item = Item.new(uri, params["http://purl.org/rss/1.0/title"])
+    item.date = params["http://purl.org/rss/1.0/pubDate"] if params["http://purl.org/rss/1.0/pubDate"] != nil
+    item.description = params["http://purl.org/rss/1.0/description"] if params["http://purl.org/rss/1.0/description"] != nil
     item.props = params
     return item
   end
