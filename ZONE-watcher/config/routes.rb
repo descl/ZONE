@@ -9,6 +9,7 @@ ZONEWatcher::Application.routes.draw do
   #Sources managment
   get "sources/langs", :action => "langs", :controller => "sources"
   get "sources/themes", :action => "themes", :controller => "sources"
+  match "sources/uploadopml" => "sources#uploadopml"
 
   match 'sources/:id/edit' => 'sources#edit', :constraints  =>  {:id =>  /.*/ }
   match 'sources/:id/delete' => 'sources#destroy', :constraints  =>  {:id =>  /.*/ }

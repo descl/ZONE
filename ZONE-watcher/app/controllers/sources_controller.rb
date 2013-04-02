@@ -2,7 +2,14 @@ class SourcesController < ApplicationController
   # GET /sources
   # GET /sources.json
   def index
-    @sources = Source.all
+    if !user_signed_in?
+      flash[:error] = 'You are not logged in'
+      redirect_to :back
+      return
+    end
+    @sources = Source.all(
+        "?uri <#{ZoneOntology::SOURCES_OWNER}> ?owner.
+         Filter(str(?owner) = \"#{current_user.id}\")")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -131,6 +138,30 @@ class SourcesController < ApplicationController
     else
       flash[:error] = 'Problem occured while removing source'
     end
+    respond_to do |format|
+      format.html { redirect_to sources_url }
+      format.json { head :no_content }
+    end
+  end
+
+  def uploadopml
+    require 'rexml/document'
+    require 'opml'
+    xml =  params['upload']['datafile'].read
+    opml = OpmlSaw::Parser.new(xml)
+    opml.parse
+    opml.feeds.each do |r|
+      if r[:xml_url] == nil
+        next;
+      end
+
+      s = Source.new(r[:xml_url],{
+        :label => r[:title],
+        :owner => current_user.id
+      })
+      s.save
+    end
+    flash[:notice] = 'Sources added'
     respond_to do |format|
       format.html { redirect_to sources_url }
       format.json { head :no_content }
