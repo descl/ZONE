@@ -16,9 +16,8 @@ class Item# < ActiveRecord::Base
     SELECT ?concept ?title
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     WHERE {
-      ?concept
-        RSS:title ?title;
-        RSS:pubDateTime ?pubDateTime.
+      ?concept RSS:title ?title.
+      OPTIONAL { ?concept RSS:pubDateTime ?pubDateTime}.
       #{param}
       
     }ORDER BY DESC(?pubDateTime) LIMIT #{per_page} OFFSET #{start}"
