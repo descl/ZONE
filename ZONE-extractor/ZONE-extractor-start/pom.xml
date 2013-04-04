@@ -56,5 +56,11 @@
       <version>1.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>org.zoneproject.extractor</groupId>
+      <artifactId>ZONE-plugin-categorization_SVM</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 </project>
