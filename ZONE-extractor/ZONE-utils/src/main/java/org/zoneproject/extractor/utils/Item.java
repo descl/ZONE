@@ -53,7 +53,8 @@ import org.xml.sax.SAXException;
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class Item implements Serializable{
-    private static final long serialVersionUID = 1L;
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(Item.class);
+private static final long serialVersionUID = 1L;
     public String uri;
     public ArrayList<Prop> values;
 
@@ -118,16 +119,19 @@ public class Item implements Serializable{
             values.add(new Prop(RSS.link,link,true));
             values.add(new Prop(RSS.title,title));
             values.add(new Prop(RSS.description,Jsoup.parse(description).text()));
-            values.add(new Prop(RSS.getURI()+"pubDate",datePublication.toString()));
-            values.add(new Prop(RSS.getURI()+"pubDateTime",Long.toString(datePublication.getTime())));
-
+            if(datePublication != null){
+                values.add(new Prop(RSS.getURI()+"pubDate",datePublication.toString()));
+                values.add(new Prop(RSS.getURI()+"pubDateTime",Long.toString(datePublication.getTime())));
+            }
             for(Object o : enclosure){
                 SyndEnclosureImpl e = (SyndEnclosureImpl)o;
                 values.add(new Prop(RSS.image,e.getUrl(),true));
             }
             values.add(new Prop("http://purl.org/rss/1.0/source", source,false));
         }
-        catch(NullPointerException e){}
+        catch(NullPointerException e){
+            logger.error(e);
+        }
         
     }
     
