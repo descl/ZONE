@@ -26,8 +26,12 @@ package org.zoneproject.extractor.utils;
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class ZoneOntology {
-    public static String SOURCES_PREFIX = "http://zone-project.org/model/sources";
-    public static String PLUGIN_PREFIX = "http://zone-project.org/model/plugins";
+    public static String PREFIX = "http://zone-project.org/";
+    public static String SOURCES_PREFIX = PREFIX+"model/sources";
+    public static String PLUGIN_PREFIX  = PREFIX+"model/plugins";
+    
+    
+    public static String ANNOTATION = PREFIX+"/model/annotation";
     
     public static String PLUGIN_EXTRACT_ARTICLES_CONTENT =  PLUGIN_PREFIX+"/ExtractArticlesContent";
     public static String PLUGIN_EXTRACT_ARTICLES_CONTENT_RES = PLUGIN_EXTRACT_ARTICLES_CONTENT+"#result";

@@ -122,7 +122,7 @@ public class App
                 }
             }
             if(d != -100){
-                Database.addAnnotation(item.getUri(), newAnnotation);
+                Database.addAnnotation(item.getUri(), newAnnotation,true);
             }
             Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
         }

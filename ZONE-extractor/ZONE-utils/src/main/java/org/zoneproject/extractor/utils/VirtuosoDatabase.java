@@ -21,13 +21,10 @@ package org.zoneproject.extractor.utils;
  * #L%
  */
 
-import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -37,8 +34,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -84,17 +79,28 @@ public abstract class VirtuosoDatabase {
     public static void addItem(Item item){
         Iterator it = item.values.iterator();
         while (it.hasNext()){
-            addAnnotation(item.getUri(), (Prop)it.next());
+            addAnnotation(item.getUri(), (Prop)it.next(),false);
         }
     }
     
     public static void addAnnotations(String itemUri, ArrayList<Prop> prop){
+        addAnnotations(itemUri, prop,false);
+    }
+    
+    public static void addAnnotations(String itemUri, ArrayList<Prop> prop, boolean isSearchableAnnotation){
         for(int i=0; i< prop.size();i++){
-            VirtuosoDatabase.addAnnotation(itemUri, prop.get(i));
+            VirtuosoDatabase.addAnnotation(itemUri, prop.get(i),isSearchableAnnotation);
         }
     }
     
     public static void addAnnotation(String itemUri, Prop prop){
+        addAnnotation(itemUri, prop,false);
+    }
+    
+    public static void addAnnotation(String itemUri, Prop prop, Boolean isSearchableAnnotation){
+        if(isSearchableAnnotation)
+            VirtuosoDatabase.addAnnotation(prop.getType().getLocalName(),new Prop(ZoneOntology.ANNOTATION, "true"),false);
+        
         Model model = ModelFactory.createDefaultModel();
         Resource itemNode = model.createResource(itemUri);
         if(prop.isLiteral()){
@@ -103,7 +109,7 @@ public abstract class VirtuosoDatabase {
         else{
             itemNode.addProperty(prop.getType(), model.createResource(prop.getValue()));
         }
-        getStore().add(model);
+        getStore(ZoneOntology.GRAPH_NEWS).add(model);
     }
     
     /**
@@ -214,7 +220,14 @@ public abstract class VirtuosoDatabase {
         Model m = ModelFactory.createDefaultModel();
         Resource r = m.createResource(uri);
         Property p = m.createProperty(prop);
-        return getStore().contains(r,p);
+        boolean res = true;
+        try{
+            res = getStore().contains(r,p);
+        }
+        catch(Exception e){
+            logger.warn("The item "+uri +" existance cannot be check due to encoding errors  ("+ e+")");
+        }
+        return res;
         
     }
     
@@ -229,7 +242,7 @@ public abstract class VirtuosoDatabase {
     
     public static void deleteItem(String uri) throws IOException{
         Item item = getOneItemByURI(uri);
-        getStore().remove(item.getModel());
+        getStore(ZoneOntology.GRAPH_NEWS).remove(item.getModel());
     }
     
     public static void loadFolder(String graphURI,String dir){
@@ -276,7 +289,7 @@ public abstract class VirtuosoDatabase {
         logger.info(VirtuosoDatabase.ItemURIExist("http://www.personnes.com#Margot"));
         * */
         extractDB();
-    }
+        }
     
     public static void extractDB(){
         FileOutputStream fout;
@@ -300,5 +313,5 @@ public abstract class VirtuosoDatabase {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+}
 }

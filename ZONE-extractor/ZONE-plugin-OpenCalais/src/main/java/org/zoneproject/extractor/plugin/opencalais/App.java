@@ -54,7 +54,7 @@ public class App
             props.addAll(openCalaisExtractor.getCitiesResultProp(item.concat()));
             props.addAll(openCalaisExtractor.getPersonsResultProp(item.concat()));
 
-            Database.addAnnotations(item.getUri(), props);
+            Database.addAnnotations(item.getUri(), props,true);
             Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
         }
     }
