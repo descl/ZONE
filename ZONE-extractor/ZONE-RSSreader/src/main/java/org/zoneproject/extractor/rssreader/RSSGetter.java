@@ -26,13 +26,17 @@ package org.zoneproject.extractor.rssreader;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -56,13 +60,15 @@ public class RSSGetter {
      */
     public static ArrayList<Item> getFlux(String[] urls) {
         ArrayList<Item> result = new ArrayList<Item>();
-        try {
-            for(int i=0; i < urls.length;i++){
-                result.addAll(RSSGetter.getFlux(urls[i],new XmlReader(new URL(urls[i]))));
-                
+        for(int i=0; i < urls.length;i++){
+            try{
+                XmlReader flux = new XmlReader(new URL(urls[i]));
+                result.addAll(RSSGetter.getFlux(urls[i],flux));
+            } catch (java.net.UnknownHostException ex) {
+                logger.warn("RSS Feed "+urls[i]+" is offline");
+            } catch (IOException ex) {
+                logger.warn("RSS Feed "+urls[i]+" is offline");
             }
-        } catch (Exception ex) {
-            Logger.getLogger(RSSGetter.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
@@ -107,18 +113,40 @@ public class RSSGetter {
             for (int i = 0; i < entries.size(); i++){
                 SyndEntry entry = (SyndEntry)entries.get(i);
                 
-                //create item
-                Item cur = new Item(source, entry);
+                //we clean bad Uris
+                String uri = entry.getLink();
+                uri = uri.replace("\t", "");
+                uri = uri.replace("\n", "");
+                while(uri.startsWith(" ")) {
+                    uri = uri.substring(1);
+                }
+                while(uri.endsWith(" ")) {
+                    uri = uri.substring(0,uri.length()-1);
+                }
+                //catch if the uri is local
+                if(uri.startsWith("/")){
+                    uri = "http://"+URI.create(source).getHost()+""+uri;
+                }
                 
+                //create item
+                String description = "";
+                if(entry.getDescription() != null){
+                    description = entry.getDescription().getValue();
+                }
+                Item cur = new Item(source, uri.toString(),entry.getTitle(),description,entry.getPublishedDate(),entry.getEnclosures());
+
                 //add item to list
                 items.add(cur);
             }
         }
+        catch(NullPointerException e) {
+            logger.warn("RSS Feed "+source+" not working"+e);
+        }
         catch(IllegalArgumentException e) {
-            logger.warn("RSS Feed "+e+" not working");
+            logger.warn("RSS Feed "+source+" not working"+e);
         }
         catch(FeedException e) {
-            logger.warn("RSS Feed "+e+" not working");
+            logger.warn("RSS Feed "+source+" not working"+e);
         }
         return items;
     }
