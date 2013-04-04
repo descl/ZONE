@@ -134,7 +134,7 @@ public class RSSGetter {
                     description = entry.getDescription().getValue();
                 }
                 Item cur = new Item(source, uri.toString(),entry.getTitle(),description,entry.getPublishedDate(),entry.getEnclosures());
-
+                
                 //add item to list
                 items.add(cur);
             }
