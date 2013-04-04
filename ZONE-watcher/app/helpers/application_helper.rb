@@ -18,7 +18,7 @@ module ApplicationHelper
     extendQuery = ""
       
     filter.each do |cur|
-      if cur.value.match(/^http\:\/\//)
+      if cur.value.match(/^http\:\/\//) || cur.value.match(/^https\:\/\//)
         #URI
         extendQuery += "?concept <"+cur.prop+"> <"+cur.value+">. \n"
       else
