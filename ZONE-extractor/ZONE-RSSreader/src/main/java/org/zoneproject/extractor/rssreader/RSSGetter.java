@@ -127,6 +127,9 @@ public class RSSGetter {
                 if(uri.startsWith("/")){
                     uri = "http://"+URI.create(source).getHost()+""+uri;
                 }
+                if(uri.equals("")) {
+                    continue;
+                }
                 
                 //create item
                 String description = "";
