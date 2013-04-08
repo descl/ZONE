@@ -21,6 +21,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 #gem "linkeddata"
 gem "rest-client"
@@ -41,3 +42,5 @@ gem 'omniauth-google-oauth2'
 #opml files import
 gem 'opml_saw', github: 'feedbin/opml_saw'
 gem "paperclip", "~> 3.4.1"
+
+gem "tag_it", "~> 0.0.1"

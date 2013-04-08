@@ -36,8 +36,8 @@ class SourcesController < ApplicationController
       redirect_to :back
       return
     end
-    @themes = Filter.all(:prop => ZoneOntology::SOURCES_THEME)
-    @langs = Filter.all(:prop => ZoneOntology::SOURCES_LANG)
+    @themes = Filter.find(:prop => ZoneOntology::SOURCES_THEME)
+    @langs = Filter.find(:prop => ZoneOntology::SOURCES_LANG)
     @source = Source.new
 
     respond_to do |format|
@@ -63,7 +63,7 @@ class SourcesController < ApplicationController
   end
 
   def themes
-    @themes = Filter.all(:prop => ZoneOntology::SOURCES_THEME)
+    @themes = Filter.find(:prop => ZoneOntology::SOURCES_THEME)
     @result = []
     @themes.each{|p|
       item =  {'text' => p.value, :value => p.value}
@@ -145,8 +145,6 @@ class SourcesController < ApplicationController
   end
 
   def uploadopml
-    require 'rexml/document'
-    require 'opml'
     xml =  params['upload']['datafile'].read
     opml = OpmlSaw::Parser.new(xml)
     opml.parse

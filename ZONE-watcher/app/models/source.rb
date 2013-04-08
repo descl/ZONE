@@ -43,7 +43,8 @@ class Source
     require 'cgi'
     require 'uri'
 
-    uri = CGI.unescape(URI.escape(CGI.unescape(param)))
+    #uri = CGI.unescape(URI.escape(CGI.unescape(param)))
+    uri = param
     id = uri
     
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>

@@ -34,6 +34,19 @@ class FiltersController < ApplicationController
     end
     
   end
-  
+
+  def list
+    @filters = Filter.all
+    @result = []
+    @filters.each{|p|
+      item =  {'prop' => p.prop, :value => p.value}
+      item[:selected] = true if item[:value] == params[:selected]
+      @result << item
+    }
+    respond_to do |format|
+      format.json { render json: @result }
+    end
+  end
+
   
 end

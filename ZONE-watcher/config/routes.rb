@@ -1,7 +1,4 @@
 ZONEWatcher::Application.routes.draw do
-
-  resources :test_descls
-
   #Twitter managment
   get "twitter/addtimeline", :action => "add_timeline", :controller => "twitter"
   get "twitter", :action => "index", :controller => "twitter"
@@ -28,8 +25,10 @@ ZONEWatcher::Application.routes.draw do
   get "home/index"
 
   resources :items
-  get "filters/getNumber"
 
+
+  get "filters/list", :action => "list", :controller => "filters"
+  get "filters/getNumber"
   resources :filters
 
   root :to => "home#index"

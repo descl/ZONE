@@ -2,7 +2,8 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 #//
-#//  require jquery_ujs
+//=  require jquery
+//=  require jquery_ujs
 //= require jquery-ui
 //= require tag-it
 
@@ -11,13 +12,11 @@ $(document).ready ->
   #jQuery('#demo6').tagit({tagSource:availableTags, sortable:true});
     
   
-  tags = ["Java", "Javascript", "Python", "C", "C++", "Ruby", "CSS", "HTML", "C#", "Visual Basic", "Prolog", "Smalltalk", "Scala", "Haskel", "Bash"]
-  $("#languages-select").tagit
+  tags = []
+  $.ajax '/filters.json',
+    success  : (data, status, xhr) ->
+      for elem in data
+        tags.push(elem['value']+" | "+elem['prop'])
+  $("#filter-select").tagit
     tags: tags
-    field: "language"
-  
-  $("#add-all-link").click (event) ->
-    $.each tags, (i, e) ->
-      $("#languages-select").tagit "addTag", e
-  
-    event.preventDefault()
+    field: "tag"

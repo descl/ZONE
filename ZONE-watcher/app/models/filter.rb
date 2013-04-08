@@ -15,11 +15,10 @@ class Filter
   end
 
   #find all filters with a specific prop
-  def self.all(param = "")
+  def self.find(param = "")
 
     query = "PREFIX SOURCE: <#{ZoneOntology::SOURCES_PREFIX}>
     SELECT DISTINCT(?value)
-    FROM <#{ZoneOntology::GRAPH_SOURCES}>
     WHERE {
       ?uri <#{param[:prop]}> ?value.
     }"
@@ -31,4 +30,22 @@ class Filter
     return filters
   end
 
+  def self.all
+
+    query = "PREFIX SOURCE: <#{ZoneOntology::SOURCES_PREFIX}>
+    SELECT DISTINCT ?prop ?value
+    FROM <#{ZoneOntology::GRAPH_ITEMS}>
+    WHERE {
+      ?prop <#{ZoneOntology::ANNOTATION}> \"true\".
+      ?uri ?prop ?value.
+
+    }"
+    puts query
+    store = SPARQL::Client.new($endpoint)
+    filters = Array.new
+    store.query(query).each do |res|
+      filters << Filter.new(:prop => res.prop.to_s, :value => res.value.to_s)
+    end
+    return filters
+  end
 end

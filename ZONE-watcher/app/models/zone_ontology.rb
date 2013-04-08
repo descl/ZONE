@@ -6,6 +6,7 @@ class ZoneOntology < ActiveRecord::Base
   PLUGIN_WIKIMETA = "http://zone-project.org/model/plugins/WikiMeta"
   PLUGIN_SVM = "http://zone-project.org/model/plugins/Categorization_SVM"
   PLUGIN_SVM_RES = "http://zone-project.org/model/plugins/Categorization_SVM#result"
+  ANNOTATION = "http://zone-project.org/model/annotation"
   
   GRAPH_ITEMS = "http://zone-project.org/datas/items";
   GRAPH_SOURCES= "http://zone-project.org/datas/sources"
