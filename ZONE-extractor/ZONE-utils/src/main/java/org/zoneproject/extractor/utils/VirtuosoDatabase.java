@@ -71,9 +71,24 @@ public abstract class VirtuosoDatabase {
     }
     
     public static void addItems(Item[] items){
+        Model model = ModelFactory.createDefaultModel();
+        
         for(int i=0; i < items.length;i++){
-            addItem(items[i]);
+            Item item = items[i];
+            Iterator it = item.values.iterator();
+            while (it.hasNext()){
+                String itemUri = item.getUri();
+                Prop prop = (Prop)it.next();
+                Resource itemNode = model.createResource(itemUri);
+                if(prop.isLiteral()){
+                    itemNode.addLiteral(prop.getType(), model.createLiteral(prop.getValue()));
+                }
+                else{
+                    itemNode.addProperty(prop.getType(), model.createResource(prop.getValue()));
+                }
+            }
         }
+        getStore(ZoneOntology.GRAPH_NEWS).add(model);
     }
 
     public static void addItem(Item item){
@@ -98,9 +113,9 @@ public abstract class VirtuosoDatabase {
     }
     
     public static void addAnnotation(String itemUri, Prop prop, Boolean isSearchableAnnotation){
-        if(isSearchableAnnotation)
-            VirtuosoDatabase.addAnnotation(prop.getType().getLocalName(),new Prop(ZoneOntology.ANNOTATION, "true"),false);
-        
+        if(isSearchableAnnotation) {
+            VirtuosoDatabase.addAnnotation(prop.getType().getURI(),new Prop(ZoneOntology.ANNOTATION, "true"),false);
+        }
         Model model = ModelFactory.createDefaultModel();
         Resource itemNode = model.createResource(itemUri);
         if(prop.isLiteral()){
