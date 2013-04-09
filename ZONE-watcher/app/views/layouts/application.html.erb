@@ -4,22 +4,24 @@
   <title>ZONEWatcher</title>
   <%= include_gon %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag("/bootstrap/css/bootstrap.min.css") %>
+  <%= stylesheet_link_tag("/bootstrap/css/bootstrap-responsive.css") %>
+  <%= stylesheet_link_tag("/bootstrap/css/zone-wp.css") %>
+  <%= stylesheet_link_tag("/bootstrap/css/slate.css") %>
+  <%= stylesheet_link_tag("/jquery.sexy-combo/css/sexy-combo.css") %>
+  <%= stylesheet_link_tag("/jquery.sexy-combo/css/sexy/sexy.css") %>
+
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag params[:controller] %>
   <%= csrf_meta_tags %>
   <%= javascript_include_tag("/bootstrap/js/bootstrap.min.js")%>
   <%= javascript_include_tag "/jquery.sexy-combo/jquery.sexy-combo.js" %>
-  <%= stylesheet_link_tag("/bootstrap/css/bootstrap.min.css") %>
-  <%= stylesheet_link_tag("/bootstrap/css/bootstrap-responsive.css") %>
-  <%= stylesheet_link_tag("/bootstrap/css/zone-wp.css") %>
-  <%= stylesheet_link_tag("/bootstrap/css/slate.css") %>
-  <%= #stylesheet_link_tag("/assets/tagit.css")
-  %>
-  <%= stylesheet_link_tag("/jquery.sexy-combo/css/sexy-combo.css") %>
-  <%= stylesheet_link_tag("/jquery.sexy-combo/css/sexy/sexy.css") %>
+  <%= javascript_include_tag "/jwplayer/jwplayer.js" %>
 
 
-<script type="text/javascript" src="/jwplayer/jwplayer.js" ></script>
+
+  <%= stylesheet_link_tag("/assets/jquery.tagit.css") %>
+
 </head>
 <body>
   <div class="navbar navbar-fixed-top">
@@ -33,8 +35,9 @@
         <a class="brand" href="/">Zone - DEMO</a>
         <div class="nav-collapse collapse">
           <ul class="nav">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="/sources">Sources List</a></li>
+            <li class="<%= 'active' if current_page?(root_path) %>"><%= link_to "Home", root_path %></li>
+            <li class="<%= 'active' if current_page?(items_path) %>"><%= link_to "Items", items_path %></li>
+            <li class="<%= 'active' if current_page?(sources_path) %>"><%= link_to "Sources list", sources_path %></li>
             <!--<li><a href="/twitter">See my twitter timeline!</a></li>-->
           </ul>
         </div>
