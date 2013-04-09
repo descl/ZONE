@@ -1,3 +1,5 @@
+[![Build Status](https://ci.inria.fr/zone/job/slave1/badge/icon)](https://ci.inria.fr/zone/job/slave1/)
+
 # ZONE-Project
 #### A semantic RSS feed aggregator
 
@@ -22,8 +24,6 @@ If you want to have your own aggregating service:
 [more infos on install](https://github.com/descl/ZONE/wiki/install)
 
 [contribute](https://github.com/descl/ZONE/wiki/contribute)
-
-[![Build Status](https://secure.travis-ci.org/descl/ZONE.png?branch=master)](https://travis-ci.org/descl/ZONE)
 
 
 ## Licenses
