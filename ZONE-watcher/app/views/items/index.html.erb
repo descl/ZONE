@@ -1,10 +1,10 @@
-<h1>Service de configuration de flux RSS</h1>
-
+<%= render 'home/search'%>
 
 <%= javascript_tag do %>
   query = '<%= j items_path(:old => @filters) %>';
 <% end %>
 
+<!--
 <% if @filters.length > 0 %>
   <h3>Votre filtre actuel:</h3>
   <% @filters.each do |filter| %>
@@ -14,9 +14,8 @@
     </div>
   <% end %>
 <br/></br/>
-<% end %>
+<% end %>-->
 
-(<a href= "<%=@uriForItemsNumber%>"><i class=" icon-refresh" id="number_items_wait"></i></a><span id='number_items_container'></span> éléments)
 
 
 

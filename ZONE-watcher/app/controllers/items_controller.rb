@@ -16,8 +16,19 @@ class ItemsController < ApplicationController
     #  @filters = Array.new
     #  @filters.push(Filter.new(:prop => "http://purl.org/rss/1.0/source",:value=> "https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=#{current_user.login}"))
     #else
-      @filters = parseFilterParams(params)
     #end
+    puts "---------------"
+    puts params.to_json
+    if params[:tag] != nil
+      partition = params[:tag].partition(" | http")
+
+      value = partition[0]
+      prop = "http"+partition[2]
+      filter = Filter.new(:prop => prop, :value => value)
+      @filters = [filter]
+    else
+      @filters = parseFilterParams(params)
+    end
 
     current_page = params[:page]
     current_page = 1 if current_page == nil

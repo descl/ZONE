@@ -48,4 +48,8 @@ class Filter
     end
     return filters
   end
+
+  def get_search_button
+    return @value+" | "+@prop
+  end
 end

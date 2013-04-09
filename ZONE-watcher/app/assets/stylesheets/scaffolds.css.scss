@@ -4,6 +4,7 @@ body {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
+  padding-top:50px;
 }
 
 p, ol, ul, td {
@@ -66,4 +67,15 @@ div {
     font-size: 12px;
     list-style: square;
   }
+}
+
+.follow-project-picture{
+  position: absolute;
+  top: 40px;
+  right: 0;
+  border: 0;
+  z-index: -10;
+}
+.navbar-inner{
+  z-index: 20;
 }

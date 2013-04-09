@@ -3,16 +3,19 @@
 <head>
   <title>ZONEWatcher</title>
   <%= include_gon %>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= stylesheet_link_tag("/bootstrap/css/bootstrap.min.css") %>
-  <%= stylesheet_link_tag("/bootstrap/css/bootstrap-responsive.css") %>
-  <%= stylesheet_link_tag("/bootstrap/css/zone-wp.css") %>
-  <%= stylesheet_link_tag("/bootstrap/css/slate.css") %>
+
   <%= stylesheet_link_tag("/jquery.sexy-combo/css/sexy-combo.css") %>
   <%= stylesheet_link_tag("/jquery.sexy-combo/css/sexy/sexy.css") %>
 
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= #stylesheet_link_tag("/bootstrap/css/slate.css")
+  %>
+  <%= stylesheet_link_tag("/bootstrap/css/bootstrap-responsive.css") %>
+
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag params[:controller] %>
+  <%= javascript_include_tag "search_box" %>
   <%= csrf_meta_tags %>
   <%= javascript_include_tag("/bootstrap/js/bootstrap.min.js")%>
   <%= javascript_include_tag "/jquery.sexy-combo/jquery.sexy-combo.js" %>
@@ -20,7 +23,6 @@
 
 
 
-  <%= stylesheet_link_tag("/assets/jquery.tagit.css") %>
 
 </head>
 <body>
@@ -41,11 +43,13 @@
             <!--<li><a href="/twitter">See my twitter timeline!</a></li>-->
           </ul>
         </div>
-        <%= render 'layouts/login' %>
+        <div class="nav-collapse collapse pull-right">
+          <%= render 'layouts/login' %>
+        </div>
       </div>
     </div>
     <div style="z-index: 10">
-      <a href="http://www.zone-project.org/mailing-list/"><img style="position: absolute; top: 40px; right: 0; border: 0; z-index: 10" src="/imgs/follow_me.png" alt="Fork me on GitHub"></a>
+      <a href="http://www.zone-project.org/mailing-list/"><img class="follow-project-picture" src="/imgs/follow_me.png" alt="Fork me on GitHub"></a>
     </div>
   </div>
 
