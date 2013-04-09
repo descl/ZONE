@@ -26,7 +26,7 @@
                                     <goal>wget</goal>
                             </goals>
                             <configuration>
-                                    <url>http://rdf.insee.fr/geo/archive-2011.zip</url>
+                                    <url>rdf.insee.fr/geo/2011/archive-2011.zip</url>
                                     <unpack>true</unpack>
                                     <outputDirectory>${project.build.directory}/resources/inseeDB</outputDirectory>
                                     <md5>30254d8888fa79150a1209424e0e807a</md5>
