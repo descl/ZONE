@@ -8,8 +8,8 @@ class SourcesController < ApplicationController
       return
     end
     @sources = Source.all(
-        "?uri <#{ZoneOntology::SOURCES_OWNER}> ?owner.
-         Filter(str(?owner) = \"#{current_user.id}\")")
+        "?uri <#{ZoneOntology::SOURCES_OWNER}> ?owner.")
+         #Filter(str(?owner) = \"#{current_user.id}\")")
 
     respond_to do |format|
       format.html # index.html.erb

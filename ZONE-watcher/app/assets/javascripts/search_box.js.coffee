@@ -15,4 +15,4 @@ $(document).ready ->
              tags.push(elem['value']+" | "+elem['prop'])
   $("#filter-select").tagit
     tags: tags
-    field: "tag"
+    field: "tag[]"

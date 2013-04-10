@@ -28,7 +28,9 @@
 <% end %>
 
 
-<p><%= link_to "Recupérer le flux RSS", params.merge(:format => :rss), :class => "feed_link" %></p>
+  <%= link_to(params.merge(:format => :rss)) do%>
+    <span id="rss-button" class="btn btn-warning btn-large btn-primary goButton"><i class="icon-rss"></i></span>
+  <%end%>
 
 
 

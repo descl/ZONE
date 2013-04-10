@@ -44,3 +44,5 @@ gem 'opml_saw', github: 'feedbin/opml_saw'
 gem "paperclip", "~> 3.4.1"
 
 gem "tag_it", "~> 0.0.1"
+
+gem "font-awesome-rails"

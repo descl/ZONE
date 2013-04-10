@@ -90,7 +90,6 @@
             close
                 .text(unescape("%D7"))
                 .click(function() {
-                    event.stopPropagation(); //added by descl
                     $(this).parent().remove();
                 });
 
@@ -178,6 +177,9 @@
                                     e.tagit("addTag", selection.text());
                                     self.val("");
                                 }
+                            }
+                            else {
+                                $("#search-form").submit();
                             }
 
                             event.preventDefault();
