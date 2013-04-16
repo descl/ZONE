@@ -214,4 +214,12 @@ private static final long serialVersionUID = 1L;
         }
         return model;
     }
+    
+    public String getTitle(){
+        return getElement(RSS.title);
+    }
+    
+    public String getDescription(){
+        return getElement(RSS.description);
+    }
 }
