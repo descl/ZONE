@@ -40,7 +40,7 @@
             <li class="<%= 'active' if current_page?(root_path) %>"><%= link_to "Home", root_path %></li>
             <li class="<%= 'active' if current_page?(items_path) %>"><%= link_to "Items", items_path %></li>
             <li class="<%= 'active' if current_page?(sources_path) %>"><%= link_to "Sources list", sources_path %></li>
-            <!--<li><a href="/twitter">See my twitter timeline!</a></li>-->
+            <li class="<%= 'active' if current_page?(twitter_path) %>"><%= link_to "Your twitter timeline!", twitter_path %></li>
           </ul>
         </div>
         <div class="nav-collapse collapse pull-right">

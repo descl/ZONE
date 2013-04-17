@@ -1,37 +1,33 @@
-        <div class="container">
-            <div class="row">
-              <div class="span3"></div>
-                <div class="search-zone span6 columns body-content">
-                    <div>
-                        <form id="search-form" action="/items">
-                            <fieldset>
-                                <div class="clearfix">
-                                    <label class="text-center"><h1>What are you looking for?</h1></label>
-                                    <div class="input">
-                                        <ul id="filter-select" class="fake-input" tabindex="1">
+<div class="row">
+    <div class="span3"></div>
+    <div class="search-zone span6 columns body-content">
+        <div>
+            <form id="search-form" action="/items">
+                <fieldset>
+                    <div class="clearfix">
+                        <label class="text-center"><h1>What are you looking for?</h1></label>
+                        <div class="input">
+                            <ul id="filter-select" class="fake-input" tabindex="1">
 
-                                              <% if @filters != nil && @filters.length > 0 %>
-                                              <% @filters.each do |filter| %>
-                                                  <li><%= filter.get_search_button%></li>
-                                              <% end %>
-                                          <% end %>
-                                        </ul>
-                                    </div>
-                                </div>
-
-
-                            </fieldset>
-                            <div class="actions">
-                              <button type="submit" class="btn btn-info btn-large btn-primary goButton">Let us know</button>
-                            </div>
-                          <% if @uriForItemsNumber != nil%>
-                              <span class="items-count">(<a href= "<%=@uriForItemsNumber%>"><i class=" icon-refresh" id="number_items_wait"></i></a><span id='number_items_container'></span> items)</span>
-                          <%end%>
-                        </form>
-
+                                <% if @filters != nil && @filters.length > 0 %>
+                                    <% @filters.each do |filter| %>
+                                        <li><%= filter.get_search_button%></li>
+                                    <% end %>
+                                <% end %>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-              <div class="span3"></div>
 
-            </div>
+
+                </fieldset>
+                <div class="actions">
+                    <button type="submit" class="btn btn-info btn-large btn-primary goButton">Let us know</button>
+                </div>
+                <% if @uriForItemsNumber != nil%>
+                    <span class="items-count">(<a href= "<%=@uriForItemsNumber%>"><i class=" icon-refresh" id="number_items_wait"></i></a><span id='number_items_container'></span> items)</span>
+                <%end%>
+            </form>
         </div>
+    </div>
+    <div class="span3"></div>
+</div>
