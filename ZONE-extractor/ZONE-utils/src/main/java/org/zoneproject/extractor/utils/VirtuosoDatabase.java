@@ -70,51 +70,26 @@ public abstract class VirtuosoDatabase {
         addItems(items.toArray(new Item[items.size()]));
     }
     
-    public static void addItems(Item[] items){
-        Model model = ModelFactory.createDefaultModel();
-        
+    public static void addItems(Item[] items){        
         for(int i=0; i < items.length;i++){
-            Item item = items[i];
-            Iterator it = item.values.iterator();
-            while (it.hasNext()){
-                String itemUri = item.getUri();
-                Prop prop = (Prop)it.next();
-                Resource itemNode = model.createResource(itemUri);
-                if(prop.isLiteral()){
-                    itemNode.addLiteral(prop.getType(), model.createLiteral(prop.getValue()));
-                }
-                else{
-                    itemNode.addProperty(prop.getType(), model.createResource(prop.getValue()));
-                }
-            }
+            addItem(items[i]);
         }
-        getStore(ZoneOntology.GRAPH_NEWS).add(model);
     }
 
     public static void addItem(Item item){
-        Iterator it = item.values.iterator();
-        while (it.hasNext()){
-            addAnnotation(item.getUri(), (Prop)it.next(),false);
-        }
+        addAnnotations(item.getUri(), item.getElements());
     }
     
-    public static void addAnnotations(String itemUri, ArrayList<Prop> prop){
-        addAnnotations(itemUri, prop,false);
-    }
-    
-    public static void addAnnotations(String itemUri, ArrayList<Prop> prop, boolean isSearchableAnnotation){
-        for(int i=0; i< prop.size();i++){
-            VirtuosoDatabase.addAnnotation(itemUri, prop.get(i),isSearchableAnnotation);
+    public static void addAnnotations(String itemUri, ArrayList<Prop> props){
+        for (Iterator<Prop> it = props.iterator(); it.hasNext();) {
+            Prop prop = it.next();
+            addAnnotation(itemUri, prop);
         }
     }
     
     public static void addAnnotation(String itemUri, Prop prop){
-        addAnnotation(itemUri, prop,false);
-    }
-    
-    public static void addAnnotation(String itemUri, Prop prop, Boolean isSearchableAnnotation){
-        if(isSearchableAnnotation) {
-            VirtuosoDatabase.addAnnotation(prop.getType().getURI(),new Prop(ZoneOntology.ANNOTATION, "true"),false);
+        if(prop.isIsSearchable()) {
+            VirtuosoDatabase.addAnnotation(prop.getType().getURI(),new Prop(ZoneOntology.ANNOTATION, "true",true));
         }
         Model model = ModelFactory.createDefaultModel();
         Resource itemNode = model.createResource(itemUri);

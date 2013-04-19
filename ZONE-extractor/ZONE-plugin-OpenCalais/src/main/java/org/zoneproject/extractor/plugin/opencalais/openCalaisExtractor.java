@@ -91,7 +91,7 @@ public class openCalaisExtractor {
         String [] cities = getCitiesResult(content);
         ArrayList<Prop> result = new ArrayList<Prop>();
         for(String i : cities){
-            result.add(new Prop(EntitiesURI+"LOC",i,true));
+            result.add(new Prop(EntitiesURI+"LOC",i,true,true));
         }
         return result;
         
@@ -115,7 +115,7 @@ public class openCalaisExtractor {
         String [] persons = getPersonsResult(content);
         ArrayList<Prop> result = new ArrayList<Prop>();
         for(String i : persons){
-            result.add(new Prop(EntitiesURI+"PERSON",i,true));
+            result.add(new Prop(EntitiesURI+"PERSON",i,true,true));
         }
         return result;
         

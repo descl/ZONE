@@ -50,7 +50,7 @@ public class App
             logger.info("Add WikiMeta for item: "+item);
             
             ArrayList<Prop> content= WikiMetaRequest.getProperties(item.concat());
-            Database.addAnnotations(item.getUri(), content,true);
+            Database.addAnnotations(item.getUri(), content);
             
             Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
 

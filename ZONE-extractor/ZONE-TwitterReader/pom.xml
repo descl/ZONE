@@ -64,5 +64,10 @@
       <artifactId>twitter4j-core</artifactId>
       <version>[3.0,)</version>
     </dependency>
+    <dependency>
+      <groupId>com.twitter</groupId>
+      <artifactId>twitter-text</artifactId>
+      <version>1.6.1</version>
+    </dependency>
   </dependencies>
 </project>

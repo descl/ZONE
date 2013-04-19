@@ -94,10 +94,10 @@ public class WikiMetaRequest {
             if(cur.containsKey("LINKEDDATA")){
                 Prop p;
                 if(cur.get("LINKEDDATA").equals("") || cur.get("LINKEDDATA").equals("null")){
-                    p = new Prop(WikiMetaRequest.EntitiesURI+""+cur.get("type").toString(), cur.get("EN").toString(), true);
+                    p = new Prop(WikiMetaRequest.EntitiesURI+""+cur.get("type").toString(), cur.get("EN").toString(), true,true);
                 }
                 else {
-                    p = new Prop(WikiMetaRequest.EntitiesURI+""+cur.get("type").toString(), cur.get("LINKEDDATA").toString(), false);
+                    p = new Prop(WikiMetaRequest.EntitiesURI+""+cur.get("type").toString(), cur.get("LINKEDDATA").toString(), false,true);
                 }
                 if(!result.contains(p)) {
                     result.add(p);

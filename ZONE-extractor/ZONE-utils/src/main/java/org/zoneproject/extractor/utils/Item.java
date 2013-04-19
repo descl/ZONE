@@ -81,7 +81,7 @@ private static final long serialVersionUID = 1L;
             QuerySolution result = set.nextSolution();
             String relation = result.get(p).toString();
             String value = result.get(o).toString();
-            values.add(new Prop(relation,value,result.get(o).isLiteral()));
+            values.add(new Prop(relation,value,result.get(o).isLiteral(),false));
         }
     }
     public Item(String uri, String sparqlResultInfos){
@@ -116,7 +116,7 @@ private static final long serialVersionUID = 1L;
         try{
             this.uri = link;
             values = new ArrayList<Prop>();
-            values.add(new Prop(RSS.link,link,true));
+            values.add(new Prop(RSS.link,link,true,false));
             values.add(new Prop(RSS.title,title));
             values.add(new Prop(RSS.description,Jsoup.parse(description).text()));
             if(datePublication != null){
@@ -125,9 +125,9 @@ private static final long serialVersionUID = 1L;
             }
             for(Object o : enclosure){
                 SyndEnclosureImpl e = (SyndEnclosureImpl)o;
-                values.add(new Prop(RSS.image,e.getUrl(),true));
+                values.add(new Prop(RSS.image,e.getUrl(),true,false));
             }
-            values.add(new Prop("http://purl.org/rss/1.0/source", source,false));
+            values.add(new Prop("http://purl.org/rss/1.0/source", source,false,false));
         }
         catch(NullPointerException e){
             logger.error(e);
@@ -162,7 +162,9 @@ private static final long serialVersionUID = 1L;
             Prop me = (Prop)i.next();
             String isL = "Uri";
             if(me.isLiteral()) isL = "Lit";
-            content += "\n\t"+isL+" "+me.getType() + " : ";
+            String isS = " ";
+            if(me.isIsSearchable()) isS = "*";
+            content += "\n\t"+isS+" "+isL+" "+me.getType() + " : ";
             if (me.getValue().length() > 100){
                 content+= me.getValue().substring(0,100)+"...";
             }else{

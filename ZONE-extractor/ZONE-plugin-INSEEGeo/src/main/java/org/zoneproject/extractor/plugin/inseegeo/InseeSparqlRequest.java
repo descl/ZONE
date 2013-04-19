@@ -67,7 +67,7 @@ public class InseeSparqlRequest {
         ArrayList<Prop> dims = new ArrayList<Prop>();
         while (res.hasNext()) {
             QuerySolution r = res.nextSolution();
-            dims.add(new Prop(r.get("?type").toString(), r.get("?zone").toString(),false));
+            dims.add(new Prop(r.get("?type").toString(), r.get("?zone").toString(),false,true));
 
         }
         
@@ -100,7 +100,7 @@ public class InseeSparqlRequest {
         while (res.hasNext()) {
             QuerySolution r = res.nextSolution();
             logger.info(r);
-            dims.add(new Prop(r.get("?type").toString(), r.get("?zone").toString(),false));
+            dims.add(new Prop(r.get("?type").toString(), r.get("?zone").toString(),false,true));
         }
         
         return dims;

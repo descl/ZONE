@@ -23,12 +23,15 @@ package org.zoneproject.extractor.twitterreader;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.twitter.Extractor;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zoneproject.extractor.utils.Config;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
+import org.zoneproject.extractor.utils.Prop;
 import org.zoneproject.extractor.utils.ZoneOntology;
 import twitter4j.ResponseList;
 import twitter4j.Status;
@@ -42,6 +45,7 @@ import twitter4j.auth.AccessToken;
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class TwitterApi {
+    private static Extractor extractor = new Extractor();
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(TwitterApi.class);
     /**
      * Get all the items from twitter for an user timeline list
@@ -77,7 +81,16 @@ public class TwitterApi {
      * @return the item created
      */
     private static Item getItemFromStatus(Status s, String source){
-        return new Item(source, "https://twitter.com/"+s.getUser().getScreenName()+"/status/"+Long.toString(s.getId()), s.getText(), s.getText(), s.getCreatedAt());
+        Item res = new Item(source, "https://twitter.com/"+s.getUser().getScreenName()+"/status/"+Long.toString(s.getId()), s.getText(), s.getText(), s.getCreatedAt());
+        String[] hashtags = getHashTags(res.getDescription());
+        for(String hashtag: hashtags){
+            res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_HASHTAG,hashtag,true,true));
+        }
+        for(String mentioned: TwitterApi.extractor.extractMentionedScreennames(s.getText())){
+            res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_MENTIONED,mentioned,true,true));
+        }
+        res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_AUTHOR,s.getUser().getScreenName(),true,true));
+        return res;
     }
     
     /**
@@ -112,5 +125,10 @@ public class TwitterApi {
             sources.add(r.get("?uri").toString());
         }
         return sources.toArray(new String[sources.size()]);
+    }
+
+    public static String[] getHashTags(String description) {
+        List<String> res = extractor.extractHashtags(description);
+        return res.toArray(new String[res.size()]);
     }
 }

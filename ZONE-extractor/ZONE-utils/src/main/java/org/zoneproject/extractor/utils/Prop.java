@@ -37,23 +37,27 @@ public class Prop {
     private Property type=null;
     private String value=null;
     private boolean isLiteral;
+    private boolean isSearchable=false;
 
     public Prop(Property t, String value){
-        this(t,value,true);
+        this(t,value,true,false);
     }
 
     public Prop(String type, String value) {
         this(type,value,true);
     }
-
-    public Prop(String t, String value, boolean isLi){
-        this(ResourceFactory.createProperty(t),value,isLi);
+    public Prop(String type, String value, boolean isLi) {
+        this(type,value,isLi,false);
+    }
+    public Prop(String t, String value, boolean isLi, boolean isSearchable){
+        this(ResourceFactory.createProperty(t),value,isLi,isSearchable);
     }
     
-    public Prop(Property t, String value, boolean isLi){
+    public Prop(Property t, String value, boolean isLi, boolean isS){
         this.type = t;
         this.value= value;
         this.isLiteral = isLi;
+        this.isSearchable = isS;
     }
     
     public Property getType() {
@@ -78,6 +82,22 @@ public class Prop {
 
     public void setLiteral(boolean isLiteral) {
         this.isLiteral = isLiteral;
+    }
+
+    public boolean isIsLiteral() {
+        return isLiteral;
+    }
+
+    public void setIsLiteral(boolean isLiteral) {
+        this.isLiteral = isLiteral;
+    }
+
+    public boolean isIsSearchable() {
+        return isSearchable;
+    }
+
+    public void setIsSearchable(boolean isSearchable) {
+        this.isSearchable = isSearchable;
     }
     
     @Override

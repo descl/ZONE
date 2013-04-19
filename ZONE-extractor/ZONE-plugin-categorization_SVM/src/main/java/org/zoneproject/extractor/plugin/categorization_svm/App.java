@@ -118,11 +118,11 @@ public class App
                 double newd = cm.getValue().classifyText(t);
                 if( d < newd){
                     d = newd;
-                    newAnnotation = new Prop(ZoneOntology.PLUGIN_SVM_RES,cm.getKey(),true);
+                    newAnnotation = new Prop(ZoneOntology.PLUGIN_SVM_RES,cm.getKey(),true,true);
                 }
             }
             if(d != -100){
-                Database.addAnnotation(item.getUri(), newAnnotation,true);
+                Database.addAnnotation(item.getUri(), newAnnotation);
             }
             Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
         }

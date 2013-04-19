@@ -50,7 +50,7 @@ public class App
             logger.info("Add INSEEGeo for item: "+item);
             ArrayList<Prop> props;
             props = InseeSparqlRequest.getDimensions(item.getElements(openCalaisPrefix+"#LOC"));
-            Database.addAnnotations(item.getUri(), props,true);
+            Database.addAnnotations(item.getUri(), props);
             Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
             
         }

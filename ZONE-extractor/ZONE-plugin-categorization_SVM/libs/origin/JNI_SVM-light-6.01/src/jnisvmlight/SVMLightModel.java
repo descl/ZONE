@@ -327,7 +327,7 @@ public class SVMLightModel implements Serializable {
       }
 
     } else {
-      System.out.println("Cannot write model file..");
+      logger.error("Cannot write model file..");
     }
   }
 }

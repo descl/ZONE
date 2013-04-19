@@ -130,8 +130,8 @@ public class SparqlRequestWithJena_OLD {
         while(res.hasNext()){
             QuerySolution q = res.nextSolution();
             System.out.println("has next"+q.get("nom").toString());
-            dims.add(new Prop(q.get("type").toString(), q.get("nom").toString(),true));
-            dims.add(new Prop(q.get("type").toString(), q.get("entite").toString(),false));
+            dims.add(new Prop(q.get("type").toString(), q.get("nom").toString(),true,true));
+            dims.add(new Prop(q.get("type").toString(), q.get("entite").toString(),false,true));
             
         }
         System.out.println("no more");

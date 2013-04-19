@@ -43,6 +43,10 @@ public class ZoneOntology {
     public static String PLUGIN_SVM = PLUGIN_PREFIX+"/Categorization_SVM";
     public static String PLUGIN_SVM_RES = PLUGIN_SVM+"#result";
     
+    public static String PLUGIN_TWITTER_HASHTAG = PLUGIN_PREFIX+"/twitter#hashtag";
+    public static String PLUGIN_TWITTER_AUTHOR = PLUGIN_PREFIX+"/twitter#author";
+    public static String PLUGIN_TWITTER_MENTIONED = PLUGIN_PREFIX+"/twitter#mentioned";
+    
     public static String SOURCES_TYPE = SOURCES_PREFIX+"#Source";
     public static String SOURCES_LANG = SOURCES_PREFIX+"#lang";
     public static String SOURCES_THUMB = SOURCES_PREFIX+"#thumb";
