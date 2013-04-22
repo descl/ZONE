@@ -1,14 +1,13 @@
 <div class="row">
     <div class="span3"></div>
-    <div class="search-zone span6 columns body-content">
+    <div class="span6 columns body-content">
         <div>
-            <form id="search-form" action="/items">
-                <fieldset>
+            <form action="/items">
+                <fieldset class="search-zone">
                     <div class="clearfix">
                         <label class="text-center"><h1>What are you looking for?</h1></label>
                         <div class="input">
-                            <ul id="filter-select" class="fake-input" tabindex="1">
-
+                            <ul id="search-form" class="fake-input" tabindex="1">
                                 <% if @filters != nil && @filters.length > 0 %>
                                     <% @filters.each do |filter| %>
                                         <li><%= filter.get_search_button%></li>
@@ -17,9 +16,40 @@
                             </ul>
                         </div>
                     </div>
-
-
                 </fieldset>
+                <div class="row">
+                  <div class="span3">Only in your sources</div>
+                  <div class="span2">
+                    <div class="select-sources">
+                      <a href="#" type="button" >
+                        select sources
+                      </a>
+                    </div>
+
+
+
+                </div>
+              </div>
+              <div id="sources-collapse">
+                <fieldset >
+                  <div class="clearfix">
+                    <div class="input select-source-input" style="display:none">
+                      <ul id="sources-list"  class="fake-input select-source-ul" tabindex="1">
+
+                        <% if @sources != nil && @sources.length > 0 %>
+                            <% @sources.each do |source| %>
+                                <li><%= source.get_search_button%></li>
+                            <% end %>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+
+
+
+
                 <div class="actions">
                     <button type="submit" class="btn btn-info btn-large btn-primary goButton">Let us know</button>
                 </div>
@@ -31,3 +61,7 @@
     </div>
     <div class="span3"></div>
 </div>
+
+
+
+

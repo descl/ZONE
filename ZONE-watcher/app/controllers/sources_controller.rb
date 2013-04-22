@@ -2,18 +2,30 @@ class SourcesController < ApplicationController
   # GET /sources
   # GET /sources.json
   def index
-    if !user_signed_in?
-      flash[:error] = 'You are not logged in'
-      redirect_to :back
-      return
-    end
-    @sources = Source.all(
-        "?uri <#{ZoneOntology::SOURCES_OWNER}> ?owner.")
-         #Filter(str(?owner) = \"#{current_user.id}\")")
+
+
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @sources }
+      format.html {
+        if !user_signed_in?
+          flash[:error] = 'You are not logged in'
+          redirect_to :back
+          return
+        else
+          @sources = Source.all(
+              "?uri <#{ZoneOntology::SOURCES_OWNER}> ?owner.
+          Filter(str(?owner) = \"#{current_user.id}\")")
+        end
+      }# index.html.erb
+      format.json {
+        sources = Source.all
+        @result = []
+        sources.each{|p|
+          item =  {'prop' => p.uri, :value => p.uri}
+          item[:selected] = true if item[:value] == params[:selected]
+          @result << item
+        }
+        render json: @result }
     end
   end
 

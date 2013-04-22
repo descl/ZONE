@@ -18,8 +18,8 @@ class ItemsController < ApplicationController
     #else
     #end
     @filters = []
-    if params[:tag] != nil
-      params[:tag].each do |tag|
+    if params[:tags] != nil
+      params[:tags].each do |tag|
         partition = tag.partition(" | http")
 
         value = partition[0]
@@ -30,6 +30,12 @@ class ItemsController < ApplicationController
       @filters = parseFilterParams(params)
     end
 
+    @sources = []
+    if params[:sources] != nil
+      params[:sources].each do |tag|
+        @sources << Filter.new(:prop => "http://purl.org/rss/1.0/source", :value => tag)
+      end
+    end
     current_page = params[:page]
     current_page = 1 if current_page == nil
     current_page = Integer(current_page)

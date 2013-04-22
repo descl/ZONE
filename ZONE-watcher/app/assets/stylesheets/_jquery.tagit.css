@@ -95,7 +95,7 @@ form div.error .fake-input.focused {
     line-height: 26px;
 }
 .tagit li {
-    display: inline-block;
+    /*display: inline-block;  descl for better filters showing*/
 }
 .tagit li.tag {
     margin: 3px 4px 3px 0;
