@@ -11,7 +11,7 @@ module ApplicationHelper
       end
     end
     
-    filters
+    return filters
   end
   
   def generateFilterSPARQLRequest(filter)
@@ -30,6 +30,10 @@ module ApplicationHelper
   
   def calculateNumber(params)
     filters = parseFilterParams(params)
+    return calculateNumberFromFilters(filters)
+  end
+
+  def calculateNumberFromFilters(filters)
     request = generateFilterSPARQLRequest(filters)
     query = "SELECT ?number COUNT(DISTINCT ?concept) FROM <#{ZoneOntology::GRAPH_ITEMS}> WHERE {\n"
     query += request
@@ -42,7 +46,17 @@ module ApplicationHelper
       return store.query(query)[0]["callret-1"]
     end
   end
-  
+
+  def getSourcesFromFilters(filters)
+    result = []
+    filters.each do |filter|
+      if filter.prop == ZoneOntology::RSS_SOURCE
+        result << filter
+      end
+    end
+    return result
+  end
+
   #devise spefific helpers
   def resource_name
     :user

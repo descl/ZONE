@@ -26,21 +26,22 @@ class ItemsController < ApplicationController
         prop = "http"+partition[2]
         @filters << Filter.new(:prop => prop, :value => value)
       end
-    else
-      @filters = parseFilterParams(params)
     end
-
-    @sources = []
     if params[:sources] != nil
       params[:sources].each do |tag|
-        @sources << Filter.new(:prop => "http://purl.org/rss/1.0/source", :value => tag)
+        puts tag
+        @filters << Filter.new(:prop => "http://purl.org/rss/1.0/source", :value => tag)
       end
     end
+    @filters = @filters +  parseFilterParams(params)
+    @sources = getSourcesFromFilters(@filters)
+    @purFilters = @filters - @sources
+
     current_page = params[:page]
     current_page = 1 if current_page == nil
     current_page = Integer(current_page)
     per_page = 10
-    pageNumber = calculateNumber(params)
+    pageNumber = calculateNumberFromFilters(@filters)
     if pageNumber > (10000 - per_page +1)
       pageNumber = (10000 - per_page +1)
     end
@@ -84,7 +85,7 @@ class ItemsController < ApplicationController
     @uriHash = Digest::SHA1.hexdigest(@uri)
     
     @item = Item.find(@uri)
-    
+
     @filters = parseFilterParams(params)
     
     render  :layout => 'empty'

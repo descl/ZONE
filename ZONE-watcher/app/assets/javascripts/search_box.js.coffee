@@ -3,10 +3,12 @@
 //= require jquery-ui
 //= require tag-it
 
-$ ->
-  #availableTags = ["ActionScript","AppleScript","Asp","BASIC"];
-  #jQuery('#demo6').tagit({tagSource:availableTags, sortable:true});
 
+$ ->
+
+  #display sources list if used
+  if($('#sources-list > *').length > 0)
+    $('.select-source-input').css "display", 'block'
 
   tags = []
   $.ajax '/filters.json',
@@ -29,6 +31,9 @@ $ ->
              tags: sources
              field: "sources[]"
 
+
+
+  #handle click on "select sources"
   $('.select-sources').click ->
     if $('.select-source-input').is(':visible')
       $('.select-source-input').css "display", 'none'

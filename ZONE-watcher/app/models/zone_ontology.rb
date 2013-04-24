@@ -24,5 +24,6 @@ class ZoneOntology < ActiveRecord::Base
   SOURCES_DATA_TWITTER_TIMELINE = "#{GRAPH_SOURCES}#twitterTimeline"
   SOURCES_TWITTER_TOKEN = "#{SOURCES_PREFIX}#twitterToken"
   SOURCES_TWITTER_TOKEN_SECRET = "#{SOURCES_PREFIX}#twitterSecretToken"
+  RSS_SOURCE= "http://purl.org/rss/1.0/source"
   
 end

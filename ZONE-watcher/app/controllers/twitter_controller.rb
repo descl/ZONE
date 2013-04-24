@@ -17,8 +17,8 @@ class TwitterController < ApplicationController
       flash[:notice] = 'Your twitter account has just been added to the annotation server. Tweets filtering will be possible for you in 5 - 10 minutes.'
     end
 
-    @filter = Filter.new(:prop => "http://purl.org/rss/1.0/source",:value=> "#{ZoneOntology::SOURCES_DATA_TWITTER_TIMELINE}/#{current_user.login}")
-    redirect_to items_path(:new => @filter)
+    sourceURI =  "#{ZoneOntology::SOURCES_DATA_TWITTER_TIMELINE}/#{current_user.login}"
+    redirect_to items_path(:sources => [ sourceURI ] )
   end
   
   def add_timeline_to_sources
