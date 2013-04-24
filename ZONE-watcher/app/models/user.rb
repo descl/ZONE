@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
         user.provider = session["devise.twitter_data"].provider
         user.uid = session["devise.twitter_data"].uid
         user.password = Devise.friendly_token[0,20]
+        user.token = session["devise.twitter_data"].credentials.token
+        user.tokenSecret = session["devise.twitter_data"].credentials.secret
       elsif data = session["devise.github_data"] && session["devise.github_data"]["extra"]["raw_info"]
         user.email = data["email"] if user.email.blank?
         user.provider = session["devise.github_data"].provider

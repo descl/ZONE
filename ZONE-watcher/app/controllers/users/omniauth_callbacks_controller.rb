@@ -2,9 +2,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def twitter
     auth = request.env["omniauth.auth"]
     @user = User.find_for_provider_oauth(auth, current_user)
-    @user.token = auth.credentials.token
-    @user.tokenSecret = auth.credentials.secret
-
 
     if @user.persisted?
       set_flash_message(:notice, :success, :kind => "Twitter") #if is_navigational_format?
