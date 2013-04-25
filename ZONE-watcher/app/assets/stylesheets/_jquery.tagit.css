@@ -98,7 +98,7 @@ form div.error .fake-input.focused {
     /*display: inline-block;  descl for better filters showing*/
 }
 .tagit li.tag {
-    margin: 3px 4px 3px 0;
+    margin: 3px 4px 3px 4px;
     padding: 0 2px 0 2px;
     line-height: 18px;
     cursor: default;
@@ -108,7 +108,7 @@ form div.error .fake-input.focused {
     color: #333;
 }
 .tagit li.tag .close {
-    margin-left: 5px;
+    /*margin-left: 5px; descl*/
 }
 .tagit .tagit-edit-handle {
     position: relative;

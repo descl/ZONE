@@ -1,9 +1,9 @@
 .search-zone{
-  margin-top:70px;
   min-padding-left:10px;
   min-padding-right:10px;
-  text-align:center;
   min-width: 300px;
+  margin: -5px 20px 10px 20px;
+  padding: 25px 5px 5px 5px;
 }
 
 .goButton{
@@ -13,11 +13,8 @@
 .fake-input{
   margin-top:20px;
   width: 100%;
-  text-align: left;
-}
-
-.select-sources{
-  text-align: right;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .select-source-input{
@@ -31,5 +28,19 @@
 
 .tagit li.tag .close {
   opacity: 1;
-  color:  grey;
+  color:  #808080;
+}
+
+#dino-logo{
+  padding-top:0px;
+}
+
+#reador-title{
+  min-width: 340px;
+}
+
+
+#search-form, #sources-list{
+  padding-left: 0px;
+  padding-right: 0px;
 }

@@ -1,9 +1,6 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-#languages-select {
-    width: 530px;
-}
 
 .body-content {
     margin: 20px;
@@ -14,4 +11,16 @@
 
 .body-content > div {
     margin: 20px;
+}
+.search{
+  margin-top:150px;
+}
+
+.splash{
+  background: none repeat scroll 0 0 #EEEEEE;
+  margin-top:60px;
+
+  height: 300px;
+  /* TODO better hack */
+
 }
