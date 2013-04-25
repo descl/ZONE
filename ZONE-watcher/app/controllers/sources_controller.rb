@@ -2,7 +2,9 @@ class SourcesController < ApplicationController
   # GET /sources
   # GET /sources.json
   def index
-
+    @themes = Filter.find(:prop => ZoneOntology::SOURCES_THEME)
+    @langs = Filter.find(:prop => ZoneOntology::SOURCES_LANG)
+    @source = Source.new
 
 
     respond_to do |format|
@@ -59,7 +61,7 @@ class SourcesController < ApplicationController
   end
 
   def langs
-    @langs = Filter.all(:prop => ZoneOntology::SOURCES_LANG)
+    @langs = Filter.find(:prop => ZoneOntology::SOURCES_LANG)
     @result = []
     @langs.each{|p|
       item =  {'text' => p.value, :value => p.value}

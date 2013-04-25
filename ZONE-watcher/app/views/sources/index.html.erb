@@ -1,54 +1,67 @@
-<h1>Listing sources</h1>
+<ul class="nav nav-tabs" id="sources-menu">
+  <li class="active"><a href="#list"  data-toggle="tab">Your sources</a></li>
+  <li><a href="#new"  data-toggle="tab">New source</a></li>
+  <li><a href="#opml"  data-toggle="tab">Import opml file</a></li>
+  <li><a href="#group"  data-toggle="tab">Manage sources group</a></li>
+</ul>
 
-<table>
-  <tr>
-    <th>Uri</th>
-    <th>Elements number</th>
-    <th>Label</th>
-    <th>Lang</th>
-    <th>Owner</th>
-    <th>Theme</th>
-  </tr>
+<div id="myTabContent" class="tab-content">
+  <div id="group" class="tab-pane fade">
+    <h1> Not yet implemented</h1>
+  </div>
 
-<% @sources.each do |source| %>
-      <% next if source == nil  %>
-      <% filter = Filter.new(:prop => "http://purl.org/rss/1.0/source",:value => source.uri) %>
-      <% uriNumber = filters_getNumber_path(:old => [filter]) %>
-  <tr>
-    <td><%= link_to source.uri, items_path(:new => filter) %></td>
-    <td>
-      (
-      <span class="number_items_wait">
-        <a href="<%= uriNumber%>">
-          <i class="number_items_wait icon-refresh" data-url="<%= uriNumber%>" sourceId="<%=source%>" ></i>
-        </a>
-      </span>
-      <span class='number_items_container' sourceId="<%=source%>"  data-url="<%= uriNumber%>" ></span>
-      éléments)
-    </td>
-    <td><%= source.label %></td>
-    <td><%= source.lang %></td>
-    <td><%= source.owner %></td>
-    <td><%= source.theme %></td>
-    <td>
-      <span class="btn-group">
-        <%= link_to "edit",edit_source_path(source) , :class => 'btn btn-warning btn'  %>
-        <a class="btn btn-danger btn" href="/sources/<%=source.to_param%>/delete">delete</a>
-      </span>
-    </td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Source', new_source_path %>
+  <div id="opml" class="tab-pane fade">
+    <h1> Import opml file</h1>
+    <%= form_for(:upload, :url => { :action => "uploadopml" }, :multipart => true) do |form| %>
+        <p><%= form.file_field 'datafile' %><%= form.submit "Upload" %></p>
+    <% end %>
+  </div>
 
 
-<hr>
+  <div id="new" class="tab-pane fade">
+    <%= render 'form' %>
+    <%= link_to 'New Source', new_source_path %>
+  </div>
 
-<h1> Import opml file</h1>
-<%= form_for(:upload, :url => { :action => "uploadopml" }, :multipart => true) do |form| %>
-    <p><%= form.file_field 'datafile' %><%= form.submit "Upload" %></p>
 
-<% end %>
+  <div id="list" class="tab-pane fade active in">
+    <table>
+      <tr>
+        <th>Uri</th>
+        <th>Elements number</th>
+        <th>Label</th>
+        <th>Lang</th>
+        <th>Owner</th>
+        <th>Theme</th>
+      </tr>
+
+    <% @sources.each do |source| %>
+          <% next if source == nil  %>
+          <% filter = Filter.new(:prop => "http://purl.org/rss/1.0/source",:value => source.uri) %>
+          <% uriNumber = filters_getNumber_path(:old => [filter]) %>
+      <tr>
+        <td><%= link_to source.uri, items_path(:new => filter) %></td>
+        <td>
+          (
+          <span class="number_items_wait">
+            <a href="<%= uriNumber%>">
+              <i class="number_items_wait icon-refresh" data-url="<%= uriNumber%>" sourceId="<%=source%>" ></i>
+            </a>
+          </span>
+          <span class='number_items_container' sourceId="<%=source%>"  data-url="<%= uriNumber%>" ></span>
+          éléments)
+        </td>
+        <td><%= source.label %></td>
+        <td><%= source.lang %></td>
+        <td><%= source.owner %></td>
+        <td><%= source.theme %></td>
+        <td>
+          <span class="btn-group">
+            <%= link_to "edit",edit_source_path(source) , :class => 'btn btn-warning btn'  %>
+            <a class="btn btn-danger btn" href="/sources/<%=source.to_param%>/delete">delete</a>
+          </span>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+
