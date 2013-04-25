@@ -1,0 +1,3 @@
+virtuosoEndpoint: "http://localhost:8890/sparql/"
+virtuosoLogin: "dba"
+virtuosoPassword: "dba"

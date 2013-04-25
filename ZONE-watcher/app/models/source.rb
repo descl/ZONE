@@ -13,13 +13,13 @@ class Source
   validates_format_of :uri, :with => URI::regexp(%w(http https))
 
 
-  $endpoint = 'http://localhost:8890/sparql/'
+  $endpoint = Rails.application.config.virtuosoEndpoint
 
-  update_uri = "http://localhost:8890/sparql-auth"
+  update_uri = Rails.application.config.virtuosoEndpoint+"-auth"
   $repo       = RDF::Virtuoso::Repository.new($endpoint,
                                               :update_uri => update_uri,
-                                              :username => 'dba',
-                                              :password => 'dba',
+                                              :username => Rails.application.config.virtuosoLogin,
+                                              :password => Rails.application.config.virtuosoPassword,
                                               :auth_method => 'digest')
 
   def self.all(param = "")

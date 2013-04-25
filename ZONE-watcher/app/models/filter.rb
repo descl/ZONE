@@ -3,7 +3,7 @@ class Filter
     
   attr_accessor :prop, :value
 
-  $endpoint = 'http://localhost:8890/sparql/'
+  $endpoint = Rails.application.config.virtuosoEndpoint
   
   def initialize(attributes = {})  
     attributes.each do |name, value|  

@@ -3,7 +3,7 @@ class Item# < ActiveRecord::Base
   include ActiveModel::AttributeMethods
   require 'rubygems'
   require 'rest_client'
-  $endpoint = 'http://localhost:8890/sparql/'
+  $endpoint = Rails.application.config.virtuosoEndpoint
 
 
   attr_accessor :uri, :title, :props, :description, :date, :localURI
