@@ -17,10 +17,17 @@
 }
 
 .splash{
-  background: none repeat scroll 0 0 #EEEEEE;
+  border-bottom: 1px solid #DDDDDD;
+  border-top: 1px solid #DDDDDD;
+  background: none repeat scroll 0 0 #F5F5F5;
   margin-top:60px;
+  padding-top: 20px;
+  padding-bottom: 40px;
 
-  height: 300px;
-  /* TODO better hack */
+}
 
+#why h4 [class^="icon-"], #whats-new h4 [class^="icon-"], #why h4 [class*=" icon-"], #whats-new h4 [class*=" icon-"] {
+  font-size: 28px;
+  margin-right: 5px;
+  vertical-align: -10%;
 }
