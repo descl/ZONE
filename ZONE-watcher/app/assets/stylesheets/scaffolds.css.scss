@@ -71,12 +71,14 @@ div {
   }
 }
 
+#follow-project{
+}
 .follow-project-picture{
   position: absolute;
   top: 40px;
   right: 0;
   border: 0;
-  z-index: -10;
+  z-index: 1;
 }
 .navbar-inner{
   z-index: 20;
