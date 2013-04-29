@@ -1,11 +1,18 @@
 @import "font-awesome";
 
+
+html, body{
+  height:100%;
+}
 body {
   background-color: #fff;
   color: #333;
   font-family: proxima-nova,"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
   line-height: 20px;
+}
+
+#page-content{
   padding-top:100px;
 }
 

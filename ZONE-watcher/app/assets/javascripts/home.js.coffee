@@ -6,8 +6,12 @@
 $ ->
   $('.more-infos').click ->
     if $('.infos').is(':visible')
-      $('.splash').css "position", 'absolute'
+      $('.splash').addClass("splash-off")
+      $('.splash').removeClass("splash-on")
       $('.infos').hide();
+      $('body, html').css "height", "100%"
     else
       $('.infos').show();
-      $('.splash').css "position", 'relative'
+      $('.splash').addClass("splash-on")
+      $('.splash').removeClass("splash-off")
+      $('body, html').css "height", "auto"

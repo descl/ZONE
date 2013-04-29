@@ -55,8 +55,10 @@
 
 
   <div class="container">
-      <%= render 'layouts/messages' %>
+    <div  id="page-content">
+  <%= render 'layouts/messages' %>
     <%= yield %>
+      </div>
   </div>
 
 <div class="footer">
