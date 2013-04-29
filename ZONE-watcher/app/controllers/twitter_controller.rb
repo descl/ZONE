@@ -6,7 +6,7 @@ class TwitterController < ApplicationController
   # GET /twitter_timelines.json
   def index
     if !user_signed_in? || current_user.provider != "twitter"
-      flash[:error] = 'You are not logged with a twitter account.'
+      flash[:error] = t("twitter.err.notlogged")
         redirect_to :back 
         return
     end
@@ -14,7 +14,7 @@ class TwitterController < ApplicationController
     userSource = Source.find("#{ZoneOntology::SOURCES_DATA_TWITTER_TIMELINE}/#{current_user.login}")
     if userSource.to_json == "null"
       add_timeline_to_sources
-      flash[:notice] = 'Your twitter account has just been added to the annotation server. Tweets filtering will be possible for you in 5 - 10 minutes.'
+      flash[:notice] = t("twitter.created")
     end
 
     sourceURI =  "#{ZoneOntology::SOURCES_DATA_TWITTER_TIMELINE}/#{current_user.login}"

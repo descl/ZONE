@@ -2,7 +2,7 @@
   <div class="span2"></div>
   <div id="dino-logo" class="span3"><img src="assets/dino.png"/></div>
   <div class="span5 ">
-    <h1 class="triangle-border left"  id="reador-title"><u>Reador</u> can help you?</h1>
+    <h1 class="triangle-border left"  id="reador-title"><%= raw t 'search.infobulle' %></h1>
 
     <div class="search-zone">
       <form action="/items">
@@ -20,7 +20,7 @@
         <!-- sources select bouton-->
         <div class="row select-sources text-right">
           <a href="#" type="button">
-            select sources
+            <%= raw t 'search.sources' %>
           </a>
         </div>
 
@@ -38,7 +38,7 @@
         <!-- go button-->
         <div class="text-center">
           <div>
-            <button type="submit" class="center btn btn-success btn-large btn-primary goButton">Go reador!</button>
+            <button type="submit" class="center btn btn-success btn-large btn-primary goButton"><%= raw t 'search.searchbutton' %></button>
           </div>
           <div>
             <% if @uriForItemsNumber != nil %>

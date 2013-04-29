@@ -1,8 +1,8 @@
 <ul class="nav nav-tabs" id="sources-menu">
-  <li class="active"><a href="#list"  data-toggle="tab">Your sources</a></li>
-  <li><a href="#new"  data-toggle="tab">New source</a></li>
-  <li><a href="#opml"  data-toggle="tab">Import opml file</a></li>
-  <li><a href="#group"  data-toggle="tab">Manage sources group</a></li>
+  <li class="active"><a href="#list"  data-toggle="tab"><%= t("source.your")%></a></li>
+  <li><a href="#new"  data-toggle="tab"><%= t("source.new")%></a></li>
+  <li><a href="#opml"  data-toggle="tab"><%= t("source.opml.title")%></a></li>
+  <li><a href="#group"  data-toggle="tab"><%= t("source.groups.title")%></a></li>
 </ul>
 
 <div id="myTabContent" class="tab-content">
@@ -11,7 +11,7 @@
   </div>
 
   <div id="opml" class="tab-pane fade">
-    <h1> Import opml file</h1>
+    <h1><%= t("source.opml.title")%></h1>
     <%= form_for(:upload, :url => { :action => "uploadopml" }, :multipart => true) do |form| %>
         <p><%= form.file_field 'datafile' %><%= form.submit "Upload" %></p>
     <% end %>
@@ -20,19 +20,19 @@
 
   <div id="new" class="tab-pane fade">
     <%= render 'form' %>
-    <%= link_to 'New Source', new_source_path %>
+    <%= link_to t("source.new"), new_source_path %>
   </div>
 
 
   <div id="list" class="tab-pane fade active in">
     <table>
       <tr>
-        <th>Uri</th>
-        <th>Elements number</th>
-        <th>Label</th>
-        <th>Lang</th>
-        <th>Owner</th>
-        <th>Theme</th>
+        <th><%= t("source.list.uri")%></th>
+        <th><%= t("source.list.num")%></th>
+        <th><%= t("source.list.label")%></th>
+        <th><%= t("source.list.lang")%></th>
+        <th><%= t("source.list.owner")%></th>
+        <th><%= t("source.list.theme")%></th>
       </tr>
 
     <% @sources.each do |source| %>
@@ -49,7 +49,7 @@
             </a>
           </span>
           <span class='number_items_container' sourceId="<%=source%>"  data-url="<%= uriNumber%>" ></span>
-          éléments)
+          <%= t("source.elemsNumber")%>)
         </td>
         <td><%= source.label %></td>
         <td><%= source.lang %></td>
@@ -58,7 +58,7 @@
         <td>
           <span class="btn-group">
             <%= link_to "edit",edit_source_path(source) , :class => 'btn btn-warning btn'  %>
-            <a class="btn btn-danger btn" href="/sources/<%=source.to_param%>/delete">delete</a>
+            <a class="btn btn-danger btn" href="/sources/<%=source.to_param%>/delete"><%= t("delete") %></a>
           </span>
         </td>
       </tr>

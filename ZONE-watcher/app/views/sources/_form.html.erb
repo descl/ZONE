@@ -1,7 +1,7 @@
 <%= form_for(@source, :html => { :class => "form-horizontal"} ) do |f| %>
   <% if @source.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@source.errors.count, "error") %> prohibited this source from being saved:</h2>
+      <h2><%= pluralize(@source.errors.count, "error") %> <%=  t("source.destroyed.errSave") %></h2>
 
       <ul>
       <% @source.errors.full_messages.each do |msg| %>
@@ -26,14 +26,14 @@
 
 
     <div class="control-group">
-      <label for="ajax-combo" class="control-label">Lang:</label>
+      <label for="ajax-combo" class="control-label"><%=  t("source.lang") %>:</label>
       <div class="controls">
         <div id="ajax-container-lang"></div>
       </div>
     </div>
 
     <div class="control-group">
-      <label for="ajax-combo" class="control-label">Theme:</label>
+      <label for="ajax-combo" class="control-label"><%=  t("source.theme") %>:</label>
       <div class="controls">
         <div id="ajax-container-theme"></div>
       </div>

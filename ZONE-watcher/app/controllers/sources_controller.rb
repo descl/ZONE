@@ -10,7 +10,7 @@ class SourcesController < ApplicationController
     respond_to do |format|
       format.html {
         if !user_signed_in?
-          flash[:error] = 'You are not logged in'
+          flash[:error] = t("devise.failure.unauthenticated")
           redirect_to :back
           return
         else
@@ -46,7 +46,7 @@ class SourcesController < ApplicationController
   # GET /sources/new.json
   def new
     if !user_signed_in?
-      flash[:error] = 'You are not logged in'
+      flash[:error] = t("devise.failure.unauthenticated")
       redirect_to :back
       return
     end
@@ -92,7 +92,7 @@ class SourcesController < ApplicationController
   # GET /sources/1/edit
   def edit
     if !user_signed_in?
-      flash[:error] = 'You are not logged in'
+      flash[:error] =  t("devise.failure.unauthenticated")
       redirect_to :back
       return
     end
@@ -103,7 +103,7 @@ class SourcesController < ApplicationController
   # POST /sources.json
   def create(update=false)
     if !user_signed_in?
-      flash[:error] = 'You are not logged in'
+      flash[:error] =  t("devise.failure.unauthenticated")
       redirect_to :back
       return
     end
@@ -116,9 +116,9 @@ class SourcesController < ApplicationController
     respond_to do |format|
       if @source.valid? && @source.save
         if update == true
-          message = 'Source was successfully updated.'
+          message = t("source.updated")
         else
-          message = 'Source was successfully created.'
+          message = t("source.created")
         end
         format.html { redirect_to "/sources", notice: message }
         format.json { render json: @source, status: :created, location: @source }
@@ -133,7 +133,7 @@ class SourcesController < ApplicationController
   # PUT /sources/1.json
   def update
     if !user_signed_in?
-      flash[:error] = 'You are not logged in'
+      flash[:error] = t("devise.failure.unauthenticated")
       redirect_to :back
       return
     end
@@ -148,9 +148,9 @@ class SourcesController < ApplicationController
   def destroy
     @source = Source.find(params[:id])
     if @source.destroy
-      flash[:notice] = 'Source destroyed'
+      flash[:notice] = t("source.destroyed.ok")
     else
-      flash[:error] = 'Problem occured while removing source'
+      flash[:error] = t("source.destroyed.err")
     end
     respond_to do |format|
       format.html { redirect_to sources_url }

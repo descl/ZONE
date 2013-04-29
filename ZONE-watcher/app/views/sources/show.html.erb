@@ -1,30 +1,25 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Uri:</b>
+  <b><%= t("source.list.uri") %>:</b>
   <%= @source.uri %>
 </p>
 
 <p>
-  <b>Label:</b>
+  <b><%= t("source.list.label") %>:</b>
   <%= @source.label %>
 </p>
 
 <p>
-  <b>Lang:</b>
+  <b><%= t("source.list.lang") %>:</b>
   <%= @source.lang %>
 </p>
 
-<p>
-  <b>Licence:</b>
-  <%= @source.licence %>
-</p>
 
 <p>
-  <b>Owner:</b>
+  <b><%= t("source.list.owner") %>:</b>
   <%= @source.owner %>
 </p>
 
 
-<%= link_to 'Edit', edit_source_path(@source) %> |
-<%= link_to 'Back', sources_path %>
+<%= link_to t("edit"), edit_source_path(@source) %>

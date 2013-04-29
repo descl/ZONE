@@ -1,0 +1,132 @@
+fr:
+  edit:
+    "Modifier"
+  show:
+    "Voir"
+  delete:
+    "Supprimer"
+  title:
+    "Reador - aggregateur de news sémantique"
+  twitter:
+    created:
+      "Votre compte twitter a été ajouté à notre base. Vous pourrez filtrer vos tweets d'ici 5 à 10 minutes."
+    err:
+      notlogged:
+        "Nous n'etes pas connectés avec un compte twitter."
+  source:
+    elemsNumber:
+      "éléments"
+    list:
+      uri:
+        "Uri"
+      num:
+        "Nombre d'éléments"
+      label:
+        "Label"
+      lang:
+        "Langue"
+      owner:
+        "Owner"
+      theme:
+        "Theme"
+    your:
+      "Vous sources"
+    new:
+      "Nouvelle source"
+    opml:
+      title:
+        "Importer un fichier opml"
+    groups:
+      title:
+        "Gérer vos groupes de sources"
+    edit:
+      title:
+        "Modifier une source"
+    lang:
+      "Lang"
+    theme:
+      "Theme"
+    updated:
+      "La source a été modifiée avec succès."
+    created:
+      "La source a été ajoutée avec succès."
+    destroyed:
+      ok:
+        'Source supprimée'
+      err:
+        'Un problème est apparu durant la suppression de la source.'
+      errSave:
+        "Erreur lors de la création de la source"
+  menu:
+    home:
+      "Accueil"
+    news:
+      "News"
+    sources:
+      "Sources"
+    twitter:
+      "Votre timeline twitter!"
+    signIn:
+      "Se connecter"
+    signInWith:
+      "Se connecter avec"
+  search:
+    infobulle:
+      "<u>Reador</u> pour vous servir!"
+    sources:
+      "selection des sources"
+    searchbutton:
+      "Go reador!"
+  moreabout:
+    title:
+      "En savoir plus sur Reador!"
+    getintouch:
+      title:
+        "Se tenir informer"
+      content:
+        "Suivez en temps réel les news publiées sur internet avec un filtrage personnalisé des informations."
+    twitter:
+      title:
+        "Connectez moi à twitter!"
+      content:
+        "Reador peut récupérer votre timeline et effectuer du filtrage pour vous sur les tweets présents en ligne."
+    scalable:
+      title:
+        "Scalable"
+      content:
+        "Reador marche aussi bien sur PC que sur tablette ou telephone portable!"
+    opensource:
+      title:
+        "OpenSource"
+      content:
+        "Reador est un logiciel libre, vous pouvez le telecharger, le modifier et le publier, effectuez des pull requests sur <a href='https://github.com/descl/ZONE'>github</a>."
+    rssfeed:
+      title:
+        "Fonctionne avec d'autres aggrégateurs RSS"
+      content:
+        "Vous pouvez générer vos propre flux RSS sur Reador pour ensuite les utiliser sur votre propre gestionnaire de flux RSS"
+    free:
+      title:
+        "Reador est gratuit"
+      content:
+        "Reador est fournit gratuitement depuis le site web <a href='http://www.reador.net'>reador.net</a>."
+    foryou:
+      title:
+        "Fait pour vous et avec vous!"
+      content:
+        "Reador est développé pour vous! Nous avons réelement besoin de vos retours, de vos besoin et de tout savoir sur l'organisation de votre veille pour vous fournir une solution toujours plus performante <a href='https://github.com/descl/ZONE/pulls'>soumettre une requête</a>."
+    semantic:
+      title:
+        "Semantique"
+      content:
+        "La sémantique est un point qui nous tient vraiment à coeur, nous voulons supprimer toutes sources d'ambiguité dans vos recherches de news."
+    veilleurs:
+      title:
+        "Une solution parfaite pour les veilleurs"
+      content:
+        "Vous êtes stressés à l'idée de rater une news importante? d'avoir du retard sur vos news à analyser? Nous aussi!"
+    whosunder:
+      title:
+        "Qui est dérrière reador?"
+      content:
+        "Reador est principalement développé par <a href='http://desclaux.me'>Christophe Desclaux<a>. Il est assisté par l'institut de recherche <a href='http://www.inria.fr'>Inria</a> dans le cadre du concours <a href='http://boostyourcode.inria.fr'>BoostYourCode2012</a>."

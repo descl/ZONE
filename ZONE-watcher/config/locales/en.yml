@@ -1,5 +1,132 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  hello: "Hello world"
+  edit:
+    "Edit"
+  show:
+    "Show"
+  delete:
+    "Delete"
+  title:
+    "Reador - a semantic feed aggregator"
+  twitter:
+    created:
+      'Your twitter account has just been added to the annotation server. Tweets filtering will be possible for you in 5 - 10 minutes.'
+    err:
+      notlogged:
+        'You are not logged with a twitter account.'
+  source:
+    elemsNumber:
+      "elements"
+    list:
+      uri:
+        "Uri"
+      num:
+        "Elements number"
+      label:
+        "Label"
+      lang:
+        "Lang"
+      owner:
+        "Owner"
+      theme:
+        "Theme"
+    your:
+      "Your sources"
+    new:
+      "New source"
+    opml:
+      title:
+        "Import opml file"
+    groups:
+      title:
+        "Manage sources group"
+    edit:
+      title:
+        "Editing source"
+    lang:
+      "Lang"
+    theme:
+      "Theme"
+    updated:
+      "Source was successfully updated."
+    created:
+      "Source was successfully created."
+    destroyed:
+      ok:
+        'Source destroyed'
+      err:
+        'Problem occured while removing source'
+      errSave:
+        "prohibited this source from being saved:"
+  menu:
+    home:
+      "Home"
+    news:
+      "News"
+    sources:
+      "Sources"
+    twitter:
+      "Your twitter timeline!"
+    signIn:
+      "Sign in"
+    signInWith:
+      "Sign in with"
+  search:
+    infobulle:
+      "<u>Reador</u> can help you?"
+    sources:
+      "select sources"
+    searchbutton:
+      "Go reador!"
+  moreabout:
+    title:
+      "More about Reador!"
+    getintouch:
+      title:
+        "Get in touch"
+      content:
+        "You can easily use reador with other people exchanging filters and news sources."
+    twitter:
+      title:
+        " Work with twitter!"
+      content:
+        "You can use reador on many different devices."
+    scalable:
+      title:
+        "Scalable"
+      content:
+        "You can use reador on many different devices. "
+    opensource:
+      title:
+        "OpenSource"
+      content:
+        "Reador is OpenSource, you can download, fork, make pull requests on <a href='https://github.com/descl/ZONE'>ZONE-project repo</a>."
+    rssfeed:
+      title:
+        "Work with other RSS feed aggregator"
+      content:
+        "You can take as output as you filters an RSS feeds for you favorite feeds management system."
+    free:
+      title:
+        "It's free as in free beer"
+      content:
+        "reador is free and is provided free of charge by Inria."
+    foryou:
+      title:
+        "Made for You"
+      content:
+        "Reador is made for you! We realy need your feedback and <a href='https://github.com/descl/ZONE/pulls'>pull requests</a>."
+    semantic:
+      title:
+        "Semantic"
+      content:
+        ""
+    veilleurs:
+      title:
+        "Usefull for 'veilleurs'"
+      content:
+        "Reador is a fabulous tool for veilleurs"
+    whosunder:
+      title:
+        "Who is under reador?"
+      content:
+        "Reador is mainly developed by <a href='http://desclaux.me'>Christophe Desclaux<a>. He is assisted by the french research institute <a href='http://www.inria.fr'>Inria</a> under the contest <a href='http://boostyourcode.inria.fr'>BoostYourCode2012</a>."
