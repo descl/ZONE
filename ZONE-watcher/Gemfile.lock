@@ -1,6 +1,7 @@
 GIT
   remote: git://github.com/feedbin/opml_saw.git
   revision: 61d8c2dd3d46e9cae38178754469dd9da7c8bd6a
+  branch: master
   specs:
     opml_saw (0.0.2)
       nokogiri
