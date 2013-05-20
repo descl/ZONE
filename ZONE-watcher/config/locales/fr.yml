@@ -70,6 +70,8 @@ fr:
       "Se connecter"
     signInWith:
       "Se connecter avec"
+    signInWithReador:
+      "Creer son compte <b>Reador</b>"
   search:
     infobulle:
       "<u>Reador</u> pour vous servir!"

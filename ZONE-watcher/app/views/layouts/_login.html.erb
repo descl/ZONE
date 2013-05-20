@@ -1,5 +1,5 @@
 
-<ul class="nav">
+<ul class="nav user-box">
   <% if user_signed_in? %>
     <li>
         <%= link_to 'Edit account', edit_user_registration_path %>
@@ -13,24 +13,19 @@
       <div class="dropdown-menu" style="padding: 10px; padding-bottom: 0px;">
 
         <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-          <div>
-          <%= f.email_field :email, :value=>"Email",:width=>4 %></div>
-        
-          <div>
-          <%= f.password_field :password, :value=>"Password" %></div>
+          <div><%= f.email_field :email, :value=>"Email",:width=>4 %></div>
+          <div><%= f.password_field :password, :value=>"Password" %></div>
         
           <% if devise_mapping.rememberable? -%>
-            <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+            <div><%= f.check_box :remember_me %><%= f.label :remember_me -%></div>
           <% end -%>
         
           <div>
             <%= f.submit t("menu.signIn"), :class => "btn btn-primary", :style => "clear: left; width: 100%; height: 32px; font-size: 13px;" %>
+            <br/><br/>
+            <%= link_to raw( t("menu.signInWithReador")), new_user_registration_path, :class=>"btn-auth btn-zone", :style => "width: 194px;" %>
+            <%= link_to raw( t("menu.signInWith")+" <b>Twitter</b>"), user_omniauth_authorize_path(:twitter), :class=>"btn-auth btn-twitter", :style => "width: 194px;" %>
           </div>
-          <%= link_to raw( t("menu.signInWith")+" <b>Zone</b>"), new_user_registration_path, :class=>"btn-auth" %>
-          <%= link_to raw( t("menu.signInWith")+" <b>GitHub</b>"), user_omniauth_authorize_path(:github), :class=>"btn-auth btn-github" %>
-          <%= link_to raw( t("menu.signInWith")+" <b>Twitter</b>"), user_omniauth_authorize_path(:twitter), :class=>"btn-auth btn-twitter" %>
-          <%= link_to raw( t("menu.signInWith")+" <b>Google</b>"), user_omniauth_authorize_path(:google_oauth2), :class=>"btn-auth btn-google" %>
-
         <% end %>
       </div>
     </li>

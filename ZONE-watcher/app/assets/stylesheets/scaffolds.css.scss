@@ -90,3 +90,20 @@ div {
 .navbar-inner{
   z-index: 20;
 }
+
+.user-box{
+  min-width: 150px;
+}
+
+.btn-zone:before {
+  background-position: 0 0;
+  margin: 0 0.6em 0 -0.6em;
+
+  background: url("logo-small.png") no-repeat scroll transparent;
+  content: "";
+  float: left;
+  height: 22px;
+  width: 22px;
+}
+
+

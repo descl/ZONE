@@ -70,6 +70,8 @@ en:
       "Sign in"
     signInWith:
       "Sign in with"
+    signInWithReador:
+      "Sign up on <b>Reador</b>"
   search:
     infobulle:
       "<u>Reador</u> can help you?"
