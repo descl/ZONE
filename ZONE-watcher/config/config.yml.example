@@ -2,6 +2,7 @@ virtuosoEndpoint: "http://localhost:8890/sparql/"
 virtuosoLogin: "dba"
 virtuosoPassword: "dba"
 
+zopimId: "1AfdKtAnFnyhyiv9K09kidoNONtAmgvV"
 
 devise:
   twitter:
