@@ -1,3 +1,15 @@
 virtuosoEndpoint: "http://localhost:8890/sparql/"
 virtuosoLogin: "dba"
 virtuosoPassword: "dba"
+
+
+devise:
+  twitter:
+    auth: ""
+    pass: ""
+  github:
+    auth: ""
+    pass: ""
+  google:
+    auth: ""
+    pass: ""
