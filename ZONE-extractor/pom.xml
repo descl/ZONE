@@ -44,7 +44,7 @@
     <module>ZONE-extractor-start</module>
     <module>ZONE-plugin-INSEEGeo</module>
     <!-- Enable SVM here!-->
-    <module>ZONE-plugin-categorization_SVM</module>
+    <!--<module>ZONE-plugin-categorization_SVM</module>-->
     <module>ZONE-TwitterReader</module>
   </modules>
   

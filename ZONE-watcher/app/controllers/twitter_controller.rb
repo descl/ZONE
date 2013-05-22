@@ -11,27 +11,42 @@ class TwitterController < ApplicationController
         return
     end
     
-    userSource = Source.find("#{ZoneOntology::SOURCES_DATA_TWITTER_TIMELINE}/#{current_user.login}")
+    userSource = Source.find("#{ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE}/#{current_user.login}")
     if userSource.to_json == "null"
       add_timeline_to_sources
       flash[:notice] = t("twitter.created")
     end
 
-    sourceURI =  "#{ZoneOntology::SOURCES_DATA_TWITTER_TIMELINE}/#{current_user.login}"
+    sourceURI =  "#{ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE}/#{current_user.login}"
     redirect_to items_path(:sources => [ sourceURI ] )
   end
   
   def add_timeline_to_sources
     @source = Source.new(
-      "#{ZoneOntology::SOURCES_DATA_TWITTER_TIMELINE}/#{current_user.login}",
+      "#{ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE}/#{current_user.login}",
       {
         :owner => current_user.id, 
         :attrs => {
           RDF.type => ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE,
+          RDF.type => ZoneOntology::SOURCES_TYPE_TWITTER,
           ZoneOntology::SOURCES_TWITTER_TOKEN =>current_user.token, 
           ZoneOntology::SOURCES_TWITTER_TOKEN_SECRET => current_user.tokenSecret
         }
       }
+    )
+    @source.save
+  end
+
+  def add_hashtag_to_sources(tag)
+
+    @source = Source.new(
+        "#{ZoneOntology::SOURCES_DATA_TWITTER_HASHTAG}/##{tag}",
+        {
+            :owner => current_user.id,
+            :attrs => {
+                RDF.type => ZoneOntology::SOURCES_TYPE_TWITTER_HASHTAG
+            }
+        }
     )
     @source.save
   end

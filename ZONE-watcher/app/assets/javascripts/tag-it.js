@@ -179,10 +179,8 @@
                                 }
                             }
                             else {
-                                $("#search-form").submit();
+                               $("#search-form-button").submit();
                             }
-
-                            event.preventDefault();
                         } else
                         // tab key pressed
                         if (keyCode == 9) {
@@ -190,6 +188,15 @@
                                 e.tagit("addTag", self.val());
                                 self.val("");
 
+                                event.preventDefault();
+                            }
+                        } else
+                        // space key press added by descl
+                        if (keyCode == 32) {
+                            if (tag[0] == '#') {
+                                //TODO: ne pas utiliser l'uri en hardcode
+                                e.tagit("addTag", self.val()+" | http://zone-project.org/model/plugins/twitter#hashtag");
+                                self.val("");
                                 event.preventDefault();
                             }
                         } else

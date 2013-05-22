@@ -67,15 +67,15 @@ public class TwitterApi {
                 for(Status r :status){
                     result.add(TwitterApi.getItemFromStatus(r,sourceUri));
                 }
-            } catch (TwitterException ex) {
-                Logger.getLogger(TwitterApi.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                logger.info(ex);
             }
         }
         return result;
     }
     
     /**
-     * create an item by his twitter Status
+     * create an item by his twitter Status description, will add hashtags and others "metas"
      * @param s the twitter Status
      * @param source the Uri of the source
      * @return the item created
@@ -89,14 +89,21 @@ public class TwitterApi {
         for(String mentioned: TwitterApi.extractor.extractMentionedScreennames(s.getText())){
             res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_MENTIONED,mentioned,true,true));
         }
+            System.out.println(s.getText()+"_____________"+s.getGeoLocation()+"___________________");
+        if(s.getGeoLocation() != null){
+            System.out.println("________________________________");
+            System.out.println(s.getGeoLocation().getLatitude());
+            System.out.println(s.getGeoLocation().getLongitude());
+            System.out.println(s.getGeoLocation().toString());
+        }
         res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_AUTHOR,s.getUser().getScreenName(),true,true));
         return res;
     }
     
     /**
-     * 
-     * @param uri
-     * @return 
+     * Get the access token for a specified URI
+     * @param the twitter URI
+     * @return the AccessToken for specified URI
      */
     private static AccessToken getAccessToken(String uri){
         ResultSet results = Database.getRelationsForURI(uri, ZoneOntology.GRAPH_SOURCES);
@@ -115,8 +122,12 @@ public class TwitterApi {
         return new AccessToken(token, secret);
     }
     
+    /**
+     * Get all twitter sources in the database
+     * @return List of sources URI
+     */
     public static String [] getSources(){
-        String query = "SELECT *  WHERE {?uri rdf:type <"+ZoneOntology.SOURCES_TWITTER_TYPE+">.}";
+        String query = "SELECT *  WHERE {?uri rdf:type <"+ZoneOntology.SOURCES_TYPE_TWITTER+">.}";
         logger.info(query);
         ResultSet res = Database.runSPARQLRequest(query, ZoneOntology.GRAPH_SOURCES);
         ArrayList<String> sources = new ArrayList<String>();
@@ -127,8 +138,17 @@ public class TwitterApi {
         return sources.toArray(new String[sources.size()]);
     }
 
+    /**
+     * Extract hashtags from a text
+     * @param the tweet to analyse
+     * @return list oh hashtags (# included)
+     */
     public static String[] getHashTags(String description) {
-        List<String> res = extractor.extractHashtags(description);
-        return res.toArray(new String[res.size()]);
+        List<String> tags = extractor.extractHashtags(description);
+        String[]result=new String[tags.size()];
+        for(int i=0; i < tags.size();i++){
+            result[i] = "#"+tags.get(i);
+        }
+        return result;
     }
 }
