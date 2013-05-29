@@ -1,26 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>The page you were looking for doesn't exist (404)</title>
-  <style type="text/css">
-    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
-    div.dialog {
-      width: 25em;
-      padding: 0 4em;
-      margin: 4em auto 0 auto;
-      border: 1px solid #ccc;
-      border-right-color: #999;
-      border-bottom-color: #999;
-    }
-    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
-  </style>
-</head>
+    <title>Reador - page not found</title>
 
+    <link href="/bootstrap/css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/bootstrap/css/bootstrap-responsive.css" media="screen" rel="stylesheet" type="text/css" />
+
+
+
+</head>
 <body>
-  <!-- This file lives in public/404.html -->
-  <div class="dialog">
-    <h1>The page you were looking for doesn't exist.</h1>
-    <p>You may have mistyped the address or the page may have moved.</p>
-  </div>
+<style type="text/css">
+.dead{
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+#reador-title{
+    margin-top:200px;
+}
+
+.triangle-border {
+    position:relative;
+    padding:5px;
+    border:5px solid #5a8f00;
+    color:#333;
+    background:#fff;
+    /* css3 */
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+    margin-bottom: 0px;
+}
+
+    /* Variant : for left positioned triangle
+    ------------------------------------------ */
+
+.triangle-border:before {
+    content:"";
+    position:absolute;
+    bottom:-20px; /* value = - border-top-width - border-bottom-width */
+    left:40px; /* controls horizontal position */
+    border-width:20px 20px 0;
+    border-style:solid;
+    border-color:#5a8f00 transparent;
+    /* reduce the damage in FF3.0 */
+    display:block;
+    width:0;
+    top:10px; /* controls vertical position */
+    bottom:auto;
+    left:-30px; /* value = - border-left-width - border-right-width */
+    border-width:15px 30px 15px 0;
+    border-color:transparent #5a8f00;
+}
+
+    /* creates the smaller  triangle */
+.triangle-border:after {
+    content:"";
+    position:absolute;
+    bottom:-13px; /* value = - border-top-width - border-bottom-width */
+    left:47px; /* value = (:before left) + (:before border-left) - (:after border-left) */
+    border-width:13px 13px 0;
+    border-style:solid;
+    border-color:#fff transparent;
+    /* reduce the damage in FF3.0 */
+    display:block;
+    width:0;
+    top:16px; /* value = (:before top) + (:before border-top) - (:after border-top) */
+    bottom:auto;
+    left:-21px; /* value = - border-left-width - border-right-width */
+    border-width:9px 21px 9px 0;
+    border-color:transparent #fff;
+}
+</style>
+
+
+<div class="container">
+    <div  id="page-content">
+
+        <div class="search clear-top">
+
+            <div class="row" xmlns="http://www.w3.org/1999/html">
+                <div class="span2"></div>
+                <div id="dino-logo" class="span3"><img src="assets/dino.png" class="dead"/></div>
+                <div class="span5 ">
+                    <h1 class="triangle-border left"  id="reador-title"><u>404: Page not found</u><br/><br/> sorry boy!</h1>
+
+                </div>
+                <div class="span2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>
