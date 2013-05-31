@@ -53,7 +53,5 @@ public class App
         logger.info("========= saving to database==================");
         Database.addItems(items);
         logger.info("Done");
-
-    System.exit(0);
   }
 }

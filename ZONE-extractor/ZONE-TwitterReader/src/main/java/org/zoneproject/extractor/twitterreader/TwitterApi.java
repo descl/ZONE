@@ -89,7 +89,6 @@ public class TwitterApi {
         for(String mentioned: TwitterApi.extractor.extractMentionedScreennames(s.getText())){
             res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_MENTIONED,mentioned,true,true));
         }
-            System.out.println(s.getText()+"_____________"+s.getGeoLocation()+"___________________");
         if(s.getGeoLocation() != null){
             System.out.println("________________________________");
             System.out.println(s.getGeoLocation().getLatitude());
