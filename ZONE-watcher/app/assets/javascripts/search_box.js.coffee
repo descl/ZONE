@@ -39,7 +39,3 @@ $ ->
       $('.select-source-input').css "display", 'none'
     else
       $('.select-source-input').css "display", 'block'
-
-
-
-

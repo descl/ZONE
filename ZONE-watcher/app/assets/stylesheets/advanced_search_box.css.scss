@@ -1,0 +1,81 @@
+
+.nav > li:not(.active).tabadvancedsearch a{
+  font-size :30px;
+  background-color: #C0C0C0;
+  opacity:0.5;
+  border-radius: 4px 4px 0 0;
+  margin-left:2px;
+}
+
+#advancedSearchModal{
+  /* new custom width */
+  width: 900px;
+  /* must be half of the width, minus scrollbar on the left (30px) */
+  margin-left: -420px;
+  padding-top : 10px;
+}
+
+
+.btnSource{
+  margin-top:-17px;
+  margin-right : 5px;
+  margin-left:5px;
+}
+
+
+
+/** sources */
+
+div.flipper {
+  -webkit-perspective: 800;
+  width: 175px;
+  height: 175px;
+}
+
+div.flipper div {
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  -webkit-transition: 280ms ease-in-out;
+}
+
+div.flipper div.back {
+  width: 175px;
+  height: 175px;
+  background-size : cover;
+  -webkit-transform: rotatey(-180deg);
+  padding : 3px;
+  border-radius: 25px;
+}
+
+div.flipper:hover div.front {
+  -webkit-transform: rotatey(180deg);
+}
+
+div.flipper:hover div.back {
+  -webkit-transform: rotatey(0deg);
+}
+
+.imageronde {
+  border-radius: 25px;
+}
+
+.imagerondepetite {
+  border-radius: 7px;
+}
+
+#sortable-delete {
+  height: 18px;
+  overflow: hidden;
+  background: url('/assets/bin.png') 0 50% no-repeat;
+}
+#sortable-delete li {
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
+ul.sortable {
+  padding-bottom: 5px;
+}
+ul.sortable li {
+  cursor: pointer;
+}

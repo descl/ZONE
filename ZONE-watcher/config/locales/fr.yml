@@ -78,7 +78,9 @@ fr:
     sources:
       "selection des sources"
     searchbutton:
-      "Go reador!"
+      "Go !"
+    searchadvanced:
+      "Recherche avancée"
   moreabout:
     title:
       "En savoir plus sur Reador!"

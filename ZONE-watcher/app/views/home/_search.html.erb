@@ -17,12 +17,12 @@
           </ul>
         </div>
 
-        <!-- sources select bouton-->
+        <!-- sources select bouton
         <div class="row select-sources text-right">
           <a href="#" type="button">
             <%= raw t 'search.sources' %>
           </a>
-        </div>
+        </div>-->
 
         <!-- sources input box -->
         <div id="sources-collapse"  class="input select-source-input" style="display:none">
@@ -36,16 +36,31 @@
         </div>
 
         <!-- go button-->
-        <div class="text-center">
-          <button id="search-form-button" type="submit" class="center btn btn-success btn-large btn-primary goButton"><%= raw t 'search.searchbutton' %></button>
-          <div>
+        <div class="row-fluid">
+          <div class="span8">
+            <a href="#advancedSearchModal" role="button" class="left btn btn-success btn-large btn-primary goButton" data-toggle="modal"><%= raw t 'search.searchadvanced' %></a>
+          </div>
+          <div class="span4 text-right">
+            <button id="search-form-button" type="submit" class="text-right btn btn-info btn-large btn-primary goButton"><%= raw t 'search.searchbutton' %></button>
             <% if @uriForItemsNumber != nil %>
-              <span class="items-count">(<a href="<%= @uriForItemsNumber %>"><i class=" icon-refresh" id="number_items_wait"></i></a><span id='number_items_container'></span> items)</span>
+                <div class="text-center">
+                  <span class="items-count">(<a href="<%= @uriForItemsNumber %>"><i class=" icon-refresh" id="number_items_wait"></i></a><span id='number_items_container'></span> items)</span>
+                </div>
             <% end %>
           </div>
         </div>
+
+
       </form>
     </div>
   </div>
   <div class="span2"></div>
+</div>
+
+
+
+
+<!--advanced search include -->
+<div id="advancedSearchModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="advancedSearchModalLabel" aria-hidden="true">
+  <%= render 'home/advancedSearch'%>
 </div>

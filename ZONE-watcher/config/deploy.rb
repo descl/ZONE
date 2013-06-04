@@ -35,14 +35,16 @@ namespace :deploy do
 
   task :symlink_shared do
     run "ln -s #{shared_path}/config.yml #{release_path}/config/config.yml"
-  end
+    run "ln -s #{shared_path}/database.yml #{release_path}/config/database.yml"
+    run "ln -sf #{shared_path}/footer.html #{release_path}/app/views/layouts/_footer.html.erb"
 
+  end
 end
 
 after :deploy, "deploy:restart"
 
+after "deploy:finalize_update", "deploy:symlink_shared"
 after 'deploy:update_code', 'deploy:migrate'
-
 set :keep_releases, 10
 after "deploy:restart", "deploy:cleanup"
 
@@ -59,5 +61,4 @@ before 'deploy:setup', 'rvm:install_ruby'  # install Ruby and create gemset, OR:
 before 'deploy:setup', 'rvm:create_gemset' # only create gemset
 
 #copy config file from shared folder to prod folder
-before "deploy:finalize_update", "deploy:symlink_shared"
 require "rvm/capistrano"
