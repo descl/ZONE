@@ -17,27 +17,18 @@
   overflow:auto;
 }
 
-
-.btnSource{
-  margin-top:-17px;
-  margin-right : 5px;
-  margin-left:5px;
-}
-
-
-
 /** sources */
 
 div.flipper {
   -webkit-perspective: 800;
-  width: 175px;
-  height: 175px;
+  width: 150px;
+  height: 150px;
 }
 
 div.flipper div.front{
   visibility : visible;
-  width: 175px;
-  height: 175px;
+  width: 150px;
+  height: 150px;
 }
 
 div.flipper div {
@@ -48,8 +39,8 @@ div.flipper div {
 
 div.flipper div.back {
   visibility : hidden;
-  width: 175px;
-  height: 175px;
+  width: 150px;
+  height: 150px;
   background-size : cover;
   border-radius: 25px;
   -webkit-transform: rotatey(-180deg);
@@ -96,15 +87,24 @@ ul.sortable li {
 
 .overflowFiltre{
   overflow : auto;
-  height: 330px;
+  height: 315px;
 }
 
 .overflowSource{
   overflow : auto;
-  height: 550px;
+  max-height: 550px;
 }
 
 .overflowSynonyme{
-  height: 170px;
+  height: 125px;
   overflow: auto;
+}
+
+.bodyModal{
+  max-height : 450px;
+}
+
+.modalContentPane{
+  overflow:hidden;
+  height:450px;
 }
