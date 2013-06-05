@@ -10,9 +10,11 @@
 #advancedSearchModal{
   /* new custom width */
   width: 900px;
+  height :560px;
   /* must be half of the width, minus scrollbar on the left (30px) */
   margin-left: -420px;
   padding-top : 10px;
+  overflow:auto;
 }
 
 
@@ -32,27 +34,35 @@ div.flipper {
   height: 175px;
 }
 
+div.flipper div.front{
+  visibility : visible;
+  width: 175px;
+  height: 175px;
+}
+
 div.flipper div {
-  -webkit-backface-visibility: hidden;
   position: absolute;
+  -webkit-backface-visibility: hidden;
   -webkit-transition: 280ms ease-in-out;
 }
 
 div.flipper div.back {
+  visibility : hidden;
   width: 175px;
   height: 175px;
   background-size : cover;
-  -webkit-transform: rotatey(-180deg);
-  padding : 3px;
   border-radius: 25px;
+  -webkit-transform: rotatey(-180deg);
 }
 
 div.flipper:hover div.front {
   -webkit-transform: rotatey(180deg);
+  visibility : hidden;
 }
 
 div.flipper:hover div.back {
   -webkit-transform: rotatey(0deg);
+  visibility : visible;
 }
 
 .imageronde {
@@ -78,4 +88,23 @@ ul.sortable {
 }
 ul.sortable li {
   cursor: pointer;
+}
+
+.breakword{
+  word-break:break-all;
+}
+
+.overflowFiltre{
+  overflow : auto;
+  height: 330px;
+}
+
+.overflowSource{
+  overflow : auto;
+  height: 550px;
+}
+
+.overflowSynonyme{
+  height: 170px;
+  overflow: auto;
 }
