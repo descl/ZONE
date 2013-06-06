@@ -227,4 +227,7 @@ function rebootGeneralModal() {
 	rebootTableSynonyme();
 	
 	affichfiltre();
+	
+	$('#Sources').addClass('active');
+	$('#Filtrage').removeClass('active');	
 }

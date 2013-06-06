@@ -8,7 +8,7 @@
 	$('#advancedSearchModal').on('hide', function() {
 		rebootGeneralModal();
 
-	})
+	});
 </script>
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -35,11 +35,11 @@
 												<form name="formTwitter" action="#" class="span11" style="margin-left:7px">
 													<p></p><p></p>
 													<p>
-														<i class="icon-user"></i>
+														<i class="icon-white icon-user"></i>
 														<input name="pseudo" type="text" class="span10" id="pseudotwitter" placeholder="Pseudo" onclick="$(this).prop('readonly',false);$('#searchtwitter').prop('readonly',true);$('#searchtwitter').val('');" onKeyPress="if (event.keyCode == 13){ addRow(formTwitter);return false;}">
 													</p>
 													<p>
-														<i class="icon-search"></i>
+														<i class="icon-search icon-white"></i>
 														<input name="recherche" type="text" class="span10" id="searchtwitter" placeholder="Tag" readonly onclick="$(this).prop('readonly',false);$('#pseudotwitter').prop('readonly',true);$('#pseudotwitter').val('');" onKeyPress="if (event.keyCode == 13){ addRow(formTwitter);return false;}" />
 													</p>
 													<button class="pull-left btn btn-success" type="button" onclick="addAll(formTwitter);return false;">
@@ -257,12 +257,12 @@
 	</table>
 </div>
 <div class="modal-footer">
-	<a href="#Sources" data-toggle="tab" >
-	<button id="btnTabSource" class="btn btn-primary" onclick="$(this).addClass('btn-primary').removeClass('btn-info');$('#btnTabFiltrage').addClass('btn-info').removeClass('btn-primary');">
+	<a href="#Sources" data-toggle="tab">
+	<button id="btnTabSource" class="btn btn-primary">
 		Sources
 	</button></a>
 	<a href="#Filtrage" data-toggle="tab">
-	<button id="btnTabFiltrage" class="btn btn-info" onclick="$(this).addClass('btn-primary').removeClass('btn-info');$('#btnTabSource').addClass('btn-info').removeClass('btn-primary');">
+	<button id="btnTabFiltrage" class="btn btn-info">
 		Filtrage
 	</button></a>
 	<a href="http://www.reador.net/items">
