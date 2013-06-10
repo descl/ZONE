@@ -29,23 +29,23 @@
 								<ul class="unstyled">
 									<li>
 										<div class="flipper">
-											<div class="front"><img class="circleImage" src="/assets/logotwitter.jpg"/>
+											<div class="front"><img class="circleImage" src="/assets/foregroundTwitter.jpg"/>
 											</div>
-											<div class="back" style="background-image: url('/assets/fondlogotwitter.jpg')">
+											<div class="back" style="background-image: url('/assets/backgroundTwitter.jpg')">
 												<form name="formTwitter" action="#" class="span11" style="margin-left:7px">
 													<p></p><p></p>
 													<p>
 														<i class="icon-white icon-user"></i>
-														<input name="pseudo" type="text" class="span10" id="pseudotwitter" placeholder="Pseudo" onclick="$(this).prop('readonly',false);$('#searchtwitter').prop('readonly',true);$('#searchtwitter').val('');" onKeyPress="if (event.keyCode == 13){ addRow(formTwitter);return false;}">
+														<input name="inputLogin" type="text" class="span10" id="loginTwitter" placeholder="Login" onclick="$(this).prop('readonly',false);$('#searchtwitter').prop('readonly',true);$('#searchtwitter').val('');" onKeyPress="if (event.keyCode == 13){ addRowSourceTable(formTwitter);return false;}">
 													</p>
 													<p>
 														<i class="icon-search icon-white"></i>
-														<input name="inputSearch" type="text" class="span10" id="searchtwitter" placeholder="Tag" readonly onclick="$(this).prop('readonly',false);$('#pseudotwitter').prop('readonly',true);$('#pseudotwitter').val('');" onKeyPress="if (event.keyCode == 13){ addRow(formTwitter);return false;}" />
+														<input name="inputSearch" type="text" class="span10" id="searchTwitter" placeholder="Tag" readonly onclick="$(this).prop('readonly',false);$('#pseudotwitter').prop('readonly',true);$('#pseudotwitter').val('');" onKeyPress="if (event.keyCode == 13){ addRowSourceTable(formTwitter);return false;}" />
 													</p>
-													<button class="pull-left btn btn-success" type="button" onclick="addAll(formTwitter);return false;">
+													<button class="pull-left btn btn-success" type="button" onclick="addAllSourceTable(formTwitter);return false;">
 														Tout
 													</button>
-													<button class="pull-right btn btn-info" type="button" onclick="addRow(formTwitter);return false;">
+													<button class="pull-right btn btn-info" type="button" onclick="addRowSourceTable(formTwitter);return false;">
 														Ajouter
 													</button>
 												</form>
@@ -54,23 +54,23 @@
 									</li>
 									<li>
 										<div class="flipper">
-											<div class="front"><img class="circleImage" src="/assets/logog+.jpg"/>
+											<div class="front"><img class="circleImage" src="/assets/foregroundGoogle.jpg"/>
 											</div>
-											<div class="back" style="background-image: url('/assets/fondlogog+.jpg');">
+											<div class="back" style="background-image: url('/assets/backgroundGoogle.jpg');">
 												<form name="formGoogle" action="#" class="span11" style="margin-left:7px">
 													<p></p><p></p>
 													<p>
-														<i class="icon-user"></i>
-														<input name="pseudo" id="pseudogoogle" type="text" class="span10" placeholder="Pseudo" onclick="$(this).prop('readonly',false);$('#searchgoogle').prop('readonly',true);$('#searchgoogle').val('');" onKeyPress="if (event.keyCode == 13){addRow(formGoogle);return false;}">
+														<i class="icon-white icon-user"></i>
+														<input name="inputLogin" id="loginGoogle" type="text" class="span10" placeholder="Login" onclick="$(this).prop('readonly',false);$('#searchgoogle').prop('readonly',true);$('#searchgoogle').val('');" onKeyPress="if (event.keyCode == 13){addRowSourceTable(formGoogle);return false;}">
 													</p>
 													<p>
-														<i class="icon-search"></i>
-														<input name="inputSearch" id="searchgoogle" type="text" class="span10" placeholder="Recherche" readonly onclick="$(this).prop('readonly',false);$('#pseudogoogle').prop('readonly',true);$('#pseudogoogle').val('');" onKeyPress="if (event.keyCode == 13){ addRow(formGoogle);return false;}">
+														<i class="icon-white icon-search"></i>
+														<input name="inputSearch" id="searchGoogle" type="text" class="span10" placeholder="Search" readonly onclick="$(this).prop('readonly',false);$('#pseudogoogle').prop('readonly',true);$('#pseudogoogle').val('');" onKeyPress="if (event.keyCode == 13){ addRowSourceTable(formGoogle);return false;}">
 													</p>
-													<button class="pull-left btn btn-success" type="button" onclick="addAll(formGoogle);return false;">
+													<button class="pull-left btn btn-success" type="button" onclick="addAllSourceTable(formGoogle);return false;">
 														Tout
 													</button>
-													<button class="pull-right btn btn-danger" type="button" onclick="addRow(formGoogle);return false;">
+													<button class="pull-right btn btn-danger" type="button" onclick="addRowSourceTable(formGoogle);return false;">
 														Ajouter
 													</button>
 												</form>
@@ -79,22 +79,22 @@
 									</li>
 									<li>
 										<div class="flipper">
-											<div class="front"><img class="circleImage" src="/assets/logorss.jpg"/>
+											<div class="front"><img class="circleImage" src="/assets/foregroundRSS.jpg"/>
 											</div>
-											<div class="back" style="background-image: url('/assets/fondlogorss.jpg');">
+											<div class="back" style="background-image: url('/assets/backgroundRSS.jpg');">
 												<form name="formRSS" action="#" class="span11" style="margin-left:7px">
 													<p></p><p></p>
 													<p>
 														<input name="inputHidden" type="hidden" class="span10">
 													</p>
 													<p>
-														<i class="icon-search"></i>
-														<input name="inputSearch" type="text" class="span10" placeholder="URL" onKeyPress="if (event.keyCode == 13){addRow(formRSS);return false;}">
+														<i class="icon-white icon-search"></i>
+														<input name="inputSearch" type="text" class="span10" placeholder="URL" onKeyPress="if (event.keyCode == 13){addRowSourceTable(formRSS);return false;}">
 													</p>
-													<button class="pull-left btn btn-success" type="button" onclick="addAll(formRSS);return false;">
+													<button class="pull-left btn btn-success" type="button" onclick="addAllSourceTable(formRSS);return false;">
 														Tout
 													</button>
-													<button class="pull-right btn btn-warning" type="button" onclick="addRow(formRSS);return false;">
+													<button class="pull-right btn btn-warning" type="button" onclick="addRowSourceTable(formRSS);return false;">
 														Ajouter
 													</button>
 												</form>
@@ -105,8 +105,8 @@
 							</div>
 
 							<!-- tableau récap -->
-							<div class="span5 overflowSource">
-								<table class="table table-striped table-bordered table-hover pre-scrollable" id="tablesource">
+							<div class="span5 sourceOverflow">
+								<table class="table table-striped table-bordered table-hover pre-scrollable" id="sourceTable">
 									<thead>
 										<tr>
 											<th class="span1">Type</th>
@@ -119,7 +119,7 @@
 						</div>
 					</div>
 					<!-- Panel de filtrage -->
-					<div class="tab-pane" id="Filtrage">
+					<div class="tab-pane" id="Filtering">
 						<div class="modalContentPane">
 							<div class="row-fluid">
 								<div class="span1"></div>
@@ -146,8 +146,8 @@
 													</li>
 												</ul>
 											</div>
-											<input id="keyword" type="text" placeholder="Votre mot-clé" onkeypress="if (event.keyCode == 13){ addFiltre(); return false;}" onkeyup="MAJtablesynonyme();return false;">
-											<button class="btn btn-success pull-right" onclick="addFiltre(); return false;">
+											<input id="keyword" type="text" placeholder="Keyword" onkeypress="if (event.keyCode == 13){ addFilter(); return false;}" onkeyup="updateKeywordTable();return false;">
+											<button class="btn btn-success pull-right" onclick="addFilter(); return false;">
 												Ajouter
 											</button>
 										</div>
@@ -158,8 +158,8 @@
 										<button class="btn" onclick="unselect();return false;">
 											AUCUN
 										</button>
-										<div class="overflowSynonyme">
-											<table class="table table-striped table-bordered table-hover pre-scrollable" id="tablesynonyme">
+										<div class="keywordOverflow">
+											<table class="table table-striped table-bordered table-hover pre-scrollable" id="keywordTable">
 												<tbody></tbody>
 											</table>
 										</div>
@@ -170,8 +170,8 @@
 
 								<div class="span5" >
 									<h3>Votre filtrage</h3>
-									<div class='overflowFiltre'>
-										<table class="table table-striped table-bordered table-hover pre-scrollable" id="tablefiltrage">
+									<div class='filteringOverflow'>
+										<table class="table table-striped table-bordered table-hover pre-scrollable" id="filteringTable">
 											<thead>
 												<tr>
 													<th hidden>ID</th>
@@ -187,7 +187,7 @@
 							<div class="row-fluid">
 								<div class="span1"></div>
 								<div class="span10">
-									<textarea id="areafiltre" readonly style="width:100%; resize: none"></textarea>
+									<textarea id="filteringArea" readonly style="width:100%; resize: none"></textarea>
 								</div>
 							</div>
 						</div>
@@ -261,7 +261,7 @@
 	<button id="btnTabSource" class="btn btn-primary">
 		Sources
 	</button></a>
-	<a href="#Filtrage" data-toggle="tab">
+	<a href="#Filtering" data-toggle="tab">
 	<button id="btnTabFiltrage" class="btn btn-info">
 		Filtrage
 	</button></a>

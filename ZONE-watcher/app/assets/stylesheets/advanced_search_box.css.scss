@@ -85,17 +85,17 @@ ul.sortable li {
   word-break:break-all;
 }
 
-.overflowFiltre{
+.filteringOverflow{
   overflow : auto;
   height: 315px;
 }
 
-.overflowSource{
+.sourceOverflow{
   overflow : auto;
   max-height: 440px;
 }
 
-.overflowSynonyme{
+.keywordOverflow{
   height: 125px;
   overflow: auto;
 }
@@ -107,4 +107,8 @@ ul.sortable li {
 .modalContentPane{
   overflow:hidden;
   height:450px;
+}
+
+.icon-white{
+  color : white;
 }
