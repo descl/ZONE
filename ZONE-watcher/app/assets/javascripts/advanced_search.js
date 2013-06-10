@@ -122,11 +122,11 @@ function addRow(Form) {
 
 	var tdicone = "";
 	if (Form.name == "formTwitter")
-		tdicone = '<td><img class="imagerondepetite sortable" src="/assets/logotwitter.jpg" width="40" height="40";/></td>';
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/logotwitter.jpg" width="40" height="40";/></td>';
 	else if (Form.name == "formGoogle")
-		tdicone = '<td><img class="imagerondepetite sortable" src="/assets/logog+.jpg" width="40" height="40";/></td>';
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/logog+.jpg" width="40" height="40";/></td>';
 	else if (Form.name == "formRSS")
-		tdicone = '<td><img class="imagerondepetite sortable" src="/assets/logorss.jpg" width="40" height="40";/></td>';
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/logorss.jpg" width="40" height="40";/></td>';
 
 	var text = "";
 	var tdsource = "";
@@ -180,11 +180,11 @@ function addAll(Form) {
 
 	var tdicone = "";
 	if (Form.name == "formTwitter")
-		tdicone = '<td><img class="imagerondepetite sortable" src="/assets/logotwitter.jpg" width="40" height="40";/></td>';
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/logotwitter.jpg" width="40" height="40";/></td>';
 	else if (Form.name == "formGoogle")
-		tdicone = '<td><img class="imagerondepetite sortable" src="/assets/logog+.jpg" width="40" height="40";/></td>';
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/logog+.jpg" width="40" height="40";/></td>';
 	else if (Form.name == "formRSS")
-		tdicone = '<td><img class="imagerondepetite sortable" src="/assets/logorss.jpg" width="40" height="40";/></td>';
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/logorss.jpg" width="40" height="40";/></td>';
 
 	var tdsource = "<td><i>Toutes les sources</i>";
 

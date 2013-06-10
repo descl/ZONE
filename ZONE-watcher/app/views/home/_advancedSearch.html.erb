@@ -29,7 +29,7 @@
 								<ul class="unstyled">
 									<li>
 										<div class="flipper">
-											<div class="front"><img class="imageronde" src="/assets/logotwitter.jpg"/>
+											<div class="front"><img class="circleImage" src="/assets/logotwitter.jpg"/>
 											</div>
 											<div class="back" style="background-image: url('/assets/fondlogotwitter.jpg')">
 												<form name="formTwitter" action="#" class="span11" style="margin-left:7px">
@@ -40,7 +40,7 @@
 													</p>
 													<p>
 														<i class="icon-search icon-white"></i>
-														<input name="recherche" type="text" class="span10" id="searchtwitter" placeholder="Tag" readonly onclick="$(this).prop('readonly',false);$('#pseudotwitter').prop('readonly',true);$('#pseudotwitter').val('');" onKeyPress="if (event.keyCode == 13){ addRow(formTwitter);return false;}" />
+														<input name="inputSearch" type="text" class="span10" id="searchtwitter" placeholder="Tag" readonly onclick="$(this).prop('readonly',false);$('#pseudotwitter').prop('readonly',true);$('#pseudotwitter').val('');" onKeyPress="if (event.keyCode == 13){ addRow(formTwitter);return false;}" />
 													</p>
 													<button class="pull-left btn btn-success" type="button" onclick="addAll(formTwitter);return false;">
 														Tout
@@ -54,7 +54,7 @@
 									</li>
 									<li>
 										<div class="flipper">
-											<div class="front"><img class="imageronde" src="/assets/logog+.jpg"/>
+											<div class="front"><img class="circleImage" src="/assets/logog+.jpg"/>
 											</div>
 											<div class="back" style="background-image: url('/assets/fondlogog+.jpg');">
 												<form name="formGoogle" action="#" class="span11" style="margin-left:7px">
@@ -65,7 +65,7 @@
 													</p>
 													<p>
 														<i class="icon-search"></i>
-														<input name="recherche" id="searchgoogle" type="text" class="span10" placeholder="Recherche" readonly onclick="$(this).prop('readonly',false);$('#pseudogoogle').prop('readonly',true);$('#pseudogoogle').val('');" onKeyPress="if (event.keyCode == 13){ addRow(formGoogle);return false;}">
+														<input name="inputSearch" id="searchgoogle" type="text" class="span10" placeholder="Recherche" readonly onclick="$(this).prop('readonly',false);$('#pseudogoogle').prop('readonly',true);$('#pseudogoogle').val('');" onKeyPress="if (event.keyCode == 13){ addRow(formGoogle);return false;}">
 													</p>
 													<button class="pull-left btn btn-success" type="button" onclick="addAll(formGoogle);return false;">
 														Tout
@@ -79,17 +79,17 @@
 									</li>
 									<li>
 										<div class="flipper">
-											<div class="front"><img class="imageronde" src="/assets/logorss.jpg"/>
+											<div class="front"><img class="circleImage" src="/assets/logorss.jpg"/>
 											</div>
 											<div class="back" style="background-image: url('/assets/fondlogorss.jpg');">
 												<form name="formRSS" action="#" class="span11" style="margin-left:7px">
 													<p></p><p></p>
 													<p>
-														<input name="recherche" type="hidden" class="span10">
+														<input name="inputHidden" type="hidden" class="span10">
 													</p>
 													<p>
 														<i class="icon-search"></i>
-														<input name="recherche" type="text" class="span10" placeholder="URL" onKeyPress="if (event.keyCode == 13){addRow(formRSS);return false;}">
+														<input name="inputSearch" type="text" class="span10" placeholder="URL" onKeyPress="if (event.keyCode == 13){addRow(formRSS);return false;}">
 													</p>
 													<button class="pull-left btn btn-success" type="button" onclick="addAll(formRSS);return false;">
 														Tout
