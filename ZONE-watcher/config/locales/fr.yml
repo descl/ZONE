@@ -91,7 +91,7 @@ fr:
         "Suivez en temps réel les news publiées sur internet avec un filtrage personnalisé des informations."
     twitter:
       title:
-        "Connectez moi à twitter!"
+        "Restez connecté à twitter!"
       content:
         "Reador peut récupérer votre timeline et effectuer du filtrage pour vous sur les tweets présents en ligne."
     scalable:
@@ -103,12 +103,12 @@ fr:
       title:
         "OpenSource"
       content:
-        "Reador est un logiciel libre, vous pouvez le telecharger, le modifier et le publier, effectuez des pull requests sur <a href='https://github.com/descl/ZONE'>github</a>."
+        "Reador est un logiciel libre, vous pouvez le télécharger, le modifier et le publier, effectuer des pull requests sur <a href='https://github.com/descl/ZONE'>github</a>, etc."
     rssfeed:
       title:
-        "Fonctionne avec d'autres aggrégateurs RSS"
+        "Créateur de flux"
       content:
-        "Vous pouvez générer vos propre flux RSS sur Reador pour ensuite les utiliser sur votre propre gestionnaire de flux RSS"
+        "Vous pouvez générer vos propre flux RSS sur Reador pour ensuite les utiliser sur votre propre gestionnaire de flux RSS."
     free:
       title:
         "Reador est gratuit"
@@ -118,12 +118,12 @@ fr:
       title:
         "Fait pour vous et avec vous!"
       content:
-        "Reador est développé pour vous! Nous avons réelement besoin de vos retours, de vos besoin et de tout savoir sur l'organisation de votre veille pour vous fournir une solution toujours plus performante <a href='https://github.com/descl/ZONE/pulls'>soumettre une requête</a>."
+        "Reador est développé pour vous! Nous avons réellement besoin de vos retours, de vos demandes, de vos remarques et de tout savoir sur l'organisation de votre veille pour vous fournir une solution toujours plus performante."
     semantic:
       title:
-        "Semantique"
+        "Sémantique"
       content:
-        "La sémantique est un point qui nous tient vraiment à coeur, nous voulons supprimer toutes sources d'ambiguité dans vos recherches de news."
+        "La sémantique est un point qui nous tient vraiment à coeur, nous voulons supprimer toutes sources d'ambiguïté dans vos recherches de news."
     veilleurs:
       title:
         "Une solution parfaite pour les veilleurs"
@@ -131,6 +131,6 @@ fr:
         "Vous êtes stressés à l'idée de rater une news importante? d'avoir du retard sur vos news à analyser? Nous aussi!"
     whosunder:
       title:
-        "Qui est dérrière reador?"
+        "Qui est derrière reador?"
       content:
         "Reador est principalement développé par <a href='http://desclaux.me'>Christophe Desclaux<a>. Il est assisté par l'institut de recherche <a href='http://www.inria.fr'>Inria</a> dans le cadre du concours <a href='http://boostyourcode.inria.fr'>BoostYourCode2012</a>."
