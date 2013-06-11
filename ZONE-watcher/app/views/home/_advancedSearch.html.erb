@@ -14,7 +14,7 @@
 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 		×
 	</button>
-	<h3 id="myModalLabel">Recherche avancée</h3>
+	<h3 id="myModalLabel">Recherche sémantique : Sources</h3>
 </div>
 <div class="modal-body bodyModal">
 	<div class="row-fluid" xmlns="http://www.w3.org/1999/html">
@@ -213,38 +213,21 @@
 				<td class="synonyme">education</td>
 			</tr>
 			<tr>
-				<td class="mot" value="mooc">mooc</td>
-				<td class="synonyme">education</td>
+				<td class="mot" value="mooc">inria</td>
+				<td class="synonyme">laboratoire (recherche)</td>
 			</tr>
 			<tr>
-				<td class="mot" value="mooc">mooc</td>
-				<td class="synonyme">education</td>
+				<td class="mot" value="mooc">inria</td>
+				<td class="synonyme">laboratoire (batiment)</td>
 			</tr>
 			<tr>
-				<td class="mot" value="mooc">mooc</td>
-				<td class="synonyme">education</td>
+				<td class="mot" value="mooc">inria</td>
+				<td class="synonyme">recherche</td>
 			</tr>
 			<tr>
-				<td class="mot" value="mooc">mooc</td>
-				<td class="synonyme">education</td>
+				<td class="mot" value="mooc">inria</td>
+				<td class="synonyme">wimmics</td>
 			</tr>
-			<tr>
-				<td class="mot" value="mooc">mooc</td>
-				<td class="synonyme">education</td>
-			</tr>
-			<tr>
-				<td class="mot" value="mooc">mooc</td>
-				<td class="synonyme">education</td>
-			</tr>
-			<tr>
-				<td class="mot" value="mooc">mooc</td>
-				<td class="synonyme">education</td>
-			</tr>
-			<tr>
-				<td class="mot" value="mooc">mooc</td>
-				<td class="synonyme">education</td>
-			</tr>
-
 			<tr>
 				<td class="mot" value="elearning">elearning</td>
 				<td class="synonyme">onlinelearning</td>
@@ -258,15 +241,15 @@
 </div>
 <div class="modal-footer">
 	<a href="#Sources" data-toggle="tab">
-	<button id="btnTabSource" class="btn btn-primary">
-		Sources
+	<button id="btnTabSource" class="btn btn-info" style="display :none;" onclick="setButtonNextTab();">
+		< Précedent
 	</button></a>
 	<a href="#Filtering" data-toggle="tab">
-	<button id="btnTabFiltrage" class="btn btn-info">
-		Filtrage
+	<button id="btnTabFiltrage" class="btn btn-info" onclick="setButtonPreviousTab();">
+		Suivant >
 	</button></a>
 	<a href="http://www.reador.net/items">
-	<button class="btn btn-success" >
+	<button id='btnGoReador' style="display :none;"  class="btn btn-success">
 		Go Reador
 	</button> </a>
 </div>

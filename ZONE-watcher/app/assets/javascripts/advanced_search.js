@@ -84,11 +84,7 @@ function removelinefiltrage(line) {
 }
 
 function updateKeywordTable() {
-	if ($('#keyword').val() == "") {
-		$('#keywordTable tbody > tr').each(function() {
-			$(this).remove();
-		});
-	}
+	rebootKeywordTable();
 	$('#fakesynonyme tbody > tr').each(function() {
 		if ($('#keyword').val() == $(this).find('td.mot').html()) {
 			$('#keywordTable').append('<tr><td><label class="checkbox"><input type="checkbox" value="' + $(this).find('td.synonyme').html() + '">' + $(this).find('td.synonyme').html() + '</label></td></tr>');
@@ -199,5 +195,21 @@ function rebootGeneralModal() {
 	getFilter();
 	
 	$('#Sources').addClass('active');
-	$('#Filtering').removeClass('active');	
+	$('#Filtering').removeClass('active');
+	
+	setButtonNextTab();
+}
+
+function setButtonNextTab(){
+	$('#btnTabSource').hide();
+	$('#btnTabFiltrage').show();
+	$('#btnGoReador').hide();
+	$('#myModalLabel').text('Recherche sémantique : Sources');
+}
+
+function setButtonPreviousTab(){
+	$('#btnTabFiltrage').hide();
+	$('#btnGoReador').show();
+	$('#btnTabSource').show();
+	$('#myModalLabel').text('Recherche sémantique : Filtres');
 }
