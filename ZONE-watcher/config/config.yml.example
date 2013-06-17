@@ -6,11 +6,11 @@ zopimId: "1AfdKtAnFnyhyiv9K09kidoNONtAmgvV"
 
 devise:
   twitter:
-    auth: ""
-    pass: ""
+    auth: "v"
+    pass: "v"
   github:
-    auth: ""
-    pass: ""
+    auth: "v"
+    pass: "v"
   google:
-    auth: ""
-    pass: ""
+    auth: "v"
+    pass: "v"
