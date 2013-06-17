@@ -4,3 +4,6 @@
 *~
 *#
 *.log
+.project
+/ZONE-watcher/Gemfile.lock
+/ZONE-watcher/db/schema.rb
