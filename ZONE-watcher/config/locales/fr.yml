@@ -134,3 +134,59 @@ fr:
         "Qui est derrière reador?"
       content:
         "Reador est principalement développé par <a href='http://desclaux.me'>Christophe Desclaux<a>. Il est assisté par l'institut de recherche <a href='http://www.inria.fr'>Inria</a> dans le cadre du concours <a href='http://boostyourcode.inria.fr'>BoostYourCode2012</a>."
+  semanticsource:
+    title:
+      "Recherche sémantique : Sources"  
+    button:
+      addall:
+        "Tout"
+      addone:
+        "Ajouter"
+    table: 
+      keyword:
+        "Type"
+      content:
+        "Intitulé"
+  semanticfiltering:
+    title:
+      "Recherche sémantique : Filtrage"
+    keyword:
+      title:
+        "Mot-clé"
+      with:
+        "AVEC"
+      without:
+        "SANS"
+      and:
+        "ET"
+      or:
+        "OU"
+    button:
+      addone:
+        "Ajouter"
+    linkword:
+      title:
+        "Mots-liés"
+      selectall:
+        "Tous"
+      unselect:
+        "Aucun"
+    easyfilter:
+      title:
+        "Votre filtre"
+    table:
+      title:
+        "Votre filtrage"
+      keyword:
+        "Attribut"
+      content:
+        "Intitulé"
+  modal:
+    button:
+      previous:
+        "< Précédent"
+      next:
+        "Suivant >"
+      go:
+        "Go Reador"
+  
