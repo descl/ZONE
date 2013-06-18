@@ -80,7 +80,7 @@ en:
     searchbutton:
       "Go reador!"
     searchadvanced:
-      "Advanced search"
+      "Semantic search"
   moreabout:
     title:
       "More about Reador!"
@@ -91,9 +91,9 @@ en:
         "You can easily use reador with other people exchanging filters and news sources."
     twitter:
       title:
-        " Work with twitter!"
+        "Work with twitter!"
       content:
-        "You can use reador on many different devices."
+        "Reador can use your timelime and do the filtering for your tweets."
     scalable:
       title:
         "Scalable"
@@ -106,7 +106,7 @@ en:
         "Reador is OpenSource, you can download, fork, make pull requests on <a href='https://github.com/descl/ZONE'>ZONE-project repo</a>."
     rssfeed:
       title:
-        "Work with other RSS feed aggregator"
+        "RSS feed maker"
       content:
         "You can take as output as you filters an RSS feeds for you favorite feeds management system."
     free:
@@ -118,19 +118,19 @@ en:
       title:
         "Made for You"
       content:
-        "Reador is made for you! We realy need your feedback and <a href='https://github.com/descl/ZONE/pulls'>pull requests</a>."
+        "Reador is made for you! We really need your feedback, your requests, yous comments and to learn all about the organization of your work to provide you with an even more powerful solution."
     semantic:
       title:
         "Semantic"
       content:
-        ""
+        "Semantic is really important to us, we want to to remove all sources of ambiguity in your search."
     veilleurs:
       title:
-        "Usefull for 'veilleurs'"
+        "Usefull for watchmen"
       content:
-        "Reador is a fabulous tool for veilleurs"
+        "You're stressed out about missing an important news? to be behind on your news to analyze? So are we!"
     whosunder:
       title:
-        "Who is under reador?"
+        "Who is behind Reador?"
       content:
         "Reador is mainly developed by <a href='http://desclaux.me'>Christophe Desclaux<a>. He is assisted by the french research institute <a href='http://www.inria.fr'>Inria</a> under the contest <a href='http://boostyourcode.inria.fr'>BoostYourCode2012</a>."
