@@ -165,7 +165,7 @@ private static final long serialVersionUID = 1L;
             String isS = " ";
             if(me.isIsSearchable()) isS = "*";
             content += "\n\t"+isS+" "+isL+" "+me.getType() + " : ";
-            if (me.getValue().length() > 100){
+            if (me.getValue()!= null && me.getValue().length() > 100){
                 content+= me.getValue().substring(0,100)+"...";
             }else{
                 content+= me.getValue();
