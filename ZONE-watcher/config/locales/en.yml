@@ -134,3 +134,58 @@ en:
         "Who is behind Reador?"
       content:
         "Reador is mainly developed by <a href='http://desclaux.me'>Christophe Desclaux<a>. He is assisted by the french research institute <a href='http://www.inria.fr'>Inria</a> under the contest <a href='http://boostyourcode.inria.fr'>BoostYourCode2012</a>."
+  semanticsource:
+    title:
+      "Semantic search : Sources"  
+    button:
+      addall:
+        "All"
+      addone:
+        "Add"
+    table: 
+      keyword:
+        "Source"
+      content:
+        "Content"
+  semanticfiltering:
+    title:
+      "Semantic search : Filtering"
+    keyword:
+      title:
+        "Keyword"
+      with:
+        "WITH"
+      without:
+        "WITHOUT"
+      and:
+        "AND"
+      or:
+        "OR"
+    button:
+      addone:
+        "Add"
+    linkword:
+      title:
+        "Related words"
+      selectall:
+        "All"
+      unselect:
+        "None"
+    easyfilter:
+      title:
+        "Your filter"
+    table:
+      title:
+        "Your filtering"
+      keyword:
+        "Attribute"
+      content:
+        "Content"
+  modal:
+    button:
+      previous:
+        "< Previous"
+      next:
+        "Next >"
+      go:
+        "Go Reador"
