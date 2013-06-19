@@ -154,6 +154,9 @@
 															source : "complete_entities/a.json",
 															search : function(event, ui) {
 																$("#keyword").autocomplete({source : "complete_entities/"+$("#keyword").val()+".json"});
+															},
+															close: function( event, ui ){
+																updateKeywordTable();
 															}
 														});
 													});
