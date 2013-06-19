@@ -2,6 +2,8 @@
 
 //General ID for the filters that the user pick
 idRowFiltering = 0;
+//Timer for keyword update
+timer = "";
 
 //Add a filter to the list of filter
 function addFilter() {
@@ -137,6 +139,11 @@ function updateKeywordTable() {
 		});
 }
 
+//ask the timer if the related keyword table can be show. It will wait 1 second before doing it. If the function is call again, it will stop the current timer and start a new
+function askUpdateKeywordTable(){
+	clearTimeout(timer);
+	timer=setTimeout(function(){updateKeywordTable()},1000);
+}
 /** sources **/
 
 //General ID for the sources that the user pick
