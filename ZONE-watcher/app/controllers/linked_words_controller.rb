@@ -6,6 +6,8 @@ class LinkedWordsController < ApplicationController
       format.json {
         @result = []
         @result << params[:desc]
+        @result << "first word"
+        @result << "second word"
         render json: @result }
     end
   end
