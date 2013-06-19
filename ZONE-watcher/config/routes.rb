@@ -37,6 +37,7 @@ ZONEWatcher::Application.routes.draw do
   match 'items/:id' => 'items#show', :constraints  =>  {:id =>  /.*/ }
 
   get "linked_words/:desc", :action => "list", :controller => "linked_words"
+  get "complete_entities/:desc", :action => "autoComplete", :controller => "linked_words"
 
 end
 

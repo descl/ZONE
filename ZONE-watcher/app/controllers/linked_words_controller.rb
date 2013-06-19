@@ -11,4 +11,15 @@ class LinkedWordsController < ApplicationController
         render json: @result }
     end
   end
+
+  def autoComplete
+    respond_to do |format|
+      format.json {
+        @result = []
+        @result << params[:desc]
+        @result << "first word"
+        @result << "second word"
+        render json: @result }
+    end
+  end
 end
