@@ -116,3 +116,49 @@ ul.sortable li {
 #formModal {
   margin : 0;
 }
+
+.ui-autocomplete { 
+  z-index:2147483647; 
+   max-width:184px;
+   //border: solid 1px #f9f9f9;
+   
+}
+
+.ui-menu-item{
+  list-style-type: none;
+  padding-left : 3px;
+}
+
+.ui-menu li:nth-child(2n+1)
+{
+    background-color: #f9f9f9;
+    border-top: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    border-left: 1px solid #dddddd;
+}
+.ui-menu li:nth-child(2n)
+{
+    background-color: white;
+    border-top: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    border-left: 1px solid #dddddd;
+}
+
+.ui-menu li:last-child{
+  border-bottom: 1px solid #dddddd;
+  border-radius:0 0 4px 4px;
+}
+
+.ui-menu li:hover{
+   background-color: #f5f5f5;
+}
+.ui-corner-all:hover{
+  background : none;
+  color:black;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+#btnWITHOUT{
+  border-radius : 0 0 0 0;
+}
