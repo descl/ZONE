@@ -3,12 +3,6 @@
 //General ID for the filters that the user pick
 idRowFiltering = 0;
 
-//Change the dropdown selector for the filtering
-function changeDropdownKeyword(keyword) {
-	$('#dropdownKeyword').text(keyword);
-	$('#dropdownKeyword').val(keyword);
-}
-
 //Add a filter to the list of filter
 function addFilter() {
 	if ($('#keyword').val() == "") {
@@ -17,15 +11,17 @@ function addFilter() {
 	var id = 1;
 	var classtr = "";
 	//Choose the class of the line of the table ( red for WITHOUT, blue for OR, green for AND)
-	if ($('#dropdownKeyword').val() == "ET") {
+	if ($('#btnAND').hasClass('active') || $('#btnWITH').hasClass('active')) {
 		id = 1;
 		classtr = 'success';
-	} else if ($('#dropdownKeyword').val() == "OU" || $('#dropdownKeyword').val() == "AVEC") {
+	} else if ($('#btnOR').hasClass('active')) {
 		id = 0;
 		classtr = 'info';
-	} else if ($('#dropdownKeyword').val() == "SANS") {
+	} else if ($('#btnWITHOUT').hasClass('active')) {
 		id = 2;
 		classtr = 'error';
+	} else {
+		return false;
 	}
 
 	//Add the related word to the keyword
@@ -35,35 +31,54 @@ function addFilter() {
 			motcle += ', ' + $(this).val();
 		}
 	});
-	
-	
-	var attr = $('#dropdownKeyword').val();
-	
-	//Change the dropdwonselector ( take away WITH and WITHOUT and put AND, OR , WITHOUT instead)
-	if ($('#filteringTable tr').length == 1)
-		$('.dropdownKeywordFiltering').html('<li onclick="changeDropdownKeyword(\'OU\')">OU</li><li onclick="changeDropdownKeyword(\'ET\')">ET</li><li onclick="changeDropdownKeyword(\'SANS\')">SANS</li>');
-	
+
+	var attr = getAttrSelected();
+
 	//Add the line to the table
 	$('#filteringTable').append('<tr id="idrow' + idRowFiltering + '" class="' + classtr + '"><td hidden>' + id + '</td><td class="tdkey">' + attr + '</td><td class="span3"><div class="tdval span9 breakword">' + motcle + '</div><button class="btn btn-danger pull-right"  onclick="removelinefiltrage(\'idrow' + idRowFiltering + '\')"><i class="icon-remove"></i></button></td></tr>');
 	idRowFiltering += 1;
 
 	//Reset the filtering
 	rebootFiltering();
-	
+
 	//Write the filter in the easy-box
 	getFilter();
+
+	//Change the dropdwonselector ( take away WITH and WITHOUT and put AND, OR , WITHOUT instead)
+	checkDropdown();
+}
+
+//Return the title of the button selected ( WITH, WITHOUT, AND, OR)
+function getAttrSelected() {
+	if ($('#btnAND').hasClass('active'))
+		return $('#btnAND').prop('title');
+	if ($('#btnWITH').hasClass('active'))
+		return $('#btnWITH').prop('title');
+	if ($('#btnOR').hasClass('active'))
+		return $('#btnOR').prop('title');
+	if ($('#btnWITHOUT').hasClass('active'))
+		return $('#btnWITHOUT').prop('title');
+}
+
+//Disabled or not the OR button and hide or show the AND/WITH button, depending if it's the first line of filter or not
+function checkDropdown() {
+	if ($('#filteringTable tr').length > 1) {
+		$('#btnOR').prop('disabled', false);
+		$('#btnWITH').addClass('hidden');
+		$('#btnAND').removeClass('hidden');
+		$('#btnAND').button('toggle');
+	} else {
+		$('#btnOR').prop('disabled', true);
+		$('#btnWITH').removeClass('hidden');
+		$('#btnAND').addClass('hidden');
+		$('#btnWITH').button('toggle');
+	}
 }
 
 //Reset the dropdown selector and the table of related word
 function rebootFiltering() {
 	$('#keyword').val('');
-	if ($('#filteringTable tr').length == 1) {
-		$('#dropdownKeyword').text("AVEC");
-		$('#dropdownKeyword').val("AVEC");
-	} else {
-		$('#dropdownKeyword').text("OU");
-		$('#dropdownKeyword').val("OU");
-	}
+	checkDropdown();
 
 	unselect();
 	$('#keywordTable tbody > tr').each(function() {
@@ -103,8 +118,7 @@ function removelinefiltrage(line) {
 	//Set the filter in the easy-filter box
 	getFilter();
 
-	if ($('#filteringTable tr').length == 1)
-		$('.dropdownKeywordFiltering').html('<li onclick="changeDropdownKeyword(\'AVEC\')">AVEC</li><li onclick="changeDropdownKeyword(\'SANS\')">SANS</li>');
+	checkDropdown();
 
 	rebootFiltering();
 }
@@ -112,11 +126,15 @@ function removelinefiltrage(line) {
 //Fill the related keyword table with the right keyword
 function updateKeywordTable() {
 	rebootKeywordTable();
-	$('#fakesynonyme tbody > tr').each(function() {
-		if ($('#keyword').val() == $(this).find('td.mot').html()) {
-			$('#keywordTable').append('<tr><td><label class="checkbox"><input type="checkbox" value="' + $(this).find('td.synonyme').html() + '">' + $(this).find('td.synonyme').html() + '</label></td></tr>');
-		}
-	});
+	if ($('#keyword').val() != "" || $('#keyword').val() != null)
+		$.getJSON('linked_words/' + $('#keyword').val() + '.json', function(data) {
+			rebootKeywordTable();
+			$.each(data, function(key, val) {
+				if ($('#keyword').val() != "") {
+					$('#keywordTable').append('<tr><td><label class="checkbox"><input type="checkbox" value="' + val + '">' + val + '</label></td></tr>');
+				}
+			});
+		});
 }
 
 /** sources **/
@@ -140,15 +158,15 @@ function addRowSourceTable(Form) {
 	//Pick the icon corresponding to the source ( twitter, g+, rss,...)
 	var tdicone = "";
 	if (Form == "#formTwitter")
-		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundTwitter.jpg" width="40" height="40";/><input class="valSource" type="hidden" value="twitter"></td>';
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundTwitter.png" width="40" height="40";/><input class="valSource" type="hidden" value="twitter"></td>';
 	else if (Form == "#formGoogle")
-		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundGoogle.jpg" width="40" height="40";/><input class="valSource" type="hidden" value="google"></td>';
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundGoogle.png" width="40" height="40";/><input class="valSource" type="hidden" value="google"></td>';
 	else if (Form == "#formRSS")
-		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundRSS.jpg" width="40" height="40";/><input class="valSource" type="hidden" value="rss"></td>';
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundRSS.png" width="40" height="40";/><input class="valSource" type="hidden" value="rss"></td>';
 
 	var text = "";
 	var tdsource = "";
-	
+
 	//Pick the icon corresponding to the type of the source ( search or people)
 	if ($(Form + " .inputLogin").val() != "" && Form != "#formRSS") {
 		text = $(Form + " .inputLogin").val();
@@ -165,10 +183,10 @@ function addRowSourceTable(Form) {
 	idRowSource += 1;
 
 	textefinal = textefinal + tdicone + tdsource + tdaction + "/<tr>";
-	
+
 	//add the line
 	$('#sourceTable').append(textefinal);
-	
+
 	//Reset the input of the source
 	rebootForm(Form);
 }
@@ -184,14 +202,14 @@ function addAllSourceTable(Form) {
 	var textefinal = "";
 
 	var tdicone = "";
-	
+
 	//Pick the icon corresponding to the source ( twitter, g+, rss,...)
 	if (Form == "formTwitter")
-		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundTwitter.jpg" width="40" height="40";/><input class="valSource" type="hidden" value="twitter"></td>';
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundTwitter.png" width="40" height="40";/><input class="valSource" type="hidden" value="twitter"></td>';
 	else if (Form == "formGoogle")
-		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundGoogle.jpg" width="40" height="40";/><input class="valSource" type="hidden" value="google"></td>';
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundGoogle.png" width="40" height="40";/><input class="valSource" type="hidden" value="google"></td>';
 	else if (Form == "formRSS")
-		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundRSS.jpg" width="40" height="40";/><input class="valSource" type="hidden" value="rss"></td>';
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundRSS.png" width="40" height="40";/><input class="valSource" type="hidden" value="rss"></td>';
 
 	var tdsource = "<td><i><div class='breakword' style='float:left'>Toutes les sources</div></i>";
 
@@ -202,10 +220,10 @@ function addAllSourceTable(Form) {
 	idRowSource += 1;
 
 	textefinal = textefinal + tdicone + tdsource + tdaction + "/<tr>";
-	
+
 	//add the line
 	$('#sourceTable').append(textefinal);
-	
+
 	//Reset the input of the source
 	rebootForm(Form);
 }
@@ -236,12 +254,12 @@ function rebootGeneralModal() {
 	rebootForm('#formTwitter');
 	rebootForm('#formRSS');
 	rebootForm('#formGoogle');
-	
+
 	rebootSourceTable();
 
-	rebootFiltering();
 	rebootFilteringTable();
 	rebootKeywordTable();
+	rebootFiltering();
 
 	getFilter();
 
@@ -249,13 +267,6 @@ function rebootGeneralModal() {
 	$('#Filtering').removeClass('active');
 
 	setButtonNextTab();
-	
-	if ($('#filteringTable tr').length == 1){
-		$('.dropdownKeywordFiltering').html('<li onclick="changeDropdownKeyword(\'AVEC\')">AVEC</li><li onclick="changeDropdownKeyword(\'SANS\')">SANS</li>');
-		$('#dropdownKeyword').text("AVEC");
-		$('#dropdownKeyword').val("AVEC");
-	}
-
 }
 
 //Change the button that switch tab ( put everything ready to go to next tab)
@@ -278,11 +289,11 @@ function setButtonPreviousTab() {
 
 //Prepare the input with all data
 function movingData() {
-	
+
 	var arraySourceAdded = new Array();
 	var arrayFilteringAdded = new Array();
 	var littleArray = new Array();
-	
+
 	//Prepare the array that will contain the sources data
 	$('#sourceTable tbody > tr ').each(function() {
 		if ($(this).find('input.valSource').val()) {
@@ -306,7 +317,7 @@ function movingData() {
 			littleArray = new Array();
 		}
 	});
-	
+
 	//create the input with the data
 	$('#movedData').html($('#movedData').html() + "<input name='arraySource' type='hidden' value='" + arraySourceAdded + "'>" + "<input name='arrayFiltering[]' type='hidden' value='" + arrayFilteringAdded + "'>");
 }
