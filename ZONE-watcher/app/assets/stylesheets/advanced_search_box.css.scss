@@ -39,7 +39,7 @@ div.flipper div {
 
 div.flipper div.back {
   visibility : hidden;
-  width: 150px;
+  width: 142px;
   height: 150px;
   background-size : cover;
   border-radius: 25px;
@@ -166,3 +166,8 @@ ul.sortable li {
 .input-prepend, .input-append {
     white-space : normal;
   }
+  
+.paddingFour{
+  padding-left:4px;
+  padding-right:4px;
+}
