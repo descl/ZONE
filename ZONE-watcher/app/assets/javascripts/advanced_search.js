@@ -86,7 +86,7 @@ function rebootFiltering() {
 	$('#keywordTable tbody > tr').each(function() {
 		$(this).remove();
 	});
-	
+
 }
 
 //Write the filter in the easy-filter box
@@ -151,7 +151,7 @@ function askUpdateKeywordTable() {
 		timer = setTimeout(function() {
 			updateKeywordTable()
 		}, 1000);
-	} else{
+	} else {
 		$("#progressBarFiltering").hide();
 	}
 }
@@ -286,6 +286,9 @@ function rebootGeneralModal() {
 	$('#Filtering').removeClass('active');
 
 	setButtonNextTab();
+
+	$("#keywordTable").hide();
+	$("#progressBarFiltering").hide();
 }
 
 //Change the button that switch tab ( put everything ready to go to next tab)
