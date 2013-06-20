@@ -2,6 +2,8 @@
 
 //General ID for the filters that the user pick
 idRowFiltering = 0;
+//Timer for keyword update
+timer = "";
 
 //Add a filter to the list of filter
 function addFilter() {
@@ -84,6 +86,7 @@ function rebootFiltering() {
 	$('#keywordTable tbody > tr').each(function() {
 		$(this).remove();
 	});
+	
 }
 
 //Write the filter in the easy-filter box
@@ -126,7 +129,7 @@ function removelinefiltrage(line) {
 //Fill the related keyword table with the right keyword
 function updateKeywordTable() {
 	rebootKeywordTable();
-	if ($('#keyword').val() != "" || $('#keyword').val() != null)
+	if ($('#keyword').val() != "" && $('#keyword').val() != null)
 		$.getJSON('linked_words/' + $('#keyword').val() + '.json', function(data) {
 			rebootKeywordTable();
 			$.each(data, function(key, val) {
@@ -134,7 +137,23 @@ function updateKeywordTable() {
 					$('#keywordTable').append('<tr><td><label class="checkbox"><input type="checkbox" value="' + val + '">' + val + '</label></td></tr>');
 				}
 			});
+			$("#keywordTable").show();
+			$("#progressBarFiltering").hide();
 		});
+}
+
+//ask the timer if the related keyword table can be show. It will wait 1 second before doing it. If the function is call again, it will stop the current timer and start a new
+function askUpdateKeywordTable() {
+	$("#keywordTable").hide();
+	if ($('#keyword').val() != "" && $('#keyword').val() != null) {
+		$("#progressBarFiltering").show();
+		clearTimeout(timer);
+		timer = setTimeout(function() {
+			updateKeywordTable()
+		}, 1000);
+	} else{
+		$("#progressBarFiltering").hide();
+	}
 }
 
 /** sources **/
