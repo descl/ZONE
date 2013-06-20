@@ -7,8 +7,13 @@
 <script>
 	$('#advancedSearchModal').on('hide', function() {
 		rebootGeneralModal();
+		$('body').css('overflow-y','auto');
 
 	}); 
+	$('#advancedSearchModal').on('show', function() {
+		rebootGeneralModal();
+		$('body').css('overflow-y','hidden');
+	});
 </script>
 
 <form action="/items" method="GET" id="formModal">
@@ -156,6 +161,9 @@
 																$("#keyword").autocomplete({
 																	source : "complete_entities/" + $("#keyword").val() + ".json"
 																});
+															},
+															close : function(){
+																askUpdateKeywordTable();
 															}
 														});
 													});
