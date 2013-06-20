@@ -2,15 +2,26 @@ class LinkedWord
   $endpoint = "http://fr.dbpedia.org/sparql"
 
   def self.complete(param = "")
-    query = "SELECT DISTINCT  ?o ?label COUNT(?link) AS ?popularity WHERE{
+    words = param.split
+    wordsRequest  = ""
+    words.each do |word|
+      if word.size >= 4
+        wordsRequest += word+"* "
+      else
+        if wordsRequest.size == 0
+          wordsRequest += word+" "
+        end
+      end
+    end
+
+    query = "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
+    SELECT DISTINCT  ?o ?label COUNT(?link) AS ?popularity WHERE{
                 ?o rdfs:label ?label.
                 FILTER(lang(?label)='fr')
-                ?label bif:contains \"#{param}\"
+                ?label bif:contains '\"#{wordsRequest}\"'
                 FILTER(regex(str(?label),\"^#{param}\",\"i\")).
                 ?o dbpedia-owl:wikiPageWikiLink ?link
              }ORDER BY DESC(?popularity)  LIMIT 10"
-
-
 
     store = SPARQL::Client.new($endpoint)
     result = Array.new
@@ -30,8 +41,6 @@ class LinkedWord
                  ?linked rdfs:label ?linkedName
                  FILTER(lang(?linkedName) = 'fr')
              }"
-
-
 
     store = SPARQL::Client.new($endpoint)
     result = Array.new
