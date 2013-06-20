@@ -86,6 +86,7 @@ function rebootFiltering() {
 	$('#keywordTable tbody > tr').each(function() {
 		$(this).remove();
 	});
+	
 }
 
 //Write the filter in the easy-filter box

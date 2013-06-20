@@ -156,12 +156,10 @@
 																$("#keyword").autocomplete({
 																	source : "complete_entities/" + $("#keyword").val() + ".json"
 																});
-															},
-															close : function(event, ui) {
-																askUpdateKeywordTable();
 															}
 														});
 													});
+
 												</script>
 												<button class="btn btn-success pull-right" onclick="addFilter(); return false;">
 													<%= raw t 'semanticfiltering.button.addone' %>
@@ -172,10 +170,10 @@
 											<h3><%= raw t 'semanticfiltering.linkword.title' %></h3>
 										</div>
 										<div class="row-fluid">
-											<button class="btn" onclick="select();return false;">
+											<button id="btnSelectAll" class="btn" onclick="select();return false;">
 												<%= raw t 'semanticfiltering.linkword.selectall' %>
 											</button>
-											<button class="btn" onclick="unselect();return false;">
+											<button id="btnUnselectAll" class="btn" onclick="unselect();return false;" >
 												<%= raw t 'semanticfiltering.linkword.unselect' %>
 											</button>
 										</div>
