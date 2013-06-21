@@ -15,12 +15,12 @@ class LinkedWord
         end
       end
     end
-    #wordsRequest = wordsRequest[0..-2]
+    wordsRequest = wordsRequest[0..-2]
 
+    #FILTER(lang(?label)='fr')
     query = "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
     SELECT DISTINCT  ?o ?label COUNT(?link) AS ?popularity WHERE{
                 ?o rdfs:label ?label.
-                FILTER(lang(?label)='fr')
                 ?label bif:contains '\"#{wordsRequest}\"'
                 FILTER(regex(str(?label),\"^#{param}\",\"i\")).
                 ?o dbpedia-owl:wikiPageWikiLink ?link
@@ -35,6 +35,7 @@ class LinkedWord
   end
 
   def self.getLinkedWords(param = "")
+    #FILTER(lang(?linkedName) = 'fr')
     query = "SELECT DISTINCT ?linkedName WHERE{
                  ?o rdfs:label ?label.
                  ?label bif:contains \"'#{escapeText(param)}'\".
@@ -42,7 +43,6 @@ class LinkedWord
                  {?o prop-fr:fonction ?linked.}
                  UNION {?o prop-fr:parti ?linked.}
                  ?linked rdfs:label ?linkedName
-                 FILTER(lang(?linkedName) = 'fr')
              }"
 
     store = SPARQL::Client.new($endpoint)
