@@ -5,8 +5,43 @@ idRowFiltering = 0;
 //Timer for keyword update
 timer = "";
 
+//When the document is ready, prepare and initiate different function to the object of the modal
+$(document).ready(function() {
+	//Define the action on show and hide of the modal
+	$('#advancedSearchModal').on('hide', function() {
+		rebootGeneralModal();
+		$('body').css('overflow-y', 'auto');
+
+	});
+	$('#advancedSearchModal').on('show', function() {
+		$('body').css('overflow-y', 'hidden');
+	});
+
+	$("#keywordTable").hide();
+	$("#progressBarFiltering").hide();
+	$('#btnWITH').button('toggle');
+	
+	//Instanciate the autocomplete
+	$("#keyword").autocomplete({
+		source : [""],
+		search : function(event, ui) {
+			$("#keyword").autocomplete({
+				source : "complete_entities/" + $("#keyword").val() + ".json"
+			});
+		},
+		close : function() {
+			askUpdateKeywordTable();
+		},
+		minLength : 4
+	});
+
+});
+
 //Add a filter to the list of filter
 function addFilter() {
+	$("#progressBarFiltering").hide();
+	$("#keywordTable").hide();
+	clearTimeout(timer);
 	if ($('#keyword').val() == "") {
 		return false
 	}
@@ -153,6 +188,15 @@ function askUpdateKeywordTable() {
 		}, 1000);
 	} else {
 		$("#progressBarFiltering").hide();
+	}
+}
+
+//Define the action on ENTER key press for the filtering
+function keywordComplete() {
+	if (event.keyCode == 13) {
+		addFilter();
+		$('#keyword').autocomplete('close');
+		return false;
 	}
 }
 
