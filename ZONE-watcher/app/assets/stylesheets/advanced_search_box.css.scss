@@ -31,6 +31,18 @@ div.flipper div.front{
   height: 140px;
 }
 
+div.flipper2 {
+  -webkit-perspective: 800;
+  width: 150px;
+  height: 150px;
+}
+
+div.flipper2 div.front2{
+  visibility : visible;
+  width: 140px;
+  height: 140px;
+}
+
 div.flipper div {
   position: absolute;
   -webkit-backface-visibility: hidden;
