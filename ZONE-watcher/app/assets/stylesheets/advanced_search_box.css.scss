@@ -27,8 +27,8 @@ div.flipper {
 
 div.flipper div.front{
   visibility : visible;
-  width: 150px;
-  height: 150px;
+  width: 140px;
+  height: 140px;
 }
 
 div.flipper div {
@@ -39,8 +39,8 @@ div.flipper div {
 
 div.flipper div.back {
   visibility : hidden;
-  width: 142px;
-  height: 150px;
+  width: 132px;
+  height: 140px;
   background-size : cover;
   border-radius: 25px;
   -webkit-transform: rotatey(-180deg);
