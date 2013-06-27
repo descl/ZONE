@@ -1,97 +1,113 @@
 <div class="row-fluid">
 
-    <% if @item.props["http://purl.org/rss/1.0/image"] != nil
-        image=@item.props["http://purl.org/rss/1.0/image"][0].html_safe
-    elsif @item.uri.starts_with?('http://twitter.com')
-        image="assets/twitter.png"
-    end
-    %>
-    
-    <% if image != nil  %>
-        <div class="span3">
-          <% if image.end_with?("flv") || image.end_with?("mp4") %>
-            <div id="<%=image%>">Loading the player...</div>
-            <script type="text/javascript">
-                jwplayer("<%=image%>").setup({
-                file: "<%=image%>",
-                width: "100%"
-                });
-            </script>
-          <%else%>
-              <img src="<%= image%>" class="img-polaroid">
-          <%end%>
-        </div>
-    <div class="span9">
-    <%else%>
-        <div class="span12">
-    <%end%>
-        <a href= "<%= @item.uri %>">
-            <%= @item.props["http://purl.org/rss/1.0/title"][0]%>
-        </a>
-        <%= begin
-              @item.props["http://purl.org/rss/1.0/pubDate"][0]
-            rescue
-            end %>
-        <div class="btn-toolbar">
-            <% @item.props.each do |item|
-               item[1].each do |value|	
-				linkval = getButtonForFilter(Filter.new(:prop => item[0], :value => value))
-        		if !linkval then
-        			next
-        		end
-            		%>
-        		<div class="btn-group">
-        			<%= linkval  %>
-        		</div>
-                
-            <%end  end%>
-        </div>
-            
-        <%= if @item.props["http://purl.org/rss/1.0/description"] != nil
-             @item.props["http://purl.org/rss/1.0/description"][0].html_safe end %>
-    </div>
-</div>
+	<% if @item.props["http://purl.org/rss/1.0/image"] != nil
+    image=@item.props["http://purl.org/rss/1.0/image"][0].html_safe
+  end
+%>
 
-<div class="accordion" id="accordion-<%= @uriHash %>" style="margin-bottom: 0px;">
-    <div class="accordion-group">
-        <div class="accordion-heading">
-            <a class="accordion-toggle btn btn-mini" data-toggle="collapse" data-parent="#accordion-<%= @uriHash%>" href="#collapse-<%= @uriHash%>">
-            Voir les annotations
-            </a>
-        </div>
-        <div id="collapse-<%= @uriHash%>" class="accordion-body collapse">
-            <div class="accordion-inner" style="padding: 0px;">
-                <table class="table table-striped"><!--BORDER="1" style="border: 1px black; border-spacing: 0px;"-->
-                   <% i=0; @item.props.each do |prop,values|
-                      values.each do |value|
-                        i=i+1
-                        %>
-                        <tr><td><%= prop %></td>
-                        <td>
-                            <% if prop.starts_with? ZoneOntology::PLUGIN_EXTRACT_ARTICLES_CONTENT_RES %>
-                                <%= value %>
-                                <a href= "<%= @uri %>">
-                                    (...)
-                                </a>
-                            <% elsif (prop.starts_with? 'http://rdf.insee') || (prop.starts_with? 'http://www.dbpedia') %>
-                                <%= link_to value, "getOne?element="+value,:id => "elem"+i.to_s(), :remote => true %>
-                                <%= javascript_tag do %>
-                                  $("#elem<%=i%>").bind("ajax:complete", function(et, e){
-                                   $("#elem<%=i.to_s()%>").html(e.responseText); // insert content
-                                    event.preventDefault(); // Prevent link from following its href
-                                  });
-                                <%end%>
-                            <%elsif (value.starts_with? 'http://')%>
-                                <%= link_to value,value %>
-                            <%else%>
-                                <%= value %>
-                            <%end%>
-                        </td><td>
-                        <%= link_to "Ajouter au filtre", items_path(:old => @filters,:new => Filter.new({:prop =>prop, :value => value})), :class => "btn btn-success" %></td></tr>
-                        <% end%>
-                      <%end%>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+	<% if image != nil  %>
+	<div class="span3">
+		<% if image.end_with?("flv") || image.end_with?("mp4") %>
+		<div id="<%= image%>">
+			Loading the player...
+		</div>
+		<script type="text/javascript">
+jwplayer("<%= image%>
+			").setup({
+			file: "
+<%= image%>
+	",
+	width: "100%"
+	});
+		</script>
+		<%else%>
+		<img src="<%= image%>" class="img-polaroid">
+		<%end%>
+	</div>
+	<div class="span9">
+		<%else%>
+		<div class="span12">
+			<%end%>
+			<% if @item.uri.starts_with?('http://twitter.com')
+          thumb="assets/twitter.png"
+        else
+          thumb="assets/foregroundRSS.png"
+        end
+%>
+			<img src="<%= thumb%>" class="littleCircleImage" width=30 height=30>
+			<a href= "<%= @item.uri %>"> <%= @item.props["http://purl.org/rss/1.0/title"][0]%> </a>
+			<%= begin
+          @item.props["http://purl.org/rss/1.0/pubDate"][0]
+        rescue
+        end %>
+			<div class="btn-toolbar">
+				<% htmlval =""
+				@item.props.each do |item|
+				item[1].each do |value|
+
+				filter = Filter.new(:prop => item[0], :value => value)
+				if filter.prop.starts_with? ZoneOntology::PLUGIN_EXTRACT_ARTICLES_CONTENT_RES
+				htmlval= filter.value
+				end
+				linkval = getButtonForFilter(filter)
+				if !linkval then
+				next
+				end
+				%>
+				<div class="btn-group">
+					<%= linkval  %>
+				</div>
+				<%end  end
+				%>
+			</div>
+			<div class="contentArticle">
+				<%= if @item.props["http://purl.org/rss/1.0/description"] != nil
+        @item.props["http://purl.org/rss/1.0/description"][0].html_safe end %>
+			</div>
+
+			<div class="fullContent" hidden>
+				<%= htmlval  %>
+			</div>
+			<span class="expandArticle pull-right" onclick="$(this).prev('.fullContent').prev('.contentArticle').hide();$(this).hide();$(this).prev('.fullContent').show();$(this).next('.shortenArticle').show()">Agrandir</span>
+			<span class="shortenArticle pull-right" hidden onclick="$(this).prev('.expandArticle').prev('.fullContent').hide();$(this).hide();$(this).prev('.expandArticle').prev('.fullContent').prev('.contentArticle').show();$(this).prev('.expandArticle').show()">Rétrecir</span>
+
+		</div>
+	</div>
+
+	<div class="accordion" id="accordion-<%= @uriHash %>" style="margin-bottom: 0px;">
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle btn btn-mini" data-toggle="collapse" data-parent="#accordion-<%= @uriHash%>" href="#collapse-<%= @uriHash%>"> Voir les annotations </a>
+			</div>
+			<div id="collapse-<%= @uriHash%>" class="accordion-body collapse">
+				<div class="accordion-inner" style="padding: 0px;">
+					<table class="table table-striped">
+						<!--BORDER="1" style="border: 1px black; border-spacing: 0px;"-->
+						<% i=0; @item.props.each do |prop,values|
+						values.each do |value|
+						i=i+1
+						%>
+						<tr>
+							<td><%= prop %></td>
+							<td> <% if prop.starts_with? ZoneOntology::PLUGIN_EXTRACT_ARTICLES_CONTENT_RES %>
+							<%= value %> <a href= "<%= @uri %>"> (...) </a> <% elsif (prop.starts_with? 'http://rdf.insee') || (prop.starts_with? 'http://www.dbpedia') %>
+							<%= link_to value, "getOne?element="+value,:id => "elem"+i.to_s(), :remote => true %>
+							<%= javascript_tag do %>
+							$("#elem<%= i%>").bind("ajax:complete", function(et, e){
+							$("#elem<%= i.to_s()%>").html(e.responseText); // insert content
+							event.preventDefault(); // Prevent link from following its href
+							});
+							<%end%>
+							<%elsif (value.starts_with? 'http://')%>
+							<%= link_to value,value %>
+							<%else%>
+							<%= value %>
+							<%end%> </td><td> <%= link_to "Ajouter au filtre", items_path(:old => @filters,:new => Filter.new({:prop =>prop, :value => value})), :class => "btn btn-success" %></td>
+						</tr>
+						<% end%>
+						<%end%>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>

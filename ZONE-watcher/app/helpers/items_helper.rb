@@ -58,7 +58,7 @@ module ItemsHelper
   def getClassLabel(prop)
     if prop=="source"
       return @LABEL
-    elsif prop=="Departement" or prop=="Pays" or prop=="Canton" or prop=="Pseudo-canton" or prop=="Arrondissement" or prop=="LOC"
+    elsif prop=="Departement" or prop=="Pays" or prop=="Canton" or prop=="Pseudo-canton" or prop=="Arrondissement" or prop=="LOC" or prop=="Region"
       return @LABEL_WARNING
     elsif prop=="PERSON" or prop=="PERS.HUM"
       return @LABEL_SUCCESS
