@@ -11,3 +11,11 @@
 a.label:visited{
   color:white;
 }
+
+.btn-group+.btn-group {
+  margin-left:0px;
+}
+
+.btn-group{
+  margin-right: 5px;
+}

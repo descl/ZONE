@@ -8,30 +8,40 @@ module ItemsHelper
     @TWITTER_MENTIONED_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#mentioned'
     @TWITTER_HASHTAG_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#hashtag'
 
+    @LABEL = "label"
+    @LABEL_INFO = "label label-info"
+    @LABEL_SUCCESS = "label label-success"
+    @LABEL_WARNING = "label label-warning"
+    @LABEL_IMPORTANT = "label label-important"
+
     if(filter.value == "null")
       filter.value = "/null"
     end
     itemURI = items_path(:old => @filters,:new => filter)
     if(filter.prop.starts_with? @OPEN_CALAIS_URI)
-      res= link_to filter.prop[@OPEN_CALAIS_URI.length,filter.prop.length], itemURI, :class => "label label-success"
-      res+= link_to filter.value, itemURI, :class => "label label-success"
+      itemClassFilter=getClassLabel(filter.prop[@OPEN_CALAIS_URI.length,filter.prop.length])
+      res= link_to filter.prop[@OPEN_CALAIS_URI.length,filter.prop.length], itemURI, :class =>  itemClassFilter
+      res+= link_to filter.value, itemURI, :class =>  itemClassFilter
     elsif(filter.prop.starts_with? @WIKI_META_URI)
-      res=link_to filter.prop[@WIKI_META_URI.length,filter.prop.length], itemURI, :class => "label label-info"
+      itemClassFilter=getClassLabel(filter.prop[@WIKI_META_URI.length,filter.prop.length])
+      res=link_to filter.prop[@WIKI_META_URI.length,filter.prop.length], itemURI, :class => itemClassFilter
       if(filter.value.rindex('/') == nil)
-        res+=link_to filter.value, itemURI, :class => "label label-info"
+        res+=link_to filter.value, itemURI, :class => itemClassFilter
 
       else
-        res+=link_to filter.value[filter.value.rindex('/')+1, filter.value.length], itemURI, :class => "label label-info"
+        res+=link_to filter.value[filter.value.rindex('/')+1, filter.value.length], itemURI, :class => itemClassFilter
       end
     elsif(filter.prop.starts_with? @INSEE_GEO_URI)
-      res=link_to filter.prop[@INSEE_GEO_URI.length,filter.prop.length], itemURI, :class => "label label-warning"
-      res+=link_to filter.value[filter.value.rindex('/')+1, filter.value.length], itemURI, :class => "label label-warning"
+      itemClassFilter=getClassLabel(filter.prop[@INSEE_GEO_URI.length,filter.prop.length])
+      res=link_to filter.prop[@INSEE_GEO_URI.length,filter.prop.length], itemURI, :class => itemClassFilter
+      res+=link_to filter.value[filter.value.rindex('/')+1, filter.value.length], itemURI, :class => itemClassFilter
     elsif(filter.prop.start_with? @RSS_URI+"source")
-      res=link_to filter.prop[@RSS_URI.length,filter.prop.length], itemURI, :class => "label"
-      res+=link_to filter.value, itemURI, :class => "label"
+      itemClassFilter=getClassLabel(filter.prop[@RSS_URI.length,filter.prop.length])
+      res=link_to filter.prop[@RSS_URI.length,filter.prop.length], itemURI, :class => itemClassFilter
+      res+=link_to filter.value, itemURI, :class => itemClassFilter
     elsif(filter.prop.start_with? @SVM_PLUGIN_URI)
-      res=link_to "category", itemURI, :class => "label label-important"
-      res+=link_to filter.value, itemURI, :class => "label label-important"
+      res=link_to "category", itemURI, :class => @LABEL_INFO
+      res+=link_to filter.value, itemURI, :class => @LABEL_INFO
     elsif(filter.prop.start_with? @TWITTER_HASHTAG_PLUGIN_URI)
       res=link_to "#"+filter.value, itemURI, :class => "btn-auth  btn-twitter"
     elsif(filter.prop.start_with? @TWITTER_MENTIONED_PLUGIN_URI)
@@ -43,5 +53,19 @@ module ItemsHelper
     puts list.class
     listCopy = list.clone
     return listCopy.delete_if{|element| element == filter}
+  end
+  
+  def getClassLabel(prop)
+    if prop=="source"
+      return @LABEL
+    elsif prop=="Departement" or prop=="Pays" or prop=="Canton" or prop=="Pseudo-canton" or prop=="Arrondissement" or prop=="LOC"
+      return @LABEL_WARNING
+    elsif prop=="PERSON" or prop=="PERS.HUM"
+      return @LABEL_SUCCESS
+    elsif prop=="TIME"
+      return @LABEL_IMPORTANT
+    else
+      return @LABEL_INFO
+    end
   end
 end
