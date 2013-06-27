@@ -68,9 +68,8 @@ jwplayer("<%= image%>
 			<div class="fullContent" hidden>
 				<%= htmlval  %>
 			</div>
-			<span class="expandArticle pull-right" onclick="$(this).prev('.fullContent').prev('.contentArticle').hide();$(this).hide();$(this).prev('.fullContent').show();$(this).next('.shortenArticle').show()">Agrandir</span>
-			<span class="shortenArticle pull-right" hidden onclick="$(this).prev('.expandArticle').prev('.fullContent').hide();$(this).hide();$(this).prev('.expandArticle').prev('.fullContent').prev('.contentArticle').show();$(this).prev('.expandArticle').show()">Rétrecir</span>
-
+			<button class="expandArticle pull-right btn" onclick="$(this).prev('.fullContent').prev('.contentArticle').hide();$(this).hide();$(this).prev('.fullContent').show();$(this).next('.shortenArticle').show()"><i class="icon-chevron-down"></i></button>
+			<button class="shortenArticle pull-right btn" style='display:none' onclick="$(this).prev('.expandArticle').prev('.fullContent').hide();$(this).hide();$(this).prev('.expandArticle').prev('.fullContent').prev('.contentArticle').show();$(this).prev('.expandArticle').show()"><i class="icon-chevron-up"></i></button>
 		</div>
 	</div>
 
