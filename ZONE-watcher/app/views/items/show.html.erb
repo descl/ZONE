@@ -69,7 +69,19 @@ date.strftime(' - le %d/%m/%Y à %H:%M')
 
 			</div>
 	</div>
-
+	<hr>
+	<div class="row-fluid">
+		<button class="btn" disabled><i class="icon icon-heart"></i><i> <%= raw t 'items.users.favorite' %></i></button>
+		<button class="btn" disabled><i class="icon icon-check"></i><i> <%= raw t 'items.users.read' %></i></button>
+		
+		<span class="separationLine" ></span>
+		
+		<i><%= raw t 'items.users.share' %> </i>
+		<img src="assets/foregroundFBGray.png" class="littleCircleImage" width=30 height=30>
+		<img src="assets/foregroundTwitterGray.png" class="littleCircleImage" width=30 height=30>
+		<img src="assets/foregroundGoogleGray.png" class="littleCircleImage" width=30 height=30>
+	</div>
+	
 	<div class="accordion" id="accordion-<%= @uriHash %>" style="margin-bottom: 0px;">
 		<div class="accordion-group">
 			<div class="accordion-heading">

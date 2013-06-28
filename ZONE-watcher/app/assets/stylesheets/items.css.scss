@@ -19,3 +19,14 @@ a.label:visited{
 .btn-group-label{
   margin-right: 5px;
 }
+
+.separationLine
+{
+    position : relative;
+    width:5px;
+    border-left:1px solid #fff;
+    border-right:1px solid #eee;
+    margin-left : 10px;
+    margin-right : 10px;
+    height:30px;
+}

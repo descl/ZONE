@@ -30,18 +30,21 @@ event.preventDefault(); // Prevent link from following its href
 <div class="well">
 	<div class="row-fluid">
 		<div class="span6">
-			<h3><%= raw t 'items.reminder.source' %></h3>
+			<h3><%= raw t 'items.reminder.source' %> ( 0 items )</h3>
 		</div>
-		<div class="span6">
-			<h3><%= raw t 'items.reminder.filtering' %>
+		<div class="span5">
+			<h3><%= raw t 'items.reminder.filtering' %> ( 0 items )</h3>
+		</div>
+		<div class="span1">
+			<h3>
 			<button class="btn pull-right chevrondown" onclick="$('.tableReminder').slideDown('slow');$('.chevrondown').hide();$('.chevronup').show()">
-			<i class="icon icon-chevron-down"></i>
-		</button>
-		<button class="btn pull-right chevronup" style="display:none" onclick="$('.tableReminder').slideUp('slow');$('.chevrondown').show();$('.chevronup').hide()">
-			<i class="icon icon-chevron-up"></i>
-		</button></h3>
+				<i class="icon icon-chevron-down"></i>
+			</button>
+			<button class="btn pull-right chevronup" style="display:none" onclick="$('.tableReminder').slideUp('slow');$('.chevrondown').show();$('.chevronup').hide()">
+				<i class="icon icon-chevron-up"></i>
+			</button></h3>
 		</div>
-		
+
 	</div>
 	<div class="tableReminder row-fluid" hidden>
 		<div class="span5">
@@ -49,7 +52,7 @@ event.preventDefault(); // Prevent link from following its href
 				<thead>
 					<tr>
 						<th class="span1"> <%= raw t 'semanticsource.table.keyword' %></th>
-						<th><%= raw t 'semanticsource.table.content' %></tdth
+						<th><%= raw t 'semanticsource.table.content' %></th>
 					</tr>
 				</thead>
 				<tbody></tbody>
@@ -68,10 +71,9 @@ event.preventDefault(); // Prevent link from following its href
 			</table>
 		</div>
 	</div>
-	<div class="row-fluid">
-		
-	</div>
 </div>
+
+<hr>
 
 <% id=0; @items.each do |item| %>
 <div class="well">

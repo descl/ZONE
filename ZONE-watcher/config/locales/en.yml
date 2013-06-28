@@ -195,3 +195,10 @@ en:
         "Sources"
       filtering:
         "Filtering"
+    users:
+      favorite:
+        "Favorite"
+      read:
+        "Mark as read"
+      share:
+        "Share this article"

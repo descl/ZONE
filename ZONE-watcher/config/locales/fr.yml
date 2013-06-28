@@ -195,4 +195,11 @@ fr:
         "Sources"
       filtering:
         "Filtres"
+    users:
+      favorite:
+        "Favori"
+      read:
+        "Marquer comme lu"
+      share:
+        "Partager cet article : "
   
