@@ -37,7 +37,9 @@ jwplayer("<%= image%>
 			<img src="<%= thumb%>" class="littleCircleImage" width=30 height=30>
 			<a href= "<%= @item.uri %>"> <%= @item.props["http://purl.org/rss/1.0/title"][0]%> </a>
 			<%= begin
-          @item.props["http://purl.org/rss/1.0/pubDate"][0]
+				date = DateTime.parse(@item.props["http://purl.org/rss/1.0/pubDate"][0])
+date.strftime(' - le %d/%m/%Y à %H:%M')
+          
         rescue
         end %>
 			<div class="btn-toolbar">
@@ -47,7 +49,7 @@ jwplayer("<%= image%>
 
 				filter = Filter.new(:prop => item[0], :value => value)
 				if filter.prop.starts_with? ZoneOntology::PLUGIN_EXTRACT_ARTICLES_CONTENT_RES
-				htmlval= filter.value
+					htmlval= filter.value
 				end
 				linkval = getButtonForFilter(filter)
 				if !linkval then
@@ -62,15 +64,10 @@ jwplayer("<%= image%>
 			</div>
 			<div class="contentArticle">
 				<%= if @item.props["http://purl.org/rss/1.0/description"] != nil
-        @item.props["http://purl.org/rss/1.0/description"][0].html_safe end %>
+        			@item.props["http://purl.org/rss/1.0/description"][0].html_safe end %>
 			</div>
 
-			<div class="fullContent" style="display:none">
-				<%= htmlval  %>
 			</div>
-			<button class="expandArticle pull-right btn" onclick="$(this).prev('.fullContent').prev('.contentArticle').hide();$(this).hide();$(this).prev('.fullContent').slideDown();$(this).next('.shortenArticle').show()"><i class="icon-chevron-down"></i></button>
-			<button class="shortenArticle pull-right btn" style='display:none' onclick="$(this).prev('.expandArticle').prev('.fullContent').slideUp('slow');$(this).hide();$(this).prev('.expandArticle').prev('.fullContent').prev('.contentArticle').show();$(this).prev('.expandArticle').show()"><i class="icon-chevron-up"></i></button>
-		</div>
 	</div>
 
 	<div class="accordion" id="accordion-<%= @uriHash %>" style="margin-bottom: 0px;">
