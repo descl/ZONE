@@ -189,3 +189,9 @@ en:
         "Next >"
       go:
         "Go Reador"
+  items:
+    reminder:
+      source:
+        "Sources"
+      filtering:
+        "Filtering"

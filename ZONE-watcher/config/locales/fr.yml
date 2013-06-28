@@ -189,4 +189,10 @@ fr:
         "Suivant >"
       go:
         "Go Reador"
+  items:
+    reminder:
+      source:
+        "Sources"
+      filtering:
+        "Filtres"
   

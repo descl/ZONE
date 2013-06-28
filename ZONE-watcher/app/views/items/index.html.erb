@@ -1,49 +1,88 @@
 <%= render 'home/search'%>
 
 <%= javascript_tag do %>
-  query = '<%= j items_path(:old => @filters) %>';
+query = '<%= j items_path(:old => @filters) %>';
 <% end %>
 
 <!--
 <% if @filters.length > 0 %>
-  <h3>Votre filtre actuel:</h3>
-  <% @filters.each do |filter| %>
-    <div class="btn-group">
-      <%= raw getButtonForFilter(filter)%>
-      <%=link_to "x", items_path(:old => removeFilterFromList(@filters, filter)), :class => "btn btn-danger"%>
-    </div>
-  <% end %>
+<h3>Votre filtre actuel:</h3>
+<% @filters.each do |filter| %>
+<div class="btn-group">
+<%= raw getButtonForFilter(filter)%>
+<%=link_to "x", items_path(:old => removeFilterFromList(@filters, filter)), :class => "btn btn-danger"%>
+</div>
+<% end %>
 <br/></br/>
 <% end %>-->
 
-
-
-
-
 <%= javascript_tag do %>
-  $("#load-more2").bind("ajax:complete", function(et, e){
-   $("#load-more2").html(e.responseText); // insert content
-    event.preventDefault(); // Prevent link from following its href
-  });
+$("#load-more2").bind("ajax:complete", function(et, e){
+$("#load-more2").html(e.responseText); // insert content
+event.preventDefault(); // Prevent link from following its href
+});
 <% end %>
 
+<%= link_to(params.merge(:format => :rss)) do%>
+<span id="rss-button" class="btn btn-warning btn-large btn-primary goButton"><i class="icon-rss"></i></span>
+<%end%>
 
-  <%= link_to(params.merge(:format => :rss)) do%>
-    <span id="rss-button" class="btn btn-warning btn-large btn-primary goButton"><i class="icon-rss"></i></span>
-  <%end%>
-
-
+<div class="well">
+	<div class="row-fluid">
+		<div class="span6">
+			<h3><%= raw t 'items.reminder.source' %></h3>
+		</div>
+		<div class="span6">
+			<h3><%= raw t 'items.reminder.filtering' %>
+			<button class="btn pull-right chevrondown" onclick="$('.tableReminder').slideDown('slow');$('.chevrondown').hide();$('.chevronup').show()">
+			<i class="icon icon-chevron-down"></i>
+		</button>
+		<button class="btn pull-right chevronup" style="display:none" onclick="$('.tableReminder').slideUp('slow');$('.chevrondown').show();$('.chevronup').hide()">
+			<i class="icon icon-chevron-up"></i>
+		</button></h3>
+		</div>
+		
+	</div>
+	<div class="tableReminder row-fluid" hidden>
+		<div class="span5">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="span1"> <%= raw t 'semanticsource.table.keyword' %></th>
+						<th><%= raw t 'semanticsource.table.content' %></tdth
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+		<div class="span1"></div>
+		<div class="span5">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="span1"> <%= raw t 'semanticfiltering.table.keyword' %></th>
+						<th><%= raw t 'semanticfiltering.table.content' %></th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row-fluid">
+		
+	</div>
+</div>
 
 <% id=0; @items.each do |item| %>
-  <div class="well">
-      <div class="item_container" sourceid="<%= id %>"></div>
-      <div class="item_wait" sourceid="<%= id%>">
-          <a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
-          <a href="<%= item.uri%>"><%= item.title%></a>
-          
-      </div>
-  </div>
-  
+<div class="well">
+	<div class="item_container" sourceid="<%= id %>"></div>
+	<div class="item_wait" sourceid="<%= id%>">
+		<a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
+		<a href="<%= item.uri%>"><%= item.title%></a>
+
+	</div>
+</div>
+
 <% id+=1; end %>
 
 <%= will_paginate @page_results %>
