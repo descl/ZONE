@@ -161,6 +161,8 @@ en:
         "AND"
       or:
         "OR"
+      littleor:
+        "or"
     button:
       addone:
         "Add"

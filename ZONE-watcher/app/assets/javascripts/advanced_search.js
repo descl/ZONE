@@ -63,9 +63,10 @@ function addFilter() {
 
 	//Add the related word to the keyword
 	var motcle = $('#keyword').val();
+	var linkedKeyword = $('#btnOR').attr("title");
 	$('#keywordTable tbody > tr > td > label > input').each(function() {
 		if ($(this).is(':checked')) {
-			motcle += ', ' + $(this).val();
+			motcle += ' '+linkedKeyword.toLowerCase()+' ' + $(this).val();
 		}
 	});
 
@@ -128,7 +129,7 @@ function rebootFiltering() {
 function getFilter() {
 	$("#filteringArea").val('');
 	$('#filteringTable tbody > tr').each(function() {
-		$("#filteringArea").val($("#filteringArea").val() + $(this).find('td.tdkey').html() + ' ' + $(this).find('div.tdval').html() + ' ');
+		$("#filteringArea").val($("#filteringArea").val() + $(this).find('td.tdkey').html() + ' ( ' + $(this).find('div.tdval').html() + ' ) ');
 	});
 
 }
