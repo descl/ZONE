@@ -36,9 +36,9 @@ module ItemsHelper
       #res=link_to filter.prop[@INSEE_GEO_URI.length,filter.prop.length], itemURI, :class => itemClassFilter
       res=link_to filter.value[filter.value.rindex('/')+1, filter.value.length], itemURI, :class => itemClassFilter, title: filter.prop[@INSEE_GEO_URI.length,filter.prop.length]
     elsif(filter.prop.start_with? @RSS_URI+"source")
-      itemClassFilter=getClassLabel(filter.prop[@RSS_URI.length,filter.prop.length])
+      #itemClassFilter=getClassLabel(filter.prop[@RSS_URI.length,filter.prop.length])
       #res=link_to filter.prop[@RSS_URI.length,filter.prop.length], itemURI, :class => itemClassFilter
-      res=link_to filter.value, itemURI, :class => itemClassFilter, title: filter.prop[@RSS_URI.length,filter.prop.length]
+      #res=link_to filter.value, itemURI, :class => itemClassFilter, title: filter.prop[@RSS_URI.length,filter.prop.length]
     elsif(filter.prop.start_with? @SVM_PLUGIN_URI)
       #res=link_to "category", itemURI, :class => @LABEL_INFO
       res=link_to filter.value, itemURI, :class => @LABEL_INFO, title: filter.value
