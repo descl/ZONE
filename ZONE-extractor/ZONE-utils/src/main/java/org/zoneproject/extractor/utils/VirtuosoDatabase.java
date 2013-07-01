@@ -94,6 +94,8 @@ public abstract class VirtuosoDatabase {
         Model model = ModelFactory.createDefaultModel();
         Resource itemNode = model.createResource(itemUri);
         if(prop.isLiteral()){
+            if(prop.getValue() == null)
+                prop.setValue("");
             itemNode.addLiteral(prop.getType(), model.createLiteral(prop.getValue()));
         }
         else{
