@@ -8,11 +8,11 @@ module ItemsHelper
     @TWITTER_MENTIONED_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#mentioned'
     @TWITTER_HASHTAG_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#hashtag'
 
-    @LABEL = "label"
-    @LABEL_INFO = "label label-info"
-    @LABEL_SUCCESS = "label label-success"
-    @LABEL_WARNING = "label label-warning"
-    @LABEL_IMPORTANT = "label label-important"
+    @LABEL = "label label-source"
+    @LABEL_INFO = "label label-info label-tag"
+    @LABEL_SUCCESS = "label label-success label-tag"
+    @LABEL_WARNING = "label label-warning label-tag"
+    @LABEL_IMPORTANT = "label label-important label-tag"
 
     if(filter.value == "null")
       filter.value = "/null"

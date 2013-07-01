@@ -9,7 +9,7 @@ timer = "";
 $(document).ready(function() {
 	//Define the action on show and hide of the modal
 	$('#advancedSearchModal').on('hide', function() {
-		rebootGeneralModal();
+		//rebootGeneralModal();
 		$('body').css('overflow-y', 'auto');
 
 	});
@@ -35,7 +35,41 @@ $(document).ready(function() {
 		minLength : 4
 	});
 
+	$('.label-source').click(function (event) {
+	  $("#formRSS .inputSearch").val($(this).html());
+	  addRowSourceTable("#formRSS");
+	  showPopover();
+	  event.preventDefault(); // Prevent link from following its href
+	});
+	
+	$('.label-tag').click(function (event) {
+	  $("#keyword").val($(this).html());
+	  addFilter();
+	  showPopover();
+	  event.preventDefault(); // Prevent link from following its href
+	});
+	
+	$("#semanticSearchGoButton").click(function (event) {
+		$("#semanticSearchGoButton").popover('hide');
+	});
+	
+	$(".item_container").mouseenter(function(){
+		$(this).find('.row-favorite').fadeIn();
+	});
+	
+	$(".item_container").mouseleave(function(){
+		$(this).find('.row-favorite').fadeOut();
+	});
+
 });
+
+function showPopover(){
+	$("#semanticSearchGoButton").popover({placement:'bottom',container:'body'});
+	$("#semanticSearchGoButton").popover('show');
+	setTimeout(function() {
+			$("#semanticSearchGoButton").popover('hide')
+		}, 1000);
+}
 
 //Add a filter to the list of filter
 function addFilter() {
@@ -48,10 +82,10 @@ function addFilter() {
 	var id = 1;
 	var classtr = "";
 	//Choose the class of the line of the table ( red for WITHOUT, blue for OR, green for AND)
-	if ($('#btnAND').hasClass('active') || $('#btnWITH').hasClass('active')) {
+	if ($('#btnAND').hasClass('active') ) {
 		id = 1;
 		classtr = 'success';
-	} else if ($('#btnOR').hasClass('active')) {
+	} else if ($('#btnOR').hasClass('active') || $('#btnWITH').hasClass('active') ) {
 		id = 0;
 		classtr = 'info';
 	} else if ($('#btnWITHOUT').hasClass('active')) {
@@ -104,7 +138,7 @@ function checkDropdown() {
 		$('#btnOR').prop('disabled', false);
 		$('#btnWITH').addClass('hidden');
 		$('#btnAND').removeClass('hidden');
-		$('#btnAND').button('toggle');
+		$('#btnOR').button('toggle');
 	} else {
 		$('#btnOR').prop('disabled', true);
 		$('#btnWITH').removeClass('hidden');
