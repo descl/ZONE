@@ -42,3 +42,10 @@ a.label:visited{
 .item-bloc:nth-child(odd).span5{
   margin-left:0;
 }
+
+.sourceHover:hover,.sourceHoverFull:hover,.titleItem:hover{
+  background:none;
+  color:black;
+  text-decoration : none;
+}
+

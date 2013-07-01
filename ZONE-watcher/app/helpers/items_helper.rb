@@ -68,4 +68,8 @@ module ItemsHelper
       return @LABEL_INFO
     end
   end
+  
+  def getTitleSource(link)
+    return link[0,25] + "...";
+  end
 end
