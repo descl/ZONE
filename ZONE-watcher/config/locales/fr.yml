@@ -199,9 +199,9 @@ fr:
         "Filtres"
     users:
       favorite:
-        "Favori"
+        ""
       read:
-        "Marquer comme lu"
+        ""
       share:
         "Partager : "
   

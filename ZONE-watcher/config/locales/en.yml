@@ -199,8 +199,8 @@ en:
         "Filtering"
     users:
       favorite:
-        "Favorite"
+        ""
       read:
-        "Mark as read"
+        ""
       share:
         "Share : "
