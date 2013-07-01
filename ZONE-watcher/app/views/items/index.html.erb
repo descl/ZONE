@@ -26,7 +26,12 @@ event.preventDefault(); // Prevent link from following its href
 <%= link_to(params.merge(:format => :rss)) do%>
 <span id="rss-button" class="btn btn-warning btn-large btn-primary goButton"><i class="icon-rss"></i></span>
 <%end%>
-
+<div class="row-fluid">
+<div class="btn-group pull-right">
+	<button id="btnList" class="btn active" onclick="changeItemFormat('list');"><i class="icon icon-th-list"></i></button>
+	<button id="btnCard" class="btn" onclick="changeItemFormat('card');"><i class="icon icon-th-large"></i></button>
+</div>
+</div>
 <div class="well">
 	<div class="row-fluid">
 		<div class="span6">
@@ -76,7 +81,7 @@ event.preventDefault(); // Prevent link from following its href
 <hr>
 
 <% id=0; @items.each do |item| %>
-<div class="well">
+<div class="well item-bloc">
 	<div class="item_container" sourceid="<%= id %>"></div>
 	<div class="item_wait" sourceid="<%= id%>">
 		<a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
@@ -86,5 +91,6 @@ event.preventDefault(); // Prevent link from following its href
 </div>
 
 <% id+=1; end %>
-
+ <div class="span12">
 <%= will_paginate @page_results %>
+</div>

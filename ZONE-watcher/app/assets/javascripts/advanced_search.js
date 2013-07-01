@@ -422,3 +422,25 @@ function movingData() {
 	//create the input with the data
 	$('#movedData').html($('#movedData').html() + "<input name='arraySource' type='hidden' value='" + arraySourceAdded + "'>" + "<input name='arrayFiltering[]' type='hidden' value='" + arrayFilteringAdded + "'>");
 }
+
+//Function that change the disposition of the items
+function changeItemFormat(type){
+	if (type=='card'){
+		$("#btnCard").addClass('active');
+		$("#btnList").removeClass('active');
+		//$('.item-bloc').addClass('span5');
+		$(".item-bloc:even").addClass('span5 pull-left');
+		$(".item-bloc:even").addClass('clear-left');
+		$(".item-bloc:odd").addClass('span5 pull-right');
+		$(".item-bloc:odd").addClass('clear-right');
+	}else{
+		$('.item-bloc').removeClass('span5');
+		$('.item-bloc').removeClass('pull-left');
+		$('.item-bloc').removeClass('pull-right');
+		$('.item-bloc').removeClass('clear-right');
+		$('.item-bloc').removeClass('clear-left');
+		$("#btnList").addClass('active');
+		$("#btnCard").removeClass('active');
+	}
+	
+}
