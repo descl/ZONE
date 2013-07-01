@@ -38,3 +38,7 @@ a.label:visited{
 .clear-right {
   clear: right;
 }
+
+.item-bloc:nth-child(odd).span5{
+  margin-left:0;
+}

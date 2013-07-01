@@ -21,13 +21,14 @@ jwplayer("<%= image%>
 	});
 		</script>
 		<%else%>
-		<img src="<%= image%>" class="img-polaroid">
+		<img src="<%= image%>" class="img-polaroid span12">
 		<%end%>
 	</div>
+	
 	<div class="span9">
 		<%else%>
 			<%end%>
-			<div class="span12">
+			<div class="row-fluid">
 			<% if @item.uri.starts_with?('http://twitter.com')
           thumb="assets/twitter.png"
         else
@@ -54,40 +55,36 @@ date.strftime('Le %d/%m/%Y à %H:%M')
         end %></i>
        
         </div>
-        
-	</div>
-	<div class="row-fluid">
-	<div class="span12">
-			<div class="btn-toolbar">
-				<% htmlval =""
-				@item.props.each do |item|
-				item[1].each do |value|
+        <div class="row-fluid">
+		<div class="btn-toolbar">
+			<% htmlval =""
+			@item.props.each do |item|
+			item[1].each do |value|
 
-				filter = Filter.new(:prop => item[0], :value => value)
-				if filter.prop.starts_with? ZoneOntology::PLUGIN_EXTRACT_ARTICLES_CONTENT_RES
-					htmlval= filter.value
-				end
-				linkval = getButtonForFilter(filter)
-				if !linkval then
-				next
-				end
-				%>
-				<div class="btn-group btn-group-label">
-					<%= linkval  %>
-				</div>
-				<%end  end
-				%>
+			filter = Filter.new(:prop => item[0], :value => value)
+			if filter.prop.starts_with? ZoneOntology::PLUGIN_EXTRACT_ARTICLES_CONTENT_RES
+				htmlval= filter.value
+			end
+			linkval = getButtonForFilter(filter)
+			if !linkval then
+			next
+			end
+			%>
+			<div class="btn-group btn-group-label">
+				<%= linkval  %>
 			</div>
-			<div class="contentArticle">
-				<%= if @item.props["http://purl.org/rss/1.0/description"] != nil
-        			@item.props["http://purl.org/rss/1.0/description"][0].html_safe end %>
-			</div>
-
-			</div>
+			<%end  end
+			%>
+		</div>
+		<div class="contentArticle">
+			<%= if @item.props["http://purl.org/rss/1.0/description"] != nil
+    			@item.props["http://purl.org/rss/1.0/description"][0].html_safe end %>
+		</div>
+		</div>
 	</div>
 	<hr>
-	
-	
+</div>
+<div class="row-fluid">
 	<div class="accordion" id="accordion-<%= @uriHash %>" style="margin-bottom: 0px;">
 		<div class="accordion-group">
 			<div class="accordion-heading">
@@ -125,3 +122,4 @@ date.strftime('Le %d/%m/%Y à %H:%M')
 			</div>
 		</div>
 	</div>
+</div>
