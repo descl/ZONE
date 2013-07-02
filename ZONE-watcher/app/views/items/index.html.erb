@@ -80,6 +80,7 @@ event.preventDefault(); // Prevent link from following its href
 
 <hr>
 
+<div class="row-fluid">
 <% id=0; @items.each do |item| %>
 <div class="well item-bloc">
 	<div class="item_container" sourceid="<%= id %>"></div>
@@ -91,6 +92,7 @@ event.preventDefault(); // Prevent link from following its href
 </div>
 
 <% id+=1; end %>
+</div>
  <div class="span12">
 <%= will_paginate @page_results %>
 </div>
