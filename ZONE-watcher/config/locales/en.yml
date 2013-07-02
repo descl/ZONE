@@ -198,9 +198,10 @@ en:
       filtering:
         "Filtering"
     users:
-      favorite:
-        ""
-      read:
-        ""
       share:
         "Share : "
+    popover:
+      title:
+        "Added confirmation"
+      content:
+        "Tag well added"
