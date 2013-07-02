@@ -34,11 +34,11 @@ event.preventDefault(); // Prevent link from following its href
 </div>
 <div class="well">
 	<div class="row-fluid">
-		<div id="TableReminderSourceTitle" class="span6" data-content="<%= raw t 'items.popover.content' %>" data-original-title="<%= raw t 'items.popover.title' %>">
-			<h3><%= raw t 'items.reminder.source' %> ( 0 items )</h3>
+		<div class="span6">
+			<h3><span id="TableReminderSourceTitle" data-content="<%= raw t 'items.popover.content' %>" data-original-title="<%= raw t 'items.popover.title' %>"><%= raw t 'items.reminder.source' %> ( 0 items )</span></:span></h3>
 		</div>
-		<div id="TableReminderFilteringTitle" class="span5" data-content="<%= raw t 'items.popover.content' %>" data-original-title="<%= raw t 'items.popover.title' %>">
-			<h3><%= raw t 'items.reminder.filtering' %> ( 0 items )</h3>
+		<div  class="span5" >
+			<h3> <span id="TableReminderFilteringTitle" data-content="<%= raw t 'items.popover.content' %>" data-original-title="<%= raw t 'items.popover.title' %>" ><%= raw t 'items.reminder.filtering' %> ( 0 items )</span></h3>
 		</div>
 		<div class="span1">
 			<h3>

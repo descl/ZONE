@@ -513,5 +513,5 @@ function MAJNumberFiltering(){
 		i +=1;
 	});
 	
-	$("#TableReminderFilteringTitle").html($("#TableReminderFilteringTitle").html().split('(')[0]+" ( "+i+" items )</h3>");
+	$("#TableReminderFilteringTitle").html($("#TableReminderFilteringTitle").html().split(' (')[0]+" ( "+i+" items )</h3>");
 }
