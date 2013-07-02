@@ -35,6 +35,7 @@ $(document).ready(function() {
 		minLength : 4
 	});
 
+	//Add the tag-source into the semantic source table
 	$('.label-source').click(function (event) {
 	  $("#formRSS .inputSearch").val($(this).html());
 	  addRowSourceTable("#formRSS");
@@ -42,6 +43,7 @@ $(document).ready(function() {
 	  event.preventDefault(); // Prevent link from following its href
 	});
 	
+	//Add the tag-source into the semantic filtering table
 	$('.label-tag').click(function (event) {
 	  $("#keyword").val($(this).html());
 	  addFilter();
@@ -49,30 +51,36 @@ $(document).ready(function() {
 	  event.preventDefault(); // Prevent link from following its href
 	});
 	
+	//hide the popover of the semantic search on click
 	$("#semanticSearchGoButton").click(function (event) {
 		$("#semanticSearchGoButton").popover('hide');
 	});
 	
+	//show the favorite row when entering in an item
 	$(".item_container").mouseenter(function(){
 		if ($("#btnList").hasClass('active')){
 			$(this).find('.row-favorite').fadeIn();
 		}
 	});
 	
+	//hide the favortie row when leaving an item
 	$(".item_container").mouseleave(function(){
 		if ($("#btnList").hasClass('active')){
 			$(this).find('.row-favorite').fadeOut();
 		}
 	});
 	
+	//Hide the favorite bar by default
 	$(".row-favorite").hide();
 	$(".row-list").hide();
 	
+	//Show the full link of the item when hover the short link
 	$(".sourceHover").mouseenter(function(){
 		$(this).hide();
 		$(this).next(".sourceHoverFull").fadeIn();
 	});
 	
+	//Show the short link of the item when leaving the hover of the full link
 	$(".sourceHoverFull").mouseleave(function(){
 		$(this).hide();
 		$(this).prev(".sourceHover").fadeIn();
@@ -440,7 +448,7 @@ function movingData() {
 	$('#movedData').html($('#movedData').html() + "<input name='arraySource' type='hidden' value='" + arraySourceAdded + "'>" + "<input name='arrayFiltering[]' type='hidden' value='" + arrayFilteringAdded + "'>");
 }
 
-//Function that change the disposition of the items
+//Function that change the disposition of the items, used in /items
 function changeItemFormat(type){
 	if (type=='card'){
 		$("#btnCard").addClass('active');
