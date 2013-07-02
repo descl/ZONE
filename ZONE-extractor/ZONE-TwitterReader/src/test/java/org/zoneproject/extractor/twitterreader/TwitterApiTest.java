@@ -44,7 +44,7 @@ public class TwitterApiTest {
     @Test
     public void testGetHashTags() {
         System.out.println("getHashTags");
-        String[] expResult = {"descl","you","nice"};
+        String[] expResult = {"#descl","#you","#nice"};
         String[] result = TwitterApi.getHashTags("hello #descl how are #you in #nice?");
         for(String r: result) {
             System.out.println(r);
