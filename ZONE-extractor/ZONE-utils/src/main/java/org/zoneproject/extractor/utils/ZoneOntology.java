@@ -52,6 +52,7 @@ public class ZoneOntology {
     public static String SOURCES_THUMB = SOURCES_PREFIX+"#thumb";
     public static String SOURCES_THEME = SOURCES_PREFIX+"#theme";
     public static String SOURCES_OWNER = SOURCES_PREFIX+"#owner";
+    public static String SOURCES_OFFLINE = SOURCES_PREFIX+"#offline";
     
     public static String SOURCES_TYPE_TWITTER = SOURCES_PREFIX+"#twitter";
 

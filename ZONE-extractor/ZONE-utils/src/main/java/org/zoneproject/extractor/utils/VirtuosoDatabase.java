@@ -35,7 +35,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import virtuoso.jena.driver.VirtGraph;
@@ -87,7 +89,22 @@ public abstract class VirtuosoDatabase {
         }
     }
     
+    /**
+     * Add annotation for a news
+     * @param itemUri
+     * @param prop 
+     */
     public static void addAnnotation(String itemUri, Prop prop){
+        addAnnotation(itemUri, prop, ZoneOntology.GRAPH_NEWS);
+    }
+    
+    /**
+     * Add annotation for an item of any graph
+     * @param itemUri
+     * @param prop
+     * @param graph 
+     */
+    public static void addAnnotation(String itemUri, Prop prop, String graph){
         if(prop.isIsSearchable()) {
             VirtuosoDatabase.addAnnotation(prop.getType().getURI(),new Prop(ZoneOntology.ANNOTATION, "true",true));
         }
@@ -101,9 +118,9 @@ public abstract class VirtuosoDatabase {
         else{
             itemNode.addProperty(prop.getType(), model.createResource(prop.getValue()));
         }
-        getStore(ZoneOntology.GRAPH_NEWS).add(model);
+        getStore(graph).add(model);
     }
-    
+
     /**
      * Run a SPARQL request on the EndPoint
      * @param queryString the SPARQL request
@@ -130,6 +147,23 @@ public abstract class VirtuosoDatabase {
         String query = "SELECT DISTINCT ?relation ?object { <"+uri+"> ?relation ?object.}";
         return runSPARQLRequest(query,graphUri);
     }
+    /**
+     * Get a map of concepts/objects for a particular Uri
+     * @param uri
+     * @param graphUri
+     * @return 
+     */
+    public static Map getMapForURI(String uri, String graphUri){
+        ResultSet results = Database.getRelationsForURI(uri, graphUri);
+        Map<String,String> res = new HashMap<String,String>();
+        
+        while (results.hasNext()) {
+            QuerySolution result = results.nextSolution();
+            res.put(result.get("?relation").toString(),result.get("?object").toString() );
+        }
+        return res;
+    }
+
     /**
      * get all items which has not been annotated for a plugin
      * @param pluginURI the plugin URI
@@ -203,7 +237,7 @@ public abstract class VirtuosoDatabase {
         ResultSet results = runSPARQLRequest(request);
         return new Item(uri,results,uri,"relation","?value");
     }
-    
+
     public static boolean ItemURIExist(String uri){
         return contains(uri, "http://purl.org/rss/1.0/title");
     }
