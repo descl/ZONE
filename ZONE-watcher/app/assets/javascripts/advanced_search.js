@@ -41,11 +41,17 @@ $(document).ready(function() {
 	  event.preventDefault(); // Prevent link from following its href
 	});
 	
+	$(".label-tag").each(function(){
+		dualbutton = "<div class='btn-group'><button class='btn btn-info' onclick=addFilterItem('"+$("#reminderOr").html()+"','"+$(this).html()+"')>"+$("#reminderOr").html()+"</button><button class='btn btn-success' onclick=addFilterItem('"+$("#reminderAnd").html()+"','"+$(this).html()+"')>"+$("#reminderAnd").html()+"</button><button class='btn btn-danger' onclick=addFilterItem('"+$("#reminderWithout").html()+"','"+$(this).html()+"')>"+$("#reminderWithout").html()+"</button></div>"
+		$(this).popover({ content: dualbutton ,placement: 'bottom',html: 'true',delay: { 
+                     show: 1000, 
+                     hide: 100
+                  }});
+	});
 	//Add the tag-source into the semantic filtering table
 	$('.label-tag').click(function (event) {
-	  addFilterItem($(this).html());
-	  showPopoverFiltering();
-	  event.preventDefault(); // Prevent link from following its href
+		//$(this).popover();
+	   	event.preventDefault();
 	});
 	
 	//show the favorite row when entering in an item
@@ -490,9 +496,31 @@ function addSourceItem(type,value){
 }
 
 //Add a filter to the filtering table of the items page
-function addFilterItem(value){
-	$("#tableReminderFiltering").append("<tr class='info' ><td class=\"changeMouse\" onclick=\"changeColor($(this));\">"+$("#reminderOr").html()+"</td><td>"+value+" <button class='btn btn-danger pull-right'  onclick='$(this).closest(\"tr\").remove();MAJNumberFiltering();'><i class='icon-remove'></i></button></td></tr>");
+function addFilterItem(attribute,value){
+	classtd='info';
+	if (attribute=='OU' || attribute =='OR'){
+		classtd='info';
+		$('#btnWITH').removeClass('active');
+		$('#btnWITH').removeClass('active');
+		$('#btnAND').removeClass('active');
+		$('#btnOR').addClass('active');
+	}else if (attribute=='ET' || attribute =='AND'){
+		classtd='success';
+		$('#btnWITH').removeClass('active');
+		$('#btnWITH').removeClass('active');
+		$('#btnAND').addClass('active');
+		$('#btnOR').removeClass('active');
+	}else if (attribute=='SANS' || attribute =='WITHOUT'){
+		classtd='error';
+		$('#btnWITH').removeClass('active');
+		$('#btnWITHOUT').addClass('active');
+		$('#btnAND').removeClass('active');
+		$('#btnOR').removeClass('active');
+	}
+	$("#tableReminderFiltering").append("<tr class='"+classtd+"' ><td class=\"basicMouse\" style='text-align:center'>"+attribute+"</td><td>"+value+" <button class='btn btn-danger pull-right'  onclick='$(this).closest(\"tr\").remove();MAJNumberFiltering();'><i class='icon-remove'></i></button></td></tr>");
 	
+	$("#keyword").val(value);
+	addFilter();
 	MAJNumberFiltering();
 }
 
@@ -516,15 +544,4 @@ function MAJNumberFiltering(){
 	$("#TableReminderFilteringTitle").html($("#TableReminderFilteringTitle").html().split(' (')[0]+" ( "+i+" items )</h3>");
 }
 
-function changeColor(item){
-	if ($(item).closest('tr').hasClass('info')){
-		$(item).closest('tr').addClass('success').removeClass('info');
-		$(item).html($("#reminderAnd").html());
-	}else if ($(item).closest('tr').hasClass('success')){
-		$(item).closest('tr').addClass('error').removeClass('success');
-		$(item).html($("#reminderWithout").html());
-	}else if ($(item).closest('tr').hasClass('error')){
-		$(item).closest('tr').addClass('info').removeClass('error');
-		$(item).html($("#reminderOr").html());
-	}
-}
+

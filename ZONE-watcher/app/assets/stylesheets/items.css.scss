@@ -104,7 +104,23 @@ a.label:visited{
   overflow:auto;
 }
 
-.changeMouse{
+.pointerMouse{
   cursor:  pointer;
+}
+
+.basicMouse{
+  cursor:  default;
+}
+
+.td-info{
+  background-image : linear-gradient(to bottom,rgba(91, 192, 222, 0.1),rgba(47, 150, 180, 0.1));
+}
+
+.td-success{
+  background-image : linear-gradient(to bottom,rgba(98, 196, 98, 0.1),rgba(81, 163, 81, 0.1));
+}
+
+.td-warning{
+  background-image: linear-gradient(to bottom,rgba(238, 95, 91, 0.1),rgba(189, 54, 47, 0.1));
 }
   
