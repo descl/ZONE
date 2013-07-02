@@ -458,8 +458,6 @@ function changeItemFormat(type){
 		
 		$(".row-favorite").hide();
 		$(".row-list").show();
-		
-		$(".titletag").hide();
 	}else{
 		$("#btnList").addClass('active');
 		$("#btnCard").removeClass('active');
@@ -471,8 +469,6 @@ function changeItemFormat(type){
 		$('.item-bloc').removeClass('clear-left');
 		
 		$(".row-list").hide();
-		
-		$(".titletag").show();
 	}
 	
 }
