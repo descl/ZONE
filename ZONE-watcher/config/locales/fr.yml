@@ -161,6 +161,8 @@ fr:
         "ET"
       or:
         "OU"
+      littleor:
+        "ou"
     button:
       addone:
         "Ajouter"
@@ -189,4 +191,17 @@ fr:
         "Suivant >"
       go:
         "Go Reador"
+  items:
+    reminder:
+      source:
+        "Sources"
+      filtering:
+        "Filtres"
+    users:
+      favorite:
+        ""
+      read:
+        ""
+      share:
+        "Partager : "
   
