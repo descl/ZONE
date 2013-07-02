@@ -491,7 +491,7 @@ function addSourceItem(type,value){
 
 //Add a filter to the filtering table of the items page
 function addFilterItem(value){
-	$("#tableReminderFiltering").append("<tr class='info'><td>OU</td><td>"+value+" <button class='btn btn-danger pull-right'  onclick='$(this).closest(\"tr\").remove();MAJNumberFiltering();'><i class='icon-remove'></i></button></td></tr>");
+	$("#tableReminderFiltering").append("<tr class='info' ><td class=\"changeMouse\" onclick=\"changeColor($(this));\">"+$("#reminderOr").html()+"</td><td>"+value+" <button class='btn btn-danger pull-right'  onclick='$(this).closest(\"tr\").remove();MAJNumberFiltering();'><i class='icon-remove'></i></button></td></tr>");
 	
 	MAJNumberFiltering();
 }
@@ -514,4 +514,17 @@ function MAJNumberFiltering(){
 	});
 	
 	$("#TableReminderFilteringTitle").html($("#TableReminderFilteringTitle").html().split(' (')[0]+" ( "+i+" items )</h3>");
+}
+
+function changeColor(item){
+	if ($(item).closest('tr').hasClass('info')){
+		$(item).closest('tr').addClass('success').removeClass('info');
+		$(item).html($("#reminderAnd").html());
+	}else if ($(item).closest('tr').hasClass('success')){
+		$(item).closest('tr').addClass('error').removeClass('success');
+		$(item).html($("#reminderWithout").html());
+	}else if ($(item).closest('tr').hasClass('error')){
+		$(item).closest('tr').addClass('info').removeClass('error');
+		$(item).html($("#reminderOr").html());
+	}
 }
