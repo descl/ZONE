@@ -57,14 +57,11 @@ $(document).ready(function() {
 	});
 	
 	//show the favorite row when entering in an item
-	$(".item_container").mouseenter(function(){
+	$(".item_container").hover(function(){
 		if ($("#btnList").hasClass('active')){
 			$(this).find('.row-favorite').fadeIn();
 		}
-	});
-	
-	//hide the favortie row when leaving an item
-	$(".item_container").mouseleave(function(){
+	},function(){
 		if ($("#btnList").hasClass('active')){
 			$(this).find('.row-favorite').fadeOut();
 		}
@@ -453,12 +450,16 @@ function changeItemFormat(type){
 	if (type=='card'){
 		$("#btnCard").addClass('active');
 		$("#btnList").removeClass('active');
+		
 		$(".item-bloc:even").addClass('span6 pull-left');
 		$(".item-bloc:even").addClass('clear-left');
 		$(".item-bloc:odd").addClass('span6 pull-right');
 		$(".item-bloc:odd").addClass('clear-right');
+		
 		$(".row-favorite").hide();
 		$(".row-list").show();
+		
+		$(".titletag").hide();
 	}else{
 		$("#btnList").addClass('active');
 		$("#btnCard").removeClass('active');
@@ -470,6 +471,8 @@ function changeItemFormat(type){
 		$('.item-bloc').removeClass('clear-left');
 		
 		$(".row-list").hide();
+		
+		$(".titletag").show();
 	}
 	
 }
