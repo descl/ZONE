@@ -161,6 +161,8 @@ en:
         "AND"
       or:
         "OR"
+      littleor:
+        "or"
     button:
       addone:
         "Add"
@@ -189,3 +191,16 @@ en:
         "Next >"
       go:
         "Go Reador"
+  items:
+    reminder:
+      source:
+        "Sources"
+      filtering:
+        "Filtering"
+    users:
+      favorite:
+        ""
+      read:
+        ""
+      share:
+        "Share : "

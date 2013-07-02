@@ -9,7 +9,7 @@ timer = "";
 $(document).ready(function() {
 	//Define the action on show and hide of the modal
 	$('#advancedSearchModal').on('hide', function() {
-		rebootGeneralModal();
+		//rebootGeneralModal();
 		$('body').css('overflow-y', 'auto');
 
 	});
@@ -35,7 +35,63 @@ $(document).ready(function() {
 		minLength : 4
 	});
 
+	//Add the tag-source into the semantic source table
+	$('.label-source').click(function (event) {
+	  $("#formRSS .inputSearch").val($(this).html());
+	  addRowSourceTable("#formRSS");
+	  showPopover();
+	  event.preventDefault(); // Prevent link from following its href
+	});
+	
+	//Add the tag-source into the semantic filtering table
+	$('.label-tag').click(function (event) {
+	  $("#keyword").val($(this).html());
+	  addFilter();
+	  showPopover();
+	  event.preventDefault(); // Prevent link from following its href
+	});
+	
+	//hide the popover of the semantic search on click
+	$("#semanticSearchGoButton").click(function (event) {
+		$("#semanticSearchGoButton").popover('hide');
+	});
+	
+	//show the favorite row when entering in an item
+	$(".item_container").hover(function(){
+		if ($("#btnList").hasClass('active')){
+			$(this).find('.row-favorite').fadeIn();
+		}
+	},function(){
+		if ($("#btnList").hasClass('active')){
+			$(this).find('.row-favorite').fadeOut();
+		}
+	});
+	
+	//Hide the favorite bar by default
+	$(".row-favorite").hide();
+	$(".row-list").hide();
+	
+	//Show the full link of the item when hover the short link
+	$(".sourceHover").mouseenter(function(){
+		$(this).hide();
+		$(this).next(".sourceHoverFull").fadeIn();
+	});
+	
+	//Show the short link of the item when leaving the hover of the full link
+	$(".sourceHoverFull").mouseleave(function(){
+		$(this).hide();
+		$(this).prev(".sourceHover").fadeIn();
+	});
+
 });
+
+function showPopover(){
+	$("#semanticSearchGoButton").popover({placement:'bottom',container:'body'});
+	$("#semanticSearchGoButton").popover('show');
+	setTimeout(function() {
+			$("#semanticSearchGoButton").popover('hide')
+		}, 1000);
+}
 
 //Add a filter to the list of filter
 function addFilter() {
@@ -48,10 +104,10 @@ function addFilter() {
 	var id = 1;
 	var classtr = "";
 	//Choose the class of the line of the table ( red for WITHOUT, blue for OR, green for AND)
-	if ($('#btnAND').hasClass('active') || $('#btnWITH').hasClass('active')) {
+	if ($('#btnAND').hasClass('active') ) {
 		id = 1;
 		classtr = 'success';
-	} else if ($('#btnOR').hasClass('active')) {
+	} else if ($('#btnOR').hasClass('active') || $('#btnWITH').hasClass('active') ) {
 		id = 0;
 		classtr = 'info';
 	} else if ($('#btnWITHOUT').hasClass('active')) {
@@ -63,9 +119,10 @@ function addFilter() {
 
 	//Add the related word to the keyword
 	var motcle = $('#keyword').val();
+	var linkedKeyword = $('#btnOR').attr("title");
 	$('#keywordTable tbody > tr > td > label > input').each(function() {
 		if ($(this).is(':checked')) {
-			motcle += ', ' + $(this).val();
+			motcle += ' '+linkedKeyword.toLowerCase()+' ' + $(this).val();
 		}
 	});
 
@@ -103,7 +160,7 @@ function checkDropdown() {
 		$('#btnOR').prop('disabled', false);
 		$('#btnWITH').addClass('hidden');
 		$('#btnAND').removeClass('hidden');
-		$('#btnAND').button('toggle');
+		$('#btnOR').button('toggle');
 	} else {
 		$('#btnOR').prop('disabled', true);
 		$('#btnWITH').removeClass('hidden');
@@ -128,7 +185,7 @@ function rebootFiltering() {
 function getFilter() {
 	$("#filteringArea").val('');
 	$('#filteringTable tbody > tr').each(function() {
-		$("#filteringArea").val($("#filteringArea").val() + $(this).find('td.tdkey').html() + ' ' + $(this).find('div.tdval').html() + ' ');
+		$("#filteringArea").val($("#filteringArea").val() + $(this).find('td.tdkey').html() + ' ( ' + $(this).find('div.tdval').html() + ' ) ');
 	});
 
 }
@@ -386,4 +443,36 @@ function movingData() {
 
 	//create the input with the data
 	$('#movedData').html($('#movedData').html() + "<input name='arraySource' type='hidden' value='" + arraySourceAdded + "'>" + "<input name='arrayFiltering[]' type='hidden' value='" + arrayFilteringAdded + "'>");
+}
+
+//Function that change the disposition of the items, used in /items
+function changeItemFormat(type){
+	if (type=='card'){
+		$("#btnCard").addClass('active');
+		$("#btnList").removeClass('active');
+		
+		$(".item-bloc:even").addClass('span6 pull-left');
+		$(".item-bloc:even").addClass('clear-left');
+		$(".item-bloc:odd").addClass('span6 pull-right');
+		$(".item-bloc:odd").addClass('clear-right');
+		
+		$(".row-favorite").hide();
+		$(".row-list").show();
+		
+		$(".titletag").hide();
+	}else{
+		$("#btnList").addClass('active');
+		$("#btnCard").removeClass('active');
+		
+		$('.item-bloc').removeClass('span6');
+		$('.item-bloc').removeClass('pull-left');
+		$('.item-bloc').removeClass('pull-right');
+		$('.item-bloc').removeClass('clear-right');
+		$('.item-bloc').removeClass('clear-left');
+		
+		$(".row-list").hide();
+		
+		$(".titletag").show();
+	}
+	
 }
