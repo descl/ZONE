@@ -34,10 +34,10 @@ event.preventDefault(); // Prevent link from following its href
 </div>
 <div class="well">
 	<div class="row-fluid">
-		<div class="span6">
+		<div id="TableReminderSourceTitle" class="span6" data-content="Tag bien ajouté" data-original-title="Confirmation d'ajout">
 			<h3><%= raw t 'items.reminder.source' %> ( 0 items )</h3>
 		</div>
-		<div class="span5">
+		<div id="TableReminderFilteringTitle" class="span5" data-content="Tag bien ajouté" data-original-title="Confirmation d'ajout">
 			<h3><%= raw t 'items.reminder.filtering' %> ( 0 items )</h3>
 		</div>
 		<div class="span1">
@@ -51,9 +51,9 @@ event.preventDefault(); // Prevent link from following its href
 		</div>
 
 	</div>
-	<div class="tableReminder row-fluid" hidden>
+	<div class="tableReminder row-fluid tableReminderPanel" hidden>
 		<div class="span5">
-			<table class="table table-bordered">
+			<table id="tableReminderSource" class="table table-bordered">
 				<thead>
 					<tr>
 						<th class="span1"> <%= raw t 'semanticsource.table.keyword' %></th>
@@ -65,7 +65,7 @@ event.preventDefault(); // Prevent link from following its href
 		</div>
 		<div class="span1"></div>
 		<div class="span5">
-			<table class="table table-bordered">
+			<table id="tableReminderFiltering" class="table table-bordered">
 				<thead>
 					<tr>
 						<th class="span1"> <%= raw t 'semanticfiltering.table.keyword' %></th>

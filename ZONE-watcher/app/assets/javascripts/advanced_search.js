@@ -9,7 +9,6 @@ timer = "";
 $(document).ready(function() {
 	//Define the action on show and hide of the modal
 	$('#advancedSearchModal').on('hide', function() {
-		//rebootGeneralModal();
 		$('body').css('overflow-y', 'auto');
 
 	});
@@ -37,23 +36,16 @@ $(document).ready(function() {
 
 	//Add the tag-source into the semantic source table
 	$('.label-source').click(function (event) {
-	  $("#formRSS .inputSearch").val($(this).html());
-	  addRowSourceTable("#formRSS");
-	  showPopover();
+	  addSourceItem("RSS",$(this).html());
+	  showPopoverSource();
 	  event.preventDefault(); // Prevent link from following its href
 	});
 	
 	//Add the tag-source into the semantic filtering table
 	$('.label-tag').click(function (event) {
-	  $("#keyword").val($(this).html());
-	  addFilter();
-	  showPopover();
+	  addFilterItem($(this).html());
+	  showPopoverFiltering();
 	  event.preventDefault(); // Prevent link from following its href
-	});
-	
-	//hide the popover of the semantic search on click
-	$("#semanticSearchGoButton").click(function (event) {
-		$("#semanticSearchGoButton").popover('hide');
 	});
 	
 	//show the favorite row when entering in an item
@@ -84,14 +76,6 @@ $(document).ready(function() {
 	});
 
 });
-
-function showPopover(){
-	$("#semanticSearchGoButton").popover({placement:'bottom',container:'body'});
-	$("#semanticSearchGoButton").popover('show');
-	setTimeout(function() {
-			$("#semanticSearchGoButton").popover('hide')
-		}, 1000);
-}
 
 //Add a filter to the list of filter
 function addFilter() {
@@ -471,4 +455,63 @@ function changeItemFormat(type){
 		$(".row-list").hide();
 	}
 	
+}
+
+function showPopoverSource(){
+	$("#TableReminderSourceTitle").popover({placement:'bottom'});
+	$("#TableReminderSourceTitle").popover('show');
+	setTimeout(function() {
+			$("#TableReminderSourceTitle").popover('hide')
+		}, 1000);
+}
+
+function showPopoverFiltering(){
+	$("#TableReminderFilteringTitle").popover({placement:'bottom'});
+	$("#TableReminderFilteringTitle").popover('show');
+	setTimeout(function() {
+			$("#TableReminderFilteringTitle").popover('hide')
+		}, 1000);
+}
+
+//Add a source to the source table of the items page
+function addSourceItem(type,value){
+	if (type == "Twitter")
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundTwitter.png" width="40" height="40";/></td>';
+	else if (type == "Google")
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundGoogle.png" width="40" height="40";/></td>';
+	else if (type == "RSS")
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundRSS.png" width="40" height="40";/></td>';
+	else
+		tdicone ="<td></td>"
+
+	$("#tableReminderSource").append("<tr>"+tdicone+"<td>"+value+" <button class='btn btn-danger pull-right'  onclick='$(this).closest(\"tr\").remove();MAJNumberSource();'><i class='icon-remove'></i></button></td></tr>");
+	
+	MAJNumberSource();
+}
+
+//Add a filter to the filtering table of the items page
+function addFilterItem(value){
+	$("#tableReminderFiltering").append("<tr class='info'><td>OU</td><td>"+value+" <button class='btn btn-danger pull-right'  onclick='$(this).closest(\"tr\").remove();MAJNumberFiltering();'><i class='icon-remove'></i></button></td></tr>");
+	
+	MAJNumberFiltering();
+}
+
+//update of the number of items for the source table in the items page
+function MAJNumberSource(){
+	i = 0;
+	$('#tableReminderSource tbody > tr').each(function() {
+		i +=1;
+	});
+	
+	$("#TableReminderSourceTitle").html($("#TableReminderSourceTitle").html().split('(')[0]+" ( "+i+" items )</h3>");
+}
+
+//update of the number of items for the filtering table in the items page
+function MAJNumberFiltering(){
+	i = 0;
+	$('#tableReminderFiltering tbody > tr').each(function() {
+		i +=1;
+	});
+	
+	$("#TableReminderFilteringTitle").html($("#TableReminderFilteringTitle").html().split('(')[0]+" ( "+i+" items )</h3>");
 }
