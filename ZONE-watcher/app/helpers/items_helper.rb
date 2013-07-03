@@ -29,7 +29,7 @@ module ItemsHelper
         res=link_to filter.value, itemURI, :class => itemClassFilter, title: filter.prop[@WIKI_META_URI.length,filter.prop.length]+ " : " + filter.value
 
       else
-        res=link_to filter.value[filter.value.rindex('/')+1, filter.value.length], itemURI, :class => itemClassFilter, title: filter.prop[@WIKI_META_URI.length,filter.prop.length]+ " : " + filter.value
+        res=link_to filter.value[filter.value.rindex('/')+1, filter.value.length], itemURI, :class => itemClassFilter, title: filter.prop[@WIKI_META_URI.length,filter.prop.length]+ " : " + filter.value[filter.value.rindex('/')+1, filter.value.length]
       end
     elsif(filter.prop.starts_with? @INSEE_GEO_URI)
       itemClassFilter=getClassLabel(filter.prop[@INSEE_GEO_URI.length,filter.prop.length])

@@ -42,7 +42,7 @@ $(document).ready(function() {
 	});
 	
 	$(".label-tag").each(function(){
-		dualbutton = "<div class='btn-group'><button class='btn btn-info' onclick=addFilterItem('"+$("#reminderOr").html()+"','"+$(this).html()+"')>"+$("#reminderOr").html()+"</button><button class='btn btn-success' onclick=addFilterItem('"+$("#reminderAnd").html()+"','"+$(this).html()+"')>"+$("#reminderAnd").html()+"</button><button class='btn btn-danger' onclick=addFilterItem('"+$("#reminderWithout").html()+"','"+$(this).html()+"')>"+$("#reminderWithout").html()+"</button></div>"
+		dualbutton = "<div class='btn-group'><button class='btn btn-info' onclick='addFilterItem(\""+$("#reminderOr").html()+"\",\""+$(this).text()+"\")'>"+$("#reminderOr").html()+"</button><button class='btn btn-success' onclick='addFilterItem(\""+$("#reminderAnd").html()+"\",\""+$(this).html()+"\")'>"+$("#reminderAnd").html()+"</button><button class='btn btn-danger' onclick='addFilterItem(\""+$("#reminderWithout").html()+"\",\""+$(this).html()+"\")'>"+$("#reminderWithout").html()+"</button></div>"
 		$(this).popover({ content: dualbutton ,placement: 'bottom',html: 'true',delay: { 
                      show: 1000, 
                      hide: 100
