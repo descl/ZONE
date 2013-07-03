@@ -9,7 +9,6 @@ timer = "";
 $(document).ready(function() {
 	//Define the action on show and hide of the modal
 	$('#advancedSearchModal').on('hide', function() {
-		//rebootGeneralModal();
 		$('body').css('overflow-y', 'auto');
 
 	});
@@ -37,23 +36,25 @@ $(document).ready(function() {
 
 	//Add the tag-source into the semantic source table
 	$('.label-source').click(function (event) {
-	  $("#formRSS .inputSearch").val($(this).html());
-	  addRowSourceTable("#formRSS");
-	  showPopover();
+	  addSourceItem("RSS",$(this).html());
+	  showPopoverSource();
 	  event.preventDefault(); // Prevent link from following its href
+	});
+	
+	//Prepare the popover for each tag-label
+	$(".label-tag").each(function(){
+		dualbutton = "<div class='btn-group'><button class='btn btn-success' onclick='addFilterItem(\""+$("#reminderAnd").html()+"\",\""+$(this).html()+"\")'><i class=\"icon-plus\"></i></button><button class='btn btn-info' onclick='addFilterItem(\""+$("#reminderOr").html()+"\",\""+$(this).text()+"\")'><b>O</b></button><button class='btn btn-danger' onclick='addFilterItem(\""+$("#reminderWithout").html()+"\",\""+$(this).html()+"\")'><i class=\"icon-minus\"></i></button></div>"
+		$(this).popover({ content: dualbutton ,placement: 'bottom',html: 'true',delay: { 
+                     show: 1000, 
+                     hide: 100
+                  }});
 	});
 	
 	//Add the tag-source into the semantic filtering table
 	$('.label-tag').click(function (event) {
-	  $("#keyword").val($(this).html());
-	  addFilter();
-	  showPopover();
-	  event.preventDefault(); // Prevent link from following its href
-	});
-	
-	//hide the popover of the semantic search on click
-	$("#semanticSearchGoButton").click(function (event) {
-		$("#semanticSearchGoButton").popover('hide');
+		$('.label-tag').not(this).popover('hide');
+		//$(this).popover();
+	   	event.preventDefault();
 	});
 	
 	//show the favorite row when entering in an item
@@ -84,14 +85,6 @@ $(document).ready(function() {
 	});
 
 });
-
-function showPopover(){
-	$("#semanticSearchGoButton").popover({placement:'bottom',container:'body'});
-	$("#semanticSearchGoButton").popover('show');
-	setTimeout(function() {
-			$("#semanticSearchGoButton").popover('hide')
-		}, 1000);
-}
 
 //Add a filter to the list of filter
 function addFilter() {
@@ -472,3 +465,101 @@ function changeItemFormat(type){
 	}
 	
 }
+
+//Force the popover of the source title to appears. It will disappear after 1 second
+function showPopoverSource(){
+	$("#TableReminderSourceTitle").popover({placement:'bottom'});
+	$("#TableReminderSourceTitle").popover('show');
+	setTimeout(function() {
+			$("#TableReminderSourceTitle").popover('hide')
+		}, 1000);
+}
+
+//Force the popover of the filtering title to appears. It will disappear after 1 second
+function showPopoverFiltering(){
+	$("#TableReminderFilteringTitle").popover({placement:'bottom'});
+	$("#TableReminderFilteringTitle").popover('show');
+	setTimeout(function() {
+			$("#TableReminderFilteringTitle").popover('hide')
+		}, 1000);
+}
+
+//Add a source to the source table of the items page
+function addSourceItem(type,value){
+	if (type == "Twitter")
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundTwitter.png" width="40" height="40";/></td>';
+	else if (type == "Google")
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundGoogle.png" width="40" height="40";/></td>';
+	else if (type == "RSS")
+		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundRSS.png" width="40" height="40";/></td>';
+	else
+		tdicone ="<td></td>"
+
+	$("#tableReminderSource").append("<tr>"+tdicone+"<td>"+value+" <button class='btn btn-danger pull-right'  onclick='$(this).closest(\"tr\").remove();MAJNumberSource();removeSourceLine(\"idsource" + idRowSource + "\")'><i class='icon-remove'></i></button></td></tr>");
+	MAJNumberSource();
+	
+	if (type == "Twitter"){
+		$("#formTwitter .inputSearch").val(value);
+		addRowSourceTable("#formTwitter");
+	}else if (type == "Google"){
+		$("#formGoogle .inputSearch").val(value);
+		addRowSourceTable("#formGoogle");
+	}else if (type == "RSS"){
+		$("#formRSS .inputSearch").val(value);
+		addRowSourceTable("#formRSS");
+	}
+}
+
+//Add a filter to the filtering table of the items page
+function addFilterItem(attribute,value){
+	classtd='info';
+	if (attribute=='OU' || attribute =='OR'){
+		classtd='info';
+		$('#btnWITH').removeClass('active');
+		$('#btnWITH').removeClass('active');
+		$('#btnAND').removeClass('active');
+		$('#btnOR').addClass('active');
+	}else if (attribute=='ET' || attribute =='AND'){
+		classtd='success';
+		$('#btnWITH').removeClass('active');
+		$('#btnWITH').removeClass('active');
+		$('#btnAND').addClass('active');
+		$('#btnOR').removeClass('active');
+	}else if (attribute=='SANS' || attribute =='WITHOUT'){
+		classtd='error';
+		$('#btnWITH').removeClass('active');
+		$('#btnWITHOUT').addClass('active');
+		$('#btnAND').removeClass('active');
+		$('#btnOR').removeClass('active');
+	}
+	$("#tableReminderFiltering").append("<tr class='"+classtd+"' ><td class=\"basicMouse\" style='text-align:center'>"+attribute+"</td><td>"+value+" <button class='btn btn-danger pull-right'  onclick='$(this).closest(\"tr\").remove();MAJNumberFiltering();removelinefiltrage(\"idrow" + idRowFiltering + "\")'><i class='icon-remove'></i></button></td></tr>");
+	
+	$("#keyword").val(value);
+	addFilter();
+	MAJNumberFiltering();
+	
+	showPopoverFiltering();
+	$('.label-tag').popover('hide');
+}
+
+//update of the number of items for the source table in the items page
+function MAJNumberSource(){
+	i = 0;
+	$('#tableReminderSource tbody > tr').each(function() {
+		i +=1;
+	});
+	
+	$("#TableReminderSourceTitle").html($("#TableReminderSourceTitle").html().split('(')[0]+" ( "+i+" items )</h3>");
+}
+
+//update of the number of items for the filtering table in the items page
+function MAJNumberFiltering(){
+	i = 0;
+	$('#tableReminderFiltering tbody > tr').each(function() {
+		i +=1;
+	});
+	
+	$("#TableReminderFilteringTitle").html($("#TableReminderFilteringTitle").html().split(' (')[0]+" ( "+i+" items )</h3>");
+}
+
+

@@ -35,10 +35,10 @@ event.preventDefault(); // Prevent link from following its href
 <div class="well">
 	<div class="row-fluid">
 		<div class="span6">
-			<h3><%= raw t 'items.reminder.source' %> ( 0 items )</h3>
+			<h3><span id="TableReminderSourceTitle" data-content="<%= raw t 'items.popover.content' %>" data-original-title="<%= raw t 'items.popover.title' %>"><%= raw t 'items.reminder.source' %> ( 0 items )</span></:span></h3>
 		</div>
-		<div class="span5">
-			<h3><%= raw t 'items.reminder.filtering' %> ( 0 items )</h3>
+		<div  class="span5" >
+			<h3> <span id="TableReminderFilteringTitle" data-content="<%= raw t 'items.popover.content' %>" data-original-title="<%= raw t 'items.popover.title' %>" ><%= raw t 'items.reminder.filtering' %> ( 0 items )</span></h3>
 		</div>
 		<div class="span1">
 			<h3>
@@ -48,12 +48,15 @@ event.preventDefault(); // Prevent link from following its href
 			<button class="btn pull-right chevronup" style="display:none" onclick="$('.tableReminder').slideUp('slow');$('.chevrondown').show();$('.chevronup').hide()">
 				<i class="icon icon-chevron-up"></i>
 			</button></h3>
+			<span id="reminderAnd" hidden><%= raw t 'semanticfiltering.keyword.and' %></span>
+			<span id="reminderOr" hidden><%= raw t 'semanticfiltering.keyword.or' %></span>
+			<span id="reminderWithout" hidden><%= raw t 'semanticfiltering.keyword.without' %></span>
 		</div>
 
 	</div>
-	<div class="tableReminder row-fluid" hidden>
+	<div class="tableReminder row-fluid tableReminderPanel" hidden>
 		<div class="span5">
-			<table class="table table-bordered">
+			<table id="tableReminderSource" class="table table-bordered">
 				<thead>
 					<tr>
 						<th class="span1"> <%= raw t 'semanticsource.table.keyword' %></th>
@@ -65,7 +68,7 @@ event.preventDefault(); // Prevent link from following its href
 		</div>
 		<div class="span1"></div>
 		<div class="span5">
-			<table class="table table-bordered">
+			<table id="tableReminderFiltering" class="table table-bordered">
 				<thead>
 					<tr>
 						<th class="span1"> <%= raw t 'semanticfiltering.table.keyword' %></th>
