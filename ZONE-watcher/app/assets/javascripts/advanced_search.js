@@ -495,9 +495,19 @@ function addSourceItem(type,value){
 	else
 		tdicone ="<td></td>"
 
-	$("#tableReminderSource").append("<tr>"+tdicone+"<td>"+value+" <button class='btn btn-danger pull-right'  onclick='$(this).closest(\"tr\").remove();MAJNumberSource();'><i class='icon-remove'></i></button></td></tr>");
-	
+	$("#tableReminderSource").append("<tr>"+tdicone+"<td>"+value+" <button class='btn btn-danger pull-right'  onclick='$(this).closest(\"tr\").remove();MAJNumberSource();removeSourceLine(\"idsource" + idRowSource + "\")'><i class='icon-remove'></i></button></td></tr>");
 	MAJNumberSource();
+	
+	if (type == "Twitter"){
+		$("#formTwitter .inputSearch").val(value);
+		addRowSourceTable("#formTwitter");
+	}else if (type == "Google"){
+		$("#formGoogle .inputSearch").val(value);
+		addRowSourceTable("#formGoogle");
+	}else if (type == "RSS"){
+		$("#formRSS .inputSearch").val(value);
+		addRowSourceTable("#formRSS");
+	}
 }
 
 //Add a filter to the filtering table of the items page
