@@ -27,6 +27,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -35,7 +38,7 @@ import java.io.Serializable;
 public class Prop {
     private static final long serialVersionUID = 1L;
     private Property type=null;
-    private String value=null;
+    private String value="";
     private boolean isLiteral;
     private boolean isSearchable=false;
 
@@ -55,7 +58,13 @@ public class Prop {
     
     public Prop(Property t, String value, boolean isLi, boolean isS){
         this.type = t;
-        this.value= value;
+        byte[] utf8;
+        try {
+            utf8 = value.getBytes("UTF-8");
+        this.value= new String(utf8, "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Prop.class.getName()).log(Level.WARNING, null, ex);
+        }
         this.isLiteral = isLi;
         this.isSearchable = isS;
     }
