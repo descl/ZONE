@@ -161,8 +161,6 @@ fr:
         "ET"
       or:
         "OU"
-      littleor:
-        "ou"
     button:
       addone:
         "Ajouter"
