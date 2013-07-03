@@ -522,7 +522,7 @@ function addFilterItem(attribute,value){
 		$('#btnAND').removeClass('active');
 		$('#btnOR').removeClass('active');
 	}
-	$("#tableReminderFiltering").append("<tr class='"+classtd+"' ><td class=\"basicMouse\" style='text-align:center'>"+attribute+"</td><td>"+value+" <button class='btn btn-danger pull-right'  onclick='$(this).closest(\"tr\").remove();MAJNumberFiltering();'><i class='icon-remove'></i></button></td></tr>");
+	$("#tableReminderFiltering").append("<tr class='"+classtd+"' ><td class=\"basicMouse\" style='text-align:center'>"+attribute+"</td><td>"+value+" <button class='btn btn-danger pull-right'  onclick='$(this).closest(\"tr\").remove();MAJNumberFiltering();removelinefiltrage(\"idrow" + idRowFiltering + "\")'><i class='icon-remove'></i></button></td></tr>");
 	
 	$("#keyword").val(value);
 	addFilter();
