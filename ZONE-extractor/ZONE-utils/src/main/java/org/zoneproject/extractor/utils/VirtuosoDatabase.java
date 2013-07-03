@@ -170,7 +170,7 @@ public abstract class VirtuosoDatabase {
      * @return the items
      */
     public static Item[] getItemsNotAnotatedForOnePlugin(String pluginURI){
-        return getItemsNotAnotatedForOnePlugin(pluginURI,10000000);
+        return getItemsNotAnotatedForOnePlugin(pluginURI,100);
     }
     public static Item[] getItemsNotAnotatedForOnePlugin(String pluginURI, int limit){
         ArrayList<Item> items = new ArrayList<Item>();
