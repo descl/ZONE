@@ -523,6 +523,9 @@ function addFilterItem(attribute,value){
 	$("#keyword").val(value);
 	addFilter();
 	MAJNumberFiltering();
+	
+	showPopoverFiltering();
+	$('.label-tag').popover('hide');
 }
 
 //update of the number of items for the source table in the items page
