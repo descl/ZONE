@@ -30,19 +30,20 @@ import java.util.Timer;
 public class App {
     
     public static void main(String[] args)  {
-       Timer timer = new Timer();
+       Timer timerAnnot = new Timer();
+       Timer timerAggregate = new Timer();
 
-       String [] apps = new String[6];
+       String [] apps = new String[5];
        
        apps[0] = "org.zoneproject.extractor.twitterreader.App";
-       apps[1] = "org.zoneproject.extractor.rssreader.App";
-       apps[2] = "org.zoneproject.extractor.plugin.extractarticlescontent.App";
-       apps[3] = "org.zoneproject.extractor.plugin.opencalais.App";
-       apps[4] = "org.zoneproject.extractor.plugin.wikimeta.App";
-       apps[5] = "org.zoneproject.extractor.plugin.inseegeo.App";
-      // apps[5] = "org.zoneproject.extractor.plugin.categorization_svm.App";
+       apps[1] = "org.zoneproject.extractor.plugin.extractarticlescontent.App";
+       apps[2] = "org.zoneproject.extractor.plugin.opencalais.App";
+       apps[3] = "org.zoneproject.extractor.plugin.wikimeta.App";
+       apps[4] = "org.zoneproject.extractor.plugin.inseegeo.App";
+       timerAggregate.scheduleAtFixedRate( new ThreadApp("org.zoneproject.extractor.rssreader.App"),0, 30000);
+       
        for(String app : apps){
-           timer.scheduleAtFixedRate( new ThreadApp(app),0, 30000); 
+           timerAnnot.scheduleAtFixedRate( new ThreadApp(app),0, 30000); 
        
        }
     }

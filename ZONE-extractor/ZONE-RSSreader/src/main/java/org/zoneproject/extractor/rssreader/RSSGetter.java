@@ -26,7 +26,6 @@ package org.zoneproject.extractor.rssreader;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
@@ -36,7 +35,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -61,13 +59,17 @@ public class RSSGetter {
     public static ArrayList<Item> getFlux(String[] urls) {
         ArrayList<Item> result = new ArrayList<Item>();
         for(int i=0; i < urls.length;i++){
+            String curUri = urls[i];
             try{
-                XmlReader flux = new XmlReader(new URL(urls[i]));
-                result.addAll(RSSGetter.getFlux(urls[i],flux));
+                XmlReader flux = new XmlReader(new URL(curUri));
+                result.addAll(RSSGetter.getFlux(curUri,flux));
+                
             } catch (java.net.UnknownHostException ex) {
-                logger.warn("RSS Feed "+urls[i]+" is offline");
+                logger.warn("RSS Feed "+curUri+" is offline");
+                Database.addAnnotation(curUri, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
             } catch (IOException ex) {
-                logger.warn("RSS Feed "+urls[i]+" is offline");
+                logger.warn("RSS Feed "+curUri+" is offline");
+                Database.addAnnotation(curUri, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
             }
         }
         return result;
@@ -82,6 +84,7 @@ public class RSSGetter {
         try {
             return RSSGetter.getFlux(url,new XmlReader(new URL(url)));
         } catch (Exception ex) {
+            Database.addAnnotation(url, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
             Logger.getLogger(RSSGetter.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -144,18 +147,25 @@ public class RSSGetter {
         }
         catch(NullPointerException e) {
             logger.warn("RSS Feed "+source+" not working"+e);
+            Database.addAnnotation(source, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
         }
         catch(IllegalArgumentException e) {
             logger.warn("RSS Feed "+source+" not working"+e);
+            Database.addAnnotation(source, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
         }
         catch(FeedException e) {
             logger.warn("RSS Feed "+source+" not working"+e);
+            Database.addAnnotation(source, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
         }
         return items;
     }
     
     public static String [] getSources(){
-        String query = "SELECT *  WHERE {?uri rdf:type <"+ZoneOntology.SOURCES_TYPE+">.}";
+        String query = "SELECT *  WHERE {"
+                + "?uri rdf:type <"+ZoneOntology.SOURCES_TYPE+">."
+                + "FILTER (!bif:exists ((select (1) where { ?uri <http://zone-project.org/model/sources#offline> \"true\" } )))"
+                + "FILTER (!bif:exists ((select (1) where { ?uri rdf:type <http://zone-project.org/model/sources#twitter> } )))"
+                + "}";
         ResultSet res = Database.runSPARQLRequest(query, ZoneOntology.GRAPH_SOURCES);
         ArrayList<String> sources = new ArrayList<String>();
         while (res.hasNext()) {
@@ -164,7 +174,7 @@ public class RSSGetter {
         }
         return sources.toArray(new String[sources.size()]);
     }
-    
+
     public static void main(String[] args){
         
         String fileURI = "http://europe1.fr.feedsportal.com/c/32376/f/546041/index.rss";

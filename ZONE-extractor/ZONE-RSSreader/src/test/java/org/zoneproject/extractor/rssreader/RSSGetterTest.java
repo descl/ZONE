@@ -21,19 +21,19 @@ package org.zoneproject.extractor.rssreader;
  * #L%
  */
 
-import org.zoneproject.extractor.rssreader.RSSGetter;
 import java.io.File;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.zoneproject.extractor.utils.Database;
+import org.zoneproject.extractor.utils.ZoneOntology;
 
 /**
  *
@@ -83,5 +83,22 @@ public class RSSGetterTest {
         ArrayList result = RSSGetter.getFlux(fileURI);
         logger.info(result.size());
         assertEquals(result.size(), 25);
+    }
+    
+    /**
+     * Test of getFlux method, for an offline feed.
+     */
+    @Test
+    public void testGetFluxSourceNotFound_URI() {
+        logger.info("getFlux");
+        String fileURI = "http://turlututu.com/x.rss";
+        try{
+            ArrayList result = RSSGetter.getFlux(fileURI);
+        }
+        catch (java.lang.NoSuchFieldError e){}
+        finally{
+            Map sourceMap = Database.getMapForURI(fileURI, ZoneOntology.GRAPH_SOURCES);
+            assertEquals(sourceMap.get("http://zone-project.org/model/sources#offline"), "true");
+        }
     }
 }
