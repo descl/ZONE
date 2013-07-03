@@ -50,6 +50,7 @@ $(document).ready(function() {
 	});
 	//Add the tag-source into the semantic filtering table
 	$('.label-tag').click(function (event) {
+		$('.label-tag').not(this).popover('hide');
 		//$(this).popover();
 	   	event.preventDefault();
 	});
