@@ -24,6 +24,8 @@ ZONEWatcher::Application.routes.draw do
 
   get "home/index"
 
+  get "home/search"
+
   resources :items
 
 
