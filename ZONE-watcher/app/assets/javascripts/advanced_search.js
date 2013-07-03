@@ -20,7 +20,7 @@ $(document).ready(function() {
 	$("#progressBarFiltering").hide();
 	$('#btnWITH').button('toggle');
 	
-	//Instanciate the autocomplete
+	//Instanciate the autocomplete for semantic search
 	$("#keyword").autocomplete({
 		source : [""],
 		search : function(event, ui) {
@@ -32,7 +32,18 @@ $(document).ready(function() {
 			askUpdateKeywordTable();
 		},
 		minLength : 4
-	});
+	}).autocomplete( "widget" ).addClass( "span1" );
+	
+	//Instanciate the autocomplete for normal search
+	$("#search-form").autocomplete({
+		source : [""],
+		search : function(event, ui) {
+			$("#search-form").autocomplete({
+				source : "complete_entities/" + $("#search-form").val() + ".json"
+			});
+		},
+		minLength : 4
+	}).autocomplete( "widget" ).addClass( "span1" );
 
 	//Add the tag-source into the semantic source table
 	$('.label-source').click(function (event) {
