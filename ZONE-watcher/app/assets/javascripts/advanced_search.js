@@ -41,6 +41,7 @@ $(document).ready(function() {
 	  event.preventDefault(); // Prevent link from following its href
 	});
 	
+	//Prepare the popover for each tag-label
 	$(".label-tag").each(function(){
 		dualbutton = "<div class='btn-group'><button class='btn btn-success' onclick='addFilterItem(\""+$("#reminderAnd").html()+"\",\""+$(this).html()+"\")'><i class=\"icon-plus\"></i></button><button class='btn btn-info' onclick='addFilterItem(\""+$("#reminderOr").html()+"\",\""+$(this).text()+"\")'><b>O</b></button><button class='btn btn-danger' onclick='addFilterItem(\""+$("#reminderWithout").html()+"\",\""+$(this).html()+"\")'><i class=\"icon-minus\"></i></button></div>"
 		$(this).popover({ content: dualbutton ,placement: 'bottom',html: 'true',delay: { 
@@ -48,6 +49,7 @@ $(document).ready(function() {
                      hide: 100
                   }});
 	});
+	
 	//Add the tag-source into the semantic filtering table
 	$('.label-tag').click(function (event) {
 		$('.label-tag').not(this).popover('hide');
@@ -464,6 +466,7 @@ function changeItemFormat(type){
 	
 }
 
+//Force the popover of the source title to appears. It will disappear after 1 second
 function showPopoverSource(){
 	$("#TableReminderSourceTitle").popover({placement:'bottom'});
 	$("#TableReminderSourceTitle").popover('show');
@@ -472,6 +475,7 @@ function showPopoverSource(){
 		}, 1000);
 }
 
+//Force the popover of the filtering title to appears. It will disappear after 1 second
 function showPopoverFiltering(){
 	$("#TableReminderFilteringTitle").popover({placement:'bottom'});
 	$("#TableReminderFilteringTitle").popover('show');
