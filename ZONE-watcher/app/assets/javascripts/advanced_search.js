@@ -94,6 +94,31 @@ $(document).ready(function() {
 		$(this).hide();
 		$(this).prev(".sourceHover").fadeIn();
 	});
+	
+	//Hide the source and filtering panel in the new semantic search
+	$("#Sources").hide();
+	$("#Filtering").hide();
+	
+	//Show the sources panel on click
+	$("#openSource").click(function(event){
+		if ($("#Sources").is(":visible") )
+			$("#Sources").slideUp();
+		else
+			$("#Filtering").slideUp('swing',function(){
+				$("#Sources").slideDown();
+			});
+	});
+
+	//Show the filtering panel on click
+	$("#openFiltering").click(function(event){
+		if ($("#Filtering").is(":visible") )
+			$("#Filtering").slideUp();
+		else
+			$("#Sources").slideUp('swing',function(){
+				$("#Filtering").slideDown();
+			});
+		
+	});
 
 });
 
