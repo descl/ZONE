@@ -136,7 +136,7 @@ fr:
         "Reador est principalement développé par <a href='http://desclaux.me'>Christophe Desclaux<a>. Il est assisté par l'institut de recherche <a href='http://www.inria.fr'>Inria</a> dans le cadre du concours <a href='http://boostyourcode.inria.fr'>BoostYourCode2012</a>."
   semanticsource:
     title:
-      "Recherche sémantique : Sources"  
+      "vos sources"  
     button:
       addall:
         "Tout"
@@ -149,7 +149,7 @@ fr:
         "Intitulé"
   semanticfiltering:
     title:
-      "Recherche sémantique : Filtrage"
+      "votre filtrage"
     keyword:
       title:
         "Mot-clé"
@@ -182,6 +182,10 @@ fr:
       content:
         "Intitulé"
   modal:
+    select:
+      "Sélectionnez"
+    helper:
+      "Cliquez sur sources ou filtrage pour démarrer la recherche sémantique"
     button:
       previous:
         "< Précédent"
