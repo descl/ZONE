@@ -106,6 +106,7 @@ $(document).ready(function() {
 		else
 			$("#Filtering").slideUp('swing',function(){
 				$("#Sources").slideDown();
+				$(document.body).animate({scrollTop: $('#Sources').offset().top}, 2000,'easeInOutCubic');
 			});
 	});
 
@@ -116,6 +117,7 @@ $(document).ready(function() {
 		else
 			$("#Sources").slideUp('swing',function(){
 				$("#Filtering").slideDown();
+				$(document.body).animate({scrollTop: $('#Filtering').offset().top}, 2000,'easeInOutCubic');
 			});
 		
 	});
