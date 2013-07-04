@@ -6,22 +6,10 @@
 <!--<div class="modal-body">-->
 <div class="row-fluid">
 	<div class="span12 basicMouse" style="text-align:center;margin-top:20%">
-		<h1 style="font-size: 50px"><%= raw t 'modal.select' %> <span id="openSource" class="pointerMouse" style="text-decoration: underline"><%= raw t 'semanticsource.title' %></span> & <span id="openFiltering" class="pointerMouse" style="text-decoration: underline"><%= raw t 'semanticfiltering.title' %></span></h1>
-	</div>
-</div>
-<div class="row-fluid">
-	<div class="span12 basicMouse" style="text-align:center;">
-		<p class="muted"><%= raw t 'modal.helper' %></p>	
+		<h1 style="font-size: 50px"><%= raw t 'modal.select' %> <span id="openSource" style="text-decoration: underline"><%= raw t 'semanticsource.title' %></span></h1>
 	</div>
 </div>
 <form action="/items" method="GET" id="formModal">
-	<div class="row-fluid">
-		<div class="span12" style="text-align:center;">
-			<button id='btnGoReador' type="submit" class="btn btn-success" onclick="movingData()">
-				<h2><%= raw t 'modal.button.go' %></h2>
-			</button>
-		</div>
-	</div>
 	<div class="row-fluid" style="margin-top:1%">
 		<div id="Sources" class="row-fluid">
 			<div class="span1"></div>
@@ -114,7 +102,12 @@
 				</table>
 			</div>
 		</div>
-		<div id="Filtering" class="row-fluid">
+		<div id="Filtering" class="row-fluid newSearch" >
+			<div class="row-fluid">
+				<div class="span12 basicMouse" style="text-align:center;margin-top:5%">
+					<h1 style="font-size: 50px"><%= raw t 'modal.select' %> <span id="openSource" style="text-decoration: underline"><%= raw t 'semanticfiltering.title' %></span></h1>
+				</div>
+			</div>
 			<div class="row-fluid">
 				<div class="span1"></div>
 				<div class="span5">
@@ -195,6 +188,17 @@
 		</div>
 
 		<div id="movedData"></div>
+		<div class="row-fluid" style="margin-top:5%">
+			<div class="span12 basicMouse" style="text-align:center;">
+				<h2>
+				<button class="btn btn-info" type="button" id="openFiltering" >
+					<h2><%= raw t 'modal.add' %> <span style="text-decoration: underline"><%= raw t 'semanticfiltering.title' %></span></h2>
+				</button><span class="toHide"> ou</span>
+				<button type="submit" class="btn btn-success btnGoReador" onclick="movingData()">
+					<h2><%= raw t 'modal.button.go' %></h2>
+				</button></h2>
+			</div>
+		</div>
 	</div>
 </form>
 

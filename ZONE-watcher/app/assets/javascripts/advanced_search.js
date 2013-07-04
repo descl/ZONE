@@ -96,30 +96,16 @@ $(document).ready(function() {
 	});
 	
 	//Hide the source and filtering panel in the new semantic search
-	$("#Sources").hide();
-	$("#Filtering").hide();
+	$("#Filtering.newSearch").hide();	
 	
-	//Show the sources panel on click
-	$("#openSource").click(function(event){
-		if ($("#Sources").is(":visible") )
-			$("#Sources").slideUp();
-		else
-			$("#Filtering").slideUp('swing',function(){
-				$("#Sources").slideDown();
-				$(document.body).animate({scrollTop: $('#Sources').offset().top}, 2000,'easeInOutCubic');
-			});
-	});
-
 	//Show the filtering panel on click
 	$("#openFiltering").click(function(event){
-		if ($("#Filtering").is(":visible") )
-			$("#Filtering").slideUp();
-		else
-			$("#Sources").slideUp('swing',function(){
-				$("#Filtering").slideDown();
-				$(document.body).animate({scrollTop: $('#Filtering').offset().top}, 2000,'easeInOutCubic');
-			});
-		
+		button = $(this);
+		$("#Filtering").slideDown('swing',function(){
+			button.fadeOut();
+			$(".toHide").fadeOut();
+		});
+		$(document.body).animate({scrollTop: $('#Filtering').offset().top}, 1000,'easeInOutCubic');
 	});
 
 });

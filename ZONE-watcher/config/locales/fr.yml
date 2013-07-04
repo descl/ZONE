@@ -184,8 +184,8 @@ fr:
   modal:
     select:
       "Sélectionnez"
-    helper:
-      "Cliquez sur sources ou filtrage pour démarrer la recherche sémantique"
+    add:
+      "Ajoutez"
     button:
       previous:
         "< Précédent"

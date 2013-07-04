@@ -184,8 +184,8 @@ en:
   modal:
     select:
       "Select"
-    helper:
-      "Clic on sources or filters to start your semantic search"
+    add:
+      "Add"
     button:
       previous:
         "< Previous"
