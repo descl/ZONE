@@ -25,7 +25,7 @@ $(document).ready(function() {
 		source : [""],
 		search : function(event, ui) {
 			$("#keyword").autocomplete({
-				source : "complete_entities/" + $("#keyword").val() + ".json"
+				source : "../complete_entities/" + $("#keyword").val() + ".json"
 			});
 		},
 		close : function() {
@@ -39,7 +39,7 @@ $(document).ready(function() {
 		source : [""],
 		search : function(event, ui) {
 			$("#search-form").autocomplete({
-				source : "complete_entities/" + $("#search-form").val() + ".json"
+				source : "../complete_entities/" + $("#search-form").val() + ".json"
 			});
 		},
 		minLength : 4
@@ -251,7 +251,7 @@ function removelinefiltrage(line) {
 function updateKeywordTable() {
 	rebootKeywordTable();
 	if ($('#keyword').val() != "" && $('#keyword').val() != null)
-		$.getJSON('linked_words/' + $('#keyword').val() + '.json', function(data) {
+		$.getJSON('../linked_words/' + $('#keyword').val() + '.json', function(data) {
 			rebootKeywordTable();
 			$.each(data, function(key, val) {
 				if ($('#keyword').val() != "") {
