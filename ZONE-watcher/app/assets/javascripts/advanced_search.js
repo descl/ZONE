@@ -20,19 +20,30 @@ $(document).ready(function() {
 	$("#progressBarFiltering").hide();
 	$('#btnWITH').button('toggle');
 	
-	//Instanciate the autocomplete
+	//Instanciate the autocomplete for semantic search
 	$("#keyword").autocomplete({
 		source : [""],
 		search : function(event, ui) {
 			$("#keyword").autocomplete({
-				source : "complete_entities/" + $("#keyword").val() + ".json"
+				source : "../complete_entities/" + $("#keyword").val() + ".json"
 			});
 		},
 		close : function() {
 			askUpdateKeywordTable();
 		},
 		minLength : 4
-	});
+	}).autocomplete( "widget" ).addClass( "span1" );
+	
+	//Instanciate the autocomplete for normal search
+	$("#search-form").autocomplete({
+		source : [""],
+		search : function(event, ui) {
+			$("#search-form").autocomplete({
+				source : "../complete_entities/" + $("#search-form").val() + ".json"
+			});
+		},
+		minLength : 4
+	}).autocomplete( "widget" ).addClass( "span1" );
 
 	//Add the tag-source into the semantic source table
 	$('.label-source').click(function (event) {
@@ -82,6 +93,19 @@ $(document).ready(function() {
 	$(".sourceHoverFull").mouseleave(function(){
 		$(this).hide();
 		$(this).prev(".sourceHover").fadeIn();
+	});
+	
+	//Hide the source and filtering panel in the new semantic search
+	$("#Filtering.newSearch").hide();	
+	
+	//Show the filtering panel on click
+	$("#openFiltering").click(function(event){
+		button = $(this);
+		$("#Filtering").slideDown('swing',function(){
+			button.fadeOut();
+			$(".toHide").fadeOut();
+		});
+		$(document.body).animate({scrollTop: $('#Filtering').offset().top}, 1000,'easeInOutCubic');
 	});
 
 });
@@ -215,7 +239,7 @@ function removelinefiltrage(line) {
 function updateKeywordTable() {
 	rebootKeywordTable();
 	if ($('#keyword').val() != "" && $('#keyword').val() != null)
-		$.getJSON('linked_words/' + $('#keyword').val() + '.json', function(data) {
+		$.getJSON('../linked_words/' + $('#keyword').val() + '.json', function(data) {
 			rebootKeywordTable();
 			$.each(data, function(key, val) {
 				if ($('#keyword').val() != "") {
