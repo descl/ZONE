@@ -136,7 +136,7 @@ en:
         "Reador is mainly developed by <a href='http://desclaux.me'>Christophe Desclaux<a>. He is assisted by the french research institute <a href='http://www.inria.fr'>Inria</a> under the contest <a href='http://boostyourcode.inria.fr'>BoostYourCode2012</a>."
   semanticsource:
     title:
-      "your sources"  
+      "Select your sources"  
     button:
       addall:
         "All"
@@ -149,7 +149,7 @@ en:
         "Content"
   semanticfiltering:
     title:
-      "your filters"
+      "Select your filters"
     keyword:
       title:
         "Keyword"
