@@ -230,16 +230,21 @@ fr:
         "Valider et passer à la suite"
       add:
          "Ajouter"
+      separator:
+        "OU"
       twitter:
         all:
           "Toutes les sources twitter"
         holderpersonn:
-          "Personne à suivre"
+          "Ajouter une personne à suivre"
         holdertag:
-          "Hashtag à surveiller"
+          "Ajouter un hashtag à surveiller"
       rss:
         all:
           "Toutes les sources RSS de Reador"
         holderurl:
-          "Flux RSS à surveiller"
-  
+          "Ajouter un flux RSS à surveiller"
+        yourrss:
+          "Ajouter vos propres flux RSS"
+        opml:
+          "Faire un import OPML"

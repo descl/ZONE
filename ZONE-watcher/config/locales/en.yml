@@ -230,15 +230,21 @@ en:
         "Next"
       add:
          "Add"
+      separator:
+        "OR"
       twitter:
         all:
           "All twitter sources"
         holderpersonn:
-          "People to follow"
+          "Add someone to follow"
         holdertag:
-          "Hashtag to follow"
+          "Add a hashtag to follow"
       rss:
         all:
-          "All rss sources from Reador"
+          "All RSS sources from Reador"
         holderurl:
-          "RSS flow to follow up"
+          "Add a RSS flow to follow"
+        yourrss:
+          "Add your personnal RSS flows"
+        opml:
+          "Do an OPML import"
