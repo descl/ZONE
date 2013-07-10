@@ -516,14 +516,31 @@ function switchTab(){
 	}	
 }
 
+//Add a source in the table
 function addSource(table,value){
 	if (table=="#wellTwitter"){
-		$(table).append("<span class='label label-info'>"+$(value).val()+"</span> ");
+		text = $(value).val();
+		if (value=="#searchTwitter")
+			text = "#"+text;
+		else
+			text="@"+text;
+		$(table).append("<span class='label label-info'>"+text+" <i class='icon-remove' onclick='$(this).closest(\"span\").remove()'></i></span> ");
 	} else if (table=="#wellRSS"){
-		$(table).append("<span class='label label-warning span12' style='white-space: pre-wrap;min-height: 0px;width: auto;margin-left:5px'>"+$(value).val()+"</span>");
+		$(table).append("<span class='label label-warning span12' style='white-space: pre-wrap;min-height: 0px;width: auto;margin-left:5px'>"+text+" <i class='icon-remove' onclick='$(this).closest(\"span\").remove()'></i></span>");
 	}
 	$(value).val("");
 	$(value).html("");
+}
+
+//add "all" sources in the table
+function addAllSource(table,value){
+	if (table=="#wellTwitter"){
+		$(table).empty();
+		$(table).append("<span class='label label-info'>"+value+" <i class='icon-remove' onclick='$(this).closest(\"span\").remove()'></i></span> ");
+	} else if (table=="#wellRSS"){
+		$(table).empty();
+		$(table).append("<span class='label label-warning span12' style='white-space: pre-wrap;min-height: 0px;width: auto;margin-left:5px'>"+value+" <i class='icon-remove' onclick='$(this).closest(\"span\").remove()'></i></span>");
+	}
 }
 
 
