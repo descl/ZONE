@@ -480,8 +480,19 @@ function changeItemFormat(type){
 //slide down the source tab for the source selected
 function slideDown(id){
 $(".form").not(id).slideUp('swing', function() {
+		$(".form").hide();
     	$(id).slideDown();
   });
+}
+
+function setAfter(id){
+	$("#imgTwitter").removeClass('imgTwitter');
+	$("#imgRSS").removeClass('imgRSS');
+	
+	if(id=="#imgTwitter")
+		$(id).addClass('imgTwitter');
+	else if (id=="#imgRSS")
+		$(id).addClass('imgRSS');
 }
 
 

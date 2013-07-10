@@ -183,3 +183,38 @@ ul.sortable li {
   padding-left:4px;
   padding-right:4px;
 }
+.contentTwitter{
+  border-radius:8px;
+  margin-top: 10px;
+  border: 1px solid #49afcd;
+}
+
+.contentRSS{
+  border-radius:8px;
+  margin-top: 10px;
+  border: 1px solid #f89406;
+}
+
+.imgTwitter:after{
+  content:"";
+  width:1px;
+  height:1px;
+  border:1px solid #49afcd;
+  border-color:transparent transparent #49afcd transparent;
+  border-width: 15px;
+ top: -3px;
+position: relative;
+left: 50%;
+}
+
+.imgRSS:after{
+content:"";
+  width:1px;
+  height:1px;
+  border:1px solid #f89406;
+  border-color:transparent transparent #f89406 transparent;
+  border-width: 15px;
+  top: -3px;
+position: relative;
+left: 50%;
+}
