@@ -208,6 +208,19 @@ fr:
       content:
         "Tag bien ajouté"
   newmodal:
+    breadcrumb:
+      sources:
+        one:
+          "Sources (1/2)"
+        two:
+          "Sources (2/2)"
+      filtering:
+        one:
+          "Filtrage (1/2)"
+        two:
+          "Filtrage (2/2)"
+      results:
+        "Résultats"
     sources:
       title:
         "Sélectionner vos sources"

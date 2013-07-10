@@ -208,6 +208,19 @@ en:
       content:
         "Tag well added"
   newmodal:
+    breadcrumb:
+      sources:
+        one:
+          "Sources (1/2)"
+        two:
+          "Sources (2/2)"
+      filtering:
+        one:
+          "Filtering (1/2)"
+        two:
+          "Filtering (2/2)"
+      results:
+        "Results"
     sources:
       title:
         "Select your sources"

@@ -500,15 +500,30 @@ function setAfter(id){
 function switchTab(){
 	if ($('#sourcesFirst').hasClass("active")){
 		$('#sourcesFirst').removeClass('active');
+		$('#breadcrumbSourcesOne').removeClass('active');
+		$('#breadcrumbSourcesOne').hide();
+		
 		$('#sourcesSecond').addClass('active');
+		$('#breadcrumbSourcesTwo').addClass('active');
+		$('#breadcrumbSourcesTwo').show();
 	}
 	else if ($('#sourcesSecond').hasClass("active")){
 		$('#sourcesSecond').removeClass('active');
+		$('#breadcrumbSourcesTwo').removeClass('active');
+		$('#breadcrumbSourcesTwo').show();
+		
 		$('#filteringFirst').addClass('active');
+		$('#breadcrumbFilteringOne').addClass('active');
+		$('#breadcrumbFilteringOne').show();
 	}
 	else if ($('#filteringFirst').hasClass("active")){
 		$('#filteringFirst').removeClass('active');
+		$('#breadcrumbFilteringOne').removeClass('active');
+		$('#breadcrumbFilteringOne').hide();
+		
 		$('#filteringSecond').addClass('active');
+		$('#breadcrumbFilteringTwo').addClass('active');
+		$('#breadcrumbFilteringTwo').show();
 	}	
 }
 
