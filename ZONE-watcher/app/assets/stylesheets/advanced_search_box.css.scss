@@ -130,7 +130,7 @@ ul.sortable li {
 }
 
 .ui-autocomplete { 
-  z-index:2147483647;  
+  z-index:1051;  
 }
 .ui-menu-item{
   list-style-type: none;
@@ -182,4 +182,73 @@ ul.sortable li {
 .paddingFour{
   padding-left:4px;
   padding-right:4px;
+}
+.contentTwitter{
+  border-radius:8px;
+  margin-top: 10px;
+  border: 1px solid #49afcd;
+}
+
+.contentRSS{
+  border-radius:8px;
+  margin-top: 10px;
+  border: 1px solid #f89406;
+}
+
+#formTwitter:before{
+  content:"";
+  width:1px;
+  height:1px;
+  border:1px solid #49afcd;
+  border-color:transparent transparent #49afcd transparent;
+  border-bottom-width: 15px;
+  border-left-width: 15px;
+  border-right-width: 15px;
+  top: 10px;
+  position: relative;
+  left: 15%;
+}
+
+#formRSS:before{
+  content:"";
+  width:1px;
+  height:1px;
+  border:1px solid #f89406;
+  border-color:transparent transparent #f89406 transparent;
+  border-bottom-width: 15px;
+  border-left-width: 15px;
+  border-right-width: 15px;
+  top: 10px;
+  position: relative;
+  left: 83%;
+}
+
+.formHeader{
+  border-top-left-radius:4px;
+  border-top-right-radius:4px;
+}
+.formHeader.twitter{
+  background-color:#49afcd;
+}
+.formHeader.rss{
+  background-color:#f89406;
+}
+
+.titleHeader{
+  margin-top: 0px;
+  color: white;
+}
+.titleFormContent{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.titleFormContent.twitter{
+  background-color:#49afcd;
+  
+}
+.titleFormContent.rss{
+  background-color:#f89406;
+}
+.well{
+  word-break: normal;
 }
