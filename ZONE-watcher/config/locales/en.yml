@@ -207,3 +207,19 @@ en:
         "Added confirmation"
       content:
         "Tag well added"
+  newmodal:
+    sources:
+      title:
+        "Select your sources"
+      choice:
+        "Your choices"
+      switch:
+        "Next"
+      add:
+         "Add"
+      twitter:
+        all:
+          "All twitter sources"
+      rss:
+        all:
+          "All rss sources from Reador"

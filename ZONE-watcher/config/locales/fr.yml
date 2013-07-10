@@ -207,4 +207,20 @@ fr:
         "Confirmation d'ajout"
       content:
         "Tag bien ajouté"
+  newmodal:
+    sources:
+      title:
+        "Sélectionner vos sources"
+      choice:
+        "Vos choix"
+      switch:
+        "Valider et passer à la suite"
+      add:
+         "Ajouter"
+      twitter:
+        all:
+          "Toutes les sources twitter"
+      rss:
+        all:
+          "Toutes les sources RSS de Reador"
   
