@@ -233,7 +233,13 @@ fr:
       twitter:
         all:
           "Toutes les sources twitter"
+        holderpersonn:
+          "Personne à suivre"
+        holdertag:
+          "Hashtag à surveiller"
       rss:
         all:
           "Toutes les sources RSS de Reador"
+        holderurl:
+          "Flux RSS à surveiller"
   

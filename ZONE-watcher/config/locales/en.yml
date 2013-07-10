@@ -233,6 +233,12 @@ en:
       twitter:
         all:
           "All twitter sources"
+        holderpersonn:
+          "People to follow"
+        holdertag:
+          "Hashtag to follow"
       rss:
         all:
           "All rss sources from Reador"
+        holderurl:
+          "RSS flow to follow up"

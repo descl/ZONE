@@ -485,17 +485,6 @@ $(".form").not(id).slideUp('swing', function() {
   });
 }
 
-//set the little triangle after the image
-function setAfter(id){
-	$("#imgTwitter").removeClass('imgTwitter');
-	$("#imgRSS").removeClass('imgRSS');
-	
-	if(id=="#imgTwitter")
-		$(id).addClass('imgTwitter');
-	else if (id=="#imgRSS")
-		$(id).addClass('imgRSS');
-}
-
 //Allow to switch tab in the new semantic search
 function switchTab(){
 	if ($('#sourcesFirst').hasClass("active")){
@@ -527,6 +516,15 @@ function switchTab(){
 	}	
 }
 
+function addSource(table,value){
+	if (table=="#wellTwitter"){
+		$(table).append("<span class='label label-info'>"+$(value).val()+"</span> ");
+	} else if (table=="#wellRSS"){
+		$(table).append("<span class='label label-warning span12' style='white-space: pre-wrap;min-height: 0px;width: auto;margin-left:5px'>"+$(value).val()+"</span>");
+	}
+	$(value).val("");
+	$(value).html("");
+}
 
 
 

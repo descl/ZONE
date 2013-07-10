@@ -195,28 +195,32 @@ ul.sortable li {
   border: 1px solid #f89406;
 }
 
-.imgTwitter:after{
+#formTwitter:before{
   content:"";
   width:1px;
   height:1px;
   border:1px solid #49afcd;
   border-color:transparent transparent #49afcd transparent;
-  border-width: 15px;
-  top: -3px;
+  border-bottom-width: 15px;
+  border-left-width: 15px;
+  border-right-width: 15px;
+  top: 10px;
   position: relative;
-  left: 50%;
+  left: 15%;
 }
 
-.imgRSS:after{
+#formRSS:before{
   content:"";
   width:1px;
   height:1px;
   border:1px solid #f89406;
   border-color:transparent transparent #f89406 transparent;
-  border-width: 15px;
-  top: -3px;
+  border-bottom-width: 15px;
+  border-left-width: 15px;
+  border-right-width: 15px;
+  top: 10px;
   position: relative;
-  left: 50%;
+  left: 83%;
 }
 
 .formHeader{
@@ -244,4 +248,7 @@ ul.sortable li {
 }
 .titleFormContent.rss{
   background-color:#f89406;
+}
+.well{
+  word-break: normal;
 }
