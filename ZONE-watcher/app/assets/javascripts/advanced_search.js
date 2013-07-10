@@ -485,6 +485,7 @@ $(".form").not(id).slideUp('swing', function() {
   });
 }
 
+//set the little triangle after the image
 function setAfter(id){
 	$("#imgTwitter").removeClass('imgTwitter');
 	$("#imgRSS").removeClass('imgRSS');
@@ -493,6 +494,22 @@ function setAfter(id){
 		$(id).addClass('imgTwitter');
 	else if (id=="#imgRSS")
 		$(id).addClass('imgRSS');
+}
+
+//Allow to switch tab in the new semantic search
+function switchTab(){
+	if ($('#sourcesFirst').hasClass("active")){
+		$('#sourcesFirst').removeClass('active');
+		$('#sourcesSecond').addClass('active');
+	}
+	else if ($('#sourcesSecond').hasClass("active")){
+		$('#sourcesSecond').removeClass('active');
+		$('#filteringFirst').addClass('active');
+	}
+	else if ($('#filteringFirst').hasClass("active")){
+		$('#filteringFirst').removeClass('active');
+		$('#filteringSecond').addClass('active');
+	}	
 }
 
 
