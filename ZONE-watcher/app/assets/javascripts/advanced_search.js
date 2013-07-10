@@ -94,19 +94,6 @@ $(document).ready(function() {
 		$(this).hide();
 		$(this).prev(".sourceHover").fadeIn();
 	});
-	
-	//Hide the source and filtering panel in the new semantic search
-	$("#Filtering.newSearch").hide();	
-	
-	//Show the filtering panel on click
-	$("#openFiltering").click(function(event){
-		button = $(this);
-		$("#Filtering").slideDown('swing',function(){
-			button.fadeOut();
-			$(".toHide").fadeOut();
-		});
-		$(document.body).animate({scrollTop: $('#Filtering').offset().top}, 1000,'easeInOutCubic');
-	});
 
 });
 
@@ -490,100 +477,60 @@ function changeItemFormat(type){
 	
 }
 
-//Force the popover of the source title to appears. It will disappear after 1 second
-function showPopoverSource(){
-	$("#TableReminderSourceTitle").popover({placement:'bottom'});
-	$("#TableReminderSourceTitle").popover('show');
-	setTimeout(function() {
-			$("#TableReminderSourceTitle").popover('hide')
-		}, 1000);
+//slide down the source tab for the source selected
+function slideDown(id){
+$(".form").not(id).slideUp('swing', function() {
+		$(".form").hide();
+    	$(id).slideDown();
+  });
 }
 
-//Force the popover of the filtering title to appears. It will disappear after 1 second
-function showPopoverFiltering(){
-	$("#TableReminderFilteringTitle").popover({placement:'bottom'});
-	$("#TableReminderFilteringTitle").popover('show');
-	setTimeout(function() {
-			$("#TableReminderFilteringTitle").popover('hide')
-		}, 1000);
-}
-
-//Add a source to the source table of the items page
-function addSourceItem(type,value){
-	if (type == "Twitter")
-		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundTwitter.png" width="40" height="40";/></td>';
-	else if (type == "Google")
-		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundGoogle.png" width="40" height="40";/></td>';
-	else if (type == "RSS")
-		tdicone = '<td><img class="littleCircleImage sortable" src="/assets/foregroundRSS.png" width="40" height="40";/></td>';
-	else
-		tdicone ="<td></td>"
-
-	$("#tableReminderSource").append("<tr>"+tdicone+"<td>"+value+" <button class='btn btn-danger pull-right'  onclick='$(this).closest(\"tr\").remove();MAJNumberSource();removeSourceLine(\"idsource" + idRowSource + "\")'><i class='icon-remove'></i></button></td></tr>");
-	MAJNumberSource();
+//set the little triangle after the image
+function setAfter(id){
+	$("#imgTwitter").removeClass('imgTwitter');
+	$("#imgRSS").removeClass('imgRSS');
 	
-	if (type == "Twitter"){
-		$("#formTwitter .inputSearch").val(value);
-		addRowSourceTable("#formTwitter");
-	}else if (type == "Google"){
-		$("#formGoogle .inputSearch").val(value);
-		addRowSourceTable("#formGoogle");
-	}else if (type == "RSS"){
-		$("#formRSS .inputSearch").val(value);
-		addRowSourceTable("#formRSS");
+	if(id=="#imgTwitter")
+		$(id).addClass('imgTwitter');
+	else if (id=="#imgRSS")
+		$(id).addClass('imgRSS');
+}
+
+//Allow to switch tab in the new semantic search
+function switchTab(){
+	if ($('#sourcesFirst').hasClass("active")){
+		$('#sourcesFirst').removeClass('active');
+		$('#breadcrumbSourcesOne').removeClass('active');
+		$('#breadcrumbSourcesOne').hide();
+		
+		$('#sourcesSecond').addClass('active');
+		$('#breadcrumbSourcesTwo').addClass('active');
+		$('#breadcrumbSourcesTwo').show();
 	}
-}
-
-//Add a filter to the filtering table of the items page
-function addFilterItem(attribute,value){
-	classtd='info';
-	if (attribute=='OU' || attribute =='OR'){
-		classtd='info';
-		$('#btnWITH').removeClass('active');
-		$('#btnWITH').removeClass('active');
-		$('#btnAND').removeClass('active');
-		$('#btnOR').addClass('active');
-	}else if (attribute=='ET' || attribute =='AND'){
-		classtd='success';
-		$('#btnWITH').removeClass('active');
-		$('#btnWITH').removeClass('active');
-		$('#btnAND').addClass('active');
-		$('#btnOR').removeClass('active');
-	}else if (attribute=='SANS' || attribute =='WITHOUT'){
-		classtd='error';
-		$('#btnWITH').removeClass('active');
-		$('#btnWITHOUT').addClass('active');
-		$('#btnAND').removeClass('active');
-		$('#btnOR').removeClass('active');
+	else if ($('#sourcesSecond').hasClass("active")){
+		$('#sourcesSecond').removeClass('active');
+		$('#breadcrumbSourcesTwo').removeClass('active');
+		$('#breadcrumbSourcesTwo').show();
+		
+		$('#filteringFirst').addClass('active');
+		$('#breadcrumbFilteringOne').addClass('active');
+		$('#breadcrumbFilteringOne').show();
 	}
-	$("#tableReminderFiltering").append("<tr class='"+classtd+"' ><td class=\"basicMouse\" style='text-align:center'>"+attribute+"</td><td>"+value+" <button class='btn btn-danger pull-right'  onclick='$(this).closest(\"tr\").remove();MAJNumberFiltering();removelinefiltrage(\"idrow" + idRowFiltering + "\")'><i class='icon-remove'></i></button></td></tr>");
-	
-	$("#keyword").val(value);
-	addFilter();
-	MAJNumberFiltering();
-	
-	showPopoverFiltering();
-	$('.label-tag').popover('hide');
+	else if ($('#filteringFirst').hasClass("active")){
+		$('#filteringFirst').removeClass('active');
+		$('#breadcrumbFilteringOne').removeClass('active');
+		$('#breadcrumbFilteringOne').hide();
+		
+		$('#filteringSecond').addClass('active');
+		$('#breadcrumbFilteringTwo').addClass('active');
+		$('#breadcrumbFilteringTwo').show();
+	}	
 }
 
-//update of the number of items for the source table in the items page
-function MAJNumberSource(){
-	i = 0;
-	$('#tableReminderSource tbody > tr').each(function() {
-		i +=1;
-	});
-	
-	$("#TableReminderSourceTitle").html($("#TableReminderSourceTitle").html().split('(')[0]+" ( "+i+" items )</h3>");
-}
 
-//update of the number of items for the filtering table in the items page
-function MAJNumberFiltering(){
-	i = 0;
-	$('#tableReminderFiltering tbody > tr').each(function() {
-		i +=1;
-	});
-	
-	$("#TableReminderFilteringTitle").html($("#TableReminderFilteringTitle").html().split(' (')[0]+" ( "+i+" items )</h3>");
-}
+
+
+
+
 
 
