@@ -527,6 +527,8 @@ function reverseSwitchTab(){
 		$('#breadcrumbSourcesTwo').removeClass('active');
 		$('#breadcrumbSourcesTwo').hide();
 		
+		prepareReverseSource();
+		
 		$('#sourcesFirst').addClass('active');
 		$('#breadcrumbSourcesOne').addClass('active');
 		$('#breadcrumbSourcesOne').show();
@@ -588,6 +590,19 @@ function prepareResumeSource(){
 	$("#resumeWellRSS").empty();
 	$("#wellRSS").children().not("br").each(function(index){
 			$("#resumeWellRSS").append("<span class='label label-warning span12' style='white-space: pre-wrap;min-height: 0px;width: auto;margin-left:5px;word-break:break-all'>"+$(this).html()+"</span><br>");
+	});
+}
+
+//Put all the sources in the selector
+function prepareReverseSource(){
+	$("#wellTwitter").empty();
+	$("#resumeWellTwitter").children().each(function(index){
+		$("#wellTwitter").append("<span class='label label-info'>"+$(this).html()+"</span> ");
+	});
+	
+	$("#wellRSS").empty();
+	$("#resumeWellRSS").children().not("br").each(function(index){
+			$("#wellRSS").append("<span class='label label-warning span12' style='white-space: pre-wrap;min-height: 0px;width: auto;margin-left:5px;word-break:break-all'>"+$(this).html()+"</span><br>");
 	});
 }
 
