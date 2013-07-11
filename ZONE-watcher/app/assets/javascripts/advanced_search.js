@@ -563,7 +563,7 @@ function addSource(table,value){
 			text="@"+text;
 		$(table).append("<span class='label label-info'>"+text+" <i class='icon-remove' onclick='$(this).closest(\"span\").remove()'></i></span> ");
 	} else if (table=="#wellRSS"){
-		$(table).append("<span class='label label-warning span12' style='white-space: pre-wrap;min-height: 0px;width: auto;margin-left:5px;word-break:break-all'>"+$(value).val()+" <i class='icon-remove' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();'></i></span><br>");
+		$(table).append("<span class='label-wrap label label-warning' >"+$(value).val()+" <i class='icon-remove' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();'></i></span><br>");
 	}
 	$(value).val("");
 	$(value).html("");
@@ -576,7 +576,7 @@ function addAllSource(table,value){
 		$(table).append("<span class='label label-info'>"+value+" <i class='icon-remove' onclick='$(this).closest(\"span\").remove()'></i></span> ");
 	} else if (table=="#wellRSS"){
 		$(table).empty();
-		$(table).append("<span class='label label-warning span12' style='white-space: pre-wrap;min-height: 0px;width: auto;margin-left:5px;word-break:break-all'>"+value+" <i class='icon-remove' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();'></i></span>");
+		$(table).append("<span class='label label-warning label-wrap'>"+value+" <i class='icon-remove' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();'></i></span>");
 	}
 }
 
@@ -589,7 +589,7 @@ function prepareResumeSource(){
 	
 	$("#resumeWellRSS").empty();
 	$("#wellRSS").children().not("br").each(function(index){
-			$("#resumeWellRSS").append("<span class='label label-warning span12' style='white-space: pre-wrap;min-height: 0px;width: auto;margin-left:5px;word-break:break-all'>"+$(this).html()+"</span><br>");
+			$("#resumeWellRSS").append("<span class='label label-warning label-wrap'>"+$(this).html()+"</span><br>");
 	});
 }
 
@@ -602,7 +602,7 @@ function prepareReverseSource(){
 	
 	$("#wellRSS").empty();
 	$("#resumeWellRSS").children().not("br").each(function(index){
-			$("#wellRSS").append("<span class='label label-warning span12' style='white-space: pre-wrap;min-height: 0px;width: auto;margin-left:5px;word-break:break-all'>"+$(this).html()+"</span><br>");
+			$("#wellRSS").append("<span class='label label-warning label-wrap'>"+$(this).html()+"</span><br>");
 	});
 }
 
