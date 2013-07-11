@@ -477,6 +477,8 @@ function changeItemFormat(type){
 	
 }
 
+// home/search 
+
 //slide down the source tab for the source selected
 function slideDown(id){
 $(".form").not(id).slideUp('swing', function() {
@@ -491,6 +493,8 @@ function switchTab(){
 		$('#sourcesFirst').removeClass('active');
 		$('#breadcrumbSourcesOne').removeClass('active');
 		$('#breadcrumbSourcesOne').hide();
+		
+		prepareResumeSource();
 		
 		$('#sourcesSecond').addClass('active');
 		$('#breadcrumbSourcesTwo').addClass('active');
@@ -516,6 +520,39 @@ function switchTab(){
 	}	
 }
 
+//Allow to reverse switch tab in the new semantic search
+function reverseSwitchTab(){
+	if ($('#sourcesSecond').hasClass("active")){
+		$('#sourcesSecond').removeClass('active');
+		$('#breadcrumbSourcesTwo').removeClass('active');
+		$('#breadcrumbSourcesTwo').hide();
+		
+		prepareReverseSource();
+		
+		$('#sourcesFirst').addClass('active');
+		$('#breadcrumbSourcesOne').addClass('active');
+		$('#breadcrumbSourcesOne').show();
+	}
+	else if ($('#filteringFirst').hasClass("active")){
+		$('#filteringFirst').removeClass('active');
+		$('#breadcrumbFilteringOne').removeClass('active');
+		$('#breadcrumbFilteringOne').show();
+		
+		$('#sourcesSecond').addClass('active');
+		$('#breadcrumbSourcesTwo').addClass('active');
+		$('#breadcrumbSourcesTwo').show();
+	}
+	else if ($('#filteringSecond').hasClass("active")){
+		$('#filteringSecond').removeClass('active');
+		$('#breadcrumbFilteringTwo').removeClass('active');
+		$('#breadcrumbFilteringTwo').hide();
+		
+		$('#filteringFirst').addClass('active');
+		$('#breadcrumbFilteringOne').addClass('active');
+		$('#breadcrumbFilteringOne').show();
+	}	
+}
+
 //Add a source in the table
 function addSource(table,value){
 	if (table=="#wellTwitter"){
@@ -526,7 +563,7 @@ function addSource(table,value){
 			text="@"+text;
 		$(table).append("<span class='label label-info'>"+text+" <i class='icon-remove' onclick='$(this).closest(\"span\").remove()'></i></span> ");
 	} else if (table=="#wellRSS"){
-		$(table).append("<span class='label label-warning span12' style='white-space: pre-wrap;min-height: 0px;width: auto;margin-left:5px'>"+text+" <i class='icon-remove' onclick='$(this).closest(\"span\").remove()'></i></span>");
+		$(table).append("<span class='label-wrap label label-warning' >"+$(value).val()+" <i class='icon-remove' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();'></i></span><br>");
 	}
 	$(value).val("");
 	$(value).html("");
@@ -539,8 +576,34 @@ function addAllSource(table,value){
 		$(table).append("<span class='label label-info'>"+value+" <i class='icon-remove' onclick='$(this).closest(\"span\").remove()'></i></span> ");
 	} else if (table=="#wellRSS"){
 		$(table).empty();
-		$(table).append("<span class='label label-warning span12' style='white-space: pre-wrap;min-height: 0px;width: auto;margin-left:5px'>"+value+" <i class='icon-remove' onclick='$(this).closest(\"span\").remove()'></i></span>");
+		$(table).append("<span class='label label-warning label-wrap'>"+value+" <i class='icon-remove' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();'></i></span>");
 	}
+}
+
+//Put all the sources in the resume
+function prepareResumeSource(){
+	$("#resumeWellTwitter").empty();
+	$("#wellTwitter").children().each(function(index){
+		$("#resumeWellTwitter").append("<span class='label label-info'>"+$(this).html()+"</span> ");
+	});
+	
+	$("#resumeWellRSS").empty();
+	$("#wellRSS").children().not("br").each(function(index){
+			$("#resumeWellRSS").append("<span class='label label-warning label-wrap'>"+$(this).html()+"</span><br>");
+	});
+}
+
+//Put all the sources in the selector
+function prepareReverseSource(){
+	$("#wellTwitter").empty();
+	$("#resumeWellTwitter").children().each(function(index){
+		$("#wellTwitter").append("<span class='label label-info'>"+$(this).html()+"</span> ");
+	});
+	
+	$("#wellRSS").empty();
+	$("#resumeWellRSS").children().not("br").each(function(index){
+			$("#wellRSS").append("<span class='label label-warning label-wrap'>"+$(this).html()+"</span><br>");
+	});
 }
 
 
