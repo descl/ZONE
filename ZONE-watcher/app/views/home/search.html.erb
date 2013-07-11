@@ -1,5 +1,6 @@
 <div class="row-fluid">
-	<div class="span12">
+	<div class="span1"></div>
+	<div class="span10">
 		<ul class="breadcrumb">
 			<li id="breadcrumbSourcesOne" class="active">
 				<%= raw t 'newmodal.breadcrumb.sources.one' %><span class="divider"><i class="icon-chevron-right"></i></span>
@@ -24,12 +25,14 @@
 		<div class="tab-content">
 			<div class="tab-pane active" id="sourcesFirst">
 				<div class="row-fluid">
-					<div class="span12">
+					<div class="span1"></div>
+					<div class="span10">
 						<h2><%= raw t 'newmodal.sources.title' %></h2>
 					</div>
 				</div>
 				<div class="row-fluid">
-					<div class="span12">
+					<div class="span1"></div>
+					<div class="span10">
 						<div class="row-fluid">
 							<div class="span1"></div>
 							<div class="span2" id="imgTwitter">
@@ -169,13 +172,18 @@
 						</div>
 					</div><!--span12 -->
 				</div><!--row-fluid -->
-				<hr>
+				<div class="row-fluid">
+					<div class="span1"></div>
+					<div class="span10">
+						<hr>
+					</div>
+				</div>
 				<div class="row-fluid">
 					<div class="span1"></div>
 					<div class="span10">
 						<div class="span3"></div>
 						<div class="span6">
-							<button class="btn btn-success" type="button" style="width:100%" onclick="switchTab()">
+							<button class="btn btn-info" type="button" style="width:100%" onclick="switchTab()">
 								<h3><%= raw t 'newmodal.sources.switch' %></h3>
 							</button>
 						</div>
@@ -184,14 +192,17 @@
 			</div><!--tab-pane -->
 			<div class="tab-pane" id="sourcesSecond">
 				<div class="row-fluid">
-					<div class="span12">
+					<div class="span1"></div>
+					<div class="span10">
 						<h2><%= raw t 'newmodal.sources.resumetitle' %>
-						<button class="btn btn-info pull-right" type="button" onclick="reverseSwitchTab()"><%= raw t 'newmodal.sources.reverseswitch' %></button>
-						</h2>
+						<button class="btn btn-primary pull-right" type="button" onclick="reverseSwitchTab()">
+							<%= raw t 'newmodal.sources.reverseswitch' %>
+						</button></h2>
 					</div>
 				</div>
 				<div class="row-fluid">
-					<div class="span12">
+					<div class="span1"></div>
+					<div class="span10">
 						<div class="row-fluid">
 							<div class="span12">
 								<h3>Twitter</h3>
@@ -199,7 +210,7 @@
 						</div>
 						<div class="row-fluid">
 							<div id="resumeWellTwitter" class="span12 well">
-								
+
 							</div>
 						</div>
 						<div class="row-fluid">
@@ -209,21 +220,49 @@
 						</div>
 						<div class="row-fluid">
 							<div id="resumeWellRSS" class="span12 well">
-								
+
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="row-fluid">
+					<div class="span1"></div>
+					<div class="span10">
+						<hr>
+					</div>
+				</div>
+				<div class="row-fluid">
 					<div class="span12">
+						<div class="span1"></div>
+						<div class="span4">
+							<button class="btn btn-info" type="button" style="width:100%" onclick="switchTab()">
+								<h3><%= raw t 'newmodal.sources.gofiltering' %></h3>
+							</button>
+						</div>
+						<div class="span2">
 
+						</div>
+						<div class="span4">
+							<a href="/items">
+							<button class="btn btn-success" type="button" style="width:100%">
+								<h3><%= raw t 'newmodal.sources.goreador' %></h3>
+							</button> </a>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="tab-pane" id="FilteringFirst">
-				Hi i'm filtering 1/2
+			<div class="tab-pane" id="filteringFirst">
+				<div class="row-fluid">
+					<div class="span1"></div>
+					<div class="span10">
+						<h2><%= raw t 'newmodal.filtering.title' %>
+						<button class="btn btn-primary pull-right" type="button" onclick="reverseSwitchTab()">
+							<%= raw t 'newmodal.sources.reverseswitch' %>
+						</button></h2>
+					</div>
+				</div>
 			</div>
-			<div class="tab-pane" id="FilteringSecond">
+			<div class="tab-pane" id="filteringSecond">
 				Hi i'm filtering 2/2
 			</div>
 		</div>

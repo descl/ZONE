@@ -236,6 +236,10 @@ en:
         "OR"
       resumetitle:
         "Summary of your choices"
+      goreador:
+        "Show the results"
+      gofiltering:
+        "Add some filters"
       twitter:
         all:
           "All twitter sources"
@@ -252,3 +256,6 @@ en:
           "Add your personnal RSS flows"
         opml:
           "Do an OPML import"
+    filtering:
+      title:
+        "Select your filters"
