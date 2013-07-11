@@ -47,7 +47,7 @@
 								<img class="circleImage thumbnail accordion-toggle" src="/assets/foregroundRSS.png" onclick="slideDown('#formRSS');"/>
 							</div>
 						</div>
-						<div id="formTwitter" class="row-fluid form" style="display:none;">
+						<div id="formTwitter" class="row-fluid form" hidden>
 							<div class="span1"></div>
 							<div class="span10">
 								<div class="contentTwitter" >
@@ -75,7 +75,7 @@
 												<div class="span4">
 													<hr>
 												</div>
-												<div class="span4" style="text-align:center;">
+												<div class="span4 text-center">
 													<h4 class="blackh4"><%= raw t 'newmodal.sources.separator' %></h4>
 												</div>
 												<div class="span4">
@@ -107,7 +107,7 @@
 								</div>
 							</div>
 						</div>
-						<div id="formRSS" class="row-fluid form" style="display:none;">
+						<div id="formRSS" class="row-fluid form" hidden>
 							<div class="span1"></div>
 							<div class="span10">
 								<div class="contentRSS">
@@ -128,7 +128,7 @@
 												<div class="span4">
 													<hr>
 												</div>
-												<div class="span4" style="text-align:center;">
+												<div class="span4 text-center">
 													<h4 class="blackh4"><%= raw t 'newmodal.sources.separator' %></h4>
 												</div>
 												<div class="span4">
@@ -183,7 +183,7 @@
 					<div class="span10">
 						<div class="span3"></div>
 						<div class="span6">
-							<button class="btn btn-info" type="button" style="width:100%" onclick="switchTab()">
+							<button class="btn btn-info span12" type="button"  onclick="switchTab()">
 								<h3><%= raw t 'newmodal.sources.switch' %></h3>
 							</button>
 						</div>
@@ -235,7 +235,7 @@
 					<div class="span12">
 						<div class="span1"></div>
 						<div class="span4">
-							<button class="btn btn-info" type="button" style="width:100%" onclick="switchTab()">
+							<button class="btn btn-info span12" type="button" onclick="switchTab()">
 								<h3><%= raw t 'newmodal.sources.gofiltering' %></h3>
 							</button>
 						</div>
@@ -244,7 +244,7 @@
 						</div>
 						<div class="span4">
 							<a href="/items">
-							<button class="btn btn-success" type="button" style="width:100%">
+							<button class="btn btn-success span12" type="button">
 								<h3><%= raw t 'newmodal.sources.goreador' %></h3>
 							</button> </a>
 						</div>
