@@ -228,10 +228,18 @@ fr:
         "Vos choix"
       switch:
         "Valider et passer à la suite"
+      reverseswitch:
+        "<i class='icon-chevron-left'></i> Retour"
       add:
          "Ajouter"
       separator:
         "OU"
+      resumetitle:
+        "Résumé de vos choix"
+      goreador:
+        "Accéder aux résultats"
+      gofiltering:
+        "Ajouter des filtres"
       twitter:
         all:
           "Toutes les sources twitter"
@@ -248,3 +256,6 @@ fr:
           "Ajouter vos propres flux RSS"
         opml:
           "Faire un import OPML"
+    filtering:
+      title:
+        "Sélectionner vos filtres"
