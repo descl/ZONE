@@ -228,10 +228,14 @@ fr:
         "Vos choix"
       switch:
         "Valider et passer à la suite"
+      reverseswitch:
+        "<i class='icon-chevron-left'></i> Retour"
       add:
          "Ajouter"
       separator:
         "OU"
+      resumetitle:
+        "Résumé de vos choix"
       twitter:
         all:
           "Toutes les sources twitter"

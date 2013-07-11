@@ -228,10 +228,14 @@ en:
         "Your choices"
       switch:
         "Next"
+      reverseswitch:
+        "<i class='icon-chevron-left'></i> Previous"
       add:
          "Add"
       separator:
         "OR"
+      resumetitle:
+        "Summary of your choices"
       twitter:
         all:
           "All twitter sources"
