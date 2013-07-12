@@ -555,6 +555,7 @@ function reverseSwitchTab(){
 
 //Add a source in the table
 function addSource(table,value){
+	$(table).children('.allSources').remove();
 	if (table=="#wellTwitter"){
 		text = $(value).val();
 		if (value=="#searchTwitter")
@@ -573,10 +574,10 @@ function addSource(table,value){
 function addAllSource(table,value){
 	if (table=="#wellTwitter"){
 		$(table).empty();
-		$(table).append("<span class='label label-info'>"+value+" <i class='icon-remove' onclick='$(this).closest(\"span\").remove()'></i></span> ");
+		$(table).append("<span class='label label-info allSources'>"+value+" <i class='icon-remove' onclick='$(this).closest(\"span\").remove()'></i></span> ");
 	} else if (table=="#wellRSS"){
 		$(table).empty();
-		$(table).append("<span class='label label-warning label-wrap'>"+value+" <i class='icon-remove' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();'></i></span>");
+		$(table).append("<span class='label label-warning label-wrap allSources'>"+value+" <i class='icon-remove' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();'></i></span>");
 	}
 }
 
