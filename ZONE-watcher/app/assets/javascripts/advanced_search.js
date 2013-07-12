@@ -19,7 +19,7 @@ $(document).ready(function() {
 	$("#keywordTable").hide();
 	$("#progressBarFiltering").hide();
 	$('#btnWITH').button('toggle');
-	
+
 	//Instanciate the autocomplete for semantic search
 	$("#keyword").autocomplete({
 		source : [""],
@@ -32,8 +32,8 @@ $(document).ready(function() {
 			askUpdateKeywordTable();
 		},
 		minLength : 4
-	}).autocomplete( "widget" ).addClass( "span1" );
-	
+	}).autocomplete("widget").addClass("span1");
+
 	//Instanciate the autocomplete for normal search
 	$("#search-form").autocomplete({
 		source : [""],
@@ -43,54 +43,60 @@ $(document).ready(function() {
 			});
 		},
 		minLength : 4
-	}).autocomplete( "widget" ).addClass( "span1" );
+	}).autocomplete("widget").addClass("span1");
 
 	//Add the tag-source into the semantic source table
-	$('.label-source').click(function (event) {
-	  addSourceItem("RSS",$(this).html());
-	  showPopoverSource();
-	  event.preventDefault(); // Prevent link from following its href
+	$('.label-source').click(function(event) {
+		addSourceItem("RSS", $(this).html());
+		showPopoverSource();
+		event.preventDefault();
+		// Prevent link from following its href
 	});
-	
+
 	//Prepare the popover for each tag-label
-	$(".label-tag").each(function(){
-		dualbutton = "<div class='btn-group'><button class='btn btn-success' onclick='addFilterItem(\""+$("#reminderAnd").html()+"\",\""+$(this).html()+"\")'><i class=\"icon-plus\"></i></button><button class='btn btn-info' onclick='addFilterItem(\""+$("#reminderOr").html()+"\",\""+$(this).text()+"\")'><b>O</b></button><button class='btn btn-danger' onclick='addFilterItem(\""+$("#reminderWithout").html()+"\",\""+$(this).html()+"\")'><i class=\"icon-minus\"></i></button></div>"
-		$(this).popover({ content: dualbutton ,placement: 'bottom',html: 'true',delay: { 
-                     show: 1000, 
-                     hide: 100
-                  }});
+	$(".label-tag").each(function() {
+		dualbutton = "<div class='btn-group'><button class='btn btn-success' onclick='addFilterItem(\"" + $("#reminderAnd").html() + "\",\"" + $(this).html() + "\")'><i class=\"icon-plus\"></i></button><button class='btn btn-info' onclick='addFilterItem(\"" + $("#reminderOr").html() + "\",\"" + $(this).text() + "\")'><b>O</b></button><button class='btn btn-danger' onclick='addFilterItem(\"" + $("#reminderWithout").html() + "\",\"" + $(this).html() + "\")'><i class=\"icon-minus\"></i></button></div>"
+		$(this).popover({
+			content : dualbutton,
+			placement : 'bottom',
+			html : 'true',
+			delay : {
+				show : 1000,
+				hide : 100
+			}
+		});
 	});
-	
+
 	//Add the tag-source into the semantic filtering table
-	$('.label-tag').click(function (event) {
+	$('.label-tag').click(function(event) {
 		$('.label-tag').not(this).popover('hide');
 		//$(this).popover();
-	   	event.preventDefault();
+		event.preventDefault();
 	});
-	
+
 	//show the favorite row when entering in an item
-	$(".item_container").hover(function(){
-		if ($("#btnList").hasClass('active')){
+	$(".item_container").hover(function() {
+		if ($("#btnList").hasClass('active')) {
 			$(this).find('.row-favorite').fadeIn();
 		}
-	},function(){
-		if ($("#btnList").hasClass('active')){
+	}, function() {
+		if ($("#btnList").hasClass('active')) {
 			$(this).find('.row-favorite').fadeOut();
 		}
 	});
-	
+
 	//Hide the favorite bar by default
 	$(".row-favorite").hide();
 	$(".row-list").hide();
-	
+
 	//Show the full link of the item when hover the short link
-	$(".sourceHover").mouseenter(function(){
+	$(".sourceHover").mouseenter(function() {
 		$(this).hide();
 		$(this).next(".sourceHoverFull").fadeIn();
 	});
-	
+
 	//Show the short link of the item when leaving the hover of the full link
-	$(".sourceHoverFull").mouseleave(function(){
+	$(".sourceHoverFull").mouseleave(function() {
 		$(this).hide();
 		$(this).prev(".sourceHover").fadeIn();
 	});
@@ -108,10 +114,10 @@ function addFilter() {
 	var id = 1;
 	var classtr = "";
 	//Choose the class of the line of the table ( red for WITHOUT, blue for OR, green for AND)
-	if ($('#btnAND').hasClass('active') ) {
+	if ($('#btnAND').hasClass('active')) {
 		id = 1;
 		classtr = 'success';
-	} else if ($('#btnOR').hasClass('active') || $('#btnWITH').hasClass('active') ) {
+	} else if ($('#btnOR').hasClass('active') || $('#btnWITH').hasClass('active')) {
 		id = 0;
 		classtr = 'info';
 	} else if ($('#btnWITHOUT').hasClass('active')) {
@@ -126,7 +132,7 @@ function addFilter() {
 	var linkedKeyword = $('#btnOR').attr("title");
 	$('#keywordTable tbody > tr > td > label > input').each(function() {
 		if ($(this).is(':checked')) {
-			motcle += ' '+linkedKeyword.toLowerCase()+' ' + $(this).val();
+			motcle += ' ' + linkedKeyword.toLowerCase() + ' ' + $(this).val();
 		}
 	});
 
@@ -450,166 +456,171 @@ function movingData() {
 }
 
 //Function that change the disposition of the items, used in /items
-function changeItemFormat(type){
-	if (type=='card'){
+function changeItemFormat(type) {
+	if (type == 'card') {
 		$("#btnCard").addClass('active');
 		$("#btnList").removeClass('active');
-		
+
 		$(".item-bloc:even").addClass('span6 pull-left');
 		$(".item-bloc:even").addClass('clear-left');
 		$(".item-bloc:odd").addClass('span6 pull-right');
 		$(".item-bloc:odd").addClass('clear-right');
-		
+
 		$(".row-favorite").hide();
 		$(".row-list").show();
-	}else{
+	} else {
 		$("#btnList").addClass('active');
 		$("#btnCard").removeClass('active');
-		
+
 		$('.item-bloc').removeClass('span6');
 		$('.item-bloc').removeClass('pull-left');
 		$('.item-bloc').removeClass('pull-right');
 		$('.item-bloc').removeClass('clear-right');
 		$('.item-bloc').removeClass('clear-left');
-		
+
 		$(".row-list").hide();
 	}
-	
+
 }
 
-// home/search 
+// home/search
 
 //slide down the source tab for the source selected
-function slideDown(id){
-$(".form").not(id).slideUp('swing', function() {
+function slideDown(id) {
+	$(".form").not(id).slideUp('swing', function() {
 		$(".form").hide();
-    	$(id).slideDown();
-  });
+		$(id).slideDown();
+	});
 }
 
 //Allow to switch tab in the new semantic search
-function switchTab(){
-	if ($('#sourcesFirst').hasClass("active")){
+function switchTab() {
+	if ($('#sourcesFirst').hasClass("active")) {
 		$('#sourcesFirst').removeClass('active');
 		$('#breadcrumbSourcesOne').removeClass('active');
 		$('#breadcrumbSourcesOne').hide();
-		
+
 		prepareResumeSource();
-		
+
 		$('#sourcesSecond').addClass('active');
 		$('#breadcrumbSourcesTwo').addClass('active');
 		$('#breadcrumbSourcesTwo').show();
-	}
-	else if ($('#sourcesSecond').hasClass("active")){
+	} else if ($('#sourcesSecond').hasClass("active")) {
 		$('#sourcesSecond').removeClass('active');
 		$('#breadcrumbSourcesTwo').removeClass('active');
 		$('#breadcrumbSourcesTwo').show();
-		
+
 		$('#filteringFirst').addClass('active');
 		$('#breadcrumbFilteringOne').addClass('active');
 		$('#breadcrumbFilteringOne').show();
-	}
-	else if ($('#filteringFirst').hasClass("active")){
+	} else if ($('#filteringFirst').hasClass("active")) {
 		$('#filteringFirst').removeClass('active');
 		$('#breadcrumbFilteringOne').removeClass('active');
 		$('#breadcrumbFilteringOne').hide();
-		
+
 		$('#filteringSecond').addClass('active');
 		$('#breadcrumbFilteringTwo').addClass('active');
 		$('#breadcrumbFilteringTwo').show();
-	}	
+	}
 }
 
 //Allow to reverse switch tab in the new semantic search
-function reverseSwitchTab(){
-	if ($('#sourcesSecond').hasClass("active")){
+function reverseSwitchTab() {
+	if ($('#sourcesSecond').hasClass("active")) {
 		$('#sourcesSecond').removeClass('active');
 		$('#breadcrumbSourcesTwo').removeClass('active');
 		$('#breadcrumbSourcesTwo').hide();
-		
+
 		prepareReverseSource();
-		
+
 		$('#sourcesFirst').addClass('active');
 		$('#breadcrumbSourcesOne').addClass('active');
 		$('#breadcrumbSourcesOne').show();
-	}
-	else if ($('#filteringFirst').hasClass("active")){
+	} else if ($('#filteringFirst').hasClass("active")) {
 		$('#filteringFirst').removeClass('active');
 		$('#breadcrumbFilteringOne').removeClass('active');
 		$('#breadcrumbFilteringOne').show();
-		
+
 		$('#sourcesSecond').addClass('active');
 		$('#breadcrumbSourcesTwo').addClass('active');
 		$('#breadcrumbSourcesTwo').show();
-	}
-	else if ($('#filteringSecond').hasClass("active")){
+	} else if ($('#filteringSecond').hasClass("active")) {
 		$('#filteringSecond').removeClass('active');
 		$('#breadcrumbFilteringTwo').removeClass('active');
 		$('#breadcrumbFilteringTwo').hide();
-		
+
 		$('#filteringFirst').addClass('active');
 		$('#breadcrumbFilteringOne').addClass('active');
 		$('#breadcrumbFilteringOne').show();
-	}	
+	}
 }
 
 //Add a source in the table
-function addSource(table,value){
-	$(table).children('.allSources').remove();
-	if (table=="#wellTwitter"){
+function addSource(table, value) {
+	if (table == "#wellTwitter") {
 		text = $(value).val();
-		if (value=="#searchTwitter")
-			text = "#"+text;
+		if (value == "#searchTwitter")
+			text = "#" + text;
 		else
-			text="@"+text;
-		$(table).append("<span class='label label-info'>"+text+" <i class='icon-remove' onclick='$(this).closest(\"span\").remove()'></i></span> ");
-	} else if (table=="#wellRSS"){
-		$(table).append("<span class='label-wrap label label-warning' >"+$(value).val()+" <i class='icon-remove' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();'></i></span><br>");
+			text = "@" + text;
+		$(table).append("<span class='label label-info simpleSources'>" + text + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();checkWell(\"#wellTwitter\")'></i></span> ");
+		$("#addAllTwitter").attr("disabled",true);
+	} else if (table == "#wellRSS") {
+		$(table).append("<span class='label-wrap label label-warning simpleSources' >" + $(value).val() + " <i class='icon-remove' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();checkWell(\"#wellRSS\")'></i></span><br>");
+		$("#addAllRSS").attr("disabled",true);
 	}
 	$(value).val("");
 	$(value).html("");
 }
 
 //add "all" sources in the table
-function addAllSource(table,value){
-	if (table=="#wellTwitter"){
-		$(table).empty();
-		$(table).append("<span class='label label-info allSources'>"+value+" <i class='icon-remove' onclick='$(this).closest(\"span\").remove()'></i></span> ");
-	} else if (table=="#wellRSS"){
-		$(table).empty();
-		$(table).append("<span class='label label-warning label-wrap allSources'>"+value+" <i class='icon-remove' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();'></i></span>");
+function addAllSource(table, value) {
+	if (table == "#wellTwitter") {
+		$(table).append("<span class='label label-info allSources'>" + value + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();$(\"#loginTwitter\").attr(\"disabled\",false);$(\"#searchTwitter\").attr(\"disabled\",false);checkWell(\"#wellTwitter\")'></i></span> ");
+		$("#searchTwitter").attr("disabled",true);
+		$("#loginTwitter").attr("disabled",true);
+		$("#addAllTwitter").attr("disabled",true);
+	} else if (table == "#wellRSS") {
+		$(table).append("<span class='label label-warning label-wrap allSources'>" + value + " <i class='icon-remove' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();$(\"#searchRSS\").attr(\"disabled\",false);checkWell(\"#wellRSS\")'></i></span>");
+		$("#searchRSS").attr("disabled",true);
+		$("#addAllRSS").attr("disabled",true);
 	}
 }
 
 //Put all the sources in the resume
-function prepareResumeSource(){
+function prepareResumeSource() {
 	$("#resumeWellTwitter").empty();
-	$("#wellTwitter").children().each(function(index){
-		$("#resumeWellTwitter").append("<span class='label label-info'>"+$(this).html()+"</span> ");
+	$("#wellTwitter").children().each(function(index) {
+		$("#resumeWellTwitter").append($(this));
+		$("#resumeWellTwitter").append(" ");
 	});
-	
+
 	$("#resumeWellRSS").empty();
-	$("#wellRSS").children().not("br").each(function(index){
-			$("#resumeWellRSS").append("<span class='label label-warning label-wrap'>"+$(this).html()+"</span><br>");
+	$("#wellRSS").children().not("br").each(function(index) {
+		$("#resumeWellRSS").append($(this));
 	});
 }
 
 //Put all the sources in the selector
-function prepareReverseSource(){
+function prepareReverseSource() {
 	$("#wellTwitter").empty();
-	$("#resumeWellTwitter").children().each(function(index){
-		$("#wellTwitter").append("<span class='label label-info'>"+$(this).html()+"</span> ");
+	$("#resumeWellTwitter").children().each(function(index) {
+		$("#wellTwitter").append($(this));
+		$("#wellTwitter").append(" ");
 	});
-	
+
 	$("#wellRSS").empty();
-	$("#resumeWellRSS").children().not("br").each(function(index){
-			$("#wellRSS").append("<span class='label label-warning label-wrap'>"+$(this).html()+"</span><br>");
+	$("#resumeWellRSS").children().not("br").each(function(index) {
+		$("#wellRSS").append($(this));
 	});
 }
 
-
-
-
-
-
-
+//Check the well to see if it has children. If not, addAllSources button are activated.
+function checkWell(table){
+	if ($(table).children().length==0){
+		if( table=="#wellTwitter")
+			$("#addAllTwitter").attr("disabled",false);
+		else if ( table=="#wellRSS")
+			$("#addAllRSS").attr("disabled",false);
+	}
+}
