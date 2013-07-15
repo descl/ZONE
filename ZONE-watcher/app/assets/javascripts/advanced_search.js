@@ -596,7 +596,7 @@ function prepareResumeSource() {
 	});
 
 	$("#resumeWellRSS").empty();
-	$("#wellRSS").children().not("br").each(function(index) {
+	$("#wellRSS").children().each(function(index) {
 		$("#resumeWellRSS").append($(this));
 	});
 }
@@ -610,7 +610,7 @@ function prepareReverseSource() {
 	});
 
 	$("#wellRSS").empty();
-	$("#resumeWellRSS").children().not("br").each(function(index) {
+	$("#resumeWellRSS").children().each(function(index) {
 		$("#wellRSS").append($(this));
 	});
 }
