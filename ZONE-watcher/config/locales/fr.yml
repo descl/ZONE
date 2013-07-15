@@ -210,22 +210,14 @@ fr:
   newmodal:
     breadcrumb:
       sources:
-        one:
-          "Sources (1/2)"
-        two:
-          "Sources (2/2)"
+        "Sources"
       filtering:
-        one:
-          "Filtrage (1/2)"
-        two:
-          "Filtrage (2/2)"
+        "Filtrage"
       results:
         "Résultats"
     sources:
       title:
         "Sélectionner vos sources"
-      choice:
-        "Vos choix"
       switch:
         "Valider et passer à la suite"
       reverseswitch:
@@ -240,6 +232,8 @@ fr:
         "Accéder aux résultats"
       gofiltering:
         "Ajouter des filtres"
+      choice:
+        "Vos choix"
       twitter:
         all:
           "Toutes les sources twitter"

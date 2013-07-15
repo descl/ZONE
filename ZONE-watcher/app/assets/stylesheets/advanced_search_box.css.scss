@@ -187,12 +187,14 @@ ul.sortable li {
   border-radius:8px;
   margin-top: 10px;
   border: 1px solid #49afcd;
+  padding-bottom:5px;
 }
 
 .contentRSS{
   border-radius:8px;
   margin-top: 10px;
   border: 1px solid #f89406;
+  padding-bottom:5px;
 }
 
 #formTwitter:before{
@@ -276,4 +278,7 @@ span.label-wrap{
   max-height: 300px;
   overflow-y: auto;
   overflow-x:hidden;
+}
+.form{
+  padding-bottom:5px;
 }
