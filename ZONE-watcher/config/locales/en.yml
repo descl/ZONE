@@ -259,7 +259,7 @@ en:
         "Choose the filter's type"
       buttonOption:
         "Optionnal"
-      buttonMustHave:
+      buttonMusthave:
         "Must have"
       buttonBan:
         "Bannable"

@@ -259,7 +259,7 @@ fr:
         "Choisisser le type"
       buttonOption:
         "Optionnel"
-      buttonMustHave:
+      buttonMusthave:
         "Obligatoire"
       buttonBan:
         "Interdit"
