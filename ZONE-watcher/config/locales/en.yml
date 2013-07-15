@@ -252,7 +252,7 @@ en:
           "Do an OPML import"
     filtering:
       title:
-        "Select your filters"
+        "Add some filters"
       related:
         "Choose some related words"
       filtertype:
@@ -265,8 +265,8 @@ en:
         "Bannable"
       resume:
         option:
-          "Filter the results containing at least one of those subject"
+          "Filter the results containing at least one of those subjects ..."
         musthave:
-          "And all of these subjects"
+          "... and all of these subjects ..."
         ban:
-          "And none of these subjects"
+          "... and none of these subjects"
