@@ -1,7 +1,5 @@
 /** filtrage**/
 
-//General ID for the filters that the user pick
-idRowFiltering = 0;
 //Timer for keyword update
 timer = "";
 
@@ -104,7 +102,7 @@ $(document).ready(function() {
 });
 
 //Add a filter to the list of filter
-function addFilter() {
+function addFilter(type) {
 	$("#progressBarFiltering").hide();
 	$("#keywordTable").hide();
 	clearTimeout(timer);
@@ -114,13 +112,13 @@ function addFilter() {
 	var id = 1;
 	var classtr = "";
 	//Choose the class of the line of the table ( red for WITHOUT, blue for OR, green for AND)
-	if ($('#btnAND').hasClass('active')) {
+	if (type=='and') {
 		id = 1;
-		classtr = 'success';
-	} else if ($('#btnOR').hasClass('active') || $('#btnWITH').hasClass('active')) {
+		classtr == 'success';
+	} else if (type=='or') {
 		id = 0;
 		classtr = 'info';
-	} else if ($('#btnWITHOUT').hasClass('active')) {
+	} else if (type=='without') {
 		id = 2;
 		classtr = 'error';
 	} else {
@@ -129,27 +127,24 @@ function addFilter() {
 
 	//Add the related word to the keyword
 	var motcle = $('#keyword').val();
-	var linkedKeyword = $('#btnOR').attr("title");
 	$('#keywordTable tbody > tr > td > label > input').each(function() {
 		if ($(this).is(':checked')) {
-			motcle += ' ' + linkedKeyword.toLowerCase() + ' ' + $(this).val();
+			motcle += ' , ' + $(this).val();
 		}
 	});
 
 	var attr = getAttrSelected();
 
 	//Add the line to the table
-	$('#filteringTable').append('<tr id="idrow' + idRowFiltering + '" class="' + classtr + '"><td hidden>' + id + '</td><td class="tdkey">' + attr + '</td><td class="span3"><div class="tdval span9 breakword">' + motcle + '</div><button class="btn btn-danger pull-right"  onclick="removelinefiltrage(\'idrow' + idRowFiltering + '\')"><i class="icon-remove"></i></button></td></tr>');
-	idRowFiltering += 1;
+	if(type=='and')
+		$('#wellAnd').append("<span class='label label-success'>" + motcle + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span>");
+	else if (type=='or')
+		$('#wellOr').append("<span class='label label-info'>" + motcle + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span>");
+	else if (type=='without')
+		$('#wellWithout').append("<span class='label label-danger'>" + motcle + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span>");
 
 	//Reset the filtering
 	rebootFiltering();
-
-	//Write the filter in the easy-box
-	getFilter();
-
-	//Change the dropdwonselector ( take away WITH and WITHOUT and put AND, OR , WITHOUT instead)
-	checkDropdown();
 }
 
 //Return the title of the button selected ( WITH, WITHOUT, AND, OR)
