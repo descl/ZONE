@@ -302,3 +302,31 @@ span.label-wrap{
 .label-danger{
   background-color: #da4f49;
 }
+
+.numberFiltering{
+  background-color:#BDBDBD;
+  color:white;
+}
+.bigNumberFiltering{
+  border-radius:25px;
+  padding-left:10px;
+  padding-right:10px;
+}
+
+.smallNumberFiltering{
+  border-radius:25px;
+  padding-left:8px;
+  padding-right:8px;
+}
+
+.well-success{
+  background-color: #dff0d8;
+}
+
+.well-info{
+  background-color: #d9edf7;
+}
+
+.well-danger{
+  background-color: #f2dede;
+}
