@@ -505,6 +505,11 @@ function switchTab() {
 		$('#sourcesSecond').addClass('active');
 		$('#breadcrumbSourcesTwo').addClass('active');
 		$('#breadcrumbSourcesTwo').show();
+		
+		$('#sourcesSecond').hide();
+		$('#sourcesFirst').fadeOut('swing',function(){
+			$('#sourcesSecond').fadeIn();
+		});
 	} else if ($('#sourcesSecond').hasClass("active")) {
 		$('#sourcesSecond').removeClass('active');
 		$('#breadcrumbSourcesTwo').removeClass('active');
@@ -513,6 +518,12 @@ function switchTab() {
 		$('#filteringFirst').addClass('active');
 		$('#breadcrumbFilteringOne').addClass('active');
 		$('#breadcrumbFilteringOne').show();
+		
+		$('#filteringFirst').hide();
+		$('#sourcesSecond').fadeOut('swing',function(){
+			$('#filteringFirst').fadeIn();
+		});
+		
 	} else if ($('#filteringFirst').hasClass("active")) {
 		$('#filteringFirst').removeClass('active');
 		$('#breadcrumbFilteringOne').removeClass('active');
@@ -521,6 +532,11 @@ function switchTab() {
 		$('#filteringSecond').addClass('active');
 		$('#breadcrumbFilteringTwo').addClass('active');
 		$('#breadcrumbFilteringTwo').show();
+		
+		$('#filteringSecond').hide();
+		$('#filteringFirst').fadeOut('swing',function(){
+			$('#filteringSecond').fadeIn();
+		});
 	}
 }
 
@@ -538,6 +554,12 @@ function reverseSwitchTab() {
 		$('#sourcesFirst').addClass('active');
 		$('#breadcrumbSourcesOne').addClass('active');
 		$('#breadcrumbSourcesOne').show();
+		
+		$('#sourcesFirst').hide();
+		$('#sourcesSecond').fadeOut('swing',function(){
+			$('#sourcesFirst').fadeIn();
+		});
+		
 	} else if ($('#filteringFirst').hasClass("active")) {
 		$('#filteringFirst').removeClass('active');
 		$('#breadcrumbFilteringOne').removeClass('active');
@@ -546,6 +568,11 @@ function reverseSwitchTab() {
 		$('#sourcesSecond').addClass('active');
 		$('#breadcrumbSourcesTwo').addClass('active');
 		$('#breadcrumbSourcesTwo').show();
+		
+		$('#sourcesSecond').hide();
+		$('#filteringFirst').fadeOut('swing',function(){
+			$('#sourcesSecond').fadeIn();
+		});
 	} else if ($('#filteringSecond').hasClass("active")) {
 		$('#filteringSecond').removeClass('active');
 		$('#breadcrumbFilteringTwo').removeClass('active');
@@ -554,6 +581,11 @@ function reverseSwitchTab() {
 		$('#filteringFirst').addClass('active');
 		$('#breadcrumbFilteringOne').addClass('active');
 		$('#breadcrumbFilteringOne').show();
+		
+		$('#filteringFirst').hide();
+		$('#filteringSecond').fadeOut('swing',function(){
+			$('#filteringFirst').fadeIn();
+		});
 	}
 }
 
