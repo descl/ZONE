@@ -253,3 +253,20 @@ en:
     filtering:
       title:
         "Select your filters"
+      related:
+        "Choose some related words"
+      filtertype:
+        "Choose the filter's type"
+      buttonOption:
+        "Optionnal"
+      buttonMustHave:
+        "Must have"
+      buttonBan:
+        "Bannable"
+      resume:
+        option:
+          "Filter the results containing at least one of those subject"
+        musthave:
+          "And all of these subjects"
+        ban:
+          "And none of these subjects"

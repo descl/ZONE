@@ -253,3 +253,20 @@ fr:
     filtering:
       title:
         "Sélectionner vos filtres"
+      related:
+        "Choisisser des mots-liés"
+      filtertype:
+        "Choisisser le type"
+      buttonOption:
+        "Optionnel"
+      buttonMustHave:
+        "Obligatoire"
+      buttonBan:
+        "Interdit"
+      resume:
+        option:
+          "Filtrer les résultats traitant d'au moins une des notions suivantes"
+        musthave:
+          "Et toutes les notions suivantes"
+        ban:
+          "Et aucunes de ces notions"
