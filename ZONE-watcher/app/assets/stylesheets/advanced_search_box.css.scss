@@ -263,3 +263,11 @@ span.label-wrap{
   margin-top:2px;
   word-break:break-all;
 }
+
+.breadcrumb > li{
+  color : #999;
+}
+
+.breadcrumb > li.active{
+  color : #0088cc;
+}
