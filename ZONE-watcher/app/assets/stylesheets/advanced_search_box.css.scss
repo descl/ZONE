@@ -271,3 +271,15 @@ span.label-wrap{
 .breadcrumb > li.active{
   color : #0088cc;
 }
+
+#wellRSS{
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x:hidden;
+}
+
+#wellTwitter{
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x:hidden;
+}

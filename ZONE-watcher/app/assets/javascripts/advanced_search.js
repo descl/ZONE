@@ -488,7 +488,7 @@ function changeItemFormat(type) {
 //slide down the source tab for the source selected
 function slideDown(id) {
 	$(".form").not(id).slideUp('swing', function() {
-		$(".form").hide();
+		$(".form").not(id).hide();
 		$(id).slideDown();
 	});
 }
