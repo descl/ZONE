@@ -229,9 +229,11 @@ ul.sortable li {
   border-top-left-radius:4px;
   border-top-right-radius:4px;
 }
+
 .formHeader.twitter{
   background-color:#49afcd;
 }
+
 .formHeader.rss{
   background-color:#f89406;
 }
@@ -240,17 +242,21 @@ ul.sortable li {
   margin-top: 0px;
   color: white;
 }
+
 .titleFormContent{
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
 .titleFormContent.twitter{
   background-color:#49afcd;
   
 }
+
 .titleFormContent.rss{
   background-color:#f89406;
 }
+
 .well{
   word-break: normal;
 }
@@ -258,6 +264,11 @@ ul.sortable li {
 .blackh4{
   color:black;
 }
+
+.whiteh4{
+  color:white;
+}
+
 span.label-wrap{
   white-space: pre-wrap;
   min-height: 0px;
@@ -279,6 +290,11 @@ span.label-wrap{
   overflow-y: auto;
   overflow-x:hidden;
 }
+
 .form{
   padding-bottom:5px;
+}
+
+.marged{
+  margin-bottom:10px;
 }
