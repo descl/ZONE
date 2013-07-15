@@ -271,3 +271,9 @@ span.label-wrap{
 .breadcrumb > li.active{
   color : #0088cc;
 }
+
+#wellRSS,#wellTwitter,#resumeWellRSS,#resumeWellTwitter{
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x:hidden;
+}
