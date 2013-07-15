@@ -532,7 +532,9 @@ function reverseSwitchTab() {
 		$('#breadcrumbSourcesTwo').hide();
 
 		prepareReverseSource();
-
+		
+		$(".form").hide();
+		
 		$('#sourcesFirst').addClass('active');
 		$('#breadcrumbSourcesOne').addClass('active');
 		$('#breadcrumbSourcesOne').show();
