@@ -501,6 +501,8 @@ function switchTab() {
 	$('#sources').fadeOut('swing', function() {
 		$('#filtering').fadeIn();
 	});
+	
+	$(".form").hide();
 }
 
 //Allow to reverse switch tab in the new semantic search
