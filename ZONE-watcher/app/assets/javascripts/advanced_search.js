@@ -506,7 +506,7 @@ function switchTab() {
 //Allow to reverse switch tab in the new semantic search
 function reverseSwitchTab() {
 	$('#filtering').removeClass('active');
-	$('#breadcrumbSources').removeClass('active');
+	$('#breadcrumbFiltering').removeClass('active');
 
 	$('#sources').addClass('active');
 	$('#breadcrumbSources').addClass('active');
