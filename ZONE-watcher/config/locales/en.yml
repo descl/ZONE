@@ -81,6 +81,8 @@ en:
       "Go reador!"
     searchadvanced:
       "Semantic search"
+    gobutton:
+      "New search"
   moreabout:
     title:
       "More about Reador!"
