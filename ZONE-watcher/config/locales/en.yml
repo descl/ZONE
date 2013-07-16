@@ -252,4 +252,21 @@ en:
           "Do an OPML import"
     filtering:
       title:
-        "Select your filters"
+        "Add some filters"
+      related:
+        "Choose some related words"
+      filtertype:
+        "Choose the filter's type"
+      buttonOption:
+        "Optionnal"
+      buttonMusthave:
+        "Must have"
+      buttonBan:
+        "Bannable"
+      resume:
+        option:
+          "Filter the results containing at least one of those subjects ..."
+        musthave:
+          "... and all of these subjects ..."
+        ban:
+          "... and none of these subjects"
