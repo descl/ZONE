@@ -1,4 +1,7 @@
 ZONEWatcher::Application.routes.draw do
+  resources :searches
+
+
   #Twitter managment
   get "twitter/addtimeline", :action => "add_timeline", :controller => "twitter"
   get "twitter", :action => "index", :controller => "twitter"
