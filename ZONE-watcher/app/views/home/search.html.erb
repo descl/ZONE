@@ -1,20 +1,20 @@
-<div class="row-fluid">
-	<div class="span1"></div>
-	<div class="span10">
-		<ul class="breadcrumb">
-			<li id="breadcrumbSources" class="active">
-				<%= raw t 'newmodal.breadcrumb.sources' %><span class="divider"><i class="icon-chevron-right"></i></span>
-			</li>
-			<li id="breadcrumbFiltering">
-				<%= raw t 'newmodal.breadcrumb.filtering' %><span class="divider"><i class="icon-chevron-right"></i></span>
-			</li>
-			<li>
-				<%= raw t 'newmodal.breadcrumb.results' %>
-			</li>
-		</ul>
-	</div>
-</div>
 <form action="/searches" method="POST" id="formModal">
+	<div class="row-fluid">
+		<div class="span1"></div>
+		<div class="span10">
+			<ul class="breadcrumb">
+				<li id="breadcrumbSources" class="active pointerMouse" onclick="reverseSwitchTab()">
+					<%= raw t 'newmodal.breadcrumb.sources' %><span class="divider"><i class="icon-chevron-right"></i></span>
+				</li>
+				<li id="breadcrumbFiltering" class="pointerMouse" onclick="switchTab()">
+					<%= raw t 'newmodal.breadcrumb.filtering' %><span class="divider"><i class="icon-chevron-right"></i></span>
+				</li>
+				<li class="pointerMouse" onclick="movingData();submit()">
+					<%= raw t 'newmodal.breadcrumb.results' %>
+				</li>
+			</ul>
+		</div>
+	</div>
 	<div class="row-fluid">
 		<div class="tab-content">
 			<div class="tab-pane active" id="sources">
@@ -258,8 +258,7 @@
 				</div>
 				<div class="row-fluid">
 					<div class="span1"></div>
-					<div id="wellOr" class="span10 well well-info">
-					</div>
+					<div id="wellOr" class="span10 well well-info"></div>
 				</div>
 				<div class="row-fluid">
 					<div class="span1"></div>
@@ -269,8 +268,7 @@
 				</div>
 				<div class="row-fluid">
 					<div class="span1"></div>
-					<div id="wellAnd" class="span10 well well-success">
-					</div>
+					<div id="wellAnd" class="span10 well well-success"></div>
 				</div>
 				<div class="row-fluid">
 					<div class="span1"></div>
@@ -280,8 +278,7 @@
 				</div>
 				<div class="row-fluid">
 					<div class="span1"></div>
-					<div id="wellWithout" class="span10 well well-danger">
-					</div>
+					<div id="wellWithout" class="span10 well well-danger"></div>
 				</div>
 				<div class="row-fluid">
 					<div class="span1"></div>
@@ -297,7 +294,8 @@
 						</button>
 					</div>
 				</div>
-			</div> <!--Pane-filtering-->
+			</div>
+			<!--Pane-filtering-->
 		</div>
 	</div>
 	<div id="movedData"></div>

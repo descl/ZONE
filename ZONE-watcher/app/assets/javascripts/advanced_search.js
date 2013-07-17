@@ -498,6 +498,8 @@ function slideDown(id) {
 
 //Allow to switch tab in the new semantic search
 function switchTab() {
+	if ($('#filtering').hasClass('active'))
+		return;
 	$('#sources').removeClass('active');
 	$('#breadcrumbSources').removeClass('active');
 
@@ -515,6 +517,8 @@ function switchTab() {
 
 //Allow to reverse switch tab in the new semantic search
 function reverseSwitchTab() {
+	if ($('#sources').hasClass('active'))
+		return;
 	$('#filtering').removeClass('active');
 	$('#breadcrumbFiltering').removeClass('active');
 
