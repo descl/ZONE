@@ -451,8 +451,8 @@ function movingData() {
 		filtering.without=tabWithout;
 		
 		$('#movedData').html($('#movedData').html() 
-		+ "<input name='arraySource' type='hidden' value='" + source + "'>" 
-		+ "<input name='arrayFiltering' type='hidden' value='" + filtering + "'>");
+		+ "<input name='arraySource' type='hidden' value='" + JSON.stringify(source) + "'>" 
+		+ "<input name='arrayFiltering' type='hidden' value='" + JSON.stringify(filtering) + "'>");
 }
 
 //Function that change the disposition of the items, used in /items
