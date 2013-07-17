@@ -98,7 +98,9 @@ $(document).ready(function() {
 		$(this).hide();
 		$(this).prev(".sourceHover").fadeIn();
 	});
-
+	
+	$("#addAllRSS").attr("disable",false);
+	$("#addAllTwitter").attr("disable",false);
 });
 
 //Add a filter to the list of filter
