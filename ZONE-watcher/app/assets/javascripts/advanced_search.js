@@ -112,13 +112,13 @@ function addFilter(type) {
 	var id = 1;
 	var classtr = "";
 	//Choose the class of the line of the table ( red for WITHOUT, blue for OR, green for AND)
-	if (type=='and') {
+	if (type == 'and') {
 		id = 1;
 		classtr == 'success';
-	} else if (type=='or') {
+	} else if (type == 'or') {
 		id = 0;
 		classtr = 'info';
-	} else if (type=='without') {
+	} else if (type == 'without') {
 		id = 2;
 		classtr = 'error';
 	} else {
@@ -136,11 +136,11 @@ function addFilter(type) {
 	var attr = getAttrSelected();
 
 	//Add the line to the table
-	if(type=='and')
+	if (type == 'and')
 		$('#wellAnd').append("<span class='label label-success'>" + motcle + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span>");
-	else if (type=='or')
+	else if (type == 'or')
 		$('#wellOr').append("<span class='label label-info'>" + motcle + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span>");
-	else if (type=='without')
+	else if (type == 'without')
 		$('#wellWithout').append("<span class='label label-danger'>" + motcle + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span>");
 
 	//Reset the filtering
@@ -417,37 +417,42 @@ function setButtonPreviousTab() {
 
 //Prepare the input with all data
 function movingData() {
-
-	var arraySourceAdded = new Array();
-	var arrayFilteringAdded = new Array();
-	var littleArray = new Array();
-
-	//Prepare the array that will contain the sources data
-	$('#sourceTable tbody > tr ').each(function() {
-		if ($(this).find('input.valSource').val()) {
-			littleArray.push($(this).find('input.valSource').val());
-			if ($(this).find('div.breakword').html() != null) {
-				littleArray.push($(this).find('div.breakword').html());
+	var source = {};
+		var filtering = {};
+		
+		var tabTwitter =[];
+		var tabRss =[];
+		$("#wellSources").children().each(function() {
+			if ($(this).hasClass('twitterSource')) {
+				tabTwitter.push($(this).html().substr(0, $(this).html().search('<i') - 1));
+			} else if ($(this).hasClass('rssSource')) {
+				tabRss.push($(this).html().substr(0, $(this).html().search('<i') - 1));
 			}
-			arraySourceAdded.push(littleArray);
-			littleArray = new Array();
-		}
-	});
-
-	//Prepare the array that will contain the filtering data
-	$('#filteringTable tbody > tr ').each(function() {
-		if ($(this).find('td.tdkey').html()) {
-			littleArray.push($(this).find('td.tdkey').html());
-			if ($(this).find('div.breakword').html() != null) {
-				littleArray.push($(this).find('div.breakword').html());
-			}
-			arrayFilteringAdded.push(littleArray);
-			littleArray = new Array();
-		}
-	});
-
-	//create the input with the data
-	$('#movedData').html($('#movedData').html() + "<input name='arraySource' type='hidden' value='" + arraySourceAdded + "'>" + "<input name='arrayFiltering[]' type='hidden' value='" + arrayFilteringAdded + "'>");
+		});
+		
+		var tabOr =[];
+		var tabAnd =[];
+		var tabWithout =[];
+		$("#wellOr").children().each(function() {
+			tabOr.push($(this).html().substr(0, $(this).html().search('<i') - 1));
+		});
+		$("#wellAnd").children().each(function() {
+			tabAnd.push($(this).html().substr(0, $(this).html().search('<i') - 1));
+		});
+		$("#wellWithout").children().each(function() {
+			tabWithout.push($(this).html().substr(0, $(this).html().search('<i') - 1));
+		});
+		
+		source.twitter=tabTwitter;
+		source.rss=tabRss;
+		
+		filtering.or=tabOr;
+		filtering.and=tabAnd;
+		filtering.without=tabWithout;
+		
+		$('#movedData').html($('#movedData').html() 
+		+ "<input name='arraySource' type='hidden' value='" + source + "'>" 
+		+ "<input name='arrayFiltering' type='hidden' value='" + filtering + "'>");
 }
 
 //Function that change the disposition of the items, used in /items
@@ -501,7 +506,7 @@ function switchTab() {
 	$('#sources').fadeOut('swing', function() {
 		$('#filtering').fadeIn();
 	});
-	
+
 	$(".form").hide();
 }
 
@@ -556,10 +561,10 @@ function addAllSource(table, value) {
 function checkWell(table) {
 	if (table == "Twitter")
 		$("#addAllTwitter").attr("disabled", false);
-	else if (table == "RSS" )
+	else if (table == "RSS")
 		$("#addAllRSS").attr("disabled", false);
-	if($("#wellSources").children(".twitterSource").length==0)
+	if ($("#wellSources").children(".twitterSource").length == 0)
 		$("#addAllTwitter").attr("disabled", false);
-	if ($("#wellSources").children(".rssSource").length==0)
+	if ($("#wellSources").children(".rssSource").length == 0)
 		$("#addAllRSS").attr("disabled", false);
 }
