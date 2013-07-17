@@ -3,13 +3,13 @@
 		<div class="span1"></div>
 		<div class="span10">
 			<ul class="breadcrumb">
-				<li id="breadcrumbSources" class="active pointerMouse" onclick="reverseSwitchTab()">
+				<li id="breadcrumbSources" class="active" onclick="reverseSwitchTab()">
 					<%= raw t 'newmodal.breadcrumb.sources' %><span class="divider"><i class="icon-chevron-right"></i></span>
 				</li>
-				<li id="breadcrumbFiltering" class="pointerMouse" onclick="switchTab()">
+				<li id="breadcrumbFiltering" onclick="switchTab()">
 					<%= raw t 'newmodal.breadcrumb.filtering' %><span class="divider"><i class="icon-chevron-right"></i></span>
 				</li>
-				<li class="pointerMouse" onclick="movingData();submit()">
+				<li onclick="movingData();submit()">
 					<%= raw t 'newmodal.breadcrumb.results' %>
 				</li>
 			</ul>
