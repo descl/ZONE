@@ -331,3 +331,8 @@ span.label-wrap{
 .well-danger{
   background-color: #f2dede;
 }
+
+.breadcrumb > li:hover:not(.active){
+  cursor: pointer;
+  text-decoration : underline;
+}
