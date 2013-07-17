@@ -420,41 +420,55 @@ function setButtonPreviousTab() {
 //Prepare the input with all data
 function movingData() {
 	var source = {};
-		var filtering = {};
-		
-		var tabTwitter =[];
-		var tabRss =[];
-		$("#wellSources").children().each(function() {
-			if ($(this).hasClass('twitterSource')) {
-				tabTwitter.push($(this).html().substr(0, $(this).html().search('<i') - 1));
-			} else if ($(this).hasClass('rssSource')) {
-				tabRss.push($(this).html().substr(0, $(this).html().search('<i') - 1));
-			}
-		});
-		
-		var tabOr =[];
-		var tabAnd =[];
-		var tabWithout =[];
-		$("#wellOr").children().each(function() {
-			tabOr.push($(this).html().substr(0, $(this).html().search('<i') - 1));
-		});
-		$("#wellAnd").children().each(function() {
-			tabAnd.push($(this).html().substr(0, $(this).html().search('<i') - 1));
-		});
-		$("#wellWithout").children().each(function() {
-			tabWithout.push($(this).html().substr(0, $(this).html().search('<i') - 1));
-		});
-		
-		source.twitter=tabTwitter;
-		source.rss=tabRss;
-		
-		filtering.or=tabOr;
-		filtering.and=tabAnd;
-		filtering.without=tabWithout;
-		
-		$('#movedData').html($('#movedData').html() 
-		+ "<input name='sources' type='hidden' value='" + JSON.stringify(source) + "'>" 
-		+ "<input name='filters' type='hidden' value='" + JSON.stringify(filtering) + "'>");
+	var filtering = {};
+	
+	var tabTwitter =[];
+	var tabRss =[];
+	var item=""
+	$("#wellSources").children().each(function() {
+		item = $(this).html().substr(0, $(this).html().search('<i') - 1);
+		if ($(this).hasClass('twitterSource')) {
+			tabTwitter.push(item);
+		} else if ($(this).hasClass('rssSource')) {
+			tabRss.push(item);
+		}
+	});
+	
+	var tabOr =[];
+	var tabAnd =[];
+	var tabWithout =[];
+	$("#wellOr").children().each(function() {
+		item = $(this).html().substr(0, $(this).html().search('<i') - 1);
+		item = protectLetter(item);
+		tabOr.push(item);
+	});
+	$("#wellAnd").children().each(function() {
+		item = $(this).html().substr(0, $(this).html().search('<i') - 1);
+		item = protectLetter(item);
+		tabAnd.push(item);
+	});
+	$("#wellWithout").children().each(function() {
+		item = $(this).html().substr(0, $(this).html().search('<i') - 1);
+		item = protectLetter(item);
+		tabWithout.push(item);
+	});
+	
+	source.twitter=tabTwitter;
+	source.rss=tabRss;
+	
+	filtering.or=tabOr;
+	filtering.and=tabAnd;
+	filtering.without=tabWithout;
+	
+	$('#movedData').html($('#movedData').html() 
+	+ "<input name='sources' type='hidden' value='" + JSON.stringify(source) + "'>" 
+	+ "<input name='filters' type='hidden' value='" + JSON.stringify(filtering) + "'>");
+}
+
+//protect some caracters in a string before sending it via POST method
+function protectLetter(item){
+	var newItem = item.split("'").join("&#146;");
+	return newItem;
 }
 
 //Function that change the disposition of the items, used in /items
