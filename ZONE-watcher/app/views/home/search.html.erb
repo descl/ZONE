@@ -172,7 +172,7 @@
 					</div>
 					<div class="span2"></div>
 					<div class="span4">
-						<button class="btn btn-success span12 goItem" type="button">
+						<button class="btn btn-success span12 goItem" type="submit" onclick="movingData()">
 							<h3><%= raw t 'newmodal.sources.goreador' %></h3>
 						</button>
 					</div>
@@ -292,7 +292,7 @@
 				<div class="row-fluid">
 					<div class="span4"></div>
 					<div class="span4">
-						<button class="btn btn-success span12 goItem" type="button">
+						<button class="btn btn-success span12 goItem" type="submit" onclick="movingData()">
 							<h3><%= raw t 'newmodal.sources.goreador' %></h3>
 						</button>
 					</div>
@@ -300,4 +300,5 @@
 			</div> <!--Pane-filtering-->
 		</div>
 	</div>
+	<div id="movedData"></div>
 </form>
