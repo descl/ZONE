@@ -556,10 +556,13 @@ function addAllSource(table, value) {
 		$("#wellSources").append("<span class='label label-info twitterSource'>" + value + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();$(\"#loginTwitter\").attr(\"disabled\",false);$(\"#searchTwitter\").attr(\"disabled\",false);checkWell(\"Twitter\")'></i></span> ");
 		$("#searchTwitter").attr("disabled", true);
 		$("#loginTwitter").attr("disabled", true);
+		$("#searchTwitter").val("").html("");
+		$("#loginTwitter").val("").html("");
 		$("#addAllTwitter").attr("disabled", true);
 	} else if (table == "RSS") {
 		$("#wellSources").append("<span class='label label-warning label-wrap rssSource'>" + value + " <i class='icon-remove' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();$(\"#searchRSS\").attr(\"disabled\",false);checkWell(\"RSS\")'></i></span> ");
 		$("#searchRSS").attr("disabled", true);
+		$("#searchRSS").val("").html("");
 		$("#addAllRSS").attr("disabled", true);
 	}
 }
