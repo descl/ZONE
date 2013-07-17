@@ -98,9 +98,9 @@ $(document).ready(function() {
 		$(this).hide();
 		$(this).prev(".sourceHover").fadeIn();
 	});
-	
-	$("#addAllRSS").attr("disable",false);
-	$("#addAllTwitter").attr("disable",false);
+
+	$("#addAllRSS").attr("disable", false);
+	$("#addAllTwitter").attr("disable", false);
 });
 
 //Add a filter to the list of filter
@@ -129,22 +129,25 @@ function addFilter(type) {
 
 	//Add the related word to the keyword
 	var motcle = $('#keyword').val();
-	$('#keywordTable tbody > tr > td > label > input').each(function() {
-		if ($(this).is(':checked')) {
-			motcle += ' , ' + $(this).val();
-		}
-	});
-
-	var attr = getAttrSelected();
-
+	
 	//Add the line to the table
 	if (type == 'and')
-		$('#wellAnd').append("<span class='label label-success'>" + motcle + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span>");
+		$('#wellAnd').append("<span class='label label-success'>" + motcle + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span> ");
 	else if (type == 'or')
-		$('#wellOr').append("<span class='label label-info'>" + motcle + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span>");
+		$('#wellOr').append("<span class='label label-info'>" + motcle + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span> ");
 	else if (type == 'without')
-		$('#wellWithout').append("<span class='label label-danger'>" + motcle + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span>");
+		$('#wellWithout').append("<span class='label label-danger'>" + motcle + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span> ");
 
+	$('#keywordTable tbody > tr > td > label > input').each(function() {
+		if ($(this).is(':checked')) {
+			if (type == 'and')
+				$('#wellAnd').append("<span class='label label-success'>" + $(this).val() + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span> ");
+			else if (type == 'or')
+				$('#wellOr').append("<span class='label label-info'>" + $(this).val() + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span> ");
+			else if (type == 'without')
+				$('#wellWithout').append("<span class='label label-danger'>" + $(this).val() + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();'></i></span> ");
+		}
+	});
 	//Reset the filtering
 	rebootFiltering();
 }
@@ -421,10 +424,10 @@ function setButtonPreviousTab() {
 function movingData() {
 	var source = {};
 	var filtering = {};
-	
-	var tabTwitter =[];
-	var tabRss =[];
-	var item=""
+
+	var tabTwitter = [];
+	var tabRss = [];
+	var item = ""
 	$("#wellSources").children().each(function() {
 		item = escape($(this).html().substr(0, $(this).html().search('<i') - 1));
 		if ($(this).hasClass('twitterSource')) {
@@ -433,10 +436,10 @@ function movingData() {
 			tabRss.push(item);
 		}
 	});
-	
-	var tabOr =[];
-	var tabAnd =[];
-	var tabWithout =[];
+
+	var tabOr = [];
+	var tabAnd = [];
+	var tabWithout = [];
 	$("#wellOr").children().each(function() {
 		item = escape($(this).html().substr(0, $(this).html().search('<i') - 1));
 		tabOr.push(item);
@@ -449,17 +452,15 @@ function movingData() {
 		item = escape($(this).html().substr(0, $(this).html().search('<i') - 1));
 		tabWithout.push(item);
 	});
-	
-	source.twitter=tabTwitter;
-	source.rss=tabRss;
-	
-	filtering.or=tabOr;
-	filtering.and=tabAnd;
-	filtering.without=tabWithout;
-	
-	$('#movedData').html($('#movedData').html() 
-	+ "<input name='sources' type='hidden' value='" + JSON.stringify(source) + "'>" 
-	+ "<input name='filters' type='hidden' value='" + JSON.stringify(filtering) + "'>");
+
+	source.twitter = tabTwitter;
+	source.rss = tabRss;
+
+	filtering.or = tabOr;
+	filtering.and = tabAnd;
+	filtering.without = tabWithout;
+
+	$('#movedData').html($('#movedData').html() + "<input name='sources' type='hidden' value='" + JSON.stringify(source) + "'>" + "<input name='filters' type='hidden' value='" + JSON.stringify(filtering) + "'>");
 }
 
 //Function that change the disposition of the items, used in /items
@@ -494,13 +495,13 @@ function changeItemFormat(type) {
 
 //slide down the source tab for the source selected
 function slideDown(id) {
-	if($(id).is(":visible"))
+	if ($(id).is(":visible"))
 		$(id).slideUp();
 	else
 		$(".form").not(id).slideUp('swing', function() {
 			$(".form").not(id).hide();
 			$(id).slideDown();
-		});		
+		});
 }
 
 //Allow to switch tab in the new semantic search
