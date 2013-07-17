@@ -98,7 +98,9 @@ $(document).ready(function() {
 		$(this).hide();
 		$(this).prev(".sourceHover").fadeIn();
 	});
-
+	
+	$("#addAllRSS").attr("disable",false);
+	$("#addAllTwitter").attr("disable",false);
 });
 
 //Add a filter to the list of filter
@@ -451,8 +453,8 @@ function movingData() {
 		filtering.without=tabWithout;
 		
 		$('#movedData').html($('#movedData').html() 
-		+ "<input name='arraySource' type='hidden' value='" + source + "'>" 
-		+ "<input name='arrayFiltering' type='hidden' value='" + filtering + "'>");
+		+ "<input name='sources' type='hidden' value='" + JSON.stringify(source) + "'>" 
+		+ "<input name='filters' type='hidden' value='" + JSON.stringify(filtering) + "'>");
 }
 
 //Function that change the disposition of the items, used in /items
@@ -487,14 +489,19 @@ function changeItemFormat(type) {
 
 //slide down the source tab for the source selected
 function slideDown(id) {
-	$(".form").not(id).slideUp('swing', function() {
-		$(".form").not(id).hide();
-		$(id).slideDown();
-	});
+	if($(id).is(":visible"))
+		$(id).slideUp();
+	else
+		$(".form").not(id).slideUp('swing', function() {
+			$(".form").not(id).hide();
+			$(id).slideDown();
+		});		
 }
 
 //Allow to switch tab in the new semantic search
 function switchTab() {
+	if ($('#filtering').hasClass('active'))
+		return;
 	$('#sources').removeClass('active');
 	$('#breadcrumbSources').removeClass('active');
 
@@ -512,6 +519,8 @@ function switchTab() {
 
 //Allow to reverse switch tab in the new semantic search
 function reverseSwitchTab() {
+	if ($('#sources').hasClass('active'))
+		return;
 	$('#filtering').removeClass('active');
 	$('#breadcrumbFiltering').removeClass('active');
 
@@ -549,10 +558,13 @@ function addAllSource(table, value) {
 		$("#wellSources").append("<span class='label label-info twitterSource'>" + value + " <i class='icon-remove' onclick='$(this).closest(\"span\").remove();$(\"#loginTwitter\").attr(\"disabled\",false);$(\"#searchTwitter\").attr(\"disabled\",false);checkWell(\"Twitter\")'></i></span> ");
 		$("#searchTwitter").attr("disabled", true);
 		$("#loginTwitter").attr("disabled", true);
+		$("#searchTwitter").val("").html("");
+		$("#loginTwitter").val("").html("");
 		$("#addAllTwitter").attr("disabled", true);
 	} else if (table == "RSS") {
 		$("#wellSources").append("<span class='label label-warning label-wrap rssSource'>" + value + " <i class='icon-remove' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();$(\"#searchRSS\").attr(\"disabled\",false);checkWell(\"RSS\")'></i></span> ");
 		$("#searchRSS").attr("disabled", true);
+		$("#searchRSS").val("").html("");
 		$("#addAllRSS").attr("disabled", true);
 	}
 }
