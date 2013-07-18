@@ -1,6 +1,6 @@
 class FiltersController < ApplicationController
   include ApplicationHelper
-  $endpoint = 'http://localhost:8890/sparql/'
+  $endpoint = Rails.application.config.virtuosoEndpoint
 
   # GET /filters
   # GET /filters.json

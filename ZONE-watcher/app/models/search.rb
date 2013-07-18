@@ -6,12 +6,50 @@ class Search < ActiveRecord::Base
 
   def self.build_from_form(params)
     result = Search.new
-    params[:arraySource].split(",").each do |source|
-      result.sources << SearchSource.build_from_form(source)
+    sourcesJson = JSON.parse params[:sources]
+    sourcesJson.each do |kind,vals|
+      vals.each do |value|
+        result.sources << SearchSource.build_from_form(CGI.unescape(value),kind)
+      end
     end
-    params[:arrayFiltering].split(",").each do |filter|
-      result.filters << SearchFilter.build_from_form( filter,"with")
+
+    filtersJson = JSON.parse params[:filters]
+    filtersJson.each do |kind,vals|
+      vals.each do |value|
+        result.filters << SearchFilter.build_from_form(CGI.unescape(value),kind)
+      end
     end
+
     return result
+  end
+
+  def getItemsNumber
+    #TODO
+    #request = generateFilterSPARQLRequest(filters)
+    #query = "SELECT ?number COUNT(DISTINCT ?concept) FROM <#{ZoneOntology::GRAPH_ITEMS}> WHERE {\n"
+    #query += request
+    #query += "?concept <http://purl.org/rss/1.0/title> ?title.} LIMIT 1"
+    #puts query
+    #store = SPARQL::Client.new($endpoint)
+    #if store.query(query).length == 0
+    #  return 0
+    #else
+    #  return store.query(query)[0]["callret-1"]
+    #end
+    return 0
+  end
+
+  def generateSPARQLRequest
+    extendQuery = ""
+    self.sources.each do |source|
+      extendQuery += "#{source.getSparqlTriple}. \n"
+    end
+    self.filters.each do |filter|
+      if filter.kind == "and"
+        extendQuery += "#{filter.getSparqlTriple}. \n"
+       end
+      #TODO
+    end
+    extendQuery
   end
 end

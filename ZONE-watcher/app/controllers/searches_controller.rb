@@ -1,3 +1,5 @@
+require 'json'
+
 class SearchesController < ApplicationController
   # GET /searches
   # GET /searches.json
@@ -13,11 +15,7 @@ class SearchesController < ApplicationController
   # GET /searches/1
   # GET /searches/1.json
   def show
-    @search = Search.find(params[:id])
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @search }
-    end
+    redirect_to items_path(:search => params[:id] )
   end
 
   # GET /searches/new
@@ -40,12 +38,6 @@ class SearchesController < ApplicationController
   # POST /searches.json
   def create
     @search = Search.build_from_form(params)
-    puts @search.to_json
-    puts @search.sources.to_json
-    puts @search.filters.to_json
-    @search.save
-    puts toto
-
     respond_to do |format|
       if @search.save
         format.html { redirect_to @search, notice: 'Search was successfully created.' }

@@ -100,7 +100,7 @@ function movingData() {
 	var tabRss = [];
 	var item = ""
 	$("#wellSources").children().each(function() {
-		item = escape($(this).html().substr(0, $(this).html().search('<i') - 1));
+		item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
 		if ($(this).hasClass('twitterSource')) {
 			tabTwitter.push(item);
 		} else if ($(this).hasClass('rssSource')) {
@@ -112,15 +112,15 @@ function movingData() {
 	var tabAnd = [];
 	var tabWithout = [];
 	$("#wellOr").children().each(function() {
-		item = escape($(this).html().substr(0, $(this).html().search('<i') - 1));
+		item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
 		tabOr.push(item);
 	});
 	$("#wellAnd").children().each(function() {
-		item = escape($(this).html().substr(0, $(this).html().search('<i') - 1));
+		item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
 		tabAnd.push(item);
 	});
 	$("#wellWithout").children().each(function() {
-		item = escape($(this).html().substr(0, $(this).html().search('<i') - 1));
+		item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
 		tabWithout.push(item);
 	});
 
