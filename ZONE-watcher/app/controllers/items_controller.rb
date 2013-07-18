@@ -10,12 +10,12 @@ class ItemsController < ApplicationController
     #@filters << Filter.new(:prop => "http://purl.org/rss/1.0/source", :value => tag)
 
     if params[:search] == nil
-      flash[:error] = "you need to create a search!"
-      redirect_to :back
+      #flash[:error] = "you need to create a search!"
+      #redirect_to :back
+      @search = Search.first
     else
       @search = Search.find(params[:search])
     end
-
 
     current_page = params[:page]
     current_page = 1 if current_page == nil
@@ -25,9 +25,10 @@ class ItemsController < ApplicationController
     if pageNumber > (10000 - per_page +1)
       pageNumber = (10000 - per_page +1)
     end
+    @sparqlRequest = @search.generateSPARQLRequest
     @items = WillPaginate::Collection.create(current_page, per_page, pageNumber) do |pager|
       start = (current_page-1)*per_page # assuming current_page is 1 based.
-      pager.replace(Item.all(@search.generateSPARQLRequest,start,per_page))
+      pager.replace(Item.all(@sparqlRequest,start,per_page))
     end
 
     gonItemsFiltersUri = Array.new

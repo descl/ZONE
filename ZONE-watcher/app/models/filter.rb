@@ -52,4 +52,12 @@ class Filter
   def get_search_button
     return @value+" | "+@prop
   end
+
+  def self.build_from_search(search)
+    if search.kind == "RSS"
+      return self.new(:prop => "http://purl.org/rss/1.0/source", :value => search.value)
+    elsif search.kind == "twitter"
+      return self.new(:prop => "http://purl.org/rss/1.0/source", :value => search.value)
+    end
+  end
 end

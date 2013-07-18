@@ -18,7 +18,7 @@ class FiltersControllerTest < ActionController::TestCase
 
   test "should create filter" do
     assert_difference('Filter.count') do
-      post :create, filter: {  }
+      post :create, filter: { type: @filter.type, value: @filter.value }
     end
 
     assert_redirected_to filter_path(assigns(:filter))
@@ -35,7 +35,7 @@ class FiltersControllerTest < ActionController::TestCase
   end
 
   test "should update filter" do
-    put :update, id: @filter, filter: {  }
+    put :update, id: @filter, filter: { type: @filter.type, value: @filter.value }
     assert_redirected_to filter_path(assigns(:filter))
   end
 

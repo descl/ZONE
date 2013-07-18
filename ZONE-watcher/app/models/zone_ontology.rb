@@ -19,6 +19,8 @@ class ZoneOntology < ActiveRecord::Base
   SOURCES_THEME = "#{SOURCES_PREFIX}#theme"
   SOURCES_OWNER = "#{SOURCES_PREFIX}#owner"
 
+  SOURCES_TYPE_RSS = "#{SOURCES_PREFIX}#RSS"
+
   SOURCES_TYPE_TWITTER = "#{SOURCES_PREFIX}#twitter"
 
   SOURCES_TYPE_TWITTER_TIMELINE = "#{SOURCES_TYPE_TWITTER}/timeline"
@@ -26,6 +28,7 @@ class ZoneOntology < ActiveRecord::Base
   SOURCES_TWITTER_TOKEN_SECRET = "#{SOURCES_PREFIX}#twitterSecretToken"
 
   SOURCES_TYPE_TWITTER_HASHTAG="#{SOURCES_TYPE_TWITTER}/hashTag"
+  SOURCES_TYPE_TWITTER_AUTHOR="http://zone-project.org/model/plugins/twitter#author"
 
   RSS_SOURCE= "http://purl.org/rss/1.0/source"
   
