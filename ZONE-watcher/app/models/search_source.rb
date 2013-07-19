@@ -20,7 +20,7 @@ class SearchSource < ActiveRecord::Base
   end
 
   def getSparqlTriple
-    if value == "all"
+    if value == "all" || value ==  "Toutes les sources RSS de Reador" || value == "Toutes les sources twitter"
       if kind == "twitter"
         return "?concept <#{ZoneOntology::RSS_SOURCE}> <#{ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE}>"
       elsif kind == "rss"
