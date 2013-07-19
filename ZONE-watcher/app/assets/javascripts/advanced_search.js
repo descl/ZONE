@@ -53,6 +53,12 @@ $(document).ready(function() {
 
 	$("#addAllRSS").attr("disable", false);
 	$("#addAllTwitter").attr("disable", false);
+	
+	$("#reminder").hover(function(){
+		$("#openReminder").fadeOut();
+	},function(){
+		$("#openReminder").fadeIn();
+	});
 });
 
 //Allow to switch tab in the new semantic search
@@ -341,7 +347,6 @@ function changeItemFormat(type) {
 	}
 
 }
-
 /*
  * End of items section
  */
