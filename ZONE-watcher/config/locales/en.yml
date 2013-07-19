@@ -254,6 +254,8 @@ en:
           "Do an OPML import"
     filtering:
       title:
+        "Select your filters"
+      subtitle:
         "Add some filters"
       related:
         "Choose some related words"
