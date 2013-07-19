@@ -254,6 +254,8 @@ fr:
           "Faire un import OPML"
     filtering:
       title:
+        "Sélectionner vos filtres"
+      subtitle:
         "Ajouter des filtres"
       related:
         "Choisisser des mots-liés"
