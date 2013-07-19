@@ -197,10 +197,10 @@ fr:
         "Go Reador"
   items:
     reminder:
-      source:
-        "Sources"
-      filtering:
-        "Filtres"
+      update:
+        "Relancer"
+      change:
+        "Modifier"
     users:
       share:
         "Partager : "
