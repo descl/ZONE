@@ -59,6 +59,20 @@ $(document).ready(function() {
 	},function(){
 		$("#openReminder").fadeIn();
 	});
+	
+	$(".hideTag").hide();
+	$(".btn-toolbar").hide();
+	$(".showTag").on('click',function(){
+		$(this).parent().next(".btn-toolbar").fadeIn();
+		$(this).hide();
+		$(this).next(".hideTag").show();
+	});
+	
+	$(".hideTag").on('click',function(){
+		$(this).parent().next(".btn-toolbar").fadeOut();
+		$(this).hide();
+		$(this).prev(".showTag").show();
+	});
 });
 
 //Allow to switch tab in the new semantic search

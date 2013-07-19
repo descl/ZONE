@@ -58,6 +58,15 @@ date.strftime('Le %d/%m/%Y à %H:%M - ')
         <a class="sourceHoverFull" href="<%= @item.uri %>" style="display:none"><i><%=@item.uri%></i></a>	
         </div>
         <div class="row-fluid">
+		
+		<div class="contentArticle">
+			<%= if @item.props["http://purl.org/rss/1.0/description"] != nil
+    			@item.props["http://purl.org/rss/1.0/description"][0].html_safe end %>
+		</div>
+		<div class="row-fluid">
+			<span class="showTag pointerMouse"><i>+ Tags</i></span>
+			<span class="hideTag pointerMouse"><i>- Tags</i></span>
+		</div>
 		<div class="btn-toolbar">
 			
 			<% htmlval =""
@@ -78,10 +87,6 @@ date.strftime('Le %d/%m/%Y à %H:%M - ')
 			</div>
 			<%end  end
 			%>
-		</div>
-		<div class="contentArticle">
-			<%= if @item.props["http://purl.org/rss/1.0/description"] != nil
-    			@item.props["http://purl.org/rss/1.0/description"][0].html_safe end %>
 		</div>
 		<div class="pull-right">
 			<button class="btn row-list" data-toggle="collapse" data-parent="#accordion-<%= @uriHash%>" href="#collapse-<%= @uriHash%>"><i class="icon icon-tag"></i></button>
