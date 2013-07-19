@@ -1,5 +1,13 @@
 <%= render 'home/search'%>
 
+<%= @search.to_json %>
+<%= @search.sources.to_json %>
+<%= @search.filters.to_json %>
+<hr/>
+
+<%= raw h(@sparqlRequest).gsub(/\n/, '<br/>') %>
+<hr/>
+
 <%= javascript_tag do %>
 query = '<%= j items_path(:old => @filters) %>';
 <% end %>

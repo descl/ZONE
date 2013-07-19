@@ -15,14 +15,14 @@ class SearchFilter < ActiveRecord::Base
   end
 
   def getUri
-    if self.kind == "rss"
-      return value
-    elsif self.kind == "twitter"
-      return "http://twitter..../#{value}"
-    end
+    return value
   end
 
   def getSparqlTriple
-    return "?concept <#{ZoneOntology::RSS_SOURCE}> <#{self.getUri}>"
+    if value.start_with? "http"
+      return "?concept ?filter#{self.id} <#{self.value}>"
+    else
+      return "?concept ?filter#{self.id} \"#{self.value}\""
+    end
   end
 end

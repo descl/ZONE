@@ -25,10 +25,12 @@ class ItemsController < ApplicationController
     if pageNumber > (10000 - per_page +1)
       pageNumber = (10000 - per_page +1)
     end
-    @sparqlRequest = @search.generateSPARQLRequest
+    @sparqlFilter = @search.generateSPARQLRequest
     @items = WillPaginate::Collection.create(current_page, per_page, pageNumber) do |pager|
       start = (current_page-1)*per_page # assuming current_page is 1 based.
-      pager.replace(Item.all(@sparqlRequest,start,per_page))
+      itemsTab = Item.all(@sparqlFilter,start,per_page)
+      @sparqlRequest = itemsTab[:query]
+      pager.replace(itemsTab[:result])
     end
 
     gonItemsFiltersUri = Array.new
