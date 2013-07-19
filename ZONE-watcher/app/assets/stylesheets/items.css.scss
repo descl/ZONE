@@ -40,6 +40,10 @@ a.label:visited{
   clear: right;
 }
 
+.item-bloc:nth-child(odd){
+  background-color:#e8e8e8;
+}
+
 .item-bloc:nth-child(odd).span6{
   margin-left:0px;
 }
@@ -181,4 +185,7 @@ a.label:visited{
   overflow-y: auto;
   overflow-x: hidden;
 }
-  
+
+.titleItem:visited{
+  color:black;
+}
