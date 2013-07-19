@@ -131,10 +131,10 @@ a.label:visited{
 #reminder{
   transition: all 0.5s ease-in;
   position: fixed;
-  height: 80%;
+  height: 100%;
   left: -37%;
-  top: 10%;
-  z-index: 50;
+  top: 0;
+  z-index: 1500;
 }
 
 #reminder:hover{
@@ -144,9 +144,7 @@ a.label:visited{
 
 .reminderSources{
   height:100%;
-  border: 1px solid #0088cc;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-right: 1px solid #0088cc;
   background-color: white;
   z-index: 51;
   padding-bottom:5px;
