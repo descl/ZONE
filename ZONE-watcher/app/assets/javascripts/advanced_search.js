@@ -39,17 +39,6 @@ $(document).ready(function() {
 	$(".row-favorite").hide();
 	$(".row-list").hide();
 
-	//Show the full link of the item when hover the short link
-	$(".sourceHover").mouseenter(function() {
-		$(this).hide();
-		$(this).next(".sourceHoverFull").fadeIn();
-	});
-
-	//Show the short link of the item when leaving the hover of the full link
-	$(".sourceHoverFull").mouseleave(function() {
-		$(this).hide();
-		$(this).prev(".sourceHover").fadeIn();
-	});
 
 	$("#addAllRSS").attr("disable", false);
 	$("#addAllTwitter").attr("disable", false);
