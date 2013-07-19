@@ -39,29 +39,41 @@ $(document).ready(function() {
 	$(".row-favorite").hide();
 	$(".row-list").hide();
 
-
 	$("#addAllRSS").attr("disable", false);
 	$("#addAllTwitter").attr("disable", false);
-	
-	$("#reminder").hover(function(){
+
+	$("#reminder").hover(function() {
 		$("#openReminder").fadeOut();
-	},function(){
+	}, function() {
 		$("#openReminder").fadeIn();
 	});
-	
+
 	$(".hideTag").hide();
 	$(".btn-toolbar").hide();
-	$(".showTag").on('click',function(){
+	$(".showTag").on('click', function() {
 		$(this).parent().next(".btn-toolbar").fadeIn();
 		$(this).hide();
 		$(this).next(".hideTag").show();
 	});
-	
-	$(".hideTag").on('click',function(){
+
+	$(".hideTag").on('click', function() {
 		$(this).parent().next(".btn-toolbar").fadeOut();
 		$(this).hide();
 		$(this).prev(".showTag").show();
 	});
+
+	var btnOptionnal = "<button type='button' class='btn btn-info span12 btnTag' onclick='addTag(\"opt\")'>Optionnel</button><br>";
+	var btnMust = "<button type='button' class='btn btn-success span12 btnTag' onclick='addTag(\"must\")'>Obligatoire</button><br>";
+	var btnBan = "<button type='button' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\")'>Interdit</button>";
+	$(".label-tag").popover({
+		content : "<div class='row-fluid'><div class='span12'>" + btnOptionnal + "</div></div><div class='row-fluid'><div class='span12'>" + btnMust + "</div></div><div class='row-fluid'><div class='span12'>" + btnBan + "</div></div>",
+		placement : "bottom"
+	});
+
+	$(".label-tag").on('click', function() {
+		return false;
+	});
+
 });
 
 //Allow to switch tab in the new semantic search
@@ -350,6 +362,18 @@ function changeItemFormat(type) {
 	}
 
 }
+
+//Add the tag to the summary panel
+function addTag(type) {
+	alert($(this).closest('.popover-title').html());
+	if (type == 'opt')
+		$(".well-info").append('<span class="label label-info">' + '<i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();"></i></span>');
+	else if (type == 'must')
+		$(".well-success").append('<span class="label label-info">' + '<i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();"></i></span>');
+	else if (type == 'no')
+		$(".well-danger").append('<span class="label label-info">' + '<i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();"></i></span>');
+	return false;
+};
 /*
  * End of items section
  */
