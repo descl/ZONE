@@ -198,7 +198,7 @@ fr:
   items:
     reminder:
       update:
-        "Actualiser"
+        "Relancer"
       change:
         "Modifier"
     users:
