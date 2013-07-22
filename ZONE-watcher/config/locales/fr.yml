@@ -206,7 +206,7 @@ fr:
         "Partager : "
     popover:
       title:
-        "Confirmation d'ajout"
+        "Confirmation"
       content:
         "Tag bien ajouté"
   newmodal:

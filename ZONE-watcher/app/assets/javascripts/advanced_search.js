@@ -389,6 +389,10 @@ function addTag(type,value) {
 //Close all the popover after clicking on a selction
 function closePop(){
 	$(".label-tag").popover('hide');
+	$('#openReminder').popover('show');
+	setTimeout(function() {
+  		$('#openReminder').popover('hide');
+	}, 2000);
 	return false;
 }
 /*
