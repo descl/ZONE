@@ -42,6 +42,7 @@ $(document).ready(function() {
 	$("#addAllRSS").attr("disable", false);
 	$("#addAllTwitter").attr("disable", false);
 
+	//Reminder box in the item page
 	$("#reminder").hover(function() {
 		$("#openReminder").fadeOut();
 	}, function() {
@@ -50,26 +51,37 @@ $(document).ready(function() {
 
 	$(".hideTag").hide();
 	$(".btn-toolbar").hide();
+	
+	//action to show the tag on click
 	$(".showTag").on('click', function() {
 		$(this).parent().next(".btn-toolbar").fadeIn();
 		$(this).hide();
 		$(this).next(".hideTag").show();
 	});
 
+	//Action to hide the tag on click
 	$(".hideTag").on('click', function() {
 		$(this).parent().next(".btn-toolbar").fadeOut();
 		$(this).hide();
 		$(this).prev(".showTag").show();
 	});
 
-	var btnOptionnal = "<button type='button' class='btn btn-info span12 btnTag' onclick='addTag(\"opt\")'>Optionnel</button><br>";
-	var btnMust = "<button type='button' class='btn btn-success span12 btnTag' onclick='addTag(\"must\")'>Obligatoire</button><br>";
-	var btnBan = "<button type='button' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\")'>Interdit</button>";
-	$(".label-tag").popover({
-		content : "<div class='row-fluid'><div class='span12'>" + btnOptionnal + "</div></div><div class='row-fluid'><div class='span12'>" + btnMust + "</div></div><div class='row-fluid'><div class='span12'>" + btnBan + "</div></div>",
-		placement : "bottom"
+	
+	//Generation of the popover of the tag
+	var btnOptionnal = "";
+	var btnMust = "";
+	var btnBan = "";
+	$(".label-tag").each(function(){
+		btnOptionnal = "<button type='button' class='btn btn-info span12 btnTag' onclick='addTag(\"opt\",\""+$(this).html()+"\");closePop()'>Optionnel</button><br>";
+		btnMust = "<button type='button' class='btn btn-success span12 btnTag' onclick='addTag(\"must\",\""+$(this).html()+"\");closePop()'>Obligatoire</button><br>";
+		btnBan = "<button type='button' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\",\""+$(this).html()+"\");closePop()'>Interdit</button>";
+		$(this).popover({
+			content : "<div class='row-fluid'><div class='span12'>" + btnOptionnal + "</div></div><div class='row-fluid'><div class='span12'>" + btnMust + "</div></div><div class='row-fluid'><div class='span12'>" + btnBan + "</div></div>",
+			placement : "bottom"
+		});
 	});
-
+	
+	//Disable the default action onclick on the tag
 	$(".label-tag").on('click', function() {
 		return false;
 	});
@@ -364,16 +376,21 @@ function changeItemFormat(type) {
 }
 
 //Add the tag to the summary panel
-function addTag(type) {
-	alert($(this).closest('.popover-title').html());
+function addTag(type,value) {
 	if (type == 'opt')
-		$(".well-info").append('<span class="label label-info">' + '<i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();"></i></span>');
+		$(".well-info").append('<span class="label label-info">' +value+ ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();"></i></span> ');
 	else if (type == 'must')
-		$(".well-success").append('<span class="label label-info">' + '<i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();"></i></span>');
+		$(".well-success").append('<span class="label label-success">' +value+ ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();"></i></span> ');
 	else if (type == 'no')
-		$(".well-danger").append('<span class="label label-info">' + '<i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();"></i></span>');
+		$(".well-danger").append('<span class="label label-danger">' +value+ ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();"></i></span> ');
 	return false;
 };
+
+//Close all the popover after clicking on a selction
+function closePop(){
+	$(".label-tag").popover('hide');
+	return false;
+}
 /*
  * End of items section
  */
