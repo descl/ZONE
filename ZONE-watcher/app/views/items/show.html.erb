@@ -40,11 +40,9 @@ jwplayer("<%= image%>
 			<button class="btn row-favorite" data-toggle="collapse" data-parent="#accordion-<%= @uriHash%>" href="#collapse-<%= @uriHash%>"><i class="icon icon-tag"></i></button>
 			<button class="btn btnFavorite row-favorite" disabled><i class="icon icon-heart"></i></button>
 			<button class="btn btnMarkasRead row-favorite" disabled><i class="icon icon-check"></i></button>
-			
 			<span class="separationLine row-favorite" ></span>
-			<img src="assets/foregroundFBGray.png" class="littleCircleImage row-favorite" width=30 height=30>
-			<img src="assets/foregroundTwitterGray.png" class="littleCircleImage row-favorite" width=30 height=30>
-			<img src="assets/foregroundGoogleGray.png" class="littleCircleImage row-favorite" width=30 height=30>
+			<span class="row-favorite" ><a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-via="zone_news" data-count="none" data-text="<%= @item.props["http://purl.org/rss/1.0/title"][0]%>" data-url="<%= @item.uri %>">Tweet</a>
+			</span><img src="assets/foregroundGoogleGray.png" class="littleCircleImage row-favorite" width=30 height=30>
 			<br>
 			
 			<i>
