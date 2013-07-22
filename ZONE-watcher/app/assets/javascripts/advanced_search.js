@@ -76,6 +76,7 @@ $(document).ready(function() {
 		btnMust = "<button type='button' class='btn btn-success span12 btnTag' onclick='addTag(\"must\",\""+$(this).html()+"\");closePop()'>"+$("#titleAnd").html()+"</button><br>";
 		btnBan = "<button type='button' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\",\""+$(this).html()+"\");closePop()'>"+$("#titleWithout").html()+"</button>";
 		$(this).popover({
+			title : $("#titlePopover").html(),
 			content : "<div class='row-fluid'><div class='span12'>" + btnOptionnal + "</div></div><div class='row-fluid'><div class='span12'>" + btnMust + "</div></div><div class='row-fluid'><div class='span12'>" + btnBan + "</div></div>",
 			placement : "bottom"
 		});
