@@ -206,9 +206,11 @@ en:
         "Share : "
     popover:
       title:
-        "Added confirmation"
+        "Confirmation"
       content:
         "Tag well added"
+      smalltitle:
+        "Add the tag as :"
   newmodal:
     breadcrumb:
       sources:

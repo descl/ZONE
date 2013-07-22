@@ -21,31 +21,31 @@ module ItemsHelper
     if(filter.prop.starts_with? @OPEN_CALAIS_URI)
       itemClassFilter=getClassLabel(filter.prop[@OPEN_CALAIS_URI.length,filter.prop.length])
       #res= link_to filter.prop[@OPEN_CALAIS_URI.length,filter.prop.length], itemURI, :class =>  itemClassFilter
-      res= link_to filter.value, itemURI, :class =>  itemClassFilter, title: filter.prop[@OPEN_CALAIS_URI.length,filter.prop.length]+ " : " + filter.value
+      res= link_to filter.value, itemURI, :class =>  itemClassFilter
     elsif(filter.prop.starts_with? @WIKI_META_URI)
       itemClassFilter=getClassLabel(filter.prop[@WIKI_META_URI.length,filter.prop.length])
       #res=link_to filter.prop[@WIKI_META_URI.length,filter.prop.length], itemURI, :class => itemClassFilter
       if(filter.value.rindex('/') == nil)
-        res=link_to filter.value, itemURI, :class => itemClassFilter, title: filter.prop[@WIKI_META_URI.length,filter.prop.length]+ " : " + filter.value
+        res=link_to filter.value, itemURI, :class => itemClassFilter
 
       else
-        res=link_to filter.value[filter.value.rindex('/')+1, filter.value.length], itemURI, :class => itemClassFilter, title: filter.prop[@WIKI_META_URI.length,filter.prop.length]+ " : " + filter.value[filter.value.rindex('/')+1, filter.value.length]
+        res=link_to filter.value[filter.value.rindex('/')+1, filter.value.length], itemURI, :class => itemClassFilter
       end
     elsif(filter.prop.starts_with? @INSEE_GEO_URI)
       itemClassFilter=getClassLabel(filter.prop[@INSEE_GEO_URI.length,filter.prop.length])
       #res=link_to filter.prop[@INSEE_GEO_URI.length,filter.prop.length], itemURI, :class => itemClassFilter
-      res=link_to filter.value[filter.value.rindex('/')+1, filter.value.length], itemURI, :class => itemClassFilter, title: filter.prop[@INSEE_GEO_URI.length,filter.prop.length]+ " : " + filter.value
+      res=link_to filter.value[filter.value.rindex('/')+1, filter.value.length], itemURI, :class => itemClassFilter
     elsif(filter.prop.start_with? @RSS_URI+"source")
-      itemClassFilter=getClassLabel(filter.prop[@RSS_URI.length,filter.prop.length])
+      #itemClassFilter=getClassLabel(filter.prop[@RSS_URI.length,filter.prop.length])
       #res=link_to filter.prop[@RSS_URI.length,filter.prop.length], itemURI, :class => itemClassFilter
-      res=link_to filter.value, itemURI, :class => itemClassFilter, title: filter.prop[@RSS_URI.length,filter.prop.length] + " : " + filter.value
+      #res=link_to filter.value, itemURI, :class => itemClassFilter, title: filter.prop[@RSS_URI.length,filter.prop.length] + " : " + filter.value
     elsif(filter.prop.start_with? @SVM_PLUGIN_URI)
       #res=link_to "category", itemURI, :class => @LABEL_INFO
-      res=link_to filter.value, itemURI, :class => @LABEL_INFO, title: filter.value
+      res=link_to filter.value, itemURI, :class => @LABEL_INFO
     elsif(filter.prop.start_with? @TWITTER_HASHTAG_PLUGIN_URI)
-      res=link_to "#"+filter.value, itemURI, :class => "btn-auth  btn-twitter", title: "#"+filter.value
+      res=link_to "#"+filter.value, itemURI, :class => "btn-auth  btn-twitter"
     elsif(filter.prop.start_with? @TWITTER_MENTIONED_PLUGIN_URI)
-      res=link_to "@"+filter.value, itemURI, :class => "btn-auth btn-twitter", title: "@"+filter.value
+      res=link_to "@"+filter.value, itemURI, :class => "btn-auth btn-twitter"
     end
   end
 
