@@ -393,6 +393,7 @@ function changeItemFormat(type) {
 		$(".item-bloc:odd").addClass('clear-right');
 
 		$(".row-favorite").hide();
+		$(".showFavorite").hide();
 		$(".row-list").show();
 	} else {
 		$("#btnList").addClass('active');
@@ -405,6 +406,7 @@ function changeItemFormat(type) {
 		$('.item-bloc').removeClass('clear-left');
 
 		$(".row-list").hide();
+		$(".showFavorite").show();
 	}
 
 }
