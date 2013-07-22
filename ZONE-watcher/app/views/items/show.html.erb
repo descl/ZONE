@@ -35,14 +35,18 @@ jwplayer("<%= image%>
           thumb="assets/foregroundRSS.png"
         end
 %>
-			<img src="<%= thumb%>" class="littleCircleImage" width=30 height=30>
+			<div><img src="<%= thumb%>" class="littleCircleImage" width=30 height=30>
 			<a class="titleItem" target="_blank" href= "<%= @item.uri %>"><b><u><%= @item.props["http://purl.org/rss/1.0/title"][0]%></u> </b> </a> 
-			<button class="btn row-favorite" data-toggle="collapse" data-parent="#accordion-<%= @uriHash%>" href="#collapse-<%= @uriHash%>"><i class="icon icon-tag"></i></button>
-			<button class="btn btnFavorite row-favorite" disabled><i class="icon icon-heart"></i></button>
-			<button class="btn btnMarkasRead row-favorite" disabled><i class="icon icon-check"></i></button>
-			<span class="separationLine row-favorite" ></span>
-			<span class="row-favorite" ><a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-via="zone_news" data-count="none" data-text="<%= @item.props["http://purl.org/rss/1.0/title"][0]%>" data-url="<%= @item.uri %>">Tweet</a>
-			</span><img src="assets/foregroundGoogleGray.png" class="littleCircleImage row-favorite" width=30 height=30>
+			<span class="showFavorite">Action</span></div>
+			<div class="row-favorite">
+			<button class="btn" data-toggle="collapse" data-parent="#accordion-<%= @uriHash%>" href="#collapse-<%= @uriHash%>"><i class="icon icon-tag"></i></button>
+			<button class="btn btnFavorite" disabled><i class="icon icon-heart"></i></button>
+			<button class="btn btnMarkasRead" disabled><i class="icon icon-check"></i></button>
+			<span class="separationLine" ></span>
+			<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-via="zone_news" data-count="none" data-text="<%= @item.props["http://purl.org/rss/1.0/title"][0]%>" data-url="<%= @item.uri %>">Tweet</a>
+			<div class="g-plus" data-action="share" data-annotation="none" data-href="<%= @item.uri %>"></div>
+			</div>
+
 			<br>
 			
 			<i>
@@ -89,9 +93,8 @@ date.strftime('Le %d/%m/%Y à %H:%M')
 			<button class="btn btnFavorite row-list" disabled><i class="icon icon-heart"></i></button>
 			<button class="btn btnMarkasRead row-list" disabled><i class="icon icon-check"></i></button>
 
-			<img src="assets/foregroundFBGray.png" class="littleCircleImage row-list" width=30 height=30>
-			<img src="assets/foregroundTwitterGray.png" class="littleCircleImage row-list" width=30 height=30>
-			<img src="assets/foregroundGoogleGray.png" class="littleCircleImage row-list" width=30 height=30>
+			<span class="row-list" ><a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-via="zone_news" data-count="none" data-text="<%= @item.props["http://purl.org/rss/1.0/title"][0]%>" data-url="<%= @item.uri %>">Tweet</a></span>
+			<span class="row-list" ><div class="g-plus" data-action="share" data-annotation="none" data-href="<%= @item.uri %>"></div></span>
 			</div>
 		</div>
 	</div>
