@@ -86,12 +86,12 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$(".showFavorite").click(function(){
+	$(".showFavorite").click(function() {
 		$(this).next(".row-favorite").fadeIn();
 		$(this).hide();
 	});
-	
-	$(".hideFavorite").click(function(){
+
+	$(".hideFavorite").click(function() {
 		$(this).parent(".row-favorite").hide();
 		$(this).parent(".row-favorite").prev(".showFavorite").fadeIn();
 	});
@@ -119,7 +119,18 @@ $(document).ready(function() {
 		po.src = 'https://apis.google.com/js/plusone.js';
 		var s = document.getElementsByTagName('script')[0];
 		s.parentNode.insertBefore(po, s);
-	})();
+	})(); 
+		
+	//Facebook function
+	(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id))
+				return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
+			fjs.parentNode.insertBefore(js, fjs);
+		})(document, 'script', 'facebook-jssdk');
 });
 
 //Allow to switch tab in the new semantic search

@@ -38,15 +38,15 @@ jwplayer("<%= image%>
 			<div>
 				<img src="<%= thumb%>" class="littleCircleImage" width=30 height=30>
 				<a class="titleItem" target="_blank" href= "<%= @item.uri %>"><b><u><%= @item.props["http://purl.org/rss/1.0/title"][0]%></u> </b> </a> 
-				<span class="showFavorite"><i class="icon-share-alt"></i></span>
+				<span class="showFavorite"><i class="icon-share-alt pointerMouse"></i></span>
 				<span class="row-favorite">
-					<span class="hideFavorite"><i class="icon-chevron-left"></i></span>
+					<span class="hideFavorite"><i class="icon-arrow-left pointerMouse"></i></span>
 					<button class="btn" data-toggle="collapse" data-parent="#accordion-<%= @uriHash%>" href="#collapse-<%= @uriHash%>"><i class="icon icon-tag"></i></button>
 					<button class="btn btnFavorite" disabled><i class="icon icon-heart"></i></button>
 					<button class="btn btnMarkasRead" disabled><i class="icon icon-check"></i></button>
-					<span class="separationLine" ></span>
-					<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-via="zone_news" data-count="none" data-text="<%= @item.props["http://purl.org/rss/1.0/title"][0]%>" data-url="<%= @item.uri %>">Tweet</a>
-					<div class="g-plus" data-action="share" data-annotation="none" data-href="<%= @item.uri %>"></div>
+					<div class="fb-like" data-href="<%= @item.uri %>" data-send="none" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+					<div class="g-plus" data-action="share" data-annotation="bubble" data-href="<%= @item.uri %>"></div>
+					<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-via="zone_news" data-count="horizontal" data-text="<%= @item.props["http://purl.org/rss/1.0/title"][0]%>" data-url="<%= @item.uri %>">Tweet</a>
 				</span>
 			</div>
 			<i>
@@ -88,14 +88,13 @@ date.strftime('Le %d/%m/%Y à %H:%M')
 			<%end  end
 			%>
 		</div>
-		<div class="pull-right">
-			<button class="btn row-list" data-toggle="collapse" data-parent="#accordion-<%= @uriHash%>" href="#collapse-<%= @uriHash%>"><i class="icon icon-tag"></i></button>
-			<button class="btn btnFavorite row-list" disabled><i class="icon icon-heart"></i></button>
-			<button class="btn btnMarkasRead row-list" disabled><i class="icon icon-check"></i></button>
-
-			<span class="row-list" ><a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-via="zone_news" data-count="none" data-text="<%= @item.props["http://purl.org/rss/1.0/title"][0]%>" data-url="<%= @item.uri %>">Tweet</a></span>
-			<span class="row-list" ><div class="g-plus" data-action="share" data-annotation="none" data-href="<%= @item.uri %>"></div></span>
-			</div>
+		<div class="pull-right row-list">
+			<button class="btn" data-toggle="collapse" data-parent="#accordion-<%= @uriHash%>" href="#collapse-<%= @uriHash%>"><i class="icon icon-tag"></i></button>
+			<button class="btn btnFavorite" disabled><i class="icon icon-heart"></i></button>
+			<button class="btn btnMarkasRead" disabled><i class="icon icon-check"></i></button>
+			<div class="fb-like" data-href="<%= @item.uri %>" data-send="none" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+			<div class="g-plus" data-action="share" data-annotation="bubble" data-href="<%= @item.uri %>"></div>
+			<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-via="zone_news" data-count="horizontal" data-text="<%= @item.props["http://purl.org/rss/1.0/title"][0]%>" data-url="<%= @item.uri %>">Tweet</a>
 		</div>
 	</div>
 </div>
