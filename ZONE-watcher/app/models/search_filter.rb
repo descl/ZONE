@@ -33,12 +33,6 @@ class SearchFilter < ActiveRecord::Base
     type = "info"   if self.kind == "or"
     type = "danger"  if self.kind == "without"
 
-    return "<span class=\"
-                          label
-                          label-#{type}
-                        \">
-            #{self.value}
-            <i class=\"icon-remove\" onclick=\"$(this).closest(\"span\").remove();checkWell()\"></i>
-            </span>"
+    return "<span class=\"label label-#{type}\">#{self.value} <i class=\"icon-remove\" onclick=\"$(this).closest(\'span\').remove();checkWell()\"></i></span>"
   end
 end
