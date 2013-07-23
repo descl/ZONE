@@ -81,6 +81,8 @@ en:
       "Go reador!"
     searchadvanced:
       "Semantic search"
+    gobutton:
+      "New search"
   moreabout:
     title:
       "More about Reador!"
@@ -136,7 +138,7 @@ en:
         "Reador is mainly developed by <a href='http://desclaux.me'>Christophe Desclaux<a>. He is assisted by the french research institute <a href='http://www.inria.fr'>Inria</a> under the contest <a href='http://boostyourcode.inria.fr'>BoostYourCode2012</a>."
   semanticsource:
     title:
-      "Semantic search : Sources"  
+      "Select your sources"  
     button:
       addall:
         "All"
@@ -149,7 +151,7 @@ en:
         "Content"
   semanticfiltering:
     title:
-      "Semantic search : Filtering"
+      "Select your filters"
     keyword:
       title:
         "Keyword"
@@ -161,8 +163,6 @@ en:
         "AND"
       or:
         "OR"
-      littleor:
-        "or"
     button:
       addone:
         "Add"
@@ -184,6 +184,10 @@ en:
       content:
         "Content"
   modal:
+    select:
+      "Select"
+    add:
+      "Add"
     button:
       previous:
         "< Previous"
@@ -193,15 +197,82 @@ en:
         "Go Reador"
   items:
     reminder:
-      source:
-        "Sources"
-      filtering:
-        "Filtering"
+      update:
+        "Update"
+      change:
+        "Change"
     users:
       share:
         "Share : "
     popover:
       title:
-        "Added confirmation"
+        "Confirmation"
       content:
         "Tag well added"
+      smalltitle:
+        "Add the tag as :"
+  newmodal:
+    breadcrumb:
+      sources:
+        "Sources"
+      filtering:
+        "Filtering"
+      results:
+        "Results"
+    sources:
+      title:
+        "Select your sources"
+      switch:
+        "Next"
+      reverseswitch:
+        "<i class='icon-chevron-left'></i> Previous"
+      add:
+         "Add"
+      separator:
+        "OR"
+      resumetitle:
+        "Summary of your choices"
+      goreador:
+        "Show the results"
+      gofiltering:
+        "Add some filters"
+      choice:
+        "Your choices"
+      twitter:
+        all:
+          "All twitter sources"
+        holderpersonn:
+          "Add someone to follow"
+        holdertag:
+          "Add a hashtag to follow"
+      rss:
+        all:
+          "All RSS sources from Reador"
+        holderurl:
+          "Add a RSS flow to follow"
+        yourrss:
+          "Add your personnal RSS flows"
+        opml:
+          "Do an OPML import"
+    filtering:
+      title:
+        "Select your filters"
+      subtitle:
+        "Add some filters"
+      related:
+        "Choose some related words"
+      filtertype:
+        "Choose the filter's type"
+      buttonOption:
+        "Optionnal"
+      buttonMusthave:
+        "Must have"
+      buttonBan:
+        "Bannable"
+      resume:
+        option:
+          "Filter the results containing at least one of those subjects ..."
+        musthave:
+          "... and all of these subjects ..."
+        ban:
+          "... and none of these subjects"

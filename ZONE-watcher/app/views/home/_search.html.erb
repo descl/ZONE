@@ -1,66 +1,18 @@
 <div class="row" xmlns="http://www.w3.org/1999/html">
-  <div class="span2"></div>
-  <div id="dino-logo" class="span3"><img src="/assets/dino.png"/></div>
-  <div class="span5 ">
-    <h1 class="triangle-border left"  id="reador-title"><%= raw t 'search.infobulle' %></h1>
+	<div class="span2"></div>
+	<div id="dino-logo" class="span3"><img src="/assets/dino.png"/>
+	</div>
+	<div class="span5 ">
+		<h1 class="triangle-border left"  id="reador-title"><%= raw t 'search.infobulle' %></h1>
 
-    <div class="search-zone">
-      <form action="/items">
-        <div class="input">
-          <!-- search box -->
-          <ul id="search-form" class="fake-input" tabindex="1">
-            <% if @purFilters != nil && @purFilters.length > 0 %>
-                <% @purFilters.each do |filter| %>
-                    <li><%= filter.get_search_button %></li>
-                <% end %>
-            <% end %>
-          </ul>
-        </div>
-
-        <!-- sources select bouton
-        <div class="row select-sources text-right">
-          <a href="#" type="button">
-            <%= raw t 'search.sources' %>
-          </a>
-        </div>-->
-
-        <!-- sources input box -->
-        <div id="sources-collapse"  class="input select-source-input" style="display:none">
-          <ul id="sources-list" class="fake-input select-source-ul" tabindex="1">
-            <% if @sources != nil && @sources.length > 0 %>
-                <% @sources.each do |source| %>
-                    <li><%= source.value %></li>
-                <% end %>
-            <% end %>
-          </ul>
-        </div>
-        <!-- go button-->
-        <div class="row-fluid">
-          <div class="span8">
-            <a href="#advancedSearchModal" role="button" id="semanticSearchGoButton" class="left btn btn-success btn-large btn-primary goButton" data-toggle="modal"><%= raw t 'search.searchadvanced' %></a>
-
-          </div>
-          <div class="span4 text-right">
-            <button id="search-form-button" type="submit" class="text-right btn btn-info btn-large btn-primary goButton"><%= raw t 'search.searchbutton' %></button>
-            <% if @uriForItemsNumber != nil %>
-                <div class="text-center">
-                  <span class="items-count">(<a href="<%= @uriForItemsNumber %>"><i class=" icon-refresh" id="number_items_wait"></i></a><span id='number_items_container'></span> items)</span>
-                </div>
-            <% end %>
-          </div>
-        </div>
-
-
-      </form>
-    </div>
-  </div>
-  <div class="span2"></div>
-</div>
-
-
-
-
-<!--advanced search include -->
-<div id="advancedSearchModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="advancedSearchModalLabel" aria-hidden="true">
-  <%= render 'home/advancedSearch'%>
+		<div class="row-fluid">
+			<div class="span12 btn-marged">
+				<a href="/home/search">
+				<button type="button" class="btn btn-success span12">
+					<h2><%= raw t 'search.gobutton' %></h2>
+				</button></a>
+			</div>
+		</div>
+	</div>
+	<div class="span2"></div>
 </div>

@@ -1,4 +1,6 @@
 class LinkedWordsController < ApplicationController
+  caches_page :listWords, :autoComplete
+
   # GET /linked_words
   # GET /linked_words/$entity.json
   def listWords

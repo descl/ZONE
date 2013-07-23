@@ -1,5 +1,16 @@
 <%= render 'home/search'%>
 
+<% if Rails.env.development?%>
+  <%= @search.to_json %>
+<%= @search.sources.to_json %>
+<%= @search.filters.to_json %>
+<hr/>
+
+
+<%= raw h(@sparqlRequest).gsub(/\n/, '<br/>') %>
+<hr/>
+<%end%>
+
 <%= javascript_tag do %>
 query = '<%= j items_path(:old => @filters) %>';
 <% end %>
@@ -27,75 +38,35 @@ event.preventDefault(); // Prevent link from following its href
 <span id="rss-button" class="btn btn-warning btn-large btn-primary goButton"><i class="icon-rss"></i></span>
 <%end%>
 <div class="row-fluid">
-<div class="btn-group pull-right">
-	<button id="btnList" class="btn active" onclick="changeItemFormat('list');"><i class="icon icon-th-list"></i></button>
-	<button id="btnCard" class="btn" onclick="changeItemFormat('card');"><i class="icon icon-th-large"></i></button>
-</div>
-</div>
-<div class="well">
-	<div class="row-fluid">
-		<div class="span6">
-			<h3><span id="TableReminderSourceTitle" data-content="<%= raw t 'items.popover.content' %>" data-original-title="<%= raw t 'items.popover.title' %>"><%= raw t 'items.reminder.source' %> ( 0 items )</span></:span></h3>
-		</div>
-		<div  class="span5" >
-			<h3> <span id="TableReminderFilteringTitle" data-content="<%= raw t 'items.popover.content' %>" data-original-title="<%= raw t 'items.popover.title' %>" ><%= raw t 'items.reminder.filtering' %> ( 0 items )</span></h3>
-		</div>
-		<div class="span1">
-			<h3>
-			<button class="btn pull-right chevrondown" onclick="$('.tableReminder').slideDown('slow');$('.chevrondown').hide();$('.chevronup').show()">
-				<i class="icon icon-chevron-down"></i>
-			</button>
-			<button class="btn pull-right chevronup" style="display:none" onclick="$('.tableReminder').slideUp('slow');$('.chevrondown').show();$('.chevronup').hide()">
-				<i class="icon icon-chevron-up"></i>
-			</button></h3>
-			<span id="reminderAnd" hidden><%= raw t 'semanticfiltering.keyword.and' %></span>
-			<span id="reminderOr" hidden><%= raw t 'semanticfiltering.keyword.or' %></span>
-			<span id="reminderWithout" hidden><%= raw t 'semanticfiltering.keyword.without' %></span>
-		</div>
-
-	</div>
-	<div class="tableReminder row-fluid tableReminderPanel" hidden>
-		<div class="span5">
-			<table id="tableReminderSource" class="table table-bordered">
-				<thead>
-					<tr>
-						<th class="span1"> <%= raw t 'semanticsource.table.keyword' %></th>
-						<th><%= raw t 'semanticsource.table.content' %></th>
-					</tr>
-				</thead>
-				<tbody></tbody>
-			</table>
-		</div>
-		<div class="span1"></div>
-		<div class="span5">
-			<table id="tableReminderFiltering" class="table table-bordered">
-				<thead>
-					<tr>
-						<th class="span1"> <%= raw t 'semanticfiltering.table.keyword' %></th>
-						<th><%= raw t 'semanticfiltering.table.content' %></th>
-					</tr>
-				</thead>
-				<tbody></tbody>
-			</table>
-		</div>
+  <span class=""><%= @itemsNumber %></span>
+	<div class="btn-group pull-right">
+		<button id="btnList" class="btn active" onclick="changeItemFormat('list');">
+			<i class="icon icon-th-list"></i>
+		</button>
+		<button id="btnCard" class="btn" onclick="changeItemFormat('card');">
+			<i class="icon icon-th-large"></i>
+		</button>
+		<div id="titlePopover" hidden><%= raw t 'items.popover.smalltitle' %></div>
 	</div>
 </div>
 
 <hr>
 
+<%= render "reminder_panel"%>
+
 <div class="row-fluid">
-<% id=0; @items.each do |item| %>
-<div class="well item-bloc">
-	<div class="item_container" sourceid="<%= id %>"></div>
-	<div class="item_wait" sourceid="<%= id%>">
-		<a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
-		<a href="<%= item.uri%>"><%= item.title%></a>
+	<% id=0; @items.each do |item| %>
+	<div class="well item-bloc">
+		<div class="item_container" sourceid="<%= id %>"></div>
+		<div class="item_wait" sourceid="<%= id%>">
+			<a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
+			<a href="<%= item.uri%>"><%= item.title%></a>
 
+		</div>
 	</div>
-</div>
 
-<% id+=1; end %>
+	<% id+=1; end %>
 </div>
- <div class="span12">
-<%= will_paginate @page_results %>
+<div class="span12">
+	<%= will_paginate @page_results %>
 </div>

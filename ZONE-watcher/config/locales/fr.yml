@@ -81,6 +81,8 @@ fr:
       "Go !"
     searchadvanced:
       "Recherche sémantique"
+    gobutton:
+      "Nouvelle recherche"
   moreabout:
     title:
       "En savoir plus sur Reador!"
@@ -136,7 +138,7 @@ fr:
         "Reador est principalement développé par <a href='http://desclaux.me'>Christophe Desclaux<a>. Il est assisté par l'institut de recherche <a href='http://www.inria.fr'>Inria</a> dans le cadre du concours <a href='http://boostyourcode.inria.fr'>BoostYourCode2012</a>."
   semanticsource:
     title:
-      "Recherche sémantique : Sources"  
+      "Sélection des sources"  
     button:
       addall:
         "Tout"
@@ -149,7 +151,7 @@ fr:
         "Intitulé"
   semanticfiltering:
     title:
-      "Recherche sémantique : Filtrage"
+      "Sélection des filtres"
     keyword:
       title:
         "Mot-clé"
@@ -161,8 +163,6 @@ fr:
         "ET"
       or:
         "OU"
-      littleor:
-        "ou"
     button:
       addone:
         "Ajouter"
@@ -184,6 +184,10 @@ fr:
       content:
         "Intitulé"
   modal:
+    select:
+      "Sélectionnez"
+    add:
+      "Ajoutez"
     button:
       previous:
         "< Précédent"
@@ -193,16 +197,87 @@ fr:
         "Go Reador"
   items:
     reminder:
-      source:
-        "Sources"
-      filtering:
-        "Filtres"
+      update:
+        "Relancer"
+      change:
+        "Modifier"
     users:
       share:
         "Partager : "
     popover:
       title:
-        "Confirmation d'ajout"
+        "Confirmation"
       content:
         "Tag bien ajouté"
-  
+      smalltitle:
+        "Ajouter le tag comme :"
+  newmodal:
+    breadcrumb:
+      sources:
+        "Sources"
+      filtering:
+        "Filtrage"
+      results:
+        "Résultats"
+    sources:
+      title:
+        "Sélectionner vos sources"
+      switch:
+        "Valider et passer à la suite"
+      reverseswitch:
+        "<i class='icon-chevron-left'></i> Retour"
+      add:
+         "Ajouter"
+      separator:
+        "OU"
+      resumetitle:
+        "Résumé de vos choix"
+      goreador:
+        "Accéder aux résultats"
+      gofiltering:
+        "Ajouter des filtres"
+      choice:
+        "Vos choix"
+      twitter:
+        all:
+          "Toutes les sources twitter"
+        holderpersonn:
+          "Ajouter une personne à suivre"
+        holdertag:
+          "Ajouter un hashtag à surveiller"
+      rss:
+        all:
+          "Toutes les sources RSS de Reador"
+        holderurl:
+          "Ajouter un flux RSS à surveiller"
+        yourrss:
+          "Ajouter vos propres flux RSS"
+        opml:
+          "Faire un import OPML"
+    filtering:
+      title:
+        "Sélectionner vos filtres"
+      subtitle:
+        "Ajouter des filtres"
+      related:
+        "Choisisser des mots-liés"
+      filtertype:
+        "Choisisser le type"
+      buttonOption:
+        "Optionnel"
+      buttonMusthave:
+        "Obligatoire"
+      buttonBan:
+        "Interdit"
+      resume:
+        option:
+          "Filtrer les résultats traitant d'au moins une des notions suivantes ..."
+        musthave:
+          "... et toutes les notions suivantes ..."
+        ban:
+          "... et aucunes des notions suivantes"
+
+  will_paginate:
+    previous_label: "&#8592; Précédent"
+    next_label: "Suivant &#8594;"
+    page_gap: "&hellip;"

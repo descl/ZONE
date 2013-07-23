@@ -1,0 +1,27 @@
+<h1>Listing searches</h1>
+
+<table>
+  <tr>
+    <th>Sources</th>
+    <th>Filters</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @searches.each do |search| %>
+  <tr>
+    <td><%= search.sources %></td>
+    <td><%= search.filters %></td>
+    <td><%= search.user %></td>
+    <td><%= link_to 'Show', search %></td>
+    <td><%= link_to 'Edit', edit_search_path(search) %></td>
+    <td><%= link_to 'Destroy', search, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Search', new_search_path %>

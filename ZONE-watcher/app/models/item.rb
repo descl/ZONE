@@ -15,11 +15,12 @@ class Item# < ActiveRecord::Base
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT ?concept ?title
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
+    FROM <#{ZoneOntology::GRAPH_SOURCES}>
     WHERE {
       ?concept RSS:title ?title.
       OPTIONAL { ?concept RSS:pubDateTime ?pubDateTime}.
       #{param}
-      
+
     }ORDER BY DESC(?pubDateTime) LIMIT #{per_page} OFFSET #{start}"
 
     store = SPARQL::Client.new($endpoint)
@@ -27,7 +28,7 @@ class Item# < ActiveRecord::Base
     store.query(query).each do |item|
       items << Item.new(item.concept.to_s, item.title)
     end
-    return items
+    return {:result => items, :query => query}
   end
   
   def self.find(param)

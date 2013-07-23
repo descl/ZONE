@@ -12,6 +12,11 @@ $(document).ready ->
   for id,uri of gon.gonItemsFiltersUri
     $.ajax uri,
       async: false
+      dataType: "html"
       success: (data) ->
         $('[class=item_container][sourceid="'+id+'"]').append(data)
         $('[class*=item_wait][sourceid="'+id+'"]').detach()
+      error: (xhr, ajaxOptions, thrownError) ->
+        alert(xhr.status)
+        alert(xhr.statusText)
+        alert(thrownError)

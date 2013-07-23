@@ -6,36 +6,31 @@ class ItemsController < ApplicationController
   # GET /items.json
   def index
     @filters = []
-    if params[:tags] != nil
-      params[:tags].each do |tag|
-        partition = tag.partition(" | http")
+    @sources = []
+    #@filters << Filter.new(:prop => "http://purl.org/rss/1.0/source", :value => tag)
 
-        value = partition[0]
-        prop = "http"+partition[2]
-        @filters << Filter.new(:prop => prop, :value => value)
-      end
+    if params[:search] == nil
+      #flash[:error] = "you need to create a search!"
+      #redirect_to :back
+      @search = Search.first
+    else
+      @search = Search.find(params[:search])
     end
-    if params[:sources] != nil
-      params[:sources].each do |tag|
-        puts tag
-        @filters << Filter.new(:prop => "http://purl.org/rss/1.0/source", :value => tag)
-      end
-    end
-    @filters = @filters +  parseFilterParams(params)
-    @sources = getSourcesFromFilters(@filters)
-    @purFilters = @filters - @sources
 
     current_page = params[:page]
     current_page = 1 if current_page == nil
     current_page = Integer(current_page)
     per_page = 10
-    pageNumber = calculateNumberFromFilters(@filters)
-    if pageNumber > (10000 - per_page +1)
-      pageNumber = (10000 - per_page +1)
-    end
-    @items = WillPaginate::Collection.create(current_page, per_page, pageNumber) do |pager|
+    @itemsNumber = @search.getItemsNumber
+    #if itemsNumber > (10000 - per_page +1)
+    #  itemsNumber = (10000 - per_page +1)
+    #end
+    @sparqlFilter = @search.generateSPARQLRequest
+    @items = WillPaginate::Collection.create(current_page, per_page, @itemsNumber) do |pager|
       start = (current_page-1)*per_page # assuming current_page is 1 based.
-      pager.replace(Item.all(generateFilterSPARQLRequest(@filters),start,per_page))
+      itemsTab = Item.all(@sparqlFilter,start,per_page)
+      @sparqlRequest = itemsTab[:query]
+      pager.replace(itemsTab[:result])
     end
 
     gonItemsFiltersUri = Array.new
