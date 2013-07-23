@@ -234,8 +234,10 @@ fr:
         "Résumé de vos choix"
       goreador:
         "Accéder aux résultats"
-      gofiltering:
+      gonewfiltering:
         "Ajouter des filtres"
+      goeditfiltering:
+        "Modifier les filtres"
       choice:
         "Vos choix"
       twitter:

@@ -234,7 +234,9 @@ en:
         "Summary of your choices"
       goreador:
         "Show the results"
-      gofiltering:
+      goeditfiltering:
+        "Edit some filters"
+      gonewfiltering:
         "Add some filters"
       choice:
         "Your choices"

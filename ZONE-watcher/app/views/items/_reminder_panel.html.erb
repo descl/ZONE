@@ -61,7 +61,11 @@
 			<div class="row-fluid bottomDiv">
 				<div class="span1"></div>
 				<div class="span4">
-					<button class="btn btn-info span12" type="submit" onclick="movingData();$('#formModal').attr('action','/home/search')">
+					<button class="btn btn-info span12" type="submit" onclick="
+                    movingData();
+                    $('#formModal').attr('action','/searches/<%=@search.id%>/edit');
+                    $('#formModal').attr('method','GET');
+                    ">
 						<%= raw t 'items.reminder.change' %>
 					</button>
 				</div>
