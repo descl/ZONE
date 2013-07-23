@@ -8,8 +8,12 @@
 						<h3><span class="numberFiltering smallNumberFiltering">1</span> <%= raw t 'newmodal.breadcrumb.sources' %></h3>
 					</div>
 					<div class="row-fluid">
-						<div class="well summary span12">
-						</div>
+                      <div class="well summary span12">
+                        <% @search.sources.each do |source| %>
+                          <%= raw source.getButton %>
+                        <%end%>
+                      </div>
+
 					</div>
 				</div>
 			</div>
@@ -25,6 +29,9 @@
 					</div>
 					<div class="row-fluid">
 						<div id="summaryOr" class="well summary span12 well-info">
+                          <% @search.getOrFilters.each do |filter| %>
+                            <%= raw filter.getButton%>
+                          <%end%>
 						</div>
 					</div>
 					<div class="row-fluid">
@@ -32,6 +39,9 @@
 					</div>
 					<div class="row-fluid">
 						<div id="summaryAnd" class="well summary span12 well-success">
+                          <% @search.getAndFilters.each do |filter| %>
+                              <%= raw filter.getButton%>
+                          <%end%>
 						</div>
 					</div>
 					<div class="row-fluid">
@@ -39,6 +49,9 @@
 					</div>
 					<div class="row-fluid">
 						<div id="summaryWithout" class="well summary span12 well-danger">
+                          <% @search.getWithoutFilters.each do |filter| %>
+                              <%= raw filter.getButton%>
+                          <%end%>
 						</div>
 					</div>
 				</div>

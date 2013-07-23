@@ -29,7 +29,7 @@ class SearchSource < ActiveRecord::Base
     end
     if kind == "twitter"
       if value.start_with? "#"
-        return "?concept rdf:type <#{ZoneOntology::SOURCES_TYPE_TWITTER_HASHTAG}>"
+        return "?concept <#{ZoneOntology::SOURCES_TYPE_TWITTER_HASHTAG}> \"#{value}\" "
         #TODO need to be done...
       elsif value.start_with? "@"
         return "?concept <#{ZoneOntology::SOURCES_TYPE_TWITTER_AUTHOR}> \"#{value[1..-1]}\""
@@ -38,4 +38,18 @@ class SearchSource < ActiveRecord::Base
       return "?concept <#{ZoneOntology::RSS_SOURCE}> <#{self.getUri}>"
     end
   end
+
+  def getButton
+    type= "info"
+    self.kind == "rss" ? "warning" : "info"
+    return "<span class=\"
+                          label
+                          label-#{self.kind == "rss" ? "warning" : "info"}
+                          #{self.kind}Source
+                          \">
+            #{self.value}
+            <i class=\"icon-remove\" onclick=\"$(this).closest(\"span\").remove();checkWell()\"></i>
+            </span>"
+  end
+
 end
