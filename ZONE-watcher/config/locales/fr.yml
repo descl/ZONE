@@ -276,3 +276,8 @@ fr:
           "... et toutes les notions suivantes ..."
         ban:
           "... et aucunes des notions suivantes"
+
+  will_paginate:
+    previous_label: "&#8592; Précédent"
+    next_label: "Suivant &#8594;"
+    page_gap: "&hellip;"

@@ -12,12 +12,15 @@
       <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= t("menu.signIn")%> <strong class="caret"></strong></a>
       <div class="dropdown-menu" style="padding: 10px; padding-bottom: 0px;">
 
-        <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+        <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal" }) do |f| %>
           <div><%= f.email_field :email, :value=>"Email",:width=>4 %></div>
           <div><%= f.password_field :password, :value=>"Password" %></div>
         
           <% if devise_mapping.rememberable? -%>
-            <div><%= f.check_box :remember_me %><%= f.label :remember_me -%></div>
+            <div class="control-group">
+              <%= f.check_box :remember_me, :class=>"control-label"  %>
+              <%= f.label :remember_me, :class=>"control-label" -%>
+            </div>
           <% end -%>
         
           <div>

@@ -24,19 +24,15 @@ class Search < ActiveRecord::Base
   end
 
   def getItemsNumber
-    #TODO
-    #request = generateFilterSPARQLRequest(filters)
-    #query = "SELECT ?number COUNT(DISTINCT ?concept) FROM <#{ZoneOntology::GRAPH_ITEMS}> WHERE {\n"
-    #query += request
-    #query += "?concept <http://purl.org/rss/1.0/title> ?title.} LIMIT 1"
-    #puts query
-    #store = SPARQL::Client.new($endpoint)
-    #if store.query(query).length == 0
-    #  return 0
-    #else
-    #  return store.query(query)[0]["callret-1"]
-    #end
-    return 0
+    query = "SELECT ?number COUNT(DISTINCT ?concept) FROM <#{ZoneOntology::GRAPH_ITEMS}> WHERE {\n"
+    query += self.generateSPARQLRequest
+    query += "?concept <http://purl.org/rss/1.0/title> ?title.} LIMIT 1"
+    store = SPARQL::Client.new($endpoint)
+    if store.query(query).length == 0
+      return 0
+    else
+      return store.query(query)[0]["callret-1"]
+    end
   end
 
   def getOrFilters
