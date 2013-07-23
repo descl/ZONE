@@ -44,11 +44,17 @@ $(document).ready(function() {
 
 	//Reminder box in the item page
 	$("#reminder").hover(function() {
-		$("#openReminder").fadeOut();
 	}, function() {
 		$("#openReminder").fadeIn();
+		$("#reminder").css("left", "-37%");
 	});
-
+	
+	$("#openReminder").hover(function(){
+		$("#openReminder").fadeOut();
+		$("#reminder").css("transition", "all 0.5s ease-in");
+		$("#reminder").css("left", "-1%");
+	},function(){});
+	
 	$(".hideTag").hide();
 	$(".btn-toolbar").hide();
 
