@@ -59,7 +59,13 @@
 			</div>
 			<hr>
 			<div class="row-fluid bottomDiv">
-				<div class="span7"></div>
+				<div class="span1"></div>
+				<div class="span4">
+					<button class="btn btn-info span12" type="submit" onclick="movingData();$('#formModal').attr('action','/home/search')">
+						<%= raw t 'items.reminder.change' %>
+					</button>
+				</div>
+				<div class="span2"></div>
 				<div class="span4">
 					<button class="btn btn-success span12" type="submit" onclick="movingData()">
 						<%= raw t 'items.reminder.update' %>
