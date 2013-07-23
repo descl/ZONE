@@ -60,6 +60,7 @@ public class RSSGetter {
         ArrayList<Item> result = new ArrayList<Item>();
         for(int i=0; i < urls.length;i++){
             String curUri = urls[i];
+            logger.info("RSS Feed "+curUri);
             try{
                 XmlReader flux = new XmlReader(new URL(curUri));
                 result.addAll(RSSGetter.getFlux(curUri,flux));
