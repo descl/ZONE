@@ -34,7 +34,7 @@ public class App {
        for(int i=0; i < 6; i++)
            timer[i] = new Timer();
 
-       String [] apps = new String[5];
+       String [] apps = new String[6];
        
        apps[0] = "org.zoneproject.extractor.twitterreader.App";
        apps[1] = "org.zoneproject.extractor.rssreader.App";
