@@ -205,12 +205,28 @@ function movingData() {
 		item = item.replace(/'/g, "\\&#39;");
 		tabOr.push(item);
 	});
+	$("#summaryOr").children().each(function() {
+		item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
+		item = item.replace(/'/g, "\\&#39;");
+		tabOr.push(item);
+	});
 	$("#wellAnd").children().each(function() {
 		item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
 		item = item.replace(/'/g, "\\&#39;");
 		tabAnd.push(item);
 	});
+	$("#summaryAnd").children().each(function() {
+		item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
+		item = item.replace(/'/g, "\\&#39;");
+		tabAnd.push(item);
+	});
 	$("#wellWithout").children().each(function() {
+		item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
+		item = item.replace(/'/g, "\\&#39;");
+		item = item.replace(/'/g, "\\&#39;");
+		tabWithout.push(item);
+	});
+	$("#summaryWithout").children().each(function() {
 		item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
 		item = item.replace(/'/g, "\\&#39;");
 		tabWithout.push(item);
