@@ -39,6 +39,18 @@ class Search < ActiveRecord::Base
     return 0
   end
 
+  def getOrFilters
+    return self.filters.find_all{|f| f.kind == "or" }
+  end
+
+  def getAndFilters
+    return self.filters.find_all{|f| f.kind == "and" }
+  end
+
+  def getWithoutFilters
+    return self.filters.find_all{|f| f.kind == "without" }
+  end
+
   def generateSPARQLRequest
     extendQuery = ""
     self.sources.each do |source|
@@ -48,16 +60,11 @@ class Search < ActiveRecord::Base
       extendQuery = extendQuery[0..-8]
     end
 
-
-
-
-    andFilters = self.filters.find_all{|f| f.kind == "and" }
-    andFilters.each do |filter|
+    self.getAndFilters.each do |filter|
       extendQuery += "#{filter.getSparqlTriple}. \n"
     end
 
-
-    orFilters = self.filters.find_all{|f| f.kind == "or" }
+    orFilters = self.getOrFilters
     orFilters.each do |filter|
       extendQuery += "{ #{filter.getSparqlTriple}.} \nUNION "
     end
@@ -65,8 +72,7 @@ class Search < ActiveRecord::Base
       extendQuery = extendQuery[0..-9]+".\n"
     end
 
-    withoutFilters = self.filters.find_all{|f| f.kind == "without" }
-    withoutFilters.each do |filter|
+    self.getWithoutFilters.each do |filter|
       extendQuery += "FILTER NOT EXISTS { #{filter.getSparqlTriple}.}. \n"
     end
 
