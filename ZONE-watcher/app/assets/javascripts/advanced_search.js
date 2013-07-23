@@ -92,14 +92,18 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$(".showFavorite").click(function() {
+	$(".showFavorite").hover(function() {
 		$(this).next(".row-favorite").fadeIn();
+		$(this).hide();
+	},function(){
 		$(this).hide();
 	});
 
-	$(".hideFavorite").click(function() {
-		$(this).parent(".row-favorite").hide();
-		$(this).parent(".row-favorite").prev(".showFavorite").fadeIn();
+	$(".row-favorite").hover(function(){
+		$(this).prev(".showFavorite").hide();
+	},function() {
+		$(this).hide();
+		$(this).prev(".showFavorite").fadeIn();
 	});
 	//Tweeter function
 	! function(d, s, id) {
