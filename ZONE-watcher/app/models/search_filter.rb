@@ -29,14 +29,13 @@ class SearchFilter < ActiveRecord::Base
 
   def getButton
     type= "info"
-    "succes" if self.kind == "and"
-    "info"   if self.kind == "or"
-    "error"  if self.kind == "without"
+    type = "success" if self.kind == "and"
+    type = "info"   if self.kind == "or"
+    type = "danger"  if self.kind == "without"
 
     return "<span class=\"
                           label
-                          label-#{self.kind == "rss" ? "warning" : "info"}
-                          #{self.kind}Source
+                          label-#{type}
                         \">
             #{self.value}
             <i class=\"icon-remove\" onclick=\"$(this).closest(\"span\").remove();checkWell()\"></i>

@@ -47,18 +47,6 @@ class Search < ActiveRecord::Base
     return self.filters.find_all{|f| f.kind == "without" }
   end
 
-  def getOrFilters
-    return self.filters.find_all{|f| f.kind == "or" }
-  end
-
-  def getAndFilters
-    return self.filters.find_all{|f| f.kind == "and" }
-  end
-
-  def getWithoutFilters
-    return self.filters.find_all{|f| f.kind == "without" }
-  end
-
   def generateSPARQLRequest
     extendQuery = ""
     self.sources.each do |source|
