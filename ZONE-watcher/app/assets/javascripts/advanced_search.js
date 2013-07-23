@@ -54,14 +54,14 @@ $(document).ready(function() {
 
 	//action to show the tag on click
 	$(".showTag").on('click', function() {
-		$(this).parent().next(".btn-toolbar").fadeIn();
+		$(this).parent().next(".btn-toolbar").slideDown();
 		$(this).hide();
 		$(this).next(".hideTag").show();
 	});
 
 	//Action to hide the tag on click
 	$(".hideTag").on('click', function() {
-		$(this).parent().next(".btn-toolbar").fadeOut();
+		$(this).parent().next(".btn-toolbar").slideUp();
 		$(this).hide();
 		$(this).prev(".showTag").show();
 	});
