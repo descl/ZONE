@@ -171,6 +171,7 @@ function reverseSwitchTab() {
 
 //Prepare the input with all data
 function movingData() {
+	$("#movedData").html("");
 	var source = {};
 	var filtering = {};
 
@@ -191,14 +192,17 @@ function movingData() {
 	var tabWithout = [];
 	$("#wellOr").children().each(function() {
 		item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
+		item = item.replace(/'/g, "\\&#39;");
 		tabOr.push(item);
 	});
 	$("#wellAnd").children().each(function() {
 		item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
+		item = item.replace(/'/g, "\\&#39;");
 		tabAnd.push(item);
 	});
 	$("#wellWithout").children().each(function() {
 		item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
+		item = item.replace(/'/g, "\\&#39;");
 		tabWithout.push(item);
 	});
 
@@ -208,7 +212,7 @@ function movingData() {
 	filtering.or = tabOr;
 	filtering.and = tabAnd;
 	filtering.without = tabWithout;
-
+	
 	$('#movedData').html($('#movedData').html() + "<input name='sources' type='hidden' value='" + JSON.stringify(source) + "'>" + "<input name='filters' type='hidden' value='" + JSON.stringify(filtering) + "'>");
 }
 

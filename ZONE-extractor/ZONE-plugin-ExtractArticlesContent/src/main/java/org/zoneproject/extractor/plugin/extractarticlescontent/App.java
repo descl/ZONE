@@ -78,6 +78,6 @@ public class App
             } catch (MalformedURLException ex) {
                 Logger.getLogger(App.class.getName()).log(Level.WARNING, null, ex);
             }
-        }
     }
+}
 }

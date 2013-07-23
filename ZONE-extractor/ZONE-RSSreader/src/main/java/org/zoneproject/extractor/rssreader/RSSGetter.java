@@ -64,6 +64,12 @@ public class RSSGetter {
                 XmlReader flux = new XmlReader(new URL(curUri));
                 result.addAll(RSSGetter.getFlux(curUri,flux));
                 
+            } catch (IllegalArgumentException ex) {
+                logger.warn("RSS Feed "+curUri+" not working"+ex);
+                Database.addAnnotation(curUri, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
+            } catch (FeedException ex) {
+                logger.warn("RSS Feed "+curUri+" not working"+ex);
+                Database.addAnnotation(curUri, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
             } catch (java.net.UnknownHostException ex) {
                 logger.warn("RSS Feed "+curUri+" is offline");
                 Database.addAnnotation(curUri, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
@@ -104,58 +110,44 @@ public class RSSGetter {
         return null;
     }
     
-    private static ArrayList<Item> getFlux(String source, XmlReader reader){
+    private static ArrayList<Item> getFlux(String source, XmlReader reader) throws IllegalArgumentException, FeedException{
         ArrayList<Item> items = new ArrayList<Item>();
         
         SyndFeedInput sfi = new SyndFeedInput();
-        try {
-            SyndFeed feed = sfi.build(reader);
-            List entries = new ArrayList();
-            entries = feed.getEntries();
+        SyndFeed feed = sfi.build(reader);
+        List entries = new ArrayList();
+        entries = feed.getEntries();
 
-            for (int i = 0; i < entries.size(); i++){
-                SyndEntry entry = (SyndEntry)entries.get(i);
-                
-                //we clean bad Uris
-                String uri = entry.getLink();
-                uri = uri.replace("\t", "");
-                uri = uri.replace("\n", "");
-                while(uri.startsWith(" ")) {
-                    uri = uri.substring(1);
-                }
-                while(uri.endsWith(" ")) {
-                    uri = uri.substring(0,uri.length()-1);
-                }
-                //catch if the uri is local
-                if(uri.startsWith("/")){
-                    uri = "http://"+URI.create(source).getHost()+""+uri;
-                }
-                if(uri.equals("")) {
-                    continue;
-                }
-                
-                //create item
-                String description = "";
-                if(entry.getDescription() != null){
-                    description = entry.getDescription().getValue();
-                }
-                Item cur = new Item(source, uri.toString(),entry.getTitle(),description,entry.getPublishedDate(),entry.getEnclosures());
-                
-                //add item to list
-                items.add(cur);
+        for (int i = 0; i < entries.size(); i++){
+            SyndEntry entry = (SyndEntry)entries.get(i);
+
+            //we clean bad Uris
+            String uri = entry.getLink();
+            uri = uri.replace("\t", "");
+            uri = uri.replace("\n", "");
+            while(uri.startsWith(" ")) {
+                uri = uri.substring(1);
             }
-        }
-        catch(NullPointerException e) {
-            logger.warn("RSS Feed "+source+" not working"+e);
-            Database.addAnnotation(source, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
-        }
-        catch(IllegalArgumentException e) {
-            logger.warn("RSS Feed "+source+" not working"+e);
-            Database.addAnnotation(source, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
-        }
-        catch(FeedException e) {
-            logger.warn("RSS Feed "+source+" not working"+e);
-            Database.addAnnotation(source, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
+            while(uri.endsWith(" ")) {
+                uri = uri.substring(0,uri.length()-1);
+            }
+            //catch if the uri is local
+            if(uri.startsWith("/")){
+                uri = "http://"+URI.create(source).getHost()+""+uri;
+            }
+            if(uri.equals("")) {
+                continue;
+            }
+
+            //create item
+            String description = "";
+            if(entry.getDescription() != null){
+                description = entry.getDescription().getValue();
+            }
+            Item cur = new Item(source, uri.toString(),entry.getTitle(),description,entry.getPublishedDate(),entry.getEnclosures());
+
+            //add item to list
+            items.add(cur);
         }
         return items;
     }
