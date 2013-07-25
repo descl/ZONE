@@ -140,6 +140,8 @@ private static final long serialVersionUID = 1L;
     }
     
     public String getElement(Property key){
+        String [] result = getElements(key.getURI());
+        if (result.length==0)return null;
         return getElements(key.getURI())[0];
     }
     

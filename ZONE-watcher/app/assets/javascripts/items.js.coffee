@@ -15,10 +15,10 @@ $(document).ready ->
       success: (data) ->
         $('[class=item_container][sourceid="'+id+'"]').append(data)
         $('[class*=item_wait][sourceid="'+id+'"]').detach()
-      error: (xhr, ajaxOptions, thrownError) ->
-        alert(xhr.status)
-        alert(xhr.statusText)
-        alert(thrownError)
+
+
+
+
 
 $(document).ready ->
 
