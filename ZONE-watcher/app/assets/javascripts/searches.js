@@ -23,7 +23,7 @@ $(document).ready(function() {
             	askUpdateKeywordTable();
            }
         },
-        minLength : 2
+        minLength : 3
     }).autocomplete("widget").addClass("span1");
 
 
