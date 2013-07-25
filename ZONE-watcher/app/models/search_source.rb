@@ -42,7 +42,7 @@ class SearchSource < ActiveRecord::Base
   def getButton
     type= "info"
     self.kind == "rss" ? "warning" : "info"
-    return "<span class=\"label label-#{self.kind == "rss" ? "warning" : "info"} #{self.kind}Source\">#{self.value} <i class=\"icon-remove pointerMouse\" onclick=\"$(this).closest(\'span\').remove();checkWell()\"></i></span>"
+    return "<span class=\"label label-#{self.kind == "rss" ? "warning" : "info"} #{self.kind}Source\">#{self.value} <i class=\"icon-remove pointerMouse\" onclick=\"$(this).closest(\'span\').remove(); $(\'#updateSearch\').trigger(\'click\');\"></i></span>"
   end
 
 end
