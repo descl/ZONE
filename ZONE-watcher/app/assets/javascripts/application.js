@@ -1,7 +1,7 @@
 //= require jquery
 //  require_tree .
 //  require jquery_ujs
-//  require jquery-ui
+//=  require jquery.ui.all
 
 
 //Prepare the input with all data
