@@ -1,15 +1,14 @@
 <%= render 'home/search_tool'%>
 
-<% if Rails.env.development?%>
+<div class="hidden">
   <%= @search.to_json %>
 <%= @search.sources.to_json %>
 <%= @search.filters.to_json %>
 <hr/>
 
-
 <%= raw h(@sparqlRequest).gsub(/\n/, '<br/>') %>
 <hr/>
-<%end%>
+      </div>
 
 <%= javascript_tag do %>
 query = '<%= j items_path(:old => @filters) %>';
