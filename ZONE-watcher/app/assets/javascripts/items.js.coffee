@@ -26,8 +26,8 @@ $(document).ready ->
   $(".row-favorite").hide()
   $(".row-list").hide()
 
-  $(".hideTag").hide();
-  $(".btn-toolbar").hide();
+  $(".showTag").hide();
+  #$(".btn-toolbar").hide();
 
   #action to show the tag on click
   $(".showTag").on "click", ->

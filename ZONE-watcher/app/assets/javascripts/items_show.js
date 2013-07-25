@@ -41,11 +41,11 @@ $(document).ready(function() {
 //Add the tag to the summary panel
 function addTag(type, value) {
     if (type == 'opt')
-        $(".well-info").append('<span class="label label-info">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();"></i></span> ');
+        $(".well-info").append('<span class="label label-info">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span> ');
     else if (type == 'must')
-        $(".well-success").append('<span class="label label-success">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();"></i></span> ');
+        $(".well-success").append('<span class="label label-success">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span> ');
     else if (type == 'no')
-        $(".well-danger").append('<span class="label label-danger">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();"></i></span> ');
+        $(".well-danger").append('<span class="label label-danger">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span> ');
     return false;
 };
 
