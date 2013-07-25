@@ -18,8 +18,10 @@ $(document).ready(function() {
                 source : "/complete_entities/" + $("#keyword").val() + ".json"
             });
         },
-        select : function() {
-            askUpdateKeywordTable();
+        select : function(event,ui) {
+        	if(ui.item.value.toLowerCase()!=$("#keyword").val().toLowerCase()){
+            	askUpdateKeywordTable();
+           }
         },
         minLength : 2
     }).autocomplete("widget").addClass("span1");
