@@ -3,12 +3,15 @@ class LinkedWordsController < ApplicationController
 
   # GET /linked_words
   # GET /linked_words/$entity.json
+  #TODO: imcomprehensible...
   def listWords
     @result = Array.new
     possibleWords = LinkedWord.complete(params[:desc])
     possibleWords.each do |word|
+      if word.casecmp(params[:desc]) ==1
         @result << word
-        @result.concat(LinkedWord.getLinkedWords(word))
+      end
+      @result.concat(LinkedWord.getLinkedWords(word))
     end
 
     respond_to do |format|
