@@ -99,6 +99,15 @@ a.label:visited{
   text-shadow: none;
 }
 
+.label-twitter[href] , .label-twitter[href]:visited, .label-twitter[href]:hover{
+  box-shadow: inset 0 1px 0 #fff;
+  color : #327695;
+  background-color : #cfe4f0;
+  border:1px solid #a6cde6;
+  border-radius: 4px;
+  text-shadow: none;
+}
+
 .label[href]:hover{
   text-decoration : underline;
 }
@@ -196,4 +205,17 @@ a.label:visited{
 .shareLink:hover{
   background:none;
   color:#e8e8e8;
+}
+
+#updateSearch{
+  display:none;
+}
+
+.numberItem{
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+#buttonRss{
+  margin-right: 10px;
 }

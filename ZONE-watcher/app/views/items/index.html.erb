@@ -33,11 +33,8 @@ event.preventDefault(); // Prevent link from following its href
 });
 <% end %>
 
-<%= link_to(params.merge(:format => :rss)) do%>
-<span id="rss-button" class="btn btn-warning btn-large btn-primary goButton"><i class="icon-rss"></i></span>
-<%end%>
+
 <div class="row-fluid">
-  <span class=""><%= @itemsNumber %></span>
 	<div class="btn-group pull-right">
 		<button id="btnList" class="btn active" onclick="changeItemFormat('list');">
 			<i class="icon icon-th-list"></i>
@@ -47,6 +44,10 @@ event.preventDefault(); // Prevent link from following its href
 		</button>
 		<div id="titlePopover" hidden><%= raw t 'items.popover.smalltitle' %></div>
 	</div>
+	<%= link_to(params.merge(:format => :rss)) do%>
+		<button id="buttonRss" class="btn btn-warning pull-right"><i class="icon-rss"></i></button>
+	<%end%>
+	<span class="numberItem pull-right"><%= @itemsNumber %> items</span>
 </div>
 
 <hr>
