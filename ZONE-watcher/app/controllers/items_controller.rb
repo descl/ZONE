@@ -60,7 +60,7 @@ class ItemsController < ApplicationController
       @uri = @uri+"."+params[:format]
     end
     @uri = URI.escape(CGI.unescape(@uri))
-    if @uri[6] != '/'
+    if (@uri[6] != '/' && @uri[4]== ":") || (@uri[7] != '/' && @uri[5]== ":")
       @uri = @uri.insert(6,'/')
     end
     @uri = CGI.escape(@uri)
