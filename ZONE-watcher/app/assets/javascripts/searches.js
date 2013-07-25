@@ -18,10 +18,12 @@ $(document).ready(function() {
                 source : "/complete_entities/" + $("#keyword").val() + ".json"
             });
         },
-        select : function() {
-            askUpdateKeywordTable();
+        select : function(event,ui) {
+        	if(ui.item.value.toLowerCase()!=$("#keyword").val().toLowerCase()){
+            	askUpdateKeywordTable();
+           }
         },
-        minLength : 4
+        minLength : 3
     }).autocomplete("widget").addClass("span1");
 
 
@@ -161,7 +163,7 @@ function updateKeywordTable() {
         $.getJSON('/linked_words/' + $('#keyword').val() + '.json', function(data) {
             rebootFiltering();
             $.each(data, function(key, val) {
-                if ($('#keyword').val() != "") {
+                if ($('#keyword').val() != "" && $('#keyword').val().length>2) {
                     $('#keywordTable').append('<tr><td><label class="checkbox"><input type="checkbox" value="' + val + '">' + val + '</label></td></tr>');
                 }
             });
@@ -173,7 +175,7 @@ function updateKeywordTable() {
 //ask the timer if the related keyword table can be show. It will wait 1 second before doing it. If the function is call again, it will stop the current timer and start a new
 function askUpdateKeywordTable() {
     $("#keywordTable").hide();
-    if ($('#keyword').val() != "" && $('#keyword').val() != null) {
+    if ($('#keyword').val() != "" && $('#keyword').val() != null && $('#keyword').val().length>2) {
         $("#progressBarFiltering").show();
         clearTimeout(timer);
         timer = setTimeout(function() {
