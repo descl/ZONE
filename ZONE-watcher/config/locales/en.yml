@@ -260,7 +260,7 @@ en:
       title:
         "Select your filters"
       subtitle:
-        "Add some filters"
+        "Add a filter"
       related:
         "Choose some related words"
       filtertype:
@@ -273,8 +273,8 @@ en:
         "Bannable"
       resume:
         option:
-          "Filter the results containing at least one of those subjects ..."
+          "Optionnal terms"
         musthave:
-          "... and all of these subjects ..."
+          "Mandatory terms"
         ban:
-          "... and none of these subjects"
+          "Prohibited terms"
