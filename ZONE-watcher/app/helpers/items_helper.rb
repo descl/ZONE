@@ -13,6 +13,7 @@ module ItemsHelper
     @LABEL_SUCCESS = "label label-success label-tag"
     @LABEL_WARNING = "label label-warning label-tag"
     @LABEL_IMPORTANT = "label label-important label-tag"
+    @LABEL_TWITTER = "label label-twitter label-tag"
 
     if(filter.value == "null")
       filter.value = "/null"
@@ -43,9 +44,9 @@ module ItemsHelper
       #res=link_to "category", itemURI, :class => @LABEL_INFO
       res=link_to filter.value, itemURI, :class => @LABEL_INFO
     elsif(filter.prop.start_with? @TWITTER_HASHTAG_PLUGIN_URI)
-      res=link_to "#"+filter.value, itemURI, :class => "btn-auth  btn-twitter"
+      res=link_to filter.value, itemURI, :class => @LABEL_TWITTER
     elsif(filter.prop.start_with? @TWITTER_MENTIONED_PLUGIN_URI)
-      res=link_to "@"+filter.value, itemURI, :class => "btn-auth btn-twitter"
+      res=link_to filter.value, itemURI, :class => @LABEL_TWITTER
     end
   end
 
