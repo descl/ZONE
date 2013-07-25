@@ -260,11 +260,11 @@ fr:
       title:
         "Sélectionner vos filtres"
       subtitle:
-        "Ajouter des filtres"
+        "Ajouter un filtre"
       related:
-        "Choisisser des mots-liés"
+        "Choisir des mots-liés"
       filtertype:
-        "Choisisser le type"
+        "Choisir le type"
       buttonOption:
         "Optionnel"
       buttonMusthave:
