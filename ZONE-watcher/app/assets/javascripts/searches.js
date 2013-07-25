@@ -18,7 +18,7 @@ $(document).ready(function() {
                 source : "/complete_entities/" + $("#keyword").val() + ".json"
             });
         },
-        close : function() {
+        select : function() {
             askUpdateKeywordTable();
         },
         minLength : 4
