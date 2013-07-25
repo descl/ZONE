@@ -83,6 +83,9 @@ en:
       "Semantic search"
     gobutton:
       "New search"
+  index:
+    disclaimer:
+      "Reador.NET is currently <b>under development</b>, a lot of bugs are present and your feeds will probably not work as well as needed, don't worry, be patient!"
   moreabout:
     title:
       "More about Reador!"
