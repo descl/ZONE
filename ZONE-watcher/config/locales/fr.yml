@@ -273,11 +273,11 @@ fr:
         "Interdit"
       resume:
         option:
-          "Filtrer les résultats traitant d'au moins une des notions suivantes ..."
+          "Termes optionnels"
         musthave:
-          "... et toutes les notions suivantes ..."
+          "Termes obligatoires"
         ban:
-          "... et aucunes des notions suivantes"
+          "Termes interdits"
 
   will_paginate:
     previous_label: "&#8592; Précédent"

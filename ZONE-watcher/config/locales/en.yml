@@ -273,8 +273,8 @@ en:
         "Bannable"
       resume:
         option:
-          "Filter the results containing at least one of those subjects ..."
+          "Optionnal terms"
         musthave:
-          "... and all of these subjects ..."
+          "Mandatory terms"
         ban:
-          "... and none of these subjects"
+          "Prohibited terms"
