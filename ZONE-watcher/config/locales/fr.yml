@@ -83,6 +83,9 @@ fr:
       "Recherche sémantique"
     gobutton:
       "Nouvelle recherche"
+  index:
+    disclaimer:
+      "Reador.NET est actuellement en <b>cours de développement</b>, un tas de bug sont présents et l'import de vos flux RSS et Twitter risque de ne pas fonctionner en temps réel, soyez patients!"
   moreabout:
     title:
       "En savoir plus sur Reador!"

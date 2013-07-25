@@ -48,13 +48,9 @@
 
   <div class="container">
     <div  id="page-content">
-  <%= render 'layouts/messages' %>
-      <div class="alert alert-error">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        Reador.NET est actuellement en <b>cours de développement</b>, un tas de bug sont présents et l'import de vos flux RSS et Twitter risque de ne pas fonctionner en temps réel, soyez patients!
-      </div>
-    <%= yield %>
-      </div>
+      <%= render 'layouts/messages' %>
+      <%= yield %>
+    </div>
   </div>
 
 <div class="footer">
