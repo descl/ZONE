@@ -17,10 +17,10 @@ $(document).ready(function() {
 function showUpdate(){
 	var timer = setInterval(function(){
 		if($("#updateSearch").css("opacity")==1)
-			$("#updateSearch").css("opacity","0");
+			$("#updateSearch").css("opacity","0.5");
 		else
 			$("#updateSearch").css("opacity","1");
-	},500);
+	},300);
 	setTimeout(function(){
 		clearInterval(timer);
 		$("#updateSearch").css("opacity","1");
