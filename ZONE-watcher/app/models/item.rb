@@ -13,7 +13,7 @@ class Item# < ActiveRecord::Base
     #  return Array.new
     #end
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
-    SELECT ?concept ?title
+    SELECT DISTINCT(?concept) ?title
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     FROM <#{ZoneOntology::GRAPH_SOURCES}>
     WHERE {
