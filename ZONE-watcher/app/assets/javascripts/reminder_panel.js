@@ -8,6 +8,7 @@ $(document).ready(function() {
     });
 
     $("#openReminder").hover(function(){
+    	$('#openReminder').popover('hide');
         $("#openReminder").fadeOut();
         $("#reminder").css("transition", "all 0.5s ease-in");
         $("#reminder").css("left", "-1%");
