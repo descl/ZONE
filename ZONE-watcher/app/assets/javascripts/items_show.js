@@ -35,6 +35,8 @@ $(document).ready(function() {
         js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
         fjs.parentNode.insertBefore(js, fjs);
     })(document, 'script', 'facebook-jssdk');
+    
+    changeItemFormat('card');
 });
 
 

@@ -36,14 +36,14 @@ event.preventDefault(); // Prevent link from following its href
 
 <div class="row-fluid">
 	<div class="btn-group pull-right">
-		<button id="btnList" class="btn active" onclick="changeItemFormat('list');">
-			<i class="icon icon-th-list"></i>
-		</button>
 		<button id="btnCard" class="btn" onclick="changeItemFormat('card');">
 			<i class="icon icon-th-large"></i>
 		</button>
-		<div id="titlePopover" hidden><%= raw t 'items.popover.smalltitle' %></div>
+		<button id="btnList" class="btn active" onclick="changeItemFormat('list');">
+			<i class="icon icon-th-list"></i>
+		</button>
 	</div>
+	<div id="titlePopover" hidden><%= raw t 'items.popover.smalltitle' %></div>
 	<%= link_to(params.merge(:format => :rss)) do%>
 		<button id="buttonRss" class="btn btn-warning pull-right"><i class="icon-rss"></i></button>
 	<%end%>
