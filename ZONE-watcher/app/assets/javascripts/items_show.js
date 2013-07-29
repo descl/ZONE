@@ -57,7 +57,7 @@ function closePop() {
     $('#openReminder').popover('show');
     setTimeout(function() {
         $('#openReminder').popover('hide');
-    }, 2000);
+    }, 5000);
     return false;
 }
 
