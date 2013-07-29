@@ -24,7 +24,8 @@ $(document).ready ->
 
   #Hide the favorite bar by default
   $(".row-favorite").hide()
-  $(".row-list").hide()
+  $(".showFavorite").hide()
+  $(".row-list").show()
 
   $(".showTag").hide();
   #$(".btn-toolbar").hide();
