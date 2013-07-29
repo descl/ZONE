@@ -46,7 +46,7 @@ module ItemsHelper
     elsif(filter.prop.start_with? @TWITTER_HASHTAG_PLUGIN_URI)
       res=link_to filter.value, itemURI, :class => @LABEL_TWITTER
     elsif(filter.prop.start_with? @TWITTER_MENTIONED_PLUGIN_URI)
-      res=link_to filter.value, itemURI, :class => @LABEL_TWITTER
+      res=link_to "@"+filter.value, itemURI, :class => @LABEL_TWITTER
     end
   end
 
