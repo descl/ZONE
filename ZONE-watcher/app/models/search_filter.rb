@@ -33,6 +33,6 @@ class SearchFilter < ActiveRecord::Base
     type = "info"   if self.kind == "or"
     type = "danger"  if self.kind == "without"
 
-    return "<span class=\"label label-#{type}\">#{self.value} <i class=\"icon-remove pointerMouse\" onclick=\"$(this).closest(\'span\').remove(); showUpdate()\"></i></span>"
+    return "<span id=\"#{self.id}\" class=\"label label-#{type}\" draggable=\"true\" ondragstart=\"drag(event)\">#{self.value} <i class=\"icon-remove pointerMouse\" onclick=\"$(this).closest(\'span\').remove(); showUpdate()\"></i></span>"
   end
 end
