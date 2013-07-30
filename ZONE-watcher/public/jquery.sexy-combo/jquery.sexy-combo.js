@@ -198,12 +198,7 @@
 		}*/
 		this.listWrapper.addClass("invisible");
 		
-       
-	    if ($.browser.opera) {
-	        this.wrapper.css({position: "relative", left: "0", top: "0"});
-	    } 
-	
-	
+
 	
 	    this.filterFn = ("function" == typeof(this.config.filterFn)) ? this.config.filterFn : this.filterFn;
 	
