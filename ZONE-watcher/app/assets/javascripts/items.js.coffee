@@ -24,24 +24,8 @@ $(document).ready ->
 
   #Hide the favorite bar by default
   $(".row-favorite").hide()
-  $(".row-list").hide()
-
-  $(".showTag").hide();
-  #$(".btn-toolbar").hide();
-
-  #action to show the tag on click
-  $(".showTag").on "click", ->
-    $(this).parent().next(".btn-toolbar").slideDown()
-    $(this).hide()
-    $(this).next(".hideTag").show()
-
-
-  #Action to hide the tag on click
-  $(".hideTag").on "click", ->
-    $(this).parent().next(".btn-toolbar").slideUp()
-    $(this).hide()
-    $(this).prev(".showTag").show()
-
+  $(".showFavorite").hide()
+  $(".row-list").show()
 
   #Generation of the popover of the tag
   btnOptionnal = ""

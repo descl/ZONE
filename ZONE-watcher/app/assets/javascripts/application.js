@@ -67,4 +67,6 @@ function movingData() {
     filtering.without = tabWithout;
 
     $('#movedData').html($('#movedData').html() + "<input name='sources' type='hidden' value='" + JSON.stringify(source) + "'>" + "<input name='filters' type='hidden' value='" + JSON.stringify(filtering) + "'>");
+
+	$('#formModal').submit();
 }
