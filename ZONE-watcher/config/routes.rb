@@ -1,4 +1,7 @@
 ZONEWatcher::Application.routes.draw do
+
+  get '/searches/create' => 'searches#create',
+        :via => :post
   resources :searches
 
 
