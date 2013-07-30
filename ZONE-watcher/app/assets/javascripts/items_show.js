@@ -59,12 +59,13 @@ $(window).load(function(){
 
 //Add the tag to the summary panel
 function addTag(type, value) {
+	var id = getId();
     if (type == 'opt')
-        $(".well-info").append('<span class="label label-info">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span> ');
+        $(".well-info").append('<span id="'+id+'" class="label label-info" draggable="true" ondragstart="drag(event)">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
     else if (type == 'must')
-        $(".well-success").append('<span class="label label-success">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span> ');
+        $(".well-success").append('<span id="'+id+'" class="label label-success" draggable="true" ondragstart="drag(event)">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
     else if (type == 'no')
-        $(".well-danger").append('<span class="label label-danger">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span> ');
+        $(".well-danger").append('<span id="'+id+'" class="label label-danger" draggable="true" ondragstart="drag(event)">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
     return false;
 };
 
