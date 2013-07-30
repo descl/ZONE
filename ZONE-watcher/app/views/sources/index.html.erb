@@ -40,7 +40,7 @@
           <% filter = Filter.new(:prop => "http://purl.org/rss/1.0/source",:value => source.uri) %>
           <% uriNumber = filters_getNumber_path(:old => [filter]) %>
       <tr>
-        <td><%= link_to source.uri, items_path(:new => filter) %></td>
+        <td><%= link_to source.uri, url_for(:controller => :searches, :action => :create,  :sources => {:rss => [source.uri]}), :method => "post" %></td>
         <td>
           (
           <span class="number_items_wait">
