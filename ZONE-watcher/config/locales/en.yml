@@ -246,6 +246,8 @@ en:
       twitter:
         all:
           "All twitter sources"
+        tooltip:
+          "Only from your timeline"
         holderpersonn:
           "Add someone to follow"
         holdertag:
