@@ -249,6 +249,8 @@ fr:
       twitter:
         all:
           "Toutes les sources twitter"
+        tooltip:
+          "Uniquement de votre timeline"
         holderpersonn:
           "Ajouter une personne à suivre"
         holdertag:
