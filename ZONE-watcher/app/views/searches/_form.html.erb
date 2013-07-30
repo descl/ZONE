@@ -286,7 +286,7 @@
   </div>
   <div class="row-fluid">
     <div class="span1"></div>
-    <div id="wellOr" class="span10 well well-info">
+    <div id="wellOr" class="span10 well well-info" ondrop="drop(event)" ondragover="allowDrop(event)">
       <%@search.getOrFilters.each do |filter| %>
           <%= raw filter.getButton%>
       <%end%>
@@ -300,7 +300,7 @@
   </div>
   <div class="row-fluid">
     <div class="span1"></div>
-    <div id="wellAnd" class="span10 well well-success">
+    <div id="wellAnd" class="span10 well well-success" ondrop="drop(event)" ondragover="allowDrop(event)">
       <%@search.getAndFilters.each do |filter| %>
           <%= raw filter.getButton%>
       <%end%>
@@ -314,7 +314,7 @@
   </div>
   <div class="row-fluid">
     <div class="span1"></div>
-    <div id="wellWithout" class="span10 well well-danger">
+    <div id="wellWithout" class="span10 well well-danger" ondrop="drop(event)" ondragover="allowDrop(event)">
       <%@search.getWithoutFilters.each do |filter| %>
           <%= raw filter.getButton%>
       <%end%>
