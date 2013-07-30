@@ -70,3 +70,58 @@ function movingData() {
 
 	$('#formModal').submit();
 }
+
+// Functions for the draggable tags
+function allowDrop(ev)
+{
+	ev.preventDefault();
+}
+
+function drag(ev)
+{
+	ev.dataTransfer.setData("Text",ev.target.id);
+}
+
+function drop(ev)
+{
+	ev.preventDefault();
+	var data=ev.dataTransfer.getData("Text");
+	ev.target.appendChild(document.getElementById(data));
+	checkColor();
+}
+
+//Check the color of the tags in the well box
+function checkColor(){
+	$(".well-info").children().each(function(){
+		$(this).removeClass();
+		$(this).addClass("label label-info");
+	});
+	
+	$(".well-success").children().each(function(){
+		$(this).removeClass();
+		$(this).addClass("label label-success");
+	});
+	
+	$(".well-danger").children().each(function(){
+		$(this).removeClass();
+		$(this).addClass("label label-danger");
+	});
+}
+
+//Return an id for the filter
+function getId(type){
+	var idbasic = 0;
+	$(".well-info").children().each(function(){
+		if ( idbasic <= parseInt($(this).attr("id")))
+			idbasic = parseInt($(this).attr("id")) +1;
+	});
+	$(".well-success").children().each(function(){
+		if ( idbasic <= parseInt($(this).attr("id")))
+			idbasic = parseInt($(this).attr("id")) +1;
+	});
+	$(".well-danger").children().each(function(){
+		if ( idbasic <= parseInt($(this).attr("id")))
+			idbasic = parseInt($(this).attr("id")) +1;
+	});
+	return idbasic;
+}
