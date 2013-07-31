@@ -78,10 +78,7 @@ class Search < ActiveRecord::Base
 
     orFilters = self.getOrFilters
     orFilters.each do |filter|
-      extendQuery += "{ #{filter.getSparqlTriple}.} \nUNION "
-    end
-    if orFilters.length > 0
-      extendQuery = extendQuery[0..-9]+".\n"
+      extendQuery += "OPTIONAL { #{filter.getSparqlTriple}.} \n"
     end
 
     self.getWithoutFilters.each do |filter|
