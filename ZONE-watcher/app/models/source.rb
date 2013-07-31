@@ -24,17 +24,17 @@ class Source
 
   def self.all(param = "")
     query = "PREFIX SOURCE: <#{ZoneOntology::SOURCES_PREFIX}>
-    SELECT DISTINCT ?uri
+    SELECT DISTINCT ?concept
     FROM <#{ZoneOntology::GRAPH_SOURCES}>
     WHERE {
-      ?uri rdf:type <#{ZoneOntology::SOURCES_TYPE}>.
+      ?concept rdf:type <#{ZoneOntology::SOURCES_TYPE}>.
       #{param}
-    }ORDER BY ?uri"#"
+    }ORDER BY ?concept"#"
 
     store = SPARQL::Client.new($endpoint)
     sources = Array.new
     store.query(query).each do |source|
-      sources << Source.find(source.uri.to_s)
+      sources << Source.find(source.concept.to_s)
     end
     return sources
   end

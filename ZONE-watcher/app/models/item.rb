@@ -6,14 +6,14 @@ class Item# < ActiveRecord::Base
   $endpoint = Rails.application.config.virtuosoEndpoint
 
 
-  attr_accessor :uri, :title, :props, :description, :date, :localURI
+  attr_accessor :uri, :title, :props, :description, :date, :localURI, :similarity
 
   def self.all(param = "",start=0,per_page=10)
     #if start > (10000 - per_page)
     #  return Array.new
     #end
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
-    SELECT DISTINCT(?concept) ?title
+    SELECT *
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     FROM <#{ZoneOntology::GRAPH_SOURCES}>
     WHERE {
@@ -26,7 +26,8 @@ class Item# < ActiveRecord::Base
     store = SPARQL::Client.new($endpoint)
     items = Array.new
     store.query(query).each do |item|
-      items << Item.new(item.concept.to_s, item.title)
+      similarity = item.count - 3
+      items << Item.new(item.concept.to_s, item.title, similarity)
     end
     return {:result => items, :query => query}
   end
@@ -59,10 +60,11 @@ class Item# < ActiveRecord::Base
     return item
   end
   
-  def initialize(uri,title)
+  def initialize(uri,title, similarity=0)
     @uri = uri
     @title = title
     @filters = Hash.new
+    @similarity = similarity
   end
   
   def to_param
