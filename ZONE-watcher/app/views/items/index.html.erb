@@ -58,15 +58,13 @@ event.preventDefault(); // Prevent link from following its href
 	<% id=0; @items.each do |item| %>
       <%
       similarityColor = case item.similarity
-        when 1 then "#81a3d0"
-        when 2 then "#769f7b"
-        when 3 then "#f00"
-        when 4 then "#00fff4"
-        when 5 then "#f000ff"
-        else ""
+     	when 0 then ""
+        when 1..2 then "lowSimilarity"
+        when 3..4 then "mediumSimilarity"
+        else "highSimilarity"
       end
       %>
-	<div class="well item-bloc" style="background:<%= similarityColor%>;">
+	<div class="well item-bloc <%= similarityColor%>">
 		<div class="item_container" sourceid="<%= id %>"></div>
 		<div class="item_wait" sourceid="<%= id%>">
 			<a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
