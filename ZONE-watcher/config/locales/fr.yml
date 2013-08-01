@@ -36,6 +36,15 @@ fr:
     opml:
       title:
         "Importer un fichier opml"
+      empty:
+        "Aucun fichier"
+      button:
+        select:
+          "Sélectionner un fichier"
+        upload:
+          "Importer"
+        cancel:
+          "Annuler"
     groups:
       title:
         "Gérer vos groupes de sources"
@@ -263,7 +272,7 @@ fr:
         yourrss:
           "Ajouter vos propres flux RSS"
         opml:
-          "Faire un import OPML"
+          "Importer un fichier<br>OPML"
     filtering:
       title:
         "Sélectionner vos filtres"

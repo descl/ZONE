@@ -36,6 +36,15 @@ en:
     opml:
       title:
         "Import opml file"
+      empty:
+        "Aucun fichier"
+      button:
+        select:
+          "Select a file"
+        upload:
+          "Upload"
+        cancel:
+          "Cancel"
     groups:
       title:
         "Manage sources group"
@@ -257,13 +266,13 @@ en:
           "Add a hashtag to follow"
       rss:
         all:
-          "All RSS sources from Reador"
+          "All RSS sources<br>from Reador"
         holderurl:
           "Add a RSS flow to follow"
         yourrss:
           "Add your personnal RSS flows"
         opml:
-          "Do an OPML import"
+          "Import an<br>OPML file"
     filtering:
       title:
         "Select your filters"
