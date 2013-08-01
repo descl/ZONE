@@ -197,40 +197,61 @@ function keywordComplete() {
     }
 }
 
+//Allow to switch tab in the new semantic search
+function switchTab() {
+    if ($('#filtering').hasClass('active'))
+        return;
+    $('#sources').removeClass('active');
+    $('#breadcrumbSources').removeClass('active');
 
+    $('#filtering').addClass('active');
+    $('#breadcrumbFiltering').addClass('active');
+    $('#breadcrumbFiltering').show();
 
-    //Allow to switch tab in the new semantic search
-    function switchTab() {
-        if ($('#filtering').hasClass('active'))
-            return;
-        $('#sources').removeClass('active');
-        $('#breadcrumbSources').removeClass('active');
+    $('#filtering').hide();
+    $('#sources').fadeOut('swing', function() {
+        $('#filtering').fadeIn();
+    });
 
-        $('#filtering').addClass('active');
-        $('#breadcrumbFiltering').addClass('active');
-        $('#breadcrumbFiltering').show();
+    $(".form").hide();
+}
 
-        $('#filtering').hide();
-        $('#sources').fadeOut('swing', function() {
-            $('#filtering').fadeIn();
-        });
+//Allow to reverse switch tab in the new semantic search
+function reverseSwitchTab() {
+    if ($('#sources').hasClass('active'))
+        return;
+    $('#filtering').removeClass('active');
+    $('#breadcrumbFiltering').removeClass('active');
 
-        $(".form").hide();
-    }
+    $('#sources').addClass('active');
+    $('#breadcrumbSources').addClass('active');
+    $('#breadcrumbSources').show();
 
-    //Allow to reverse switch tab in the new semantic search
-    function reverseSwitchTab() {
-        if ($('#sources').hasClass('active'))
-            return;
-        $('#filtering').removeClass('active');
-        $('#breadcrumbFiltering').removeClass('active');
+    $('#sources').hide();
+    $('#filtering').fadeOut('swing', function() {
+        $('#sources').fadeIn();
+    });
+}
 
-        $('#sources').addClass('active');
-        $('#breadcrumbSources').addClass('active');
-        $('#breadcrumbSources').show();
+//Extrait filename d'un input file
+function extractFilename(path) {
+  if (path.substr(0, 12) == "C:\\fakepath\\")
+    return path.substr(12); // modern browser
+  var x;
+  x = path.lastIndexOf('/');
+  if (x >= 0) // Unix-based path
+    return path.substr(x+1);
+  x = path.lastIndexOf('\\');
+  if (x >= 0) // Windows-based path
+    return path.substr(x+1);
+  return path; // just the filename
+}
 
-        $('#sources').hide();
-        $('#filtering').fadeOut('swing', function() {
-            $('#sources').fadeIn();
-        });
-    }
+//Update the filename in the textfield
+function updateFilename(path) {
+   var name = extractFilename(path);
+   	if(name != "")
+		$('#fileTextName').html(name);
+	else
+		$('#fileTextName').html($('#fileTextName').attr('data-initial'));
+}
