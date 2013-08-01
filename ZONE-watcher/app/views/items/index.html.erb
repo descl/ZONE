@@ -1,39 +1,25 @@
 <%= render 'home/search_tool'%>
+<%= render 'reminder_panel'%>
 
 <div class="hidden">
-  <%= @search.to_json %>
-<%= @search.sources.to_json %>
-<%= @search.filters.to_json %>
-<hr/>
+    <%= @search.to_json %>
+    <%= @search.sources.to_json %>
+    <%= @search.filters.to_json %>
+    <hr/>
 
-<%= raw h(@sparqlRequest).gsub(/\n/, '<br/>') %>
-<hr/>
-      </div>
-
-<%= javascript_tag do %>
-query = '<%= j items_path(:old => @filters) %>';
-<% end %>
-
-<!--
-<% if @filters.length > 0 %>
-<h3>Votre filtre actuel:</h3>
-<% @filters.each do |filter| %>
-<div class="btn-group">
-<%= raw getButtonForFilter(filter)%>
-<%=link_to "x", items_path(:old => removeFilterFromList(@filters, filter)), :class => "btn btn-danger"%>
+    <%= raw h(@sparqlRequest).gsub(/\n/, '<br/>') %>
+    <hr/>
 </div>
-<% end %>
-<br/></br/>
-<% end %>-->
 
 <%= javascript_tag do %>
-$("#load-more2").bind("ajax:complete", function(et, e){
-$("#load-more2").html(e.responseText); // insert content
-event.preventDefault(); // Prevent link from following its href
-});
+    $("#load-more2").bind("ajax:complete", function(et, e){
+    $("#load-more2").html(e.responseText); // insert content
+        event.preventDefault(); // Prevent link from following its href
+    });
 <% end %>
 
 
+<!-- rss feed and format page selection-->
 <div class="row-fluid">
 	<div class="btn-group pull-right">
 		<button id="btnCard" class="btn" onclick="changeItemFormat('card');">
@@ -52,30 +38,30 @@ event.preventDefault(); // Prevent link from following its href
 
 <hr>
 
-<%= render "reminder_panel"%>
+<!-- items printing-->
 <div class="items-box">
-<div class="row-fluid">
-	<% id=0; @items.each do |item| %>
-      <%
-      similarityColor = case item.similarity
-     	when 0 then ""
-        when 1 then "lowSimilarity"
-        when 2 then "mediumSimilarity"
-        else "highSimilarity"
-      end
-      %>
-	<div class="well item-bloc <%= similarityColor%>">
-		<div class="item_container" sourceid="<%= id %>"></div>
-		<div class="item_wait" sourceid="<%= id%>">
-			<a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
-			<a href="<%= item.uri%>"><%= item.title%></a>
+    <div class="row-fluid">
+        <% id=0; @items.each do |item| %>
+          <%
+          similarityColor = case item.similarity
+            when 0 then ""
+            when 1 then "lowSimilarity"
+            when 2 then "mediumSimilarity"
+            else "highSimilarity"
+          end
+          %>
+        <div class="well item-bloc <%= similarityColor%>">
+            <div class="item_container" sourceid="<%= id %>"></div>
+            <div class="item_wait" sourceid="<%= id%>">
+                <a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
+                <a href="<%= item.uri%>"><%= item.title%></a>
 
-		</div>
-	</div>
+            </div>
+        </div>
 
-	<% id+=1; end %>
-</div>
-<div class="span12">
-	<%= will_paginate @page_results %>
-</div>
+        <% id+=1; end %>
+    </div>
+    <div class="span12">
+        <%= will_paginate @page_results %>
+    </div>
 </div>

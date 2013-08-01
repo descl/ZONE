@@ -1,5 +1,7 @@
 ZONEWatcher::Application.routes.draw do
 
+  resources :search_filters
+
   get '/searches/create' => 'searches#create',
         :via => :post
   resources :searches
@@ -29,8 +31,6 @@ ZONEWatcher::Application.routes.draw do
   resources :oldsources
 
   get "home/index"
-
-  get "home/search"
 
   resources :items
 

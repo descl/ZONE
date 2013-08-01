@@ -71,4 +71,16 @@ class Item# < ActiveRecord::Base
     require 'cgi'
     CGI.escape(@uri.to_s)
   end
+
+  def getUriHash
+    return Digest::SHA1.hexdigest(self.uri)
+  end
+
+  def getTypePicture
+    if uri.starts_with?('https://twitter.com') || uri.starts_with?('http://twitter.com')
+      return "assets/twitter.png"
+    else
+      return "assets/foregroundRSS.png"
+    end
+  end
 end

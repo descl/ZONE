@@ -55,19 +55,17 @@ class ItemsController < ApplicationController
   def show
     require 'cgi'
     require 'digest'
-    @uri = params[:id]
+    uri = params[:id]
     if params[:format] != nil
-      @uri = @uri+"."+params[:format]
+      uri = uri+"."+params[:format]
     end
-    @uri = URI.escape(CGI.unescape(@uri))
-    if (@uri[6] != '/' && @uri[4]== ":") || (@uri[7] != '/' && @uri[5]== ":")
-      @uri = @uri.insert(6,'/')
+    uri = URI.escape(CGI.unescape(uri))
+    if (uri[6] != '/' && uri[4]== ":") || (uri[7] != '/' && uri[5]== ":")
+      uri = uri.insert(6,'/')
     end
-    @uri = CGI.escape(@uri)
-
-    @uriHash = Digest::SHA1.hexdigest(@uri)
+    uri = CGI.escape(uri)
     
-    @item = Item.find(@uri)
+    @item = Item.find(uri)
 
     @filters = parseFilterParams(params)
     

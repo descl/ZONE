@@ -1,102 +1,102 @@
-<div class="row-fluid">
-
-	<% if @item.props["http://purl.org/rss/1.0/image"] != nil
-    image=@item.props["http://purl.org/rss/1.0/image"][0].html_safe
-  end
+<%
+   if @item.props["http://purl.org/rss/1.0/image"] != nil
+     image=@item.props["http://purl.org/rss/1.0/image"][0].html_safe
+   end
 %>
 
+<div class="row-fluid">
 	<% if image != nil  %>
 	<div class="span3">
 		<% if image.end_with?("flv") || image.end_with?("mp4") %>
-		<div id="<%= image%>">
-			Loading the player...
-		</div>
-		<script type="text/javascript">
-jwplayer("<%= image%>
-	").setup({
-	file: "
-<%= image%>
-	",
-	width: "100%"
-	});
-		</script>
+            <div id="<%= image%>">
+                Loading the player...
+            </div>
+            <script type="text/javascript">
+                jwplayer("<%= image%>").setup({file: "<%= image%>",	width: "100%"});
+            </script>
 		<%else%>
-		<img src="<%= image%>" class="img-polaroid span12">
+		    <img src="<%= image%>" class="img-polaroid span12">
 		<%end%>
 	</div>
 
 	<div class="span9">
-		<%else%>
-		<%end%>
+	<%end%>
+        <!--header news part -->
 		<div class="row-fluid">
-			<% if @item.uri.starts_with?('https://twitter.com')
-        thumb="assets/twitter.png"
-      else
-        thumb="assets/foregroundRSS.png"
-      end
-%>
-			<div>
-				<img src="<%= thumb%>" class="littleCircleImage" width=30 height=30>
-				<a class="titleItem" target="_blank" href= "<%= @item.uri %>"><b><u><%= @item.props["http://purl.org/rss/1.0/title"][0]%></u> </b> </a>
-				<span class="showFavorite"><i class="icon-share pointerMouse"></i></span>
-				<span class="row-favorite btn-group"> 
-					<button class="btn btn-share" data-toggle="collapse" data-parent="#accordion-<%= @uriHash%>" href="#collapse-<%= @uriHash%>">
-						<i class="icon icon-tag"></i>
-					</button>
-					<button class="btn btnFavorite btn-share" disabled>
-						<i class="icon icon-heart"></i>
-					</button>
-					<button class="btn btnMarkasRead btn-share" disabled>
-						<i class="icon icon-check"></i>
-					</button> 
-					<a class="shareLink btn-share" href="https://www.facebook.com/sharer.php?u=<%= @item.uri %>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
-						<img class="littleCircleImage"src="assets/foregroundFB.png" height=30 width=30/>
-					</a>
-					<a class="shareLink btn-share" href="https://plus.google.com/share?url=<%= @item.uri %>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
-						<img class="littleCircleImage"src="assets/foregroundGoogle.png" alt="Share on Google+" height=30 width=30/>
-					</a>
-					<a class="shareLink btn-share" href="https://twitter.com/share?url=<%= @item.uri %>&via=readornet&text=<%= @item.props["http://purl.org/rss/1.0/title"][0]%>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
-						<img class="littleCircleImage" src="assets/foregroundTwitter.png" height=30 width=30>
-					</a> 
-				</span>
-			</div>
-			<i> <%= begin
-          date = DateTime.parse(@item.props["http://purl.org/rss/1.0/pubDate"][0])
-          date.strftime('Le %d/%m/%Y à %H:%M')
+            <img src="<%= @item.getTypePicture%>" class="littleCircleImage" width=30 height=30>
+            <a class="titleItem" target="_blank" href= "<%= @item.uri %>"><b><u><%= @item.props["http://purl.org/rss/1.0/title"][0]%></u> </b> </a>
+            <span class="showFavorite"><i class="icon-share pointerMouse"></i></span>
+            <span class="row-favorite btn-group">
+                <button class="btn btn-share" data-toggle="collapse" data-parent="#accordion-<%= @item.getUriHash%>" href="#collapse-<%= @item.getUriHash%>">
+                    <i class="icon icon-tag"></i>
+                </button>
+                <button class="btn btnFavorite btn-share" disabled>
+                    <i class="icon icon-heart"></i>
+                </button>
+                <button class="btn btnMarkasRead btn-share" disabled>
+                    <i class="icon icon-check"></i>
+                </button>
+                <a class="shareLink btn-share" href="https://www.facebook.com/sharer.php?u=<%= @item.uri %>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+                    <img class="littleCircleImage"src="assets/foregroundFB.png" height=30 width=30/>
+                </a>
+                <a class="shareLink btn-share" href="https://plus.google.com/share?url=<%= @item.uri %>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+                    <img class="littleCircleImage"src="assets/foregroundGoogle.png" alt="Share on Google+" height=30 width=30/>
+                </a>
+                <a class="shareLink btn-share" href="https://twitter.com/share?url=<%= @item.uri %>&via=readornet&text=<%= @item.props["http://purl.org/rss/1.0/title"][0]%>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+                    <img class="littleCircleImage" src="assets/foregroundTwitter.png" height=30 width=30>
+                </a>
+            </span>
+			<i>
+              <%=
+                begin
+                  date = DateTime.parse(@item.props["http://purl.org/rss/1.0/pubDate"][0])
+                  date.strftime('Le %d/%m/%Y à %H:%M')
 
-        rescue
-        end %></i>
+                rescue
+                end
+              %>
+            </i>
 		</div>
-		<div class="row-fluid">
 
+        <!--content news part -->
+		<div class="row-fluid">
 			<div class="contentArticle">
 				<%= if @item.props["http://purl.org/rss/1.0/description"] != nil
         			@item.props["http://purl.org/rss/1.0/description"][0].html_safe 
         		end %>
 			</div>
 			<div class="btn-toolbar">
-
 				<% htmlval =""
 				@item.props.each do |item|
-				item[1].each do |value|
+                    item[1].each do |value|
+                        filter = SearchFilter.new(:value =>  value)
+                        if value.start_with?("http")
+                          filter.uri = value
+                        end
+                        filter.prop = item[0]
+                        #filter.save
+                        #if filter.prop.starts_with? ZoneOntology::PLUGIN_EXTRACT_ARTICLES_CONTENT_RES
+                        #    htmlval= filter.value
+                        #end
+                        linkval = getButtonForFilter(filter)
+                        if !linkval then
+                            next
+                        end
+                        %>
 
-				filter = Filter.new(:prop => item[0], :value => value)
-				if filter.prop.starts_with? ZoneOntology::PLUGIN_EXTRACT_ARTICLES_CONTENT_RES
-				htmlval= filter.value
-				end
-				linkval = getButtonForFilter(filter)
-				if !linkval then
-				next
-				end
-				%>
-				<div class="btn-group btn-group-label">
-					<%= linkval  %>
-				</div>
-				<%end  end
-				%>
+                        <div class="btn-group btn-group-label">
+                            <%= linkval %>
+                        </div>
+                      <div class="btn-group btn-group-label">
+                        <%= link_to 'get Info Box', filter , :class =>"label"%><!-- TODO: code it! -->
+                      </div>
+                    <%end%>
+                <%end%>
 			</div>
+
+          <!--footer news part with share buttons -->
 			<div class="pull-right row-list">
-				<button class="btn" data-toggle="collapse" data-parent="#accordion-<%= @uriHash%>" href="#collapse-<%= @uriHash%>">
+				<button class="btn" data-toggle="collapse" data-parent="#accordion-<%= @item.getUriHash%>" href="#collapse-<%= @item.getUriHash%>">
 					<i class="icon icon-tag"></i>
 				</button>
 				<button class="btn btnFavorite" disabled>
@@ -117,13 +117,14 @@ jwplayer("<%= image%>
 			</div>
 		</div>
 	</div>
+
+    <!-- debug tool to print the tags ;) -->
 	<div class="row-fluid">
-		<div class="accordion" id="accordion-<%= @uriHash %>" style="margin-bottom: 0px;">
+		<div class="accordion" id="accordion-<%= @item.getUriHash %>" style="margin-bottom: 0px;">
 			<div class="accordion-group borderLess">
-				<div id="collapse-<%= @uriHash%>" class="accordion-body collapse">
+				<div id="collapse-<%= @item.getUriHash%>" class="accordion-body collapse">
 					<div class="accordion-inner" style="padding: 0px;">
 						<table class="table table-striped">
-							<!--BORDER="1" style="border: 1px black; border-spacing: 0px;"-->
 							<% i=0; @item.props.each do |prop,values|
 							values.each do |value|
 							i=i+1
@@ -134,10 +135,10 @@ jwplayer("<%= image%>
 								<%= value %> <a href= "<%= @uri %>"> (...) </a> <% elsif (prop.starts_with? 'http://rdf.insee') || (prop.starts_with? 'http://www.dbpedia') %>
 								<%= link_to value, "getOne?element="+value,:id => "elem"+i.to_s(), :remote => true %>
 								<%= javascript_tag do %>
-								$("#elem<%= i%>").bind("ajax:complete", function(et, e){
-								$("#elem<%= i.to_s()%>").html(e.responseText); // insert content
-								event.preventDefault(); // Prevent link from following its href
-								});
+                                    $("#elem<%= i%>").bind("ajax:complete", function(et, e){
+                                    $("#elem<%= i.to_s()%>").html(e.responseText); // insert content
+                                    event.preventDefault(); // Prevent link from following its href
+                                    });
 								<%end%>
 								<%elsif (value.starts_with? 'http://')%>
 								<%= link_to value,value %>
@@ -153,3 +154,4 @@ jwplayer("<%= image%>
 			</div>
 		</div>
 	</div>
+</div>
