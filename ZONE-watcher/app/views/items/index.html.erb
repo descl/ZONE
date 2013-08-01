@@ -59,8 +59,8 @@ event.preventDefault(); // Prevent link from following its href
       <%
       similarityColor = case item.similarity
      	when 0 then ""
-        when 1..2 then "lowSimilarity"
-        when 3..4 then "mediumSimilarity"
+        when 1 then "lowSimilarity"
+        when 2 then "mediumSimilarity"
         else "highSimilarity"
       end
       %>
