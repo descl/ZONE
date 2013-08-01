@@ -230,3 +230,15 @@ a.label:visited{
   background:none;
   color:black;
 }
+
+.lowSimilarity{
+  border: 2px solid #87cfe9;
+}
+
+.mediumSimilarity{
+  border: 3px solid #007e9d;
+}
+
+.highSimilarity{
+  border: 4px solid #002342;
+}
