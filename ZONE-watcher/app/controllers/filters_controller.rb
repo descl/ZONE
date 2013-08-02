@@ -1,6 +1,5 @@
 class FiltersController < ApplicationController
   include ApplicationHelper
-  $endpoint = Rails.application.config.virtuosoEndpoint
 
   # GET /filters
   # GET /filters.json

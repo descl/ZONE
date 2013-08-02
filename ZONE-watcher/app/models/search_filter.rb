@@ -46,14 +46,14 @@ class SearchFilter < ActiveRecord::Base
       self.uri = "http://#{self.uri[11,self.uri.length]}"
     end
 
-    $endpointDBpedia = "http://dbpedia.org/sparql"
+    endpointDBpedia = "http://dbpedia.org/sparql"
     queryStr = "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
             select ?abstract ?thumb where {
               <#{uri}> dbpedia-owl:abstract ?abstract.
               OPTIONAL{ <#{uri}> dbpedia-owl:thumbnail ?thumb}.
               Filter(lang(?abstract) = \"fr\")
             } LIMIT 1"
-    store = SPARQL::Client.new($endpointDBpedia)
+    store = SPARQL::Client.new(endpointDBpedia)
     query = store.query(queryStr)
     return {:abstract => query[0][:abstract], :thumbnail => query[0][:thumb]}
   end

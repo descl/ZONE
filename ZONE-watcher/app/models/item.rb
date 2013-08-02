@@ -3,12 +3,12 @@ class Item# < ActiveRecord::Base
   include ActiveModel::AttributeMethods
   require 'rubygems'
   require 'rest_client'
-  $endpoint = Rails.application.config.virtuosoEndpoint
 
 
   attr_accessor :uri, :title, :props, :description, :date, :localURI, :similarity
 
   def self.all(param = "",start=0,per_page=10)
+    endpoint = Rails.application.config.virtuosoEndpoint
     #if start > (10000 - per_page)
     #  return Array.new
     #end
@@ -23,7 +23,7 @@ class Item# < ActiveRecord::Base
 
     }ORDER BY DESC(?pubDateTime) LIMIT #{per_page} OFFSET #{start}"
 
-    store = SPARQL::Client.new($endpoint)
+    store = SPARQL::Client.new(endpoint)
     items = Array.new
     store.query(query).each do |item|
       similarity = item.count - 3
@@ -33,6 +33,7 @@ class Item# < ActiveRecord::Base
   end
   
   def self.find(param)
+    endpoint = Rails.application.config.virtuosoEndpoint
     require 'cgi'
     require 'uri'
     
@@ -42,7 +43,7 @@ class Item# < ActiveRecord::Base
     SELECT ?prop ?value
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     WHERE { <#{uri}> ?prop ?value.}"
-    store = SPARQL::Client.new($endpoint)
+    store = SPARQL::Client.new(endpoint)
     result = store.query(query)
     
     params = Hash.new
