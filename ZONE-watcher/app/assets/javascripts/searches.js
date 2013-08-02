@@ -255,3 +255,12 @@ function updateFilename(path) {
 	else
 		$('#fileTextName').html($('#fileTextName').attr('data-initial'));
 }
+
+//show or hide the import rss panel
+function showImportRss(){
+	if ( $(".importRss").is(":visible")){
+		$(".importRss").slideUp();
+	} else{
+		$(".importRss").slideDown();
+	}
+}
