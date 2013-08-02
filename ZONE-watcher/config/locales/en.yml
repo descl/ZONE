@@ -45,6 +45,10 @@ en:
           "Upload"
         cancel:
           "Cancel"
+    rss:
+      button:
+        addall:
+          "Add all"
     groups:
       title:
         "Manage sources group"
