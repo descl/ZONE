@@ -14,9 +14,7 @@ class SourcesController < ApplicationController
           redirect_to :back
           return
         else
-          @sources = Source.all(
-              "?uri <#{ZoneOntology::SOURCES_OWNER}> ?owner.
-          Filter(str(?owner) = \"#{current_user.id}\")")
+          @sources = current_user.getSources
         end
       }# index.html.erb
       format.json {
