@@ -38,6 +38,35 @@
 	</div>
 	<div class="modal-body importOpml">
 		<div class="row-fluid">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Thème</th>
+						<th>URL</th>
+						<th>Libellé</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% if user_signed_in?
+					@sources = current_user.getSources
+					@sources.each do |source| %>
+					<% next if source == nil  %>
+					<% filter = Filter.new(:prop => "http://purl.org/rss/1.0/source",:value => source.uri) %>
+					<% uriNumber = filters_getNumber_path(:old => [filter]) %>
+					<tr>
+						<td><%= source.theme %></td>
+						<td><%= source.uri%></td>
+						<td><%= source.label %></td>
+						<td>
+							<button class="btn btn-success span12">
+								Ajouter
+							</button>
+						</td>
+					</tr>
+					<% end end %>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	<div class="modal-footer">
@@ -184,7 +213,8 @@
 										<div class="row-fluid">
 											<div class="span1"></div>
 											<div class="span3">
-												<button href="#modalrss" class="btn btn-primary span12" type="button" data-toggle="modal">
+												<button href="#modalrss" class="btn btn-primary span12" type="button" data-toggle="modal" <%= if !user_signed_in?
+                        "disabled" end%>>
 													<%= raw t 'newmodal.sources.rss.yourrss' %>
 												</button>
 											</div>
