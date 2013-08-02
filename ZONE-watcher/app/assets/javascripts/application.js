@@ -1,8 +1,8 @@
 //= require jquery
 //  require_tree .
-//  require jquery_ujs
+//=  require jquery_ujs
 //=  require jquery.ui.all
-
+//= require jquery.remotipart
 
 //Prepare the input with all data
 //Read all the tag selected ( sources and filters ) and create input with the map corresponding to these tags

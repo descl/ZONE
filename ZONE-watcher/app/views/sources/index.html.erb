@@ -10,10 +10,15 @@
     <h1> Not yet implemented</h1>
   </div>
 
+  <!-- OPML import form -->
   <div id="opml" class="tab-pane fade">
     <h1><%= t("source.opml.title")%></h1>
-    <%= form_for(:upload, :url => { :action => "uploadopml" }, :multipart => true) do |form| %>
-        <p><%= form.file_field 'datafile' %><%= form.submit "Upload" %></p>
+    <%= form_for(:upload, :url => { :action => "uploadopml" }, :html => { :multipart => true }, :remote => true) do |form| %>
+        <p>
+          <%= form.label 'datafile' %>
+          <%= form.file_field 'datafile' %>
+          <%= form.submit  %>
+        </p>
     <% end %>
   </div>
 

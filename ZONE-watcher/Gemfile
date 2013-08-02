@@ -50,6 +50,7 @@ gem 'omniauth-google-oauth2'
 #opml files import
 gem 'opml_saw', :git => "git://github.com/feedbin/opml_saw.git", :branch => "master"
 gem "paperclip", "~> 3.4.1"
+gem "remotipart", "~> 1.2.1" #load files with Ajax
 
 gem "tag_it", "~> 0.0.1"
 

@@ -37,7 +37,7 @@ class SourcesController < ApplicationController
     @source = Source.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html # index.html.erb
       format.json { render json: @source }
     end
   end
@@ -159,24 +159,30 @@ class SourcesController < ApplicationController
   end
 
   def uploadopml
+    puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
+    puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
     xml =  params['upload']['datafile'].read
     opml = OpmlSaw::Parser.new(xml)
     opml.parse
+    puts opml.feeds
+    @sourcesList = Array.new
     opml.feeds.each do |r|
       if r[:xml_url] == nil
         next;
       end
-
       s = Source.new(r[:xml_url],{
         :label => r[:title],
-        :owner => current_user.id
+        :owner => current_user.id,
+        :theme => r[:tag]
       })
-      s.save
+      @sourcesList << s.uri
+      puts "------------------------------------------------"
+      puts s.to_json
+      #s.save
     end
     flash[:notice] = 'Sources added'
     respond_to do |format|
-      format.html { redirect_to sources_url }
-      format.json { head :no_content }
+      format.js
     end
   end
 end
