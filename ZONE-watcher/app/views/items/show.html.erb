@@ -88,7 +88,9 @@
                             <%= linkval %>
                         </div>
                       <div class="btn-group btn-group-label">
-                        <%= link_to 'get Info Box', filter , :class =>"label"%><!-- TODO: code it! -->
+                        <% if filter.uri != nil && filter.uri.start_with?("http://www.dbpe") %>
+                            <%= link_to 'get Info Box', search_filters_path(:uri => filter.uri ) , :class =>"label"%><!-- TODO: code it! -->
+                        <%end%>
                       </div>
                     <%end%>
                 <%end%>
