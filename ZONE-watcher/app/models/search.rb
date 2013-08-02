@@ -42,8 +42,9 @@ class Search < ActiveRecord::Base
     SELECT COUNT(DISTINCT ?concept) as ?number
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     FROM <#{ZoneOntology::GRAPH_SOURCES}> WHERE {\n"
+    query +="?concept RSS:title ?title."
     query += self.generateSPARQLRequest
-    query += "?concept RSS:title ?title.} LIMIT 1"
+    query += "} LIMIT 1"
     store = SPARQL::Client.new(endpoint)
     if store.query(query).length == 0
       return 0
