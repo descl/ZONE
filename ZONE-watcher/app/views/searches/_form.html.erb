@@ -192,18 +192,18 @@
 												</thead>
 												<tbody>
 													<% if user_signed_in?
-													@sources = current_user.getSources
-													@sources.each do |source| %>
-													<tr>
-														<td><%= source.theme %></td>
-														<td><%= source.uri%></td>
-														<td><%= source.label %></td>
-														<td>
-														<button class="btn btn-success span12">
-															Ajouter
-														</button></td>
-													</tr>
-													<% end %>
+														@sources = current_user.getSources
+														@sources.each do |source| %>
+															<tr>
+																<td><%= source.theme %></td>
+																<td><%= source.uri%></td>
+																<td><%= source.label %></td>
+																<td>
+																<button class="btn btn-success span12" type="button" onclick="addPersonnalRss('<%= source.uri%>')">
+																	Ajouter
+																</button></td>
+															</tr>
+														<% end %>
 													<% end %>
 												</tbody>
 											</table>
