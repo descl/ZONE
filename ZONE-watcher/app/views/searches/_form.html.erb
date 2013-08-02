@@ -163,7 +163,7 @@
 										<div class="row-fluid">
 											<div class="span1"></div>
 											<div class="span3">
-												<button class="btn btn-primary span12" type="button" data-toggle="modal" onclick="showImportRss()" <%= if !user_signed_in? 
+												<button class="btn btn-primary span12" type="button" onclick="showImportRss()" <%= if !user_signed_in? 
 													"disabled" end%>>
 													<%= raw t 'newmodal.sources.rss.yourrss' %>
 												</button>
