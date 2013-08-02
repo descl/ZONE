@@ -255,3 +255,17 @@ function updateFilename(path) {
 	else
 		$('#fileTextName').html($('#fileTextName').attr('data-initial'));
 }
+
+//show or hide the import rss panel
+function showImportRss(){
+	if ( $(".importRss").is(":visible")){
+		$(".importRss").slideUp();
+	} else{
+		$(".importRss").slideDown();
+	}
+}
+
+function addPersonnalRss(url){
+	$("#wellSources").append("<span class='label-wrap label label-warning rssSource' >" + url + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();checkWell()'></i></span> ");
+    $("#addAllRSS").attr("disabled", true);
+}

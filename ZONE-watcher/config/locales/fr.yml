@@ -45,6 +45,10 @@ fr:
           "Importer"
         cancel:
           "Annuler"
+    rss:
+      button:
+        addall:
+          "Tout ajouter"
     groups:
       title:
         "Gérer vos groupes de sources"
