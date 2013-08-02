@@ -37,7 +37,7 @@ en:
       title:
         "Import opml file"
       empty:
-        "Aucun fichier"
+        "No file"
       button:
         select:
           "Select a file"
