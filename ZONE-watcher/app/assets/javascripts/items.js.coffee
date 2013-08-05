@@ -29,9 +29,9 @@ $(document).ready ->
 
   #Generation of the popover of the tag
   $(".label-tag").each ->
-    btnOptionnal = "<button type='button' class='btn btn-info span12 btnTag' onclick='addTag(\"opt\",\"" + $(this).html() + "\");closePop()'>"+ $("#titleOr").html() + "</button><br>"
-    btnMust = "<button type='button' class='btn btn-success span12 btnTag paddingMust' onclick='addTag(\"must\",\"" + $(this).html() + "\");closePop()'>"+ $("#titleAnd").html() + "</button><br>"
-    btnBan = "<button type='button' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\",\"" + $(this).html() + "\");closePop()'>"+ $("#titleWithout").html() + "</button>"
+    btnOptionnal = "<button type='button' class='btn btn-info span12 btnTag' onclick='addTag(\"opt\",\"" + $(this).html() + "\",\"" + $(this).attr('filter-uri') + "\");closePop()'>"+ $("#titleOr").html() + "</button><br>"
+    btnMust = "<button type='button' class='btn btn-success span12 btnTag paddingMust' onclick='addTag(\"must\",\"" + $(this).html() + "\",\"" + $(this).attr('filter-uri') + "\");closePop()'>"+ $("#titleAnd").html() + "</button><br>"
+    btnBan = "<button type='button' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\",\"" + $(this).html() + "\",\"" + $(this).attr('filter-uri') + "\");closePop()'>"+ $("#titleWithout").html() + "</button>"
     
     name= $(this).html()
     titleTag = "<span class='titletag'>"+name + "</span><i class='icon-trash pull-right pointerMouse' title='Delete' onclick='deleteTag(\""+name+"\")'></i><i class='icon-edit pull-right pointerMouse' title='Edit' onclick='editTag(\""+name+"\")'></i>"

@@ -31,7 +31,7 @@ module ItemsHelper
     end
 
     if(filterval != "")
-      res=link_to filterval, itemURI, :class => labels, "data-uri" => search_filters_path(:uri => filter.uri )
+      res=link_to filterval, itemURI, :class => labels, "data-uri" => search_filters_path(:uri => filter.uri ), "filter-uri" => filter.uri
     end
     return res
   end
