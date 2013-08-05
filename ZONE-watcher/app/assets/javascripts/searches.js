@@ -127,21 +127,21 @@ function addFilter(type) {
 	var id = getId();
     //Add the line to the table
     if (type == 'and')
-        $('#wellAnd').append("<span id='"+id+"' class='label label-success' draggable='true' ondragstart='drag(event)'>" + motcle + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
+        $('#wellAnd').append("<span id='"+id+"' class='label label-success' draggable='true' ondragstart='drag(event)' filter-uri='"+$(this).attr('filter-uri')+"'>" + motcle + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
     else if (type == 'or')
-        $('#wellOr').append("<span id='"+id+"' class='label label-info' draggable='true' ondragstart='drag(event)'>" + motcle + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
+        $('#wellOr').append("<span id='"+id+"' class='label label-info' draggable='true' ondragstart='drag(event)' filter-uri='"+$(this).attr('filter-uri')+"'>" + motcle + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
     else if (type == 'without')
-        $('#wellWithout').append("<span id='"+id+"' class='label label-danger' draggable='true' ondragstart='drag(event)'>" + motcle + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
+        $('#wellWithout').append("<span id='"+id+"' class='label label-danger' draggable='true' ondragstart='drag(event)' filter-uri='"+$(this).attr('filter-uri')+"'>" + motcle + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
 
     $('#keywordTable tbody > tr > td > label > input').each(function() {
         if ($(this).is(':checked')) {
         	id = getId();
             if (type == 'and')
-                $('#wellAnd').append("<span id='"+id+"' class='label label-success'>" + $(this).val() + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
+                $('#wellAnd').append("<span id='"+id+"' class='label label-success' filter-uri='"+$(this).attr('filter-uri')+"'>" + $(this).val() + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
             else if (type == 'or')
-                $('#wellOr').append("<span id='"+id+"' class='label label-info'>" + $(this).val() + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
+                $('#wellOr').append("<span id='"+id+"' class='label label-info' filter-uri='"+$(this).attr('filter-uri')+"'>" + $(this).val() + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
             else if (type == 'without')
-                $('#wellWithout').append("<span id='"+id+"' class='label label-danger'>" + $(this).val() + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
+                $('#wellWithout').append("<span id='"+id+"' class='label label-danger' filter-uri='"+$(this).attr('filter-uri')+"'>" + $(this).val() + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
         }
     });
     $('#keyword').val('');
@@ -166,7 +166,7 @@ function updateKeywordTable() {
             rebootFiltering();
             $.each(data, function(key, val) {
                 if ($('#keyword').val() != "" && $('#keyword').val().length>2) {
-                    $('#keywordTable').append('<tr><td><label class="checkbox"><input type="checkbox" value="' + val + '">' + val + '</label></td></tr>');
+                    $('#keywordTable').append('<tr><td><label class="checkbox"><input type="checkbox" value="' + val.value + '" filter-uri="'+ val.uri+'">' + val.value + '</label></td></tr>');
                 }
             });
             $("#keywordTable").show();
