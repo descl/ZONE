@@ -247,7 +247,7 @@ a.label:visited{
   padding: 9px 15px;
 }
 
-.popover-text {
+.rowContentTag {
     max-height: 200px;
     overflow-y: auto;
 }
@@ -265,4 +265,12 @@ a.label:visited{
 }
 .adding-info{
   text-align: center;
+}
+
+.paddingMust{
+  padding-left:6px;
+}
+
+#imgtag{
+  margin-right : 5px;
 }

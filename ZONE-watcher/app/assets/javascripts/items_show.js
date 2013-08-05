@@ -38,6 +38,7 @@ $(document).ready(function() {
     })(document, 'script', 'facebook-jssdk');
     
     changeItemFormat('card');
+    
 });
 
 //Initiate the truncate of all text
@@ -51,6 +52,20 @@ $(window).load(function(){
         ellipsisText: "",  
         moreAni: "fast",  
         lessAni: "fast" 
+	});
+	
+	$('.label-tag').on('click', function () {
+		$('.label-tag').not(this).popover('hide');
+		$(this).popover('toggle');
+		$('.popover').find('.textContent').jTruncate({
+			length: 200,  
+	        minTrail: 0,  
+	        moreText: "(...)",  
+	        lessText: "[-]",  
+	        ellipsisText: "",  
+	        moreAni: "fast",  
+	        lessAni: "fast" 
+		})
 	});
 	
 	$(".items-box").fadeIn();
