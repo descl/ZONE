@@ -34,7 +34,7 @@ $(document).ready ->
     btnBan = "<button type='button' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\",\"" + $(this).html() + "\");closePop()'>"+ $("#titleWithout").html() + "</button>"
     
     name= $(this).html()
-    titleTag = "<span class='titletag'>"+name + "</span><i class='icon-remove-sign pull-right pointerMouse' title='Delete' onclick='deleteTag(\""+name+"\")'></i><i class='icon-edit pull-right pointerMouse' title='Edit' onclick='editTag(\""+name+"\")'></i>"
+    titleTag = "<span class='titletag'>"+name + "</span><i class='icon-trash pull-right pointerMouse' title='Delete' onclick='deleteTag(\""+name+"\")'></i><i class='icon-edit pull-right pointerMouse' title='Edit' onclick='editTag(\""+name+"\")'></i>"
     
     if ($(this).attr("data-uri").indexOf("/search_filters?uri=http%3A%2F%2Fwww.dbpedia.org") is 0)
       item = $(this)
