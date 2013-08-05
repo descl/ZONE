@@ -244,7 +244,7 @@ fr:
         title:
           "Modification d'un tag"
         content:
-          "Etes-vous sur de vouloir supprimer ce tag?"
+          "Nouveau nom"
         update:
           "Modifier"
         cancel:

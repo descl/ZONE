@@ -242,13 +242,13 @@ en:
           "Cancel"
       edit:
         title:
-          "Modification d'un tag"
+          "Tag modification"
         content:
-          "Etes-vous sur de vouloir supprimer ce tag?"
+          "New tag text"
         update:
-          "Modifier"
+          "Update"
         cancel:
-          "Annuler"
+          "Cancel"
   newmodal:
     breadcrumb:
       sources:
