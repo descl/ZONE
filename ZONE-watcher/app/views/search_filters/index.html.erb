@@ -1,3 +1,8 @@
-<%= @infos[:abstract]%>
-
-<%= image_tag @infos[:thumbnail] %>
+<div class="row-fluid rowContentTag">
+	<div class="span12">
+		<%= image_tag @infos[:thumbnail], :class => "pull-left span5", :id => "imgtag"%>
+		<span class="textContent">
+			<%= @infos[:abstract]%>
+		</span>
+	</div>
+</div>
