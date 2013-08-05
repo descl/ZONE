@@ -3,16 +3,13 @@ class SearchFilter < ActiveRecord::Base
   attr_accessor :prop #define the property of tags comming from items
 
   belongs_to :search
-  def self.build_from_form(value,kind)
+  def self.build_from_form(filter,kind)
     result = SearchFilter.new
 
-    if !value.start_with? "http"
-      result.uri = LinkedWord.find(value)
-    else
-      result.uri = value
+    if filter["uri"] != nil
+      result.uri = filter["uri"]
     end
-
-    result.value = value
+    result.value = CGI.unescape(filter["value"])
     result.kind = kind
     return result
   end

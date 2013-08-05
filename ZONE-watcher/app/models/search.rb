@@ -28,8 +28,8 @@ class Search < ActiveRecord::Base
 
     if inputFilters != nil
       inputFilters.each do |kind,vals|
-        vals.each do |value|
-          result.filters << SearchFilter.build_from_form(CGI.unescape(value),kind)
+        vals.each do |filter|
+          result.filters << SearchFilter.build_from_form(filter,kind)
         end
       end
     end
