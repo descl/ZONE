@@ -4,15 +4,15 @@ class SearchFilter < ActiveRecord::Base
 
   belongs_to :search
   def self.build_from_form(value,kind)
+    result = SearchFilter.new
+
     if !value.start_with? "http"
-      uri = LinkedWord.find(value)
+      result.uri = LinkedWord.find(value)
     else
-      uri = value
+      result.uri = value
     end
 
-    result = SearchFilter.new
     result.value = value
-    result.uri = uri
     result.kind = kind
     return result
   end
@@ -22,8 +22,8 @@ class SearchFilter < ActiveRecord::Base
   end
 
   def getSparqlTriple
-    if value.start_with? "http"
-      return "?concept ?filter#{self.id} <#{self.value}>"
+    if self.uri != nil
+      return "?concept ?filter#{self.id} <#{self.uri}>"
     else
       return "?concept ?filter#{self.id} \"#{self.value}\""
     end

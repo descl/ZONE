@@ -7,26 +7,28 @@ class Item# < ActiveRecord::Base
 
   attr_accessor :uri, :title, :props, :description, :date, :localURI, :similarity
 
-  def self.all(param = "",start=0,per_page=10)
+  def self.all(search = "",start=0,per_page=10)
+    sparqlFilter = search.generateSPARQLRequest
+
     endpoint = Rails.application.config.virtuosoEndpoint
     #if start > (10000 - per_page)
     #  return Array.new
     #end
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
-    SELECT *
+    SELECT DISTINCT *
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     FROM <#{ZoneOntology::GRAPH_SOURCES}>
     WHERE {
       ?concept RSS:title ?title.
       OPTIONAL { ?concept RSS:pubDateTime ?pubDateTime}.
-      #{param}
+      #{sparqlFilter}
 
     }ORDER BY DESC(?pubDateTime) LIMIT #{per_page} OFFSET #{start}"
 
     store = SPARQL::Client.new(endpoint)
     items = Array.new
     store.query(query).each do |item|
-      similarity = item.count - 3
+      similarity = item.count - 3 - search.getAndFilters.size
       items << Item.new(item.concept.to_s, item.title, similarity)
     end
     return {:result => items, :query => query}

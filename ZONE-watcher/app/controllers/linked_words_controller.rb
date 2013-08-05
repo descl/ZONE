@@ -8,10 +8,7 @@ class LinkedWordsController < ApplicationController
     @result = Array.new
     possibleWords = LinkedWord.complete(params[:desc])
     possibleWords.each do |word|
-      if word.casecmp(params[:desc]) ==1
-        @result << word
-      end
-      @result.concat(LinkedWord.getLinkedWords(word))
+      @result.concat(LinkedWord.getLinkedWords(word[:value]))
     end
 
     respond_to do |format|
@@ -21,12 +18,12 @@ class LinkedWordsController < ApplicationController
   end
 
   def autoComplete
-    #cache(params[:desc], :expires_in => 10.minute) do
+    cache(params[:desc], :expires_in => 10.minute) do
       @result = LinkedWord.complete(params[:desc])
       respond_to do |format|
         format.json {
           render json: @result }
         end
       end
-    #end
+    end
 end

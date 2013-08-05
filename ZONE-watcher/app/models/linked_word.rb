@@ -3,7 +3,7 @@ include LinkedWordsHelper
 class LinkedWord
 
   def self.complete(param = "")
-    endpoint = "http://fr.dbpedia.org/sparql"
+    endpoint = "http://dbpedia.org/sparql"
     words = param.split
     wordsRequest  = ""
     words.each do |word|
@@ -20,26 +20,27 @@ class LinkedWord
     query = "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
     SELECT DISTINCT  ?o ?label COUNT(?link) AS ?popularity WHERE{
                 ?o rdfs:label ?label.
-                FILTER(lang(?label)='fr')
+                FILTER(lang(?label)='fr' || lang(?label)='en')
                 ?label bif:contains '\"#{wordsRequest}\"'
                 FILTER(regex(str(?label),\"^#{param}\",\"i\")).
-                ?o dbpedia-owl:wikiPageWikiLink ?link
+                ?o ?t ?link
              }ORDER BY DESC(?popularity)  LIMIT 10"
     store = SPARQL::Client.new(endpoint)
     result = Array.new
-    puts query
+
     store.query(query).each do |item|
-      result << item[:label].value
+      result << {:value => item.label.to_s, :uri => item.o.to_s}
     end
     return result
   end
 
   def self.find(param)
-    endpoint = "http://fr.dbpedia.org/sparql"
+    endpoint = "http://dbpedia.org/sparql"
     query = "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
     SELECT DISTINCT ?o COUNT(?links) AS ?popularity  WHERE{
-                ?o rdfs:label '#{param}'@fr.
-                OPTIONAL{?o dbpedia-owl:wikiPageWikiLink ?links}
+                ?o rdfs:label ?label.
+                ?label bif:contains '\"#{param}\"'
+                OPTIONAL{?o ?t ?links}
              }ORDER BY DESC(?popularity)  LIMIT 1"
     puts query
     store = SPARQL::Client.new(endpoint)
@@ -50,25 +51,26 @@ class LinkedWord
   end
 
   def self.getLinkedWords(param = "")
-    endpoint = "http://fr.dbpedia.org/sparql"
+    endpoint = "http://dbpedia.org/sparql"
     #FILTER(lang(?linkedName) = 'fr')
-    query = "SELECT DISTINCT ?linkedName WHERE{
+    query = "SELECT DISTINCT ?linkedName ?linked COUNT(?links) AS ?popularity WHERE{
                  ?o rdfs:label ?label.
-                  FILTER(lang(?label)='fr')
+                  FILTER(lang(?label)='en')
                  ?label bif:contains \"'#{escapeText(param)}'\".
                  ?o rdf:type <http://www.w3.org/2002/07/owl#Thing>.
-                 {?o prop-fr:fonction ?linked.}
-                 UNION {?o prop-fr:parti ?linked.}
+                 {?o rdf:type ?linked.}
+                 UNION {?o dbpedia-owl:party ?linked.}
                  ?linked rdfs:label ?linkedName
-                FILTER(lang(?linkedName)='fr')
+                 FILTER(lang(?linkedName)='en')
+                 ?linked ?l ?links
 
-             }"
+             }ORDER BY DESC(?popularity)"
 
     store = SPARQL::Client.new(endpoint)
     result = Array.new
     store.query(query).each do |item|
       continue if item.linkedName.to_s == nil
-      result << item.linkedName.to_s
+      result << {:value => item.linkedName.to_s, :uri => item.linked.to_s}
     end
     return result
   end
