@@ -230,6 +230,25 @@ fr:
          </button></div>"
       smalltitle:
         "Ajouter le tag comme :"
+    modal:
+      delete:
+        title:
+          "Suppression d'un tag"
+        content:
+          "Etes-vous sur de vouloir supprimer ce tag?"
+        delete:
+          "Supprimer"
+        cancel:
+          "Annuler"
+      edit:
+        title:
+          "Modification d'un tag"
+        content:
+          "Nouveau nom"
+        update:
+          "Modifier"
+        cancel:
+          "Annuler"
   newmodal:
     breadcrumb:
       sources:
@@ -274,9 +293,9 @@ fr:
         holderurl:
           "Ajouter un flux RSS à surveiller"
         yourrss:
-          "Ajouter vos propres<br>flux RSS"
+          "Ajouter vos propres<br/>flux RSS"
         opml:
-          "Importer un fichier<br>OPML"
+          "Importer un fichier<br/>OPML"
     filtering:
       title:
         "Sélectionner vos filtres"

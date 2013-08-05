@@ -242,3 +242,35 @@ a.label:visited{
 .highSimilarity{
   border: 4px solid #002342;
 }
+
+.modal-body.deleteTag{
+  padding: 9px 15px;
+}
+
+.rowContentTag {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.popover-content{
+  padding: 0 2px 0 2px;
+}
+
+.popover-content>p{
+  margin-bottom : 0;
+}
+
+.popover-content>p>hr{
+  margin-top : 0;
+}
+.adding-info{
+  text-align: center;
+}
+
+.paddingMust{
+  padding-left:6px;
+}
+
+#imgtag{
+  margin-right : 5px;
+}

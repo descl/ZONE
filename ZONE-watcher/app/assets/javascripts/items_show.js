@@ -38,6 +38,7 @@ $(document).ready(function() {
     })(document, 'script', 'facebook-jssdk');
     
     changeItemFormat('card');
+    
 });
 
 //Initiate the truncate of all text
@@ -53,19 +54,33 @@ $(window).load(function(){
         lessAni: "fast" 
 	});
 	
+	$('.label-tag').on('click', function () {
+		$('.label-tag').not(this).popover('hide');
+		$(this).popover('toggle');
+		$('.popover').find('.textContent').jTruncate({
+			length: 200,  
+	        minTrail: 0,  
+	        moreText: "(...)",  
+	        lessText: "[-]",  
+	        ellipsisText: "",  
+	        moreAni: "fast",  
+	        lessAni: "fast" 
+		})
+	});
+	
 	$(".items-box").fadeIn();
 });
 
 
 //Add the tag to the summary panel
-function addTag(type, value) {
+function addTag(type, value, uri) {
 	var id = getId();
     if (type == 'opt')
-        $(".well-info").append('<span id="'+id+'" class="label label-info" draggable="true" ondragstart="drag(event)">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
+        $(".well-info").append('<span id="'+id+'" class="label label-info" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value+ ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
     else if (type == 'must')
-        $(".well-success").append('<span id="'+id+'" class="label label-success" draggable="true" ondragstart="drag(event)">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
+        $(".well-success").append('<span id="'+id+'" class="label label-success" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
     else if (type == 'no')
-        $(".well-danger").append('<span id="'+id+'" class="label label-danger" draggable="true" ondragstart="drag(event)">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
+        $(".well-danger").append('<span id="'+id+'" class="label label-danger" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
     return false;
 };
 
@@ -148,3 +163,16 @@ function changeItemFormat(type) {
 		})
 	}
 })(jQuery);
+
+//Function that delete a tag
+function deleteTag(tag){
+	$(".label-tag").popover('hide');
+	$('#modalDeleteTag').modal('show');
+}
+
+//Function that edit a tag
+function editTag(tag){
+	$(".label-tag").popover('hide');
+	$("#inputEditTag").attr("placeholder",tag);
+	$('#modalEditTag').modal('show');
+}
