@@ -15,6 +15,7 @@ function movingData() {
     var tabTwitter = [];
     var tabRss = [];
     var item = ""
+    var url = ""
     $("#wellSources").children().each(function() {
         item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
         if ($(this).hasClass('twitterSource')) {
@@ -31,32 +32,50 @@ function movingData() {
         item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
         item = item.replace(/'/g, "\\&#39;");
         tabOr.push(item);
+        
+        url = $(this).attr("filter-uri");
+        tabOr.push(url);
     });
     $("#summaryOr").children().each(function() {
         item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
         item = item.replace(/'/g, "\\&#39;");
         tabOr.push(item);
+         
+        url = $(this).attr("filter-uri");
+        tabOr.push(url);
     });
     $("#wellAnd").children().each(function() {
         item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
         item = item.replace(/'/g, "\\&#39;");
         tabAnd.push(item);
+        
+       	url = $(this).attr("filter-uri");
+        tabAnd.push(url);
     });
     $("#summaryAnd").children().each(function() {
         item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
         item = item.replace(/'/g, "\\&#39;");
         tabAnd.push(item);
+        
+        url = $(this).attr("filter-uri");
+        tabAnd.push(url);
     });
     $("#wellWithout").children().each(function() {
         item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
         item = item.replace(/'/g, "\\&#39;");
         item = item.replace(/'/g, "\\&#39;");
         tabWithout.push(item);
+        
+        url = $(this).attr("filter-uri");
+        tabWithout.push(url);
     });
     $("#summaryWithout").children().each(function() {
         item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
         item = item.replace(/'/g, "\\&#39;");
         tabWithout.push(item);
+        
+        url = $(this).attr("filter-uri");
+        tabWithout.push(url);        
     });
 
     source.twitter = tabTwitter;
