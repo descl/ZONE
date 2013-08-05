@@ -289,11 +289,11 @@ en:
           "Add a hashtag to follow"
       rss:
         all:
-          "All RSS sources<br>from Reador"
+          "All RSS sources<br/>from Reador"
         holderurl:
           "Add a RSS flow to follow"
         yourrss:
-          "Add your personnal<br>RSS flows"
+          "Add your personnal<br/>RSS flows"
         opml:
           "Import an<br>OPML file"
     filtering:
