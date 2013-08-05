@@ -154,3 +154,10 @@ function deleteTag(tag){
 	$(".label-tag").popover('hide');
 	$('#modalDeleteTag').modal('show');
 }
+
+//Function that edit a tag
+function editTag(tag){
+	$(".label-tag").popover('hide');
+	$("#inputEditTag").attr("placeholder",tag);
+	$('#modalEditTag').modal('show');
+}
