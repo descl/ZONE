@@ -4,12 +4,10 @@ class SearchFiltersController < ApplicationController
 
   # GET /searches/1
   # GET /searches/1.json
-  def show
-    @search_filter = SearchFilter.find(params[:id])
+  def index
+    @search_filter = SearchFilter.new(:uri => params[:uri])
+    @infos = @search_filter.getInfos
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @source }
-    end
+    render  :layout => 'empty'
   end
 end

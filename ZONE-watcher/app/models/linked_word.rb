@@ -1,9 +1,9 @@
 include LinkedWordsHelper
 
 class LinkedWord
-  $endpoint = "http://fr.dbpedia.org/sparql"
 
   def self.complete(param = "")
+    endpoint = "http://fr.dbpedia.org/sparql"
     words = param.split
     wordsRequest  = ""
     words.each do |word|
@@ -25,7 +25,7 @@ class LinkedWord
                 FILTER(regex(str(?label),\"^#{param}\",\"i\")).
                 ?o dbpedia-owl:wikiPageWikiLink ?link
              }ORDER BY DESC(?popularity)  LIMIT 10"
-    store = SPARQL::Client.new($endpoint)
+    store = SPARQL::Client.new(endpoint)
     result = Array.new
     puts query
     store.query(query).each do |item|
@@ -35,13 +35,14 @@ class LinkedWord
   end
 
   def self.find(param)
+    endpoint = "http://fr.dbpedia.org/sparql"
     query = "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
     SELECT DISTINCT ?o COUNT(?links) AS ?popularity  WHERE{
                 ?o rdfs:label '#{param}'@fr.
                 OPTIONAL{?o dbpedia-owl:wikiPageWikiLink ?links}
              }ORDER BY DESC(?popularity)  LIMIT 1"
     puts query
-    store = SPARQL::Client.new($endpoint)
+    store = SPARQL::Client.new(endpoint)
     store.query(query).each do |item|
       return item[:o].to_s
     end
@@ -49,6 +50,7 @@ class LinkedWord
   end
 
   def self.getLinkedWords(param = "")
+    endpoint = "http://fr.dbpedia.org/sparql"
     #FILTER(lang(?linkedName) = 'fr')
     query = "SELECT DISTINCT ?linkedName WHERE{
                  ?o rdfs:label ?label.
@@ -62,7 +64,7 @@ class LinkedWord
 
              }"
 
-    store = SPARQL::Client.new($endpoint)
+    store = SPARQL::Client.new(endpoint)
     result = Array.new
     store.query(query).each do |item|
       continue if item.linkedName.to_s == nil

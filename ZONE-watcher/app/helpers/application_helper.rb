@@ -34,12 +34,13 @@ module ApplicationHelper
   end
 
   def calculateNumberFromFilters(filters)
+    endpoint = Rails.application.config.virtuosoEndpoint
     request = generateFilterSPARQLRequest(filters)
     query = "SELECT ?number COUNT(DISTINCT ?concept) FROM <#{ZoneOntology::GRAPH_ITEMS}> WHERE {\n"
     query += request
     query += "?concept <http://purl.org/rss/1.0/title> ?title.} LIMIT 1"
     puts query
-    store = SPARQL::Client.new($endpoint)
+    store = SPARQL::Client.new(endpoint)
     if store.query(query).length == 0
       return 0
     else

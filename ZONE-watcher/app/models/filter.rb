@@ -3,8 +3,6 @@ class Filter
     
   attr_accessor :prop, :value
 
-  $endpoint = Rails.application.config.virtuosoEndpoint
-  
   def initialize(attributes = {})  
     attributes.each do |name, value|  
       send("#{name}=", value)  
@@ -16,13 +14,14 @@ class Filter
 
   #find all filters with a specific prop
   def self.find(param = "")
+    endpoint = Rails.application.config.virtuosoEndpoint
 
     query = "PREFIX SOURCE: <#{ZoneOntology::SOURCES_PREFIX}>
     SELECT DISTINCT(?value)
     WHERE {
       ?uri <#{param[:prop]}> ?value.
     }"
-    store = SPARQL::Client.new($endpoint)
+    store = SPARQL::Client.new(endpoint)
     filters = Array.new
     store.query(query).each do |res|
       filters << Filter.new(:prop => param[:prop], :value => res.value.to_s)
@@ -31,6 +30,7 @@ class Filter
   end
 
   def self.all
+    endpoint = Rails.application.config.virtuosoEndpoint
 
     query = "PREFIX SOURCE: <#{ZoneOntology::SOURCES_PREFIX}>
     SELECT DISTINCT ?prop ?value
@@ -41,7 +41,7 @@ class Filter
 
     }"
     puts query
-    store = SPARQL::Client.new($endpoint)
+    store = SPARQL::Client.new(endpoint)
     filters = Array.new
     store.query(query).each do |res|
       filters << Filter.new(:prop => res.prop.to_s, :value => res.value.to_s)

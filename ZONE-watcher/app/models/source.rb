@@ -13,10 +13,10 @@ class Source
   validates_format_of :uri, :with => URI::regexp(%w(http https))
 
 
-  $endpoint = Rails.application.config.virtuosoEndpoint
+  endpoint = Rails.application.config.virtuosoEndpoint
 
   update_uri = Rails.application.config.virtuosoEndpoint+"-auth"
-  $repo       = RDF::Virtuoso::Repository.new($endpoint,
+  $repo       = RDF::Virtuoso::Repository.new(endpoint,
                                               :update_uri => update_uri,
                                               :username => Rails.application.config.virtuosoLogin,
                                               :password => Rails.application.config.virtuosoPassword,
@@ -31,7 +31,7 @@ class Source
       #{param}
     }ORDER BY ?concept"#"
 
-    store = SPARQL::Client.new($endpoint)
+    store = SPARQL::Client.new(endpoint)
     sources = Array.new
     store.query(query).each do |source|
       sources << Source.find(source.concept.to_s)
@@ -51,7 +51,7 @@ class Source
     SELECT ?prop ?value
     FROM <#{ZoneOntology::GRAPH_SOURCES}>
     WHERE { <#{uri}> ?prop ?value.}"
-    store = SPARQL::Client.new($endpoint)
+    store = SPARQL::Client.new(endpoint)
     result = store.query(query)
 
     source = Source.new(uri)
@@ -123,7 +123,7 @@ class Source
     SELECT ?prop ?value
     FROM <#{ZoneOntology::GRAPH_SOURCES}>
     WHERE { <#{@uri}> ?prop ?value.}"
-    store = SPARQL::Client.new($endpoint)
+    store = SPARQL::Client.new(endpoint)
     result = store.query(query)
     graph = RDF::URI.new(ZoneOntology::GRAPH_SOURCES)
     subject = RDF::URI.new(@uri)
