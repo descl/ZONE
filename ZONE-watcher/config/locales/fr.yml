@@ -231,14 +231,24 @@ fr:
       smalltitle:
         "Ajouter le tag comme :"
     modal:
-      title:
-        "Suppression d'un tag"
-      content:
-        "Etes-vous sur de vouloir supprimer ce tag?"
       delete:
-        "Supprimer"
-      cancel:
-        "Annuler"
+        title:
+          "Suppression d'un tag"
+        content:
+          "Etes-vous sur de vouloir supprimer ce tag?"
+        delete:
+          "Supprimer"
+        cancel:
+          "Annuler"
+      edit:
+        title:
+          "Modification d'un tag"
+        content:
+          "Etes-vous sur de vouloir supprimer ce tag?"
+        update:
+          "Modifier"
+        cancel:
+          "Annuler"
   newmodal:
     breadcrumb:
       sources:
