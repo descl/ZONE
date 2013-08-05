@@ -230,6 +230,15 @@ en:
          </button></div>"
       smalltitle:
         "Add the tag as :"
+    modal:
+      title:
+        "Tag deletion"
+      content:
+        "Are you sure you want to delete this tag?"
+      delete:
+        "Delete"
+      cancel:
+        "Cancel"
   newmodal:
     breadcrumb:
       sources:

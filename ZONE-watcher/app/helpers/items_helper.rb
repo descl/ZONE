@@ -14,19 +14,24 @@ module ItemsHelper
       filter.value = "/null"
     end
     itemURI = items_path(:old => @filters,:new => filter)
-
+    
+    filterval=""
     if(filter.prop.starts_with? @WIKI_META_URI)
       if(filter.value.rindex('/') == nil)
-        res=link_to filter.value, itemURI, :class => labels
+        filterval=filter.value
       else
-        res=link_to filter.value[filter.value.rindex('/')+1, filter.value.length], itemURI, :class => labels
+        filterval=filter.value[filter.value.rindex('/')+1, filter.value.length]
       end
     elsif(filter.prop.starts_with? @INSEE_GEO_URI)
-      res=link_to filter.value[filter.value.rindex('/')+1, filter.value.length], itemURI, :class => labels
+      filterval=filter.value[filter.value.rindex('/')+1, filter.value.length]
     elsif( (filter.prop.start_with? @SVM_PLUGIN_URI) || (filter.prop.start_with? @TWITTER_HASHTAG_PLUGIN_URI) || (filter.prop.starts_with? @OPEN_CALAIS_URI))
-      res=link_to filter.value, itemURI, :class => labels
+      filterval=filter.value
     elsif(filter.prop.start_with? @TWITTER_MENTIONED_PLUGIN_URI)
-      res=link_to "@"+filter.value, itemURI, :class => labels
+      filterval="@"+filter.value
+    end
+
+    if(filterval != "")
+      res=link_to filterval, itemURI, :class => labels, "data-uri" => search_filters_path(:uri => filter.uri )
     end
     return res
   end

@@ -230,6 +230,15 @@ fr:
          </button></div>"
       smalltitle:
         "Ajouter le tag comme :"
+    modal:
+      title:
+        "Suppression d'un tag"
+      content:
+        "Etes-vous sur de vouloir supprimer ce tag?"
+      delete:
+        "Supprimer"
+      cancel:
+        "Annuler"
   newmodal:
     breadcrumb:
       sources:

@@ -18,6 +18,23 @@
     });
 <% end %>
 
+<div id="modalTag" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel"><%= raw t 'items.modal.title' %></h3>
+  </div>
+  <div class="modal-body deleteTag">
+  	<div class="row-fluid">
+	    <div class="span12">
+	    	<%= raw t 'items.modal.content' %>
+	    </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+  	<button class="btn btn-success"><%= raw t 'items.modal.delete' %></button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true"><%= raw t 'items.modal.cancel' %></button>
+  </div>
+</div>
 
 <!-- rss feed and format page selection-->
 <div class="row-fluid">
