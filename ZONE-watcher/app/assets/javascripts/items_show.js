@@ -152,5 +152,5 @@ function changeItemFormat(type) {
 //Function that delete a tag
 function deleteTag(tag){
 	$(".label-tag").popover('hide');
-	$('#modalTag').modal('show');
+	$('#modalDeleteTag').modal('show');
 }
