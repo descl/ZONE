@@ -274,7 +274,7 @@ en:
         holderurl:
           "Add a RSS flow to follow"
         yourrss:
-          "Add your personnal RSS flows"
+          "Add your personnal<br>RSS flows"
         opml:
           "Import an<br>OPML file"
     filtering:
