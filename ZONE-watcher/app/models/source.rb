@@ -12,7 +12,6 @@ class Source
 
   validates_format_of :uri, :with => URI::regexp(%w(http https))
 
-
   endpoint = Rails.application.config.virtuosoEndpoint
 
   update_uri = Rails.application.config.virtuosoEndpoint+"-auth"
@@ -23,6 +22,8 @@ class Source
                                               :auth_method => 'digest')
 
   def self.all(param = "")
+    endpoint = Rails.application.config.virtuosoEndpoint
+
     query = "PREFIX SOURCE: <#{ZoneOntology::SOURCES_PREFIX}>
     SELECT DISTINCT ?concept
     FROM <#{ZoneOntology::GRAPH_SOURCES}>
@@ -40,6 +41,7 @@ class Source
   end
   
   def self.find(param)
+    endpoint = Rails.application.config.virtuosoEndpoint
     require 'cgi'
     require 'uri'
 
