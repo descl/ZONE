@@ -274,7 +274,7 @@ fr:
         holderurl:
           "Ajouter un flux RSS à surveiller"
         yourrss:
-          "Ajouter vos propres flux RSS"
+          "Ajouter vos propres<br>flux RSS"
         opml:
           "Importer un fichier<br>OPML"
     filtering:
