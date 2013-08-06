@@ -36,7 +36,7 @@ $(document).ready ->
     name= $(this).html()
     titleTag = "<span class='titletag'>"+name + "</span><i class='icon-trash pull-right pointerMouse' title='Delete' onclick='deleteTag(\""+name+"\")'></i><i class='icon-edit pull-right pointerMouse' title='Edit' onclick='editTag(\""+name+"\")'></i>"
     
-    tagContent = "<hr><div class='row-fluid'><div class='span12 text-center'><b class='adding-info'>"+$("#titlePopover").html()+"</b></div></div><div class='row-fluid'><div class='span4'>"+  btnOptionnal + "</div><div class='span4'>" + btnMust + "</div><div class='span4'>" + btnBan + "</div></div>"
+    tagContent = "<hr><div class='row-fluid'><div class='span12 text-center'><b class='adding-info'>"+$("#titlePopover").html()+"</b></div></div><div class='row-fluid'><div class='span12'>"+  btnOptionnal + "</div></div><div class='row-fluid'><div class='span12'>" + btnMust + "</div></div><div class='row-fluid'><div class='span12'>" + btnBan + "</div></div>"
     if ($(this).attr("data-uri").indexOf("/search_filters?uri=http%3A%2F%2Fwww.dbpedia.org") is 0)
       item = $(this)
       $.ajax
