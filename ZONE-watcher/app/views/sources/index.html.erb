@@ -21,20 +21,22 @@
 		<div id="collapseOpml" class="accordion-body collapse">
 			<div class="accordion-inner">
 				<%= form_for(:upload, :url => { :action => "uploadopml" }, :html => { :multipart => true }, :remote => true) do |form| %>
-				<div class="row-fluid">
-					<div class="span3 offset1">
-						<input id="upload_datafile" name="upload[datafile]" type="file" hidden onchange="updateFilename($(this).val())">
-						<button class="btn btn-info span12" onclick="$('#upload_datafile').click();return false;">
-							<%= t("source.opml.button.select")%>
-						</button>
+					<div class="row-fluid">
+						<div class="span10 offset1">
+							<span id="fileTextName" data-initial="<%= t("source.opml.empty")%>"><%= t("source.opml.empty")%></span>
+						</div>
 					</div>
-					<div class="span4">
-						<span id="fileTextName" data-initial="<%= t("source.opml.empty")%>"><%= t("source.opml.empty")%></span>
+					<div class="row-fluid">
+						<div class="span3 offset1">
+							<input id="upload_datafile" name="upload[datafile]" type="file" hidden onchange="updateFilename($(this).val())">
+							<button id="btnImport" class="btn btn-info span12" onclick="$('#upload_datafile').click();return false;">
+								<%= t("source.opml.button.select")%>
+							</button>
+						</div>
+						<div class="span2">
+							<%= form.submit t("source.opml.button.upload"),:class => 'btn btn-success span12', :onclick => '$("#fileTextName").html("")'%>
+						</div>
 					</div>
-					<div class="span2">
-						<%= form.submit t("source.opml.button.upload"),:class => 'btn btn-success span12'%>
-					</div>
-				</div>
 				<% end %>
 			</div>
 		</div>
