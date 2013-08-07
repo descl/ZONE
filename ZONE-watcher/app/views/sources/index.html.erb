@@ -1,72 +1,74 @@
-<ul class="nav nav-tabs" id="sources-menu">
-  <li class="active"><a href="#list"  data-toggle="tab"><%= t("source.your")%></a></li>
-  <li><a href="#new"  data-toggle="tab"><%= t("source.new")%></a></li>
-  <li><a href="#opml"  data-toggle="tab"><%= t("source.opml.title")%></a></li>
-  <li><a href="#group"  data-toggle="tab"><%= t("source.groups.title")%></a></li>
-</ul>
+<div class="accordion" id="accordion2">
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseNew"> <%= t("source.new")%> </a>
+		</div>
+		<div id="collapseNew" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<%= render 'form' %>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOpml"> <%= t("source.opml.title")%> </a>
+		</div>
+		<div id="collapseOpml" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<h1><%= t("source.opml.title")%></h1>
+				<%= form_for(:upload, :url => { :action => "uploadopml" }, :html => { :multipart => true }, :remote => true) do |form| %>
+				<p>
+					<%= form.label 'datafile' %>
+					<%= form.file_field 'datafile' %>
+					<%= form.submit  %>
+				</p>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseGroups"> <%= t("source.groups.title")%> </a>
+		</div>
+		<div id="collapseGroups" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<h1> Not yet implemented</h1>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseAll"> <%= t("source.your")%> </a>
+		</div>
+		<div id="collapseAll" class="accordion-body collapse in">
+			<div class="accordion-inner">
+				<table>
+					<tr>
+						<th><%= t("source.list.uri")%></th>
+						<th><%= t("source.list.num")%></th>
+						<th><%= t("source.list.label")%></th>
+						<th><%= t("source.list.lang")%></th>
+						<th><%= t("source.list.owner")%></th>
+						<th><%= t("source.list.theme")%></th>
+					</tr>
 
-<div id="myTabContent" class="tab-content">
-  <div id="group" class="tab-pane fade">
-    <h1> Not yet implemented</h1>
-  </div>
-
-  <!-- OPML import form -->
-  <div id="opml" class="tab-pane fade">
-    <h1><%= t("source.opml.title")%></h1>
-    <%= form_for(:upload, :url => { :action => "uploadopml" }, :html => { :multipart => true }, :remote => true) do |form| %>
-        <p>
-          <%= form.label 'datafile' %>
-          <%= form.file_field 'datafile' %>
-          <%= form.submit  %>
-        </p>
-    <% end %>
-  </div>
-
-
-  <div id="new" class="tab-pane fade">
-    <%= render 'form' %>
-    <%= link_to t("source.new"), new_source_path %>
-  </div>
-
-
-  <div id="list" class="tab-pane fade active in">
-    <table>
-      <tr>
-        <th><%= t("source.list.uri")%></th>
-        <th><%= t("source.list.num")%></th>
-        <th><%= t("source.list.label")%></th>
-        <th><%= t("source.list.lang")%></th>
-        <th><%= t("source.list.owner")%></th>
-        <th><%= t("source.list.theme")%></th>
-      </tr>
-
-    <% @sources.each do |source| %>
-          <% next if source == nil  %>
-          <% filter = Filter.new(:prop => "http://purl.org/rss/1.0/source",:value => source.uri) %>
-          <% uriNumber = filters_getNumber_path(:old => [filter]) %>
-      <tr>
-        <td><%= link_to source.uri, url_for(:controller => :searches, :action => :create,  :sources => {:rss => [source.uri]}), :method => "post" %></td>
-        <td>
-          (
-          <span class="number_items_wait">
-            <a href="<%= uriNumber%>">
-              <i class="number_items_wait icon-refresh" data-url="<%= uriNumber%>" sourceId="<%=source%>" ></i>
-            </a>
-          </span>
-          <span class='number_items_container' sourceId="<%=source%>"  data-url="<%= uriNumber%>" ></span>
-          <%= t("source.elemsNumber")%>)
-        </td>
-        <td><%= source.label %></td>
-        <td><%= source.lang %></td>
-        <td><%= source.owner %></td>
-        <td><%= source.theme %></td>
-        <td>
-          <span class="btn-group">
-            <%= link_to "edit",edit_source_path(source) , :class => 'btn btn-warning btn'  %>
-            <a class="btn btn-danger btn" href="/sources/<%=source.to_param%>/delete"><%= t("delete") %></a>
-          </span>
-        </td>
-      </tr>
-    <% end %>
-    </table>
+					<% @sources.each do |source| %>
+					<% next if source == nil  %>
+					<% filter = Filter.new(:prop => "http://purl.org/rss/1.0/source",:value => source.uri) %>
+					<% uriNumber = filters_getNumber_path(:old => [filter]) %>
+					<tr>
+						<td><%= link_to source.uri, url_for(:controller => :searches, :action => :create,  :sources => {:rss => [source.uri]}), :method => "post" %></td>
+						<td> ( <span class="number_items_wait"> <a href="<%= uriNumber%>"> <i class="number_items_wait icon-refresh" data-url="<%= uriNumber%>" sourceId="<%= source%>" ></i> </a> </span><span class='number_items_container' sourceId="<%= source%>"  data-url="<%= uriNumber%>" ></span> <%= t("source.elemsNumber")%>) </td>
+						<td><%= source.label %></td>
+						<td><%= source.lang %></td>
+						<td><%= source.owner %></td>
+						<td><%= source.theme %></td>
+						<td><span class="btn-group"> <%= link_to "edit",edit_source_path(source) , :class => 'btn btn-warning btn'  %> <a class="btn btn-danger btn" href="/sources/<%= source.to_param%>/delete"><%= t("delete") %></a> </span></td>
+					</tr>
+					<% end %>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
 
