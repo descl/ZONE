@@ -31,8 +31,10 @@ class SearchFilter < ActiveRecord::Base
     type = "success" if self.kind == "and"
     type = "info"   if self.kind == "or"
     type = "danger"  if self.kind == "without"
+    
+    self.uri = "undefined" if self.uri == nil
 
-    return "<span id=\"#{self.id}\" class=\"label label-#{type}\" draggable=\"true\" ondragstart=\"drag(event)\">#{self.value} <i class=\"icon-remove pointerMouse\" onclick=\"$(this).closest(\'span\').remove(); showUpdate()\"></i></span>"
+    return "<span id=\"#{self.id}\" class=\"label label-#{type}\" draggable=\"true\" ondragstart=\"drag(event)\" filter-uri=\"#{self.uri}\">#{self.value} <i class=\"icon-remove pointerMouse\" onclick=\"$(this).closest(\'span\').remove(); showUpdate()\"></i></span>"
   end
 
   def getInfos
