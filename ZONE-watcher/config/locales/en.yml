@@ -34,9 +34,13 @@ en:
       theme:
         "Theme"
       show:
-        "Afficher"
+        "Show"
       hide:
-        "Cacher"
+        "Hide"
+      hideall:
+        "Hide all"
+      showall:
+        "Show all"
     your:
       title:
         "Your sources"

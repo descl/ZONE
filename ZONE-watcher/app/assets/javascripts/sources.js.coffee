@@ -18,12 +18,39 @@ $(document).ready ->
       $(this).children("i").addClass "icon-chevron-sign-right"
        
   $('.showtable').click ->
-    $(this).parents(".row-fluid").next(".tableSource").slideDown()
+    $(this).parents(".row-fluid").next(".tableSource").slideDown 'swing', ->
+      checkHideAll()
     $(this).next('.hidetable').show()
     $(this).hide()
    
     
   $('.hidetable').click ->
-    $(this).parents(".row-fluid").next(".tableSource").slideUp()
+    $(this).parents(".row-fluid").next(".tableSource").slideUp 'swing', ->
+      checkHideAll()
     $(this).prev('.showtable').show()
     $(this).hide()
+    checkHideAll()
+    
+  $('#hideAllSources').click ->
+    $(".tableSource").slideUp 'swing' , ->
+      checkHideAll()
+    $('.hidetable').hide()
+    $('.showtable').show()
+    
+  $('#showAllSources').click ->
+    $(".tableSource").slideDown 'swing' , ->
+      checkHideAll()
+    $('.hidetable').show()
+    $('.showtable').hide()
+    
+checkHideAll = ->
+  showHide = false
+  $(".tableSource").each ->
+    showHide = true  if $(this).is(':visible')
+
+  if showHide
+    $("#showAllSources").fadeOut 'swing', ->
+      $("#hideAllSources").fadeIn()
+  else
+    $("#hideAllSources").fadeOut 'swing', ->
+      $("#showAllSources").fadeIn()

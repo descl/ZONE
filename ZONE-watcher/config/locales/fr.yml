@@ -37,6 +37,10 @@ fr:
         "Afficher"
       hide:
         "Cacher"
+      hideall:
+        "Cacher tout"
+      showall:
+        "Afficher tout"
     your:
       title:
         "Vos sources"
