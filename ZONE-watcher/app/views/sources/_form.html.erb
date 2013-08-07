@@ -13,13 +13,13 @@
   <% end %>
 
   <div class="control-group">
-    <%= f.label :uri, class: "control-label span4" %>
+    <%= f.label :uri, class: "control-label span2" %>
     <div class="controls span6">
         <%= f.text_field :uri, class: "span12" %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :label, class: "control-label span4" %>
+    <%= f.label :label, class: "control-label span2" %>
     <div class="controls span6">
         <%= f.text_field :label, class: "span12" %>
     </div>
@@ -27,20 +27,20 @@
 
 
     <div class="control-group">
-      <label for="ajax-combo" class="control-label span4"><%=  t("source.lang") %>:</label>
+      <label for="ajax-combo" class="control-label span2"><%=  t("source.lang") %>:</label>
       <div class="controls span6">
         <div id="ajax-container-lang"></div>
       </div>
     </div>
 
     <div class="control-group">
-      <label for="ajax-combo" class="control-label span4"><%=  t("source.theme") %>:</label>
+      <label for="ajax-combo" class="control-label span2"><%=  t("source.theme") %>:</label>
       <div class="controls span6">
         <div id="ajax-container-theme"></div>
       </div>
     </div>
     <div class="control-group">
-    	<div class="controls span2 offset4">
+    	<div class="controls span2 offset2">
         <%= f.submit t("source.new.add"), :class => 'btn btn-success span12' %>
       </div>
    	 
