@@ -50,33 +50,48 @@
 		</div>
 		<div id="collapseAll" class="accordion-body collapse in">
 			<div class="accordion-inner">
-				<table class="table table-bordered table-striped">
-					<thead>
-						<tr>
-							<th class="span1"><%= t("source.list.action")%></th>
-							<th class="span3"><%= t("source.list.label")%></th>
-							<th class="span5"><%= t("source.list.uri")%></th>
-							<th class="span1"><%= t("source.list.lang")%></th>
-							<th class="span2"><%= t("source.list.theme")%></th>
-						</tr>
-					</thead>
-					<tbody>
-						<% @sources.each do |source| %>
-						<% next if source == nil  %>
-						<% filter = Filter.new(:prop => "http://purl.org/rss/1.0/source",:value => source.uri) %>
-						<% uriNumber = filters_getNumber_path(:old => [filter]) %>
-						<tr>
-							<td class="text-center"><%= link_to "",edit_source_path(source) , :class => 'icon-edit'  %> <a href="/sources/<%= source.to_param%>/delete"><i class="icon-trash"></i></a></td>
-							<td><%= source.label %></td>
-							<td><%= link_to source.uri, url_for(:controller => :searches, :action => :create,  :sources => {:rss => [source.uri]}), :method => "post" %></td>
-							<!--<td> ( <span class="number_items_wait"> <a href="<%= uriNumber%>"> <i class="number_items_wait icon-refresh" data-url="<%= uriNumber%>" sourceId="<%= source%>" ></i> </a> </span><span class='number_items_container' sourceId="<%= source%>"  data-url="<%= uriNumber%>" ></span> <%= t("source.elemsNumber")%>) </td>
-							-->
-							<td class="text-center"><%= source.lang.upcase %></td>
-							<td><%= source.theme %></td>
-						</tr>
+				<% startNewTable = true %>
+				<% actualTableTheme = nil%>
+				
+				<% @sources.sort! {|a,b| [a.theme,a.label,a.uri,a.lang]<=>[b.theme,b.label,b.uri,b.lang]}  %>
+				
+				<% @sources.each do |source| %>
+					<% next if source == nil  %>
+					<% filter = Filter.new(:prop => "http://purl.org/rss/1.0/source",:value => source.uri) %>
+					<% uriNumber = filters_getNumber_path(:old => [filter]) %>
+					
+					<% if source.theme != actualTableTheme%>
+						<% startNewTable = true%>
+						<% if actualTableTheme != nil%>
+							</tbody>
+							</table>
 						<% end %>
-					</tbody>
-				</table>
+					<% end %>
+					
+					<% if startNewTable %>
+						<p>Theme : <%= source.theme%></p>
+						<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th class="span1"><%= t("source.list.action")%></th>
+								<th class="span3"><%= t("source.list.label")%></th>
+								<th class="span5"><%= t("source.list.uri")%></th>
+								<th class="span1"><%= t("source.list.lang")%></th>
+							</tr>
+						</thead>
+						<tbody>
+					<% end %>
+					<tr>
+						<td class="text-center"><%= link_to "",edit_source_path(source) , :class => 'icon-edit'  %> <a href="/sources/<%= source.to_param%>/delete"><i class="icon-trash"></i></a></td>
+						<td><%= source.label %></td>
+						<td><%= link_to source.uri, url_for(:controller => :searches, :action => :create,  :sources => {:rss => [source.uri]}), :method => "post" %></td>
+						<!--<td> ( <span class="number_items_wait"> <a href="<%= uriNumber%>"> <i class="number_items_wait icon-refresh" data-url="<%= uriNumber%>" sourceId="<%= source%>" ></i> </a> </span><span class='number_items_container' sourceId="<%= source%>"  data-url="<%= uriNumber%>" ></span> <%= t("source.elemsNumber")%>) </td>
+						-->
+						<td class="text-center"><%= source.lang.upcase %></td>
+					</tr>
+					<% actualTableTheme = source.theme%>
+					<% startNewTable = false%>
+				<% end %>
 			</div>
 		</div>
 	</div>
