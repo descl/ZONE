@@ -1,11 +1,7 @@
 <div class="accordion" id="accordion2">
 	<div class="accordion-group">
 		<div class="accordion-heading">
-			<h2>
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseNew">
-					<i class="icon-expand"></i> <%= t("source.new.title")%>
-				</a>
-			</h2>
+			<h2><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseNew"> <i class="icon-expand"></i> <%= t("source.new.title")%> </a></h2>
 		</div>
 		<div id="collapseNew" class="accordion-body collapse">
 			<div class="accordion-inner">
@@ -15,32 +11,32 @@
 	</div>
 	<div class="accordion-group">
 		<div class="accordion-heading">
-			<h2>
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOpml">
-					<i class="icon-expand"></i> <%= t("source.opml.title")%>
-				</a>
-			</h2>
+			<h2><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOpml"> <i class="icon-expand"></i> <%= t("source.opml.title")%> </a></h2>
 		</div>
 		<div id="collapseOpml" class="accordion-body collapse">
 			<div class="accordion-inner">
-				<h2><%= t("source.opml.title")%></h2>
 				<%= form_for(:upload, :url => { :action => "uploadopml" }, :html => { :multipart => true }, :remote => true) do |form| %>
-				<p>
-					<%= form.label 'datafile' %>
-					<%= form.file_field 'datafile' %>
-					<%= form.submit  %>
-				</p>
+				<div class="row-fluid">
+					<div class="span4">
+						<input id="upload_datafile" name="upload[datafile]" type="file" hidden onchange="updateFilename($(this).val())">
+						<button class="btn btn-info span6 offset6" onclick="$('#upload_datafile').click();return false;">
+							<%= t("source.opml.button.select")%>
+						</button>
+					</div>
+					<div class="span5">
+						<span id="fileTextName" data-initial="<%= t("source.opml.empty")%>"><%= t("source.opml.empty")%></span>
+					</div>
+					<div class="span1">
+						<%= form.submit t("source.opml.button.upload"),:class => 'btn btn-success pull-right'%>
+					</div>
+				</div>
 				<% end %>
 			</div>
 		</div>
 	</div>
 	<div class="accordion-group">
 		<div class="accordion-heading">
-			<h2>
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseGroups">
-					<i class="icon-expand"></i> <%= t("source.groups.title")%>
-				</a>
-			</h2>
+			<h2><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseGroups"> <i class="icon-expand"></i> <%= t("source.groups.title")%> </a></h2>
 		</div>
 		<div id="collapseGroups" class="accordion-body collapse">
 			<div class="accordion-inner">
@@ -50,11 +46,7 @@
 	</div>
 	<div class="accordion-group">
 		<div class="accordion-heading">
-			<h2>
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseAll">
-					<i class="icon-collapse"></i> <%= t("source.your.title")%>
-				</a>
-			</h2>
+			<h2><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseAll"> <i class="icon-collapse"></i> <%= t("source.your.title")%> </a></h2>
 		</div>
 		<div id="collapseAll" class="accordion-body collapse in">
 			<div class="accordion-inner">
