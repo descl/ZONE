@@ -14,6 +14,8 @@ en:
       notlogged:
         'You are not logged with a twitter account.'
   source:
+    title:
+      "User sources management"
     elemsNumber:
       "elements"
     list:

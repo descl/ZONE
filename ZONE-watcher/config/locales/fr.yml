@@ -14,6 +14,8 @@ fr:
       notlogged:
         "Nous n'etes pas connectés avec un compte twitter."
   source:
+    title:
+      "Gestion des sources utilisateurs"
     elemsNumber:
       "éléments"
     list:
