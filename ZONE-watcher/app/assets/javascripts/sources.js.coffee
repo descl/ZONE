@@ -16,3 +16,14 @@ $(document).ready ->
     else if $(this).children("i").hasClass("icon-collapse")
       $(this).children("i").removeClass "icon-collapse"
       $(this).children("i").addClass "icon-expand"
+       
+  $('.showtable').click ->
+    $(this).parents(".row-fluid").next(".tableSource").slideDown()
+    $(this).next('.hidetable').show()
+    $(this).hide()
+   
+    
+  $('.hidetable').click ->
+    $(this).parents(".row-fluid").next(".tableSource").slideUp()
+    $(this).prev('.showtable').show()
+    $(this).hide()

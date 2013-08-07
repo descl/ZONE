@@ -282,6 +282,16 @@ td a:hover, td a:visited{
   background:none;
   color:black;
 }
+
+.tableSource{
+  display:none;
+  max-height: 300px;
+  overflow-x: auto
+}
+
+span.text-info:hover{
+  text-decoration : underline;
+}
 /**
  *   End of source users section
  */
