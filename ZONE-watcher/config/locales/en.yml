@@ -31,6 +31,10 @@ en:
         "Owner"
       theme:
         "Theme"
+      show:
+        "Afficher"
+      hide:
+        "Cacher"
     your:
       title:
         "Your sources"

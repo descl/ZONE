@@ -30,7 +30,11 @@ fr:
       owner:
         "Owner"
       theme:
-        "Theme"
+        "Thème"
+      show:
+        "Afficher"
+      hide:
+        "Cacher"
     your:
       title:
         "Vos sources"
