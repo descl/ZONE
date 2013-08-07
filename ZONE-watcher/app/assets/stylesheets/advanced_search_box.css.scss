@@ -273,6 +273,15 @@ a.accordion-toggle:hover{
 .accordion-inner{
   border-top : none;
 }
+
+.table td.text-center{
+  text-align : center;
+}
+
+td a:hover, td a:visited{
+  background:none;
+  color:black;
+}
 /**
  *   End of source users section
  */

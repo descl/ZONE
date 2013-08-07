@@ -17,6 +17,8 @@ en:
     elemsNumber:
       "elements"
     list:
+      action:
+        "Actions"
       uri:
         "Uri"
       num:

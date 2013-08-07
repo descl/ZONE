@@ -17,6 +17,8 @@ fr:
     elemsNumber:
       "éléments"
     list:
+      action:
+        "Actions"
       uri:
         "Uri"
       num:
