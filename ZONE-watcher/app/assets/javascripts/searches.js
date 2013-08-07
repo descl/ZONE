@@ -22,6 +22,10 @@ $(document).ready(function() {
         	if(ui.item.value.toLowerCase()!=$("#keyword").val().toLowerCase()){
             	askUpdateKeywordTable();
            }
+           $("#keyword").attr("filter-uri",ui.item.uri)
+           console.log( ui.item ?
+          "Selected: " + ui.item.value + " aka " + ui.item.uri :
+          "Nothing selected, input was " + this.value );
         },
         minLength : 3
     }).autocomplete("widget").addClass("span1");
@@ -127,11 +131,11 @@ function addFilter(type) {
 	var id = getId();
     //Add the line to the table
     if (type == 'and')
-        $('#wellAnd').append("<span id='"+id+"' class='label label-success' draggable='true' ondragstart='drag(event)' filter-uri='"+$(this).attr('filter-uri')+"'>" + motcle + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
+        $('#wellAnd').append("<span id='"+id+"' class='label label-success' draggable='true' ondragstart='drag(event)' filter-uri='"+$("#keyword").attr('filter-uri')+"'>" + motcle + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
     else if (type == 'or')
-        $('#wellOr').append("<span id='"+id+"' class='label label-info' draggable='true' ondragstart='drag(event)' filter-uri='"+$(this).attr('filter-uri')+"'>" + motcle + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
+        $('#wellOr').append("<span id='"+id+"' class='label label-info' draggable='true' ondragstart='drag(event)' filter-uri='"+$("#keyword").attr('filter-uri')+"'>" + motcle + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
     else if (type == 'without')
-        $('#wellWithout').append("<span id='"+id+"' class='label label-danger' draggable='true' ondragstart='drag(event)' filter-uri='"+$(this).attr('filter-uri')+"'>" + motcle + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
+        $('#wellWithout').append("<span id='"+id+"' class='label label-danger' draggable='true' ondragstart='drag(event)' filter-uri='"+$("#keyword").attr('filter-uri')+"'>" + motcle + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();'></i></span>");
 
     $('#keywordTable tbody > tr > td > label > input').each(function() {
         if ($(this).is(':checked')) {
@@ -145,7 +149,8 @@ function addFilter(type) {
         }
     });
     $('#keyword').val('');
-
+    $('#keyword').attr('filter-uri','undefined');
+	
     //Reset the filtering
     rebootFiltering();
 }
