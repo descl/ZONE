@@ -30,9 +30,13 @@ fr:
       theme:
         "Theme"
     your:
-      "Vos sources"
+      title:
+        "Vos sources"
     new:
-      "Nouvelle source"
+      title:
+        "Nouvelle source"
+      add:
+        "Ajouter"
     opml:
       title:
         "Importer un fichier opml"
