@@ -109,7 +109,7 @@
 								<tbody>
 					<% end %>
 					<tr>
-						<td class="text-center"><%= link_to "",edit_source_path(source) , :class => 'icon-edit'  %> <a href="/sources/<%= source.to_param%>/delete"><i class="icon-trash"></i></a></td>
+						<td class="text-center"><%= link_to "",edit_source_path(source) , :class => 'icon-edit', :title => t("edit")  %> <a href="/sources/<%= source.to_param%>/delete" title="<%= t("delete")%>"><i class="icon-trash"></i></a></td>
 						<td><%= source.label %></td>
 						<td><%= link_to source.uri, url_for(:controller => :searches, :action => :create,  :sources => {:rss => [source.uri]}), :method => "post" %></td>
 						<td class="text-center"><%= source.lang.upcase %></td>
