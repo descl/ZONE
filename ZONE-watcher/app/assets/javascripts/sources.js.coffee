@@ -7,11 +7,11 @@ $(document).ready ->
         $('[class=number_items_container][data-url="'+myUri+'"]').append(data)
         $('[class*=number_items_wait][data-url="'+myUri+'"]').detach()
     
-  $(".accordion-body").on "shown", ->
+  $(".accordion-body").on "show", ->
     $(this).prev(".accordion-heading").find("i").removeClass "icon-chevron-sign-right"
     $(this).prev(".accordion-heading").find("i").addClass "icon-chevron-sign-down"
       
-  $(".accordion-body").on "hidden", ->
+  $(".accordion-body").on "hide", ->
     $(this).prev(".accordion-heading").find("i").removeClass "icon-chevron-sign-down"
     $(this).prev(".accordion-heading").find("i").addClass "icon-chevron-sign-right"
        
