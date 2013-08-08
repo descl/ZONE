@@ -14,9 +14,13 @@ en:
       notlogged:
         'You are not logged with a twitter account.'
   source:
+    title:
+      "User sources management"
     elemsNumber:
       "elements"
     list:
+      action:
+        "Actions"
       uri:
         "Uri"
       num:
@@ -29,10 +33,22 @@ en:
         "Owner"
       theme:
         "Theme"
+      show:
+        "Show"
+      hide:
+        "Hide"
+      hideall:
+        "Hide all"
+      showall:
+        "Show all"
     your:
-      "Your sources"
+      title:
+        "Your sources"
     new:
-      "New source"
+      title:
+        "New source"
+      add:
+        "Add"
     opml:
       title:
         "Import opml file"
