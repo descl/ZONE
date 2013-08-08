@@ -1,3 +1,4 @@
+<div class="row-fluid">
 <%= form_for(@source, :html => { :class => "form-horizontal"} ) do |f| %>
   <% if @source.errors.any? %>
     <div id="error_explanation">
@@ -12,38 +13,40 @@
   <% end %>
 
   <div class="control-group">
-    <%= f.label :uri, class: "control-label" %>
-    <div class="controls">
-        <%= f.text_field :uri %>
+    <%= f.label t("source.list.uri"), class: "control-label span2" %>
+    <div class="controls span6">
+        <%= f.url_field :uri, class: "span12" , :required => "true"%>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :label, class: "control-label" %>
-    <div class="controls">
-        <%= f.text_field :label %>
+    <%= f.label t("source.list.label"), class: "control-label span2" %>
+    <div class="controls span6">
+        <%= f.text_field :label, class: "span12", :required => "true" %>
     </div>
   </div>
 
 
     <div class="control-group">
-      <label for="ajax-combo" class="control-label"><%=  t("source.lang") %>:</label>
-      <div class="controls">
+      <label for="ajax-combo" class="control-label span2"><%=  t("source.list.lang") %></label>
+      <div class="controls span6">
         <div id="ajax-container-lang"></div>
       </div>
     </div>
 
     <div class="control-group">
-      <label for="ajax-combo" class="control-label"><%=  t("source.theme") %>:</label>
-      <div class="controls">
+      <label for="ajax-combo" class="control-label span2"><%=  t("source.list.theme") %></label>
+      <div class="controls span6">
         <div id="ajax-container-theme"></div>
       </div>
     </div>
-
-    <div class="form-actions">
-      <%= f.submit 'Submit', :class => 'btn' %>
-    </div>
+    <div class="control-group">
+    	<div class="controls span2 offset2">
+        <%= f.submit t("source.new.add"), :class => 'btn btn-success span12' %>
+      </div>
+   	 
+   	</div>
 <% end %>
-
+</div>
 <script>
     $.sexyCombo.create({
         name: "theme",

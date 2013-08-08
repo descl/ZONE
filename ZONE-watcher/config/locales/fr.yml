@@ -14,9 +14,13 @@ fr:
       notlogged:
         "Nous n'etes pas connectés avec un compte twitter."
   source:
+    title:
+      "Gestion des sources utilisateurs"
     elemsNumber:
       "éléments"
     list:
+      action:
+        "Actions"
       uri:
         "Uri"
       num:
@@ -28,11 +32,23 @@ fr:
       owner:
         "Owner"
       theme:
-        "Theme"
+        "Thème"
+      show:
+        "Afficher"
+      hide:
+        "Cacher"
+      hideall:
+        "Cacher tout"
+      showall:
+        "Afficher tout"
     your:
-      "Vous sources"
+      title:
+        "Vos sources"
     new:
-      "Nouvelle source"
+      title:
+        "Nouvelle source"
+      add:
+        "Ajouter"
     opml:
       title:
         "Importer un fichier opml"

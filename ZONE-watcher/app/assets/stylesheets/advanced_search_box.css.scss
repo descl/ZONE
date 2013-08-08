@@ -255,3 +255,51 @@ span.label-wrap{
 /**
  *   End of filtering section
  */
+
+/**
+ *   Source users section
+ */
+
+a.accordion-toggle:hover{
+  background : none;
+  color : black;
+  text-decoration: none;
+}
+
+.accordion-group{
+  border:none;
+}
+
+.accordion-inner{
+  border-top : none;
+}
+
+.table td.text-center{
+  text-align : center;
+}
+
+.table th.text-center{
+  text-align : center;
+}
+
+td a:hover, td a:visited{
+  background:none;
+  color:black;
+}
+
+.tableSource{
+  display:none;
+  max-height: 300px;
+  overflow-x: auto
+}
+
+span.text-info:hover{
+  text-decoration : underline;
+}
+
+#btnImport{
+  margin-left: 0;
+}
+/**
+ *   End of source users section
+ */
