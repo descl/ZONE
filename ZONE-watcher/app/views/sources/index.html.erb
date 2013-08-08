@@ -43,16 +43,6 @@
 	</div>
 	<div class="accordion-group">
 		<div class="accordion-heading">
-			<h2><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseGroups"> <i class="icon-chevron-sign-right"></i> <%= t("source.groups.title")%> </a></h2>
-		</div>
-		<div id="collapseGroups" class="accordion-body collapse">
-			<div class="accordion-inner">
-				<h3> Not yet implemented</h3>
-			</div>
-		</div>
-	</div>
-	<div class="accordion-group">
-		<div class="accordion-heading">
 			<h2><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseAll"> <i class="icon-chevron-sign-down"></i> <%= t("source.your.title")%> </a></h2>
 		</div>
 		<div id="collapseAll" class="accordion-body collapse in">
@@ -66,8 +56,6 @@
 				<% startNewTable = true %>
 				<% actualTableTheme = nil%>
 				<% numberTheme = 0 %>
-				
-				<% @sources.sort! {|a,b| [a.theme,a.label,a.uri,a.lang]<=>[b.theme,b.label,b.uri,b.lang]}  %>
 				
 				<% @sources.each do |source| %>
 					<% next if source == nil  %>

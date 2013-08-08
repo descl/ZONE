@@ -15,6 +15,7 @@ class SourcesController < ApplicationController
           return
         else
           @sources = current_user.getSources
+          @sources.sort! {|a,b| [a.theme,a.label,a.uri,a.lang]<=>[b.theme,b.label,b.uri,b.lang]}
         end
       }# index.html.erb
       format.json {

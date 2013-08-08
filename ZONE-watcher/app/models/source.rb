@@ -77,6 +77,12 @@ class Source
 
   def initialize(uri="",attributes = {})  
     @uri = uri
+    @label = ""
+    @lang = ""
+    @licence = ""
+    @owner = ""
+    @thumb = ""
+    @theme = ""
     @id = uri
     attributes.each do |name, value|  
       send("#{name}=", value)  
