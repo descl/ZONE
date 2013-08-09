@@ -54,7 +54,6 @@
 <div class="row-fluid" >
 	<div id="navTheme" class="span2 offset1">
 		<ul class="nav nav-list span2 affix" data-spy="affix" data-offset-top="0">
-			<li class="nav-header"><%= t("source.menu.title")%></li>
 			<% firstClass = "active" %>
 			<% @sources.each do |source| %>
 				<% next if source == nil  %>
@@ -64,13 +63,13 @@
 				<% next if source.theme == actualTableTheme  %>
 			  	<li class="<%= firstClass %>">
 			  		<a href="#source<%= source.theme %>">
-			  			<%= source.theme %>
+			  			<%= source.theme %> <i class="icon-chevron-right pull-right"></i>
 			  		</a>
+			  		
 			  	</li>
 			  	<% actualTableTheme = source.theme %>
 			  	<% firstClass = "" %>
 			<% end %>
-			<li class="divider"></li>
 			<li><a id="btn_up" href="#toppage"><i class="icon-collapse-top"></i> <%= t("source.menu.gotop")%></a></li>
 		</ul>
 	</div>
