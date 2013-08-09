@@ -5,6 +5,14 @@ class Item# < ActiveRecord::Base
   require 'rest_client'
 
 
+  OPEN_CALAIS_URI = 'http://www.opencalais.org/Entities#'
+  WIKI_META_URI = 'http://www.wikimeta.org/Entities#'
+  INSEE_GEO_URI = 'http://rdf.insee.fr/geo/'
+  RSS_URI = 'http://purl.org/rss/1.0/'
+  SVM_PLUGIN_URI = 'http://zone-project.org/model/plugins/Categorization_SVM#result'
+  TWITTER_MENTIONED_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#mentioned'
+  TWITTER_HASHTAG_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#hashtag'
+
   attr_accessor :uri, :title, :props, :description, :date, :localURI, :similarity
 
   def self.all(search = "",start=0,per_page=10)
@@ -85,5 +93,35 @@ class Item# < ActiveRecord::Base
     else
       return "assets/foregroundRSS.png"
     end
+  end
+
+  def getTags
+    result = Array.new
+
+    self.props.each do |prop|
+      prop[1].each do |value|
+        filter = SearchFilter.new(:value =>  value)
+        if value.start_with?("http")
+          filter.uri = value
+        end
+        filter.prop = prop[0]
+
+        if(filter.prop.starts_with? WIKI_META_URI)
+          if(filter.uri == nil)
+            next
+          end
+          result << filter
+        elsif(filter.prop.starts_with? INSEE_GEO_URI)
+          result << filter
+        elsif (filter.prop.starts_with? TWITTER_MENTIONED_PLUGIN_URI)
+          filter.value = "@#{filter.value}"
+          result << filter
+        elsif (filter.prop.starts_with? TWITTER_HASHTAG_PLUGIN_URI)
+          filter.value = "##{filter.value}"
+          result << filter
+        end
+      end
+    end
+    return result
   end
 end

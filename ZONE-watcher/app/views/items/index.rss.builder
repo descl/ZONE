@@ -25,6 +25,10 @@ xml.rss :version => "2.0" do
         if image != nil
             xml.enclosure url:image[0], type:"image/jpeg"
         end
+        @item.getTags.each do |tag|
+          xml.enclosure tag.value
+
+        end
      end
     end
   end

@@ -1,5 +1,7 @@
 ZONEWatcher::Application.routes.draw do
 
+  resources :favorites
+
   resources :search_filters
 
   get '/searches/create' => 'searches#create',
@@ -14,6 +16,7 @@ ZONEWatcher::Application.routes.draw do
   #Sources managment
   get "sources/langs", :action => "langs", :controller => "sources"
   get "sources/themes", :action => "themes", :controller => "sources"
+  get "sources/changeCategory", :action => "changeCategory", :controller => "sources"
   match "sources/uploadopml" => "sources#uploadopml"
 
   match 'sources/:id/edit' => 'sources#edit', :constraints  =>  {:id =>  /.*/ }

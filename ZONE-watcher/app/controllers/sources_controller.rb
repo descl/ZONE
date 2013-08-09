@@ -15,6 +15,7 @@ class SourcesController < ApplicationController
           return
         else
           @sources = current_user.getSources
+          @sources.sort! {|a,b| [a.theme,a.label,a.uri,a.lang]<=>[b.theme,b.label,b.uri,b.lang]}
         end
       }# index.html.erb
       format.json {
@@ -139,6 +140,26 @@ class SourcesController < ApplicationController
 
     @source.destroy
     return create(true)
+  end
+
+  def changeCategory
+    if !user_signed_in?
+      flash[:error] =  t("devise.failure.unauthenticated")
+      redirect_to :back
+      return
+    end
+
+    @oldSource = Source.find(params[:id])
+
+    @newSource = Source.new(@oldSource.uri,{
+        :label => @oldSource.label,
+        :lang => @oldSource.lang,
+        :theme => params[:theme],
+        :owner => @oldSource.owner
+    })
+    if @newSource.valid? && @newSource.save
+      @oldSource.destroy
+    end
   end
 
   # DELETE /sources/1
