@@ -140,6 +140,13 @@ function dropSource(ev,id)
 	ev.preventDefault();
 	var data=ev.dataTransfer.getData("Text");
 	$("#"+id).append("<tr id='"+$("#"+data).attr('id')+"c"+"' draggable='true' ondragstart='drag(event)'>"+$("#"+data).html()+"</tr>");
+	var url = "/sources/changeCategory?id="+$("#"+data).find("a.linkSource").html()+"&theme="+id;
+	$.ajax({
+		uri : url,
+		success: function(){
+
+		}	
+	});
 	$("#"+data).remove();
 }
 
