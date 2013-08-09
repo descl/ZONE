@@ -121,6 +121,7 @@ class Source
   end
 
   def destroy
+    endpoint = Rails.application.config.virtuosoEndpoint
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT ?prop ?value
     FROM <#{ZoneOntology::GRAPH_SOURCES}>

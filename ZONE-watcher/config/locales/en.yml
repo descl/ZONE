@@ -86,6 +86,11 @@ en:
         'Problem occured while removing source'
       errSave:
         "prohibited this source from being saved:"
+    menu:
+      title:
+        "Your themes"
+      gotop:
+        "Go top"
   menu:
     home:
       "Home"
