@@ -14,13 +14,13 @@
 
   <div class="control-group">
     <%= f.label t("source.list.uri"), class: "control-label span2" %>
-    <div class="controls span6">
+    <div class="controls span9">
         <%= f.url_field :uri, class: "span12" , :required => "true"%>
     </div>
   </div>
   <div class="control-group">
     <%= f.label t("source.list.label"), class: "control-label span2" %>
-    <div class="controls span6">
+    <div class="controls span9">
         <%= f.text_field :label, class: "span12", :required => "true" %>
     </div>
   </div>
@@ -28,19 +28,19 @@
 
     <div class="control-group">
       <label for="ajax-combo" class="control-label span2"><%=  t("source.list.lang") %></label>
-      <div class="controls span6">
+      <div class="controls span9">
         <div id="ajax-container-lang"></div>
       </div>
     </div>
 
     <div class="control-group">
       <label for="ajax-combo" class="control-label span2"><%=  t("source.list.theme") %></label>
-      <div class="controls span6">
+      <div class="controls span9">
         <div id="ajax-container-theme"></div>
       </div>
     </div>
     <div class="control-group">
-    	<div class="controls span2 offset2">
+    	<div class="controls span2 offset9">
         <%= f.submit t("source.new.add"), :class => 'btn btn-success span12' %>
       </div>
    	 
