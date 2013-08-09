@@ -87,7 +87,7 @@ public class TwitterApi {
             res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_HASHTAG,hashtag,true,true));
         }
         for(String mentioned: TwitterApi.extractor.extractMentionedScreennames(s.getText())){
-            res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_MENTIONED,mentioned,true,true));
+            res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_MENTIONED,"@"+mentioned,true,true));
         }
         if(s.getGeoLocation() != null){
             System.out.println("________________________________");
@@ -95,7 +95,7 @@ public class TwitterApi {
             System.out.println(s.getGeoLocation().getLongitude());
             System.out.println(s.getGeoLocation().toString());
         }
-        res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_AUTHOR,s.getUser().getScreenName(),true,true));
+        res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_AUTHOR,"@"+s.getUser().getScreenName(),true,true));
         return res;
     }
     
