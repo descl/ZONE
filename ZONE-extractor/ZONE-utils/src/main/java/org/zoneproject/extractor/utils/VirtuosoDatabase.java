@@ -42,7 +42,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import virtuoso.jena.driver.VirtGraph;
 import virtuoso.jena.driver.VirtModel;
-import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
+import virtuoso.jena.driver.VirtuosoQueryExecutionFactory; 
 
 /**
  *
@@ -53,6 +53,7 @@ public abstract class VirtuosoDatabase {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     private static Model st = null;
     private static String VIRTUOSO_SERVER = Config.getVar("Virtuoso-server-uri");
+    //private static String VIRTUOSO_SERVER = "jdbc:virtuoso://localhost:12346";
     private static String VIRTUOSO_USER = Config.getVar("Virtuoso-server-user");
     private static String VIRTUOSO_PASS = Config.getVar("Virtuoso-server-pass");
     public static String ZONE_URI = ZoneOntology.GRAPH_NEWS;
@@ -234,6 +235,7 @@ public abstract class VirtuosoDatabase {
     public static Item getOneItemByURI(String uri){
         String request = "SELECT ?relation ?value WHERE{  <"+uri+"> ?relation ?value}";
         logger.info(uri);
+        System.out.println(request);
         ResultSet results = runSPARQLRequest(request);
         return new Item(uri,results,uri,"relation","?value");
     }
@@ -314,7 +316,10 @@ public abstract class VirtuosoDatabase {
         logger.info(VirtuosoDatabase.ItemURIExist(uri));
         logger.info(VirtuosoDatabase.ItemURIExist("http://www.personnes.com#Margot"));
         * */
-        extractDB();
+        //extractDB();
+        System.out.println(getItemsNotAnotatedForOnePlugin("http://zone-project.org/model/plugins/WikiMeta"));
+        System.out.println(VIRTUOSO_SERVER);
+        System.out.println(getOneItemByURI("https://twitter.com/SbayAlticus/status/352411307980500992aaaa"));
         }
     
     public static void extractDB(){

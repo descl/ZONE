@@ -1,118 +1,137 @@
-<div class="row-fluid">
-	<div class="span12">
-		<h1><%= t("source.title")%></h1>
-	</div>
+<div id="modalNewSource" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel"><%= t("source.new.title")%></h3>
+  </div>
+  <div class="modal-body">
+    <%= render 'form' %>
+  </div>
 </div>
-<div class="accordion" id="accordion2">
-	<div class="accordion-group">
-		<div class="accordion-heading">
-			<h2><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseNew"> <i class="icon-chevron-sign-right"></i> <%= t("source.new.title")%> </a></h2>
-		</div>
-		<div id="collapseNew" class="accordion-body collapse">
-			<div class="accordion-inner">
-				<%= render 'form' %>
+
+<div id="modalNewImport" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel"><%= t("source.opml.title")%></h3>
+  </div>
+  <div class="modal-body">
+    <%= form_for(:upload, :url => { :action => "uploadopml" }, :html => { :multipart => true }, :remote => true) do |form| %>
+		<div class="row-fluid">
+			<div class="span10 offset1">
+				<span id="fileTextName" data-initial="<%= t("source.opml.empty")%>"><%= t("source.opml.empty")%></span>
 			</div>
 		</div>
-	</div>
-	<div class="accordion-group">
-		<div class="accordion-heading">
-			<h2><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOpml"> <i class="icon-chevron-sign-right"></i> <%= t("source.opml.title")%> </a></h2>
-		</div>
-		<div id="collapseOpml" class="accordion-body collapse">
-			<div class="accordion-inner">
-				<%= form_for(:upload, :url => { :action => "uploadopml" }, :html => { :multipart => true }, :remote => true) do |form| %>
-					<div class="row-fluid">
-						<div class="span10 offset1">
-							<span id="fileTextName" data-initial="<%= t("source.opml.empty")%>"><%= t("source.opml.empty")%></span>
-						</div>
-					</div>
-					<div class="row-fluid">
-						<div class="span3 offset1">
-							<input id="upload_datafile" name="upload[datafile]" type="file" hidden onchange="updateFilename($(this).val())">
-							<button id="btnImport" class="btn btn-info span12" onclick="$('#upload_datafile').click();return false;">
-								<%= t("source.opml.button.select")%>
-							</button>
-						</div>
-						<div class="span2">
-							<%= form.submit t("source.opml.button.upload"),:class => 'btn btn-success span12', :onclick => '$("#fileTextName").html("")'%>
-						</div>
-					</div>
-				<% end %>
+		<div class="row-fluid">
+			<div class="span5 offset1">
+				<input id="upload_datafile" name="upload[datafile]" type="file" hidden onchange="updateFilename($(this).val())">
+				<button id="btnImport" class="btn btn-info span12" onclick="$('#upload_datafile').click();return false;">
+					<%= t("source.opml.button.select")%>
+				</button>
+			</div>
+			<div class="span5">
+				<%= form.submit t("source.opml.button.upload"),:class => 'btn btn-success span12', :onclick => '$("#fileTextName").html("")'%>
 			</div>
 		</div>
-	</div>
-	<div class="accordion-group">
-		<div class="accordion-heading">
-			<h2><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseAll"> <i class="icon-chevron-sign-down"></i> <%= t("source.your.title")%> </a></h2>
-		</div>
-		<div id="collapseAll" class="accordion-body collapse in">
-			<div class="accordion-inner">
-				<div class="row-fluid">
-					<div class="span2 offset5">
-						<i id="showAllSources" class="text-info pointerMouse"><%= t("source.list.showall")%></i>
-						<i id="hideAllSources" class="text-info pointerMouse" hidden><%= t("source.list.hideall")%></i>
-					</div>
-				</div>
-				<% startNewTable = true %>
-				<% actualTableTheme = nil%>
-				<% numberTheme = 0 %>
-				
-				<% @sources.each do |source| %>
-					<% next if source == nil  %>
-					<% filter = Filter.new(:prop => "http://purl.org/rss/1.0/source",:value => source.uri) %>
-					<% uriNumber = filters_getNumber_path(:old => [filter]) %>
-					
-					<% if source.theme != actualTableTheme%>
-						<% startNewTable = true %>
-						<% numberTheme += 1 %>
-						<% if actualTableTheme != nil%>
-							</tbody>
-							</table>
-							</div>
-							</div>
-						<% end %>
-					<% end %>
-					
-					<% if startNewTable %>
-						<div class="row-fluid">
-							<div class="span4 offset1">
-								<b><%= t("source.list.theme")%> <%= numberTheme %> : <%= source.theme %></b>
-							</div>
-							<div class="span1">
-								<span class="showtable text-info pointerMouse" ><%= t("source.list.show")%></span>
-								<span class="hidetable text-info pointerMouse" hidden><%= t("source.list.hide")%></span>
-							</div>
-						</div>
-						<div class="row-fluid tableSource" hidden>
-							<div class="span10 offset1">
-							<table class="table table-bordered table-striped">
-								<thead>
-									<tr>
-										<th class="span1 text-center"><%= t("source.list.action")%></th>
-										<th class="span3"><%= t("source.list.label")%></th>
-										<th class="span5"><%= t("source.list.uri")%></th>
-										<th class="span1 text-center"><%= t("source.list.lang")%></th>
-									</tr>
-								</thead>
-								<tbody>
-					<% end %>
-					<tr>
-						<td class="text-center"><%= link_to "",edit_source_path(source) , :class => 'icon-edit', :title => t("edit")  %> <a href="/sources/<%= source.to_param%>/delete" title="<%= t("delete")%>"><i class="icon-trash"></i></a></td>
-						<td><%= source.label %></td>
-						<td><%= link_to source.uri, url_for(:controller => :searches, :action => :create,  :sources => {:rss => [source.uri]}), :method => "post" %></td>
-						<td class="text-center"><%= source.lang.upcase %></td>
-					</tr>
-					<% actualTableTheme = source.theme%>
-					<% startNewTable = false%>
-				<% end %>
-				<% if @sources.count > 0%>
-					</tbody>
-					</table>
-					</div>
-					</div>
-				<% end %>
-			</div>
-		</div>
+	<% end %>
+  </div>
+</div>
+<div class="row-fluid">
+	<div class="span10 offset1">
+		<h2><%= t("source.title")%></h2>
 	</div>
 </div>
 
+<% actualTableTheme = nil%>
+
+<% @sources.sort! {|a,b| [a.theme,a.label,a.uri,a.lang]<=>[b.theme,b.label,b.uri,b.lang]}  %>
+<div class="row-fluid" >
+	<div class="span2 offset1">
+		<div id="navTheme" class="affix-top" data-spy="affix" data-offset-top="60">
+			<div class="row-fluid">
+				<a href="#modalNewSource" role="button" class="btn btn-success span12" data-toggle="modal"><%= t("source.new.title")%></a>
+			</div>
+			<div class="row-fluid">
+				<a href="#modalNewImport" role="button" class="btn btn-danger span12" data-toggle="modal"><%= t("source.opml.title")%></a>				
+			</div>
+			<div class="row-fluid">
+				<hr/>				
+			</div>
+			<div class="row-fluid">
+				<ul class="nav nav-list" >
+					<% firstClass = "active" %>
+					<% @sources.each do |source| %>
+						<% next if source == nil  %>
+						<% if source.theme == "" %>
+							<% source.theme = "undefined" %>
+						<% end %>
+						<% next if source.theme == actualTableTheme  %>
+					  	<li class="<%= firstClass %>" ondrop="dropSource(event,'#<%=source.theme%>')" ondragover="allowDrop(event)">
+					  		<a href="#source<%= source.theme %>">
+					  			<%= source.theme %> <i class="icon-chevron-right pull-right"></i>
+					  		</a>
+					  		
+					  	</li>
+					  	<% actualTableTheme = source.theme %>
+					  	<% firstClass = "" %>
+					<% end %>
+				</ul>
+			</div>
+			<div class="row-fluid">
+				<a class="goTop text-center" data-original="<%= t("source.menu.gotop")%>" id="btn_up" href="#toppage"><i class="icon-collapse-top"></i> <%= t("source.menu.gotop")%></a>
+			</div>
+		</div>
+	</div>
+	<div id="scrollTable" class="span8" data-spy="scroll" data-target="#navTheme" data-offset-top="10">
+		<% startNewTable = true %>
+		<% actualTableTheme = nil%>
+		<% numberTheme = 0 %>
+		<% numberSource = 0 %>
+		
+		<% @sources.each do |source| %>
+			<% next if source == nil  %>
+			<% filter = Filter.new(:prop => "http://purl.org/rss/1.0/source",:value => source.uri) %>
+			<% uriNumber = filters_getNumber_path(:old => [filter]) %>
+			
+			<% if source.theme == "" %>
+				<% source.theme = "undefined" %>
+			<% end %>
+			
+			<% if source.theme != actualTableTheme%>
+				<% startNewTable = true %>
+				<% numberTheme += 1 %>
+				<% if actualTableTheme != nil%>
+					</tbody>
+					</table>
+					</fieldset>
+				<% end %>
+			<% end %>
+			<% if startNewTable %>
+				<fieldset id="source<%= source.theme %>">
+					Theme :<%= source.theme %>
+					<table id="<%=source.theme%>" class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th class="span1 text-center"><%= t("source.list.action")%></th>
+								<th class="span3"><%= t("source.list.label")%></th>
+								<th class="span5"><%= t("source.list.uri")%></th>
+								<th class="span1 text-center"><%= t("source.list.lang")%></th>
+							</tr>
+						</thead>
+						<tbody>
+			<% end %>
+			<tr id="<%=numberSource%>" draggable="true" ondragstart="drag(event)">
+				<td class="text-center"><%= link_to "",edit_source_path(source) , :class => 'icon-edit', :title => t("edit")  %> <a href="/sources/<%= source.to_param%>/delete" title="<%= t("delete")%>"><i class="icon-trash"></i></a></td>
+				<td><%= source.label %></td>
+				<td><%= link_to source.uri, url_for(:controller => :searches, :action => :create,  :sources => {:rss => [source.uri]}), :method => "post", :class => "linkSource"%></td>
+				<td class="text-center"><%= source.lang.upcase %></td>
+			</tr>
+			<% actualTableTheme = source.theme%>
+			<% startNewTable = false%>
+			<% numberSource += 1 %>
+		<% end %>
+		<% if @sources.count > 0%>
+			</tbody>
+			</table>
+			</fieldset>
+		<% end %>
+	</div>
+</div>

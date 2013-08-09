@@ -31,5 +31,8 @@ class ZoneOntology < ActiveRecord::Base
   SOURCES_TYPE_TWITTER_AUTHOR="http://zone-project.org/model/plugins/twitter#author"
 
   RSS_SOURCE= "http://purl.org/rss/1.0/source"
+
+  ZONE_USER = "http://zone-project.org/datas/users/"
+  ZONE_FAVORITE = "http://zone-project.org/model/favorite/"
   
 end

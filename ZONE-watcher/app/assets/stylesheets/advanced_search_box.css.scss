@@ -287,18 +287,65 @@ td a:hover, td a:visited{
   color:black;
 }
 
-.tableSource{
-  display:none;
-  max-height: 300px;
-  overflow-x: auto
-}
-
 span.text-info:hover{
   text-decoration : underline;
 }
 
 #btnImport{
   margin-left: 0;
+}
+
+#btn_up{
+  display : none;
+}
+
+.nav-list> li > a {
+  display: block;
+  width: 190px \9;
+  margin: 0 0 -1px;
+  padding: 8px 14px;
+  border: 1px solid #e5e5e5;
+}
+
+.nav-list> li > a > i{
+  opacity : 0.25;
+}
+
+.nav-list> li > a:hover{
+  color: #005580;
+}
+
+.nav-list > li:first-child > a{
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.nav-list > li:last-child > a{
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.goTop:hover{
+  background: none;
+  color: black;
+}
+
+.nav-list{
+  padding : 0;
+}
+
+#navTheme{
+  margin-top: 30px;
+}
+
+#navTheme.affix{
+  top: 60px;
+  width: 158px;
+  max-height: 80%;
+  overflow:auto;
+}
+
+fieldset{
+  padding-top : 45px;
 }
 /**
  *   End of source users section

@@ -86,6 +86,11 @@ fr:
         'Un problème est apparu durant la suppression de la source.'
       errSave:
         "Erreur lors de la création de la source"
+    menu:
+      title:
+        "Vos thèmes"
+      gotop:
+        "Haut de page"
   menu:
     home:
       "Accueil"

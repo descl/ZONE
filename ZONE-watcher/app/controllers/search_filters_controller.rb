@@ -6,7 +6,8 @@ class SearchFiltersController < ApplicationController
   # GET /searches/1.json
   def index
     @search_filter = SearchFilter.new(:uri => params[:uri])
-    @infos = @search_filter.getInfos
+    #@infos = @search_filter.getInfos
+    @infos = {:thumbnail => ""}
 
     render  :layout => 'empty'
   end
