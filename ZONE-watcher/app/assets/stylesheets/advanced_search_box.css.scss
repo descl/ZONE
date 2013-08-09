@@ -287,10 +287,8 @@ td a:hover, td a:visited{
   color:black;
 }
 
-.tableSource{
+.row-fluid .span9+div[id^="source"]{
   display:none;
-  max-height: 300px;
-  overflow-x: auto
 }
 
 span.text-info:hover{
@@ -299,6 +297,16 @@ span.text-info:hover{
 
 #btnImport{
   margin-left: 0;
+}
+
+#toppage{
+  position:absolute;
+  top: 0;
+  left: 0;
+}
+
+#btn_up{
+  display : none;
 }
 /**
  *   End of source users section
