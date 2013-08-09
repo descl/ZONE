@@ -52,9 +52,9 @@
 
 <% @sources.sort! {|a,b| [a.theme,a.label,a.uri,a.lang]<=>[b.theme,b.label,b.uri,b.lang]}  %>
 <div class="row-fluid" >
-	<div class="span2 offset1">
-		<ul id="navTheme" class="nav nav-list well span2 affix" data-spy="affix" data-offset-top="0">
-			<li class="nav-header">Vos thèmes</li>
+	<div id="navTheme" class="span2 offset1">
+		<ul class="nav nav-list span2 affix" data-spy="affix" data-offset-top="0">
+			<li class="nav-header"><%= t("source.menu.title")%></li>
 			<% firstClass = "active" %>
 			<% @sources.each do |source| %>
 				<% next if source == nil  %>
@@ -63,7 +63,7 @@
 				<% end %>
 				<% next if source.theme == actualTableTheme  %>
 			  	<li class="<%= firstClass %>">
-			  		<a href="#" onclick="$('.tableSource').hide();$('#source<%= source.theme %>').show();$('#navTheme').children().removeClass('active');$(this).parent().addClass('active')">
+			  		<a href="#source<%= source.theme %>">
 			  			<%= source.theme %>
 			  		</a>
 			  	</li>
@@ -71,56 +71,58 @@
 			  	<% firstClass = "" %>
 			<% end %>
 			<li class="divider"></li>
-			<li><a id="btn_up" href="#toppage"><i class="icon-collapse-top"></i> Retour en haut</a></li>
+			<li><a id="btn_up" href="#toppage"><i class="icon-collapse-top"></i> <%= t("source.menu.gotop")%></a></li>
 		</ul>
 	</div>
-	<% startNewTable = true %>
-	<% actualTableTheme = nil%>
-	<% numberTheme = 0 %>
-	
-	<% @sources.each do |source| %>
-		<% next if source == nil  %>
-		<% filter = Filter.new(:prop => "http://purl.org/rss/1.0/source",:value => source.uri) %>
-		<% uriNumber = filters_getNumber_path(:old => [filter]) %>
+	<div id="scrollTable" class="span9">
+		<% startNewTable = true %>
+		<% actualTableTheme = nil%>
+		<% numberTheme = 0 %>
 		
-		<% if source.theme == "" %>
-			<% source.theme = "undefined" %>
-		<% end %>
-		
-		<% if source.theme != actualTableTheme%>
-			<% startNewTable = true %>
-			<% numberTheme += 1 %>
-			<% if actualTableTheme != nil%>
-				</tbody>
-				</table>
-				</div>
+		<% @sources.each do |source| %>
+			<% next if source == nil  %>
+			<% filter = Filter.new(:prop => "http://purl.org/rss/1.0/source",:value => source.uri) %>
+			<% uriNumber = filters_getNumber_path(:old => [filter]) %>
+			
+			<% if source.theme == "" %>
+				<% source.theme = "undefined" %>
 			<% end %>
+			
+			<% if source.theme != actualTableTheme%>
+				<% startNewTable = true %>
+				<% numberTheme += 1 %>
+				<% if actualTableTheme != nil%>
+					</tbody>
+					</table>
+					</fieldset>
+				<% end %>
+			<% end %>
+			<% if startNewTable %>
+				<fieldset id="source<%= source.theme %>">
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th class="span1 text-center"><%= t("source.list.action")%></th>
+								<th class="span3"><%= t("source.list.label")%></th>
+								<th class="span5"><%= t("source.list.uri")%></th>
+								<th class="span1 text-center"><%= t("source.list.lang")%></th>
+							</tr>
+						</thead>
+						<tbody>
+			<% end %>
+			<tr>
+				<td class="text-center"><%= link_to "",edit_source_path(source) , :class => 'icon-edit', :title => t("edit")  %> <a href="/sources/<%= source.to_param%>/delete" title="<%= t("delete")%>"><i class="icon-trash"></i></a></td>
+				<td><%= source.label %></td>
+				<td><%= link_to source.uri, url_for(:controller => :searches, :action => :create,  :sources => {:rss => [source.uri]}), :method => "post" %></td>
+				<td class="text-center"><%= source.lang.upcase %></td>
+			</tr>
+			<% actualTableTheme = source.theme%>
+			<% startNewTable = false%>
 		<% end %>
-		<% if startNewTable %>
-			<div id="source<%= source.theme %>" class="span9 tableSource">
-				<table class="table table-bordered table-striped">
-					<thead>
-						<tr>
-							<th class="span1 text-center"><%= t("source.list.action")%></th>
-							<th class="span3"><%= t("source.list.label")%></th>
-							<th class="span5"><%= t("source.list.uri")%></th>
-							<th class="span1 text-center"><%= t("source.list.lang")%></th>
-						</tr>
-					</thead>
-					<tbody>
+		<% if @sources.count > 0%>
+			</tbody>
+			</table>
+			</fieldset>
 		<% end %>
-		<tr>
-			<td class="text-center"><%= link_to "",edit_source_path(source) , :class => 'icon-edit', :title => t("edit")  %> <a href="/sources/<%= source.to_param%>/delete" title="<%= t("delete")%>"><i class="icon-trash"></i></a></td>
-			<td><%= source.label %></td>
-			<td><%= link_to source.uri, url_for(:controller => :searches, :action => :create,  :sources => {:rss => [source.uri]}), :method => "post" %></td>
-			<td class="text-center"><%= source.lang.upcase %></td>
-		</tr>
-		<% actualTableTheme = source.theme%>
-		<% startNewTable = false%>
-	<% end %>
-	<% if @sources.count > 0%>
-		</tbody>
-		</table>
-		</div>
-	<% end %>
+	</div>
 </div>

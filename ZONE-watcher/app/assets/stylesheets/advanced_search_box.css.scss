@@ -287,22 +287,12 @@ td a:hover, td a:visited{
   color:black;
 }
 
-.row-fluid .span9+div[id^="source"]{
-  display:none;
-}
-
 span.text-info:hover{
   text-decoration : underline;
 }
 
 #btnImport{
   margin-left: 0;
-}
-
-#toppage{
-  position:absolute;
-  top: 0;
-  left: 0;
 }
 
 #btn_up{
