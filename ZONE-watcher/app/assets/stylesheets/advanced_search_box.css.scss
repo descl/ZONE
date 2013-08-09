@@ -324,6 +324,19 @@ span.text-info:hover{
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
 }
+.goTop:hover{
+  background: none;
+  color: black;
+}
+
+.nav-list{
+  padding : 0;
+}
+
+#navTheme.affix{
+  top: 60px;
+  width: 170px;
+}
 /**
  *   End of source users section
  */

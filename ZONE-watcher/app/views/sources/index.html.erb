@@ -35,45 +35,52 @@
   </div>
 </div>
 <div class="row-fluid">
-	<div class="span12">
-		<h1><%= t("source.title")%></h1>
-	</div>
-</div>
-<div class="row-fluid">
 	<div class="span10 offset1">
-		<a href="#modalNewSource" role="button" class="btn btn-success" data-toggle="modal"><%= t("source.new.title")%></a>
-		<a href="#modalNewImport" role="button" class="btn btn-danger" data-toggle="modal"><%= t("source.opml.title")%></a>
+		<h2><%= t("source.title")%></h2>
 	</div>
 </div>
-
-<hr class="span10 offset1"/>
 
 <% actualTableTheme = nil%>
 
 <% @sources.sort! {|a,b| [a.theme,a.label,a.uri,a.lang]<=>[b.theme,b.label,b.uri,b.lang]}  %>
 <div class="row-fluid" >
-	<div id="navTheme" class="span2 offset1">
-		<ul class="nav nav-list span2 affix" data-spy="affix" data-offset-top="0">
-			<% firstClass = "active" %>
-			<% @sources.each do |source| %>
-				<% next if source == nil  %>
-				<% if source.theme == "" %>
-					<% source.theme = "undefined" %>
-				<% end %>
-				<% next if source.theme == actualTableTheme  %>
-			  	<li class="<%= firstClass %>">
-			  		<a href="#source<%= source.theme %>">
-			  			<%= source.theme %> <i class="icon-chevron-right pull-right"></i>
-			  		</a>
-			  		
-			  	</li>
-			  	<% actualTableTheme = source.theme %>
-			  	<% firstClass = "" %>
-			<% end %>
-			<li><a id="btn_up" href="#toppage"><i class="icon-collapse-top"></i> <%= t("source.menu.gotop")%></a></li>
-		</ul>
+	<div class="span2 offset1">
+		<div id="navTheme" class="affix-top" data-spy="affix" data-offset-top="60">
+			<div class="row-fluid">
+				<a href="#modalNewSource" role="button" class="btn btn-success span12" data-toggle="modal"><%= t("source.new.title")%></a>
+			</div>
+			<div class="row-fluid">
+				<a href="#modalNewImport" role="button" class="btn btn-danger span12" data-toggle="modal"><%= t("source.opml.title")%></a>				
+			</div>
+			<div class="row-fluid">
+				<hr/>				
+			</div>
+			<div class="row-fluid">
+				<ul class="nav nav-list" >
+					<% firstClass = "active" %>
+					<% @sources.each do |source| %>
+						<% next if source == nil  %>
+						<% if source.theme == "" %>
+							<% source.theme = "undefined" %>
+						<% end %>
+						<% next if source.theme == actualTableTheme  %>
+					  	<li class="<%= firstClass %>">
+					  		<a href="#source<%= source.theme %>">
+					  			<%= source.theme %> <i class="icon-chevron-right pull-right"></i>
+					  		</a>
+					  		
+					  	</li>
+					  	<% actualTableTheme = source.theme %>
+					  	<% firstClass = "" %>
+					<% end %>
+				</ul>
+			</div>
+			<div class="row-fluid">
+				<a class="goTop text-center" data-original="<%= t("source.menu.gotop")%>" id="btn_up" href="#toppage"><i class="icon-collapse-top"></i> <%= t("source.menu.gotop")%></a>
+			</div>
+		</div>
 	</div>
-	<div id="scrollTable" class="span9">
+	<div id="scrollTable" class="span8">
 		<% startNewTable = true %>
 		<% actualTableTheme = nil%>
 		<% numberTheme = 0 %>

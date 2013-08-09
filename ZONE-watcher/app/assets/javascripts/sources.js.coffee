@@ -18,3 +18,4 @@ $(document).ready ->
     else
       $("#btn_up").fadeIn()
       $("#btn_up").css("display","block")
+
