@@ -29,39 +29,22 @@ $(document).ready ->
 
   #Generation of the popover of the tag
   $(".label-tag").each ->
-    btnOptionnal = "<button type='button' class='btn btn-info span12 btnTag' onclick='addTag(\"opt\",\"" + $(this).html() + "\",\"" + $(this).attr('filter-uri') + "\");closePop()'>"+ $("#titleOr").html() + "</button><br>"
-    btnMust = "<button type='button' class='btn btn-success span12 btnTag paddingMust' onclick='addTag(\"must\",\"" + $(this).html() + "\",\"" + $(this).attr('filter-uri') + "\");closePop()'>"+ $("#titleAnd").html() + "</button><br>"
-    btnBan = "<button type='button' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\",\"" + $(this).html() + "\",\"" + $(this).attr('filter-uri') + "\");closePop()'>"+ $("#titleWithout").html() + "</button>"
-    
-    name= $(this).html()
-    titleTag = "<span class='titletag'>"+name + "</span><i class='icon-trash pull-right pointerMouse' title='Delete' onclick='deleteTag(\""+name+"\")'></i><i class='icon-edit pull-right pointerMouse' title='Edit' onclick='editTag(\""+name+"\")'></i>"
-    
-    tagContent = "<hr><div class='row-fluid'><div class='span12 text-center'><b class='adding-info'>"+$("#titlePopover").html()+"</b></div></div><div class='row-fluid'><div class='span12'>"+  btnOptionnal + "</div></div><div class='row-fluid'><div class='span12'>" + btnMust + "</div></div><div class='row-fluid'><div class='span12'>" + btnBan + "</div></div>"
+    $(this).popover
+        title: getPopoverTitle($(this).html())
+        content: getPopoverButton($(this).html())
+        placement: "bottom"
+        trigger: "manual"
+        
+  $('.label-tag').click ->
     if ($(this).attr("data-uri").indexOf("/search_filters?uri=http%3A%2F%2Fwww.dbpedia.org") is 0)
       item = $(this)
       $.ajax
         url: item.attr("data-uri")
         timeout: 5000
         success: (data) ->
-          item.popover
-            title: titleTag
-            content: data + tagContent
-            placement: "bottom"
-            trigger: "manual"
+          $('.popover-content').html(data+getPopoverButton(item.html()))
         error: ->
-          item.popover
-            title: titleTag
-            content: tagContent
-            placement: "bottom"
-            trigger: "manual"
-    else
-       $(this).popover
-            title: titleTag
-            content: tagContent
-            placement: "bottom"
-            trigger: "manual"
-
-
+          $('.popover-content').html(getPopoverButton(item.html()))
 
   #Disable the default action onclick on the tag
   $(".label-tag").on "click", ->
@@ -78,3 +61,17 @@ $(document).ready ->
   ), ->
     $(this).hide()
     $(this).prev(".showFavorite").fadeIn()
+
+getPopoverButton = (tagHtml) ->
+  btnOptionnal = "<button type='button' class='btn btn-info span12 btnTag' onclick='addTag(\"opt\",\"" + tagHtml + "\",\"" + $(this).attr('filter-uri') + "\");closePop()'>"+ $("#titleOr").html() + "</button><br>"
+  btnMust = "<button type='button' class='btn btn-success span12 btnTag paddingMust' onclick='addTag(\"must\",\"" + tagHtml + "\",\"" + $(this).attr('filter-uri') + "\");closePop()'>"+ $("#titleAnd").html() + "</button><br>"
+  btnBan = "<button type='button' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\",\"" + tagHtml + "\",\"" + $(this).attr('filter-uri') + "\");closePop()'>"+ $("#titleWithout").html() + "</button>"
+    
+  tagContent = "<hr><div class='row-fluid'><div class='span12 text-center'><b class='adding-info'>"+$("#titlePopover").html()+"</b></div></div><div class='row-fluid'><div class='span12'>"+  btnOptionnal + "</div></div><div class='row-fluid'><div class='span12'>" + btnMust + "</div></div><div class='row-fluid'><div class='span12'>" + btnBan + "</div></div>"
+  
+  tagContent
+  
+getPopoverTitle = (tagHtml) ->
+  titleTag = "<span class='titletag'>"+tagHtml + "</span><i class='icon-trash pull-right pointerMouse' title='Delete' onclick='deleteTag(\""+tagHtml+"\")'></i><i class='icon-edit pull-right pointerMouse' title='Edit' onclick='editTag(\""+tagHtml+"\")'></i>"
+  
+  titleTag 
