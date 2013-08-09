@@ -41,10 +41,17 @@ $(document).ready ->
       item = $(this)
       $.ajax
         url: item.attr("data-uri")
+        timeout: 5000
         success: (data) ->
           item.popover
             title: titleTag
             content: data + tagContent
+            placement: "bottom"
+            trigger: "manual"
+        error: ->
+          item.popover
+            title: titleTag
+            content: tagContent
             placement: "bottom"
             trigger: "manual"
     else
