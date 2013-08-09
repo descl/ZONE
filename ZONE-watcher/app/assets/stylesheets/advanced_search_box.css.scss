@@ -335,7 +335,9 @@ span.text-info:hover{
 
 #navTheme.affix{
   top: 60px;
-  width: 170px;
+  width: 158px;
+  max-height: 80%;
+  overflow:auto;
 }
 /**
  *   End of source users section
