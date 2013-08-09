@@ -333,11 +333,19 @@ span.text-info:hover{
   padding : 0;
 }
 
+#navTheme{
+  margin-top: 30px;
+}
+
 #navTheme.affix{
   top: 60px;
   width: 158px;
   max-height: 80%;
   overflow:auto;
+}
+
+fieldset{
+  padding-top : 45px;
 }
 /**
  *   End of source users section
