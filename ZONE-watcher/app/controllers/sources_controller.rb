@@ -142,6 +142,26 @@ class SourcesController < ApplicationController
     return create(true)
   end
 
+  def changeCategory
+    if !user_signed_in?
+      flash[:error] =  t("devise.failure.unauthenticated")
+      redirect_to :back
+      return
+    end
+
+    @oldSource = Source.find(params[:id])
+
+    @newSource = Source.new(@oldSource.uri,{
+        :label => @oldSource.label,
+        :lang => @oldSource.lang,
+        :theme => params[:theme],
+        :owner => @oldSource.owner
+    })
+    if @newSource.valid? && @newSource.save
+      @oldSource.destroy
+    end
+  end
+
   # DELETE /sources/1
   # DELETE /sources/1.json
   def destroy
