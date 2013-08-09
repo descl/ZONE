@@ -64,7 +64,7 @@
 							<% source.theme = "undefined" %>
 						<% end %>
 						<% next if source.theme == actualTableTheme  %>
-					  	<li class="<%= firstClass %>">
+					  	<li class="<%= firstClass %>" ondrop="dropSource(event,'table<%=source.theme%>')" ondragover="allowDrop(event)">
 					  		<a href="#source<%= source.theme %>">
 					  			<%= source.theme %> <i class="icon-chevron-right pull-right"></i>
 					  		</a>
@@ -107,7 +107,7 @@
 			<% if startNewTable %>
 				<fieldset id="source<%= source.theme %>">
 					Theme :<%= source.theme %>
-					<table id="table<%=source.theme%>" class="table table-bordered table-striped" ondrop="dropSource(event,'table<%=source.theme%>')" ondragover="allowDrop(event)">
+					<table id="table<%=source.theme%>" class="table table-bordered table-striped">
 						<thead>
 							<tr>
 								<th class="span1 text-center"><%= t("source.list.action")%></th>
