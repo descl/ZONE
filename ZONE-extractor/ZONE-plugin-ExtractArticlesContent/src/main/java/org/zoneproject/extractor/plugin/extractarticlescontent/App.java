@@ -62,11 +62,15 @@ public class App
                     String content= ArticleExtractor.INSTANCE.getText(url).replace("\u00A0", " ").trim();
 
                     String title = item.getTitle().trim();
-                    String description = item.getDescription().trim().substring(0,Math.min(item.getDescription().trim().length(),20));
-
-                    if(content.contains(description)){
-                        content = content.substring(content.indexOf(description));
+                    
+                    if(item.getDescription() != null){
+                        String description = item.getDescription().trim().substring(0,Math.min(item.getDescription().trim().length(),20));
+                    
+                        if(content.contains(description)){
+                            content = content.substring(content.indexOf(description));
+                        }
                     }
+                    
                     if(content.contains(title)){
                         content = content.substring(content.indexOf(title)+title.length());
                     }
