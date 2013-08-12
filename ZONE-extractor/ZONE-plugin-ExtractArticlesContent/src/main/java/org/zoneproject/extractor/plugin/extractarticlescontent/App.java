@@ -51,33 +51,36 @@ public class App
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Item[] items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI);
-        logger.info("ExtractArticlesContent has "+items.length+" items to annotate");
-        for(Item item : items){
-            try {
-                logger.info("Add ExtractArticlesContent for item: "+item);
-                URL url = new URL(item.getUri());
-                String content= ArticleExtractor.INSTANCE.getText(url).replace("\u00A0", " ").trim();
+        Item[] items = null;
+        do{
+            items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,10);
+            logger.info("ExtractArticlesContent has "+items.length+" items to annotate");
+            for(Item item : items){
+                try {
+                    logger.info("Add ExtractArticlesContent for item: "+item);
+                    URL url = new URL(item.getUri());
+                    String content= ArticleExtractor.INSTANCE.getText(url).replace("\u00A0", " ").trim();
 
-                String title = item.getTitle().trim();
-                String description = item.getDescription().trim().substring(0,Math.min(item.getDescription().trim().length(),20));
+                    String title = item.getTitle().trim();
+                    String description = item.getDescription().trim().substring(0,Math.min(item.getDescription().trim().length(),20));
 
-                if(content.contains(description)){
-                    content = content.substring(content.indexOf(description));
+                    if(content.contains(description)){
+                        content = content.substring(content.indexOf(description));
+                    }
+                    if(content.contains(title)){
+                        content = content.substring(content.indexOf(title)+title.length());
+                    }
+                    content = content.replace("\n", "<br/>");
+                    VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_RESULT_URI,content));
+                    VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
+                } catch (BoilerpipeProcessingException ex) {
+                    VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
+                    VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_RESULT_URI,item.getElement(RSS.description)));
+                    Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(App.class.getName()).log(Level.WARNING, null, ex);
                 }
-                if(content.contains(title)){
-                    content = content.substring(content.indexOf(title)+title.length());
-                }
-                content = content.replace("\n", "<br/>");
-                VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_RESULT_URI,content));
-                VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
-            } catch (BoilerpipeProcessingException ex) {
-                VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
-                VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_RESULT_URI,item.getElement(RSS.description)));
-                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(App.class.getName()).log(Level.WARNING, null, ex);
             }
+        }while(items.length > 0);
     }
-}
 }

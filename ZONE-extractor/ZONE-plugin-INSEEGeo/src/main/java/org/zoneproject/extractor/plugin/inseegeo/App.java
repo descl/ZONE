@@ -44,15 +44,18 @@ public class App
     public static void main(String[] args) {
         String openCalaisPrefix = "http://www.opencalais.org/Entities";
         String [] deps = {openCalaisPrefix+"#LOC"};
-        Item[] items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps);
-        logger.info("INSEEGeo has "+items.length+" items to annotate");
-        for(Item item : items){
-            logger.info("Add INSEEGeo for item: "+item);
-            ArrayList<Prop> props;
-            props = InseeSparqlRequest.getDimensions(item.getElements(openCalaisPrefix+"#LOC"));
-            Database.addAnnotations(item.getUri(), props);
-            Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
-            
+        Item[] items = null;
+        do {
+            items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps);
+            logger.info("INSEEGeo has "+items.length+" items to annotate");
+            for(Item item : items){
+                logger.info("Add INSEEGeo for item: "+item);
+                ArrayList<Prop> props;
+                props = InseeSparqlRequest.getDimensions(item.getElements(openCalaisPrefix+"#LOC"));
+                Database.addAnnotations(item.getUri(), props);
+                Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
+            }
         }
+        while(items.length > 0);
     }
 }

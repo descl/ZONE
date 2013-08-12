@@ -43,17 +43,20 @@ public class App
     }
     
     public static void main(String[] args) {
-
-        Item[] items = Database.getItemsNotAnotatedForOnePlugin(PLUGIN_URI);
-        logger.info("WikiMeta has "+items.length+" items to annotate");
-        for(Item item : items){
-            logger.info("Add WikiMeta for item: "+item);
+        Item[] items = null;
+        String [] deps = {ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT};
+        do{
+            items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps);
+            logger.info("WikiMeta has "+items.length+" items to annotate");
+            for(Item item : items){
+                logger.info("Add WikiMeta for item: "+item);
             
-            ArrayList<Prop> content= WikiMetaRequest.getProperties(item.concat());
-            Database.addAnnotations(item.getUri(), content);
+                ArrayList<Prop> content= WikiMetaRequest.getProperties(item.concat());
+                Database.addAnnotations(item.getUri(), content);
             
-            Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
+                Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
 
-        }
+            }
+        }while(items.length > 0);
     }
 }
