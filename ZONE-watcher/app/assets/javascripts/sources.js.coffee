@@ -40,7 +40,7 @@ window.dropSource = (ev, idTheme) ->
   theme ="" if theme =="undefined"
   
   #URL to call via ajax to save the update
-  urlUpdate = "/sources/changeCategory?id=" + encodeURI(sourceUrl) + "&theme=" + encodeURI(theme)
+  updateUrl = "/sources/changeCategory?id=" + encodeURI(sourceUrl) + "&theme=" + encodeURI(theme)
   
   #ID of the new table
   idTheme = "#"+idTheme
@@ -49,7 +49,7 @@ window.dropSource = (ev, idTheme) ->
   $(idTheme).append "<tr id='" + tempId + "' draggable='true' ondragstart='drag(event)'>" + trContent + "</tr>"
   
   $.ajax
-    url: urlUpdate,
+    url: updateUrl,
     success: (data) ->
       $("#"+tempId).addClass("success")
       setTimeout (->
