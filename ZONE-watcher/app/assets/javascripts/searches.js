@@ -49,12 +49,19 @@ function slideDown(id) {
 //Add a source in the table
 function addSource(table, value) {
     if (table == "Twitter") {
-        text = $(value).val();
-        if (value == "#searchTwitter")
-            text = "#" + text;
-        else
-            text = "@" + text;
-        $("#wellSources").append("<span class='label label-info twitterSource'>" + text + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();checkWell()'></i></span> ");
+    	var reg = new RegExp('[, ]+');
+        text = $(value).val().split(reg);
+        if (value == "#searchTwitter"){
+        	$.each(text,function(){
+        		content = "#" + this;
+           		$("#wellSources").append("<span class='label label-info twitterSource'>" + content + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();checkWell()'></i></span> ");
+        	})
+        }else{
+			$.each(text,function(){
+        		content = "@" + this;
+           		$("#wellSources").append("<span class='label label-info twitterSource'>" + content + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();checkWell()'></i></span> ");
+       		})
+        }
         $("#addAllTwitter").attr("disabled", true);
     } else if (table == "RSS") {
         $("#wellSources").append("<span class='label-wrap label label-warning rssSource' >" + $(value).val() + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();checkWell()'></i></span> ");
