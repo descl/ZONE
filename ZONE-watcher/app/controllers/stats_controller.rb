@@ -21,7 +21,7 @@ class StatsController < ApplicationController
     kind ="news not annotated for ExtractArticlesContent"
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT DISTINCT COUNT(?concept) AS ?num
-    FROM <#{ZoneOntology::GRAPH_SOURCES}>
+    FROM <#{ZoneOntology::GRAPH_ITEMS}>
     WHERE {
       ?concept <http://zone-project.org/model/plugins/ExtractArticlesContent> ?pluginDefined.
       FILTER (!bound(?pluginDefined))
@@ -32,7 +32,7 @@ class StatsController < ApplicationController
     kind ="news not annotated for WikiMeta"
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT DISTINCT COUNT(?concept) AS ?num
-    FROM <#{ZoneOntology::GRAPH_SOURCES}>
+    FROM <#{ZoneOntology::GRAPH_ITEMS}>
     WHERE {
       ?concept <http://zone-project.org/model/plugins/WikiMeta> ?pluginDefined.
       FILTER (!bound(?pluginDefined))
@@ -43,7 +43,7 @@ class StatsController < ApplicationController
     kind ="news not annotated for OpenCalais"
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT DISTINCT COUNT(?concept) AS ?num
-    FROM <#{ZoneOntology::GRAPH_SOURCES}>
+    FROM <#{ZoneOntology::GRAPH_ITEMS}>
     WHERE {
       ?concept <http://zone-project.org/model/plugins/OpenCalais> ?pluginDefined.
       FILTER (!bound(?pluginDefined))
@@ -54,7 +54,7 @@ class StatsController < ApplicationController
     kind ="news not annotated for INSEEGeo"
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT DISTINCT COUNT(?concept) AS ?num
-    FROM <#{ZoneOntology::GRAPH_SOURCES}>
+    FROM <#{ZoneOntology::GRAPH_ITEMS}>
     WHERE {
       ?concept <http://zone-project.org/model/plugins/INSEEGeo> ?pluginDefined.
       FILTER (!bound(?pluginDefined))
