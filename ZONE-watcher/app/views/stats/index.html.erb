@@ -1,0 +1,11 @@
+<h1>Listing stats</h1>
+
+<table border ="1">
+
+<% @stats.each do |entry| %>
+  <tr>
+    <td><u><%= entry[:kind] %></u></td>
+    <td><b><%= entry[:val] %></b></td>
+  </tr>
+<% end %>
+</table>

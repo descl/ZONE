@@ -1,5 +1,8 @@
 ZONEWatcher::Application.routes.draw do
 
+  resources :stats
+
+
   #resources :favorites
   get "favorites/create", :action => "create", :controller => "favorites"
   get "favorites", :action => "index", :controller => "favorites"
@@ -8,6 +11,7 @@ ZONEWatcher::Application.routes.draw do
 
   get '/searches/create' => 'searches#create',
         :via => :post
+  get '/searches/selectSources' => 'searches#selectSources'
   resources :searches
 
 
