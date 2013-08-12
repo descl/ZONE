@@ -29,11 +29,13 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.util.FileManager;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -106,20 +108,28 @@ public abstract class VirtuosoDatabase {
      * @param graph 
      */
     public static void addAnnotation(String itemUri, Prop prop, String graph){
-        if(prop.isIsSearchable()) {
-            VirtuosoDatabase.addAnnotation(prop.getType().getURI(),new Prop(ZoneOntology.ANNOTATION, "true",true));
+        try {
+            if(prop.isIsSearchable()) {
+                VirtuosoDatabase.addAnnotation(prop.getType().getURI(),new Prop(ZoneOntology.ANNOTATION, "true",true));
+            }
+            Model model = ModelFactory.createDefaultModel();
+            Resource itemNode = model.createResource(itemUri);
+            String val = prop.getValue();
+            if(val == null)
+                val = "";
+            byte[] utf8;
+            utf8 = val.getBytes("UTF-8");
+            val = new String(utf8, "UTF-8");
+            if(prop.isLiteral()){
+                itemNode.addLiteral(prop.getType(), model.createLiteral(val));
+            }
+            else{
+                itemNode.addProperty(prop.getType(), model.createResource(val));
+            }
+            getStore(graph).add(model);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Model model = ModelFactory.createDefaultModel();
-        Resource itemNode = model.createResource(itemUri);
-        if(prop.isLiteral()){
-            if(prop.getValue() == null)
-                prop.setValue("");
-            itemNode.addLiteral(prop.getType(), model.createLiteral(prop.getValue()));
-        }
-        else{
-            itemNode.addProperty(prop.getType(), model.createResource(prop.getValue()));
-        }
-        getStore(graph).add(model);
     }
 
     /**
@@ -175,12 +185,17 @@ public abstract class VirtuosoDatabase {
     }
     public static Item[] getItemsNotAnotatedForOnePlugin(String pluginURI, int limit){
         ArrayList<Item> items = new ArrayList<Item>();
-        String request = "SELECT DISTINCT ?uri WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title  OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined} FILTER (!bound(?pluginDefined)) } LIMIT "+limit;
+        String request = "SELECT DISTINCT ?uri  FROM <http://zone-project.org/datas/items> WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title  OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined} FILTER (!bound(?pluginDefined)) } LIMIT "+limit;
         ResultSet results = runSPARQLRequest(request);
 
         while (results.hasNext()) {
             QuerySolution result = results.nextSolution();
-            items.add(getOneItemByURI(result.get("?uri").toString()));
+            try{
+                items.add(getOneItemByURI(result.get("?uri").toString()));
+            }catch(com.hp.hpl.jena.shared.JenaException e){
+                Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, e);
+                getStore(ZoneOntology.GRAPH_NEWS).removeAll(ResourceFactory.createResource(result.get("?uri").toString()),null,null);
+            }
         }
         return items.toArray(new Item[items.size()]);
     }
@@ -191,6 +206,14 @@ public abstract class VirtuosoDatabase {
      * @return the items
      */
     public static Item[] getItemsNotAnotatedForPluginsWithDeps(String pluginURI, String []deps){
+        return getItemsNotAnotatedForPluginsWithDeps(pluginURI, deps,10);
+    }
+    /**
+     * get all items which has not been annotated for a plugin
+     * @param pluginURI the plugin URI
+     * @return the items
+     */
+    public static Item[] getItemsNotAnotatedForPluginsWithDeps(String pluginURI, String []deps, int limit){
         ArrayList<Item> items = new ArrayList<Item>();
         String requestPlugs ="";
         int i=0;
@@ -233,7 +256,7 @@ public abstract class VirtuosoDatabase {
      * @return 
      */
     public static Item getOneItemByURI(String uri){
-        String request = "SELECT ?relation ?value WHERE{  <"+uri+"> ?relation ?value}";
+        String request = "SELECT ?relation ?value FROM <http://zone-project.org/datas/items> WHERE{  <"+uri+"> ?relation ?value}";
         logger.info(uri);
         System.out.println(request);
         ResultSet results = runSPARQLRequest(request);
