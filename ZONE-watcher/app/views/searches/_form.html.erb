@@ -302,13 +302,13 @@
 									</div>
 								</div>
 								<div class="row-fluid">
-									<button class="btn btn-info span12 marged" type="button" onclick="addFilter('or');return false">
-										<h4 class="white"><%= raw t 'newmodal.filtering.buttonOption' %></h4>
+									<button class="btn btn-success span12 marged" type="button" onclick="addFilter('and');return false">
+										<h4 class="white"><%= raw t 'newmodal.filtering.buttonMusthave' %></h4>
 									</button>
 								</div>
 								<div class="row-fluid">
-									<button class="btn btn-success span12 marged" type="button" onclick="addFilter('and');return false">
-										<h4 class="white"><%= raw t 'newmodal.filtering.buttonMusthave' %></h4>
+									<button class="btn btn-info span12 marged" type="button" onclick="addFilter('or');return false">
+										<h4 class="white"><%= raw t 'newmodal.filtering.buttonOption' %></h4>
 									</button>
 								</div>
 								<div class="row-fluid">
@@ -328,20 +328,6 @@
 				<div class="row-fluid">
 					<div class="span1"></div>
 					<div class="span10">
-						<h4 class="black"><%= raw t 'newmodal.filtering.resume.option' %></h4>
-					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span1"></div>
-					<div id="wellOr" class="span10 well well-info" ondrop="drop(event)" ondragover="allowDrop(event)">
-						<%@search.getOrFilters.each do |filter| %>
-						<%= raw filter.getButton%>
-						<%end%>
-					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span1"></div>
-					<div class="span10">
 						<h4 class="black"><%= raw t 'newmodal.filtering.resume.musthave' %></h4>
 					</div>
 				</div>
@@ -349,6 +335,20 @@
 					<div class="span1"></div>
 					<div id="wellAnd" class="span10 well well-success" ondrop="drop(event)" ondragover="allowDrop(event)">
 						<%@search.getAndFilters.each do |filter| %>
+						<%= raw filter.getButton%>
+						<%end%>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span1"></div>
+					<div class="span10">
+						<h4 class="black"><%= raw t 'newmodal.filtering.resume.option' %></h4>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span1"></div>
+					<div id="wellOr" class="span10 well well-info" ondrop="drop(event)" ondragover="allowDrop(event)">
+						<%@search.getOrFilters.each do |filter| %>
 						<%= raw filter.getButton%>
 						<%end%>
 					</div>
