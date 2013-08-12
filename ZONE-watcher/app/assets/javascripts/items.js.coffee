@@ -21,12 +21,6 @@ $(document).ready ->
 
 
 $(document).ready ->
-
-  #Hide the favorite bar by default
-  $(".row-favorite").hide()
-  $(".showFavorite").hide()
-  $(".row-list").show()
-
   #Generation of the popover of the tag
   $(".label-tag").each ->
     $(this).popover
