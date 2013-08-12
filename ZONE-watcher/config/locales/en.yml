@@ -65,6 +65,8 @@ en:
       button:
         addall:
           "Add all"
+        ownsource:
+          "You must be log in"
     groups:
       title:
         "Manage sources group"
