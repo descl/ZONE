@@ -101,6 +101,7 @@ function changeItemFormat(type) {
         $(".item-bloc:even").addClass('clear-left');
         $(".item-bloc:odd").addClass('span6 pull-right');
         $(".item-bloc:odd").addClass('clear-right');
+        $('.item-bloc').removeClass('longWell');
 
         $(".row-favorite").hide();
         $(".showFavorite").hide();
@@ -114,6 +115,7 @@ function changeItemFormat(type) {
         $('.item-bloc').removeClass('pull-right');
         $('.item-bloc').removeClass('clear-right');
         $('.item-bloc').removeClass('clear-left');
+        $('.item-bloc').addClass('longWell');
 
         $(".row-list").hide();
         $(".showFavorite").show();
