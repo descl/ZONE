@@ -69,7 +69,7 @@ getPopoverButton = (tagHtml) ->
   btnMust = "<button type='button' class='btn btn-success span12 btnTag paddingMust' onclick='addTag(\"must\",\"" + tagHtml + "\",\"" + $(this).attr('filter-uri') + "\");closePop()'>"+ $("#titleAnd").html() + "</button><br>"
   btnBan = "<button type='button' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\",\"" + tagHtml + "\",\"" + $(this).attr('filter-uri') + "\");closePop()'>"+ $("#titleWithout").html() + "</button>"
     
-  tagContent = "<hr><div class='row-fluid'><div class='span12 text-center'><b class='adding-info'>"+$("#titlePopover").html()+"</b></div></div><div class='row-fluid'><div class='span12'>"+  btnOptionnal + "</div></div><div class='row-fluid'><div class='span12'>" + btnMust + "</div></div><div class='row-fluid'><div class='span12'>" + btnBan + "</div></div>"
+  tagContent = "<hr><div class='row-fluid'><div class='span12 text-center'><b class='adding-info'>"+$("#titlePopover").html()+"</b></div></div><div class='row-fluid'><div class='span12'>"+  btnMust + "</div></div><div class='row-fluid'><div class='span12'>" + btnOptionnal + "</div></div><div class='row-fluid'><div class='span12'>" + btnBan + "</div></div>"
   
   tagContent
   
