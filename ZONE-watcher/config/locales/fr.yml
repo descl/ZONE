@@ -44,6 +44,8 @@ fr:
     your:
       title:
         "Vos sources"
+      loading:
+        "Chargement..."
     new:
       title:
         "Nouvelle source"

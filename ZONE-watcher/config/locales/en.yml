@@ -44,6 +44,8 @@ en:
     your:
       title:
         "Your sources"
+      loading:
+        "Loading..."
     new:
       title:
         "New source"

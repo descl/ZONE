@@ -258,6 +258,7 @@ function showImportRss(){
 	if ( $(".importRss").is(":visible")){
 		$(".importRss").slideUp();
 	} else{
+		$(".importRss").load("/searches/selectSources");
 		$(".importRss").slideDown();
 	}
 }
