@@ -178,10 +178,10 @@
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th>Thème</th>
-														<th>URL</th>
-														<th>Libellé</th>
-														<th>Action</th>
+														<th><%= t('source.list.action')%></th>
+														<th><%= t('source.list.theme')%></th>
+														<th><%= t('source.list.uri')%></th>
+														<th><%= t('source.list.label')%></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -189,13 +189,13 @@
 														@sources = current_user.getSources
 														@sources.each do |source| %>
 															<tr>
-																<td class="span2"><%= source.theme %></td>
-																<td class="span5 tdBreakable"><%= source.uri%></td>
-																<td class="span3 tdBreakable"><%= source.label %></td>
 																<td class="span2">
 																<button class="btn btn-success" type="button" onclick="addPersonnalRss('<%= source.uri%>')">
 																	Ajouter
 																</button></td>
+																<td class="span2"><%= source.theme %></td>
+																<td class="span5 tdBreakable"><%= source.uri%></td>
+																<td class="span3 tdBreakable"><%= source.label %></td>
 															</tr>
 														<% end %>
 													<% end %>
