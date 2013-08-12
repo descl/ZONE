@@ -1,0 +1,19 @@
+<h1>Listing favorites</h1>
+<span class="hidden">
+  <%= raw h(@sparqlRequest).gsub(/\n/, '<br/>')%>
+</span>
+
+<!-- items printing-->
+<div class="items-box">
+  <div class="row-fluid">
+    <% id=0; @favorites.each do |item| %>
+      <div class="well item-bloc">
+        <div class="item_container" sourceid="<%= id %>"></div>
+        <div class="item_wait" sourceid="<%= id%>">
+          <a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
+          <a href="<%= item.uri%>"><%= item.title%></a>
+        </div>
+      </div>
+    <% id+=1; end %>
+  </div>
+</div>
