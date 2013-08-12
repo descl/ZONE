@@ -33,6 +33,14 @@ $(document).ready(function() {
 
     $("#addAllRSS").attr("disable", false);
     $("#addAllTwitter").attr("disable", false);
+    
+    //Block the original backspace action, and reverse switch the tab of the search
+    $(document).keydown(function(e){
+    	if(e.keyCode == 8){
+    		reverseSwitchTab();
+    		e.preventDefault();
+    	}
+   })  
 });
 
 //slide down the source tab for the source selected
