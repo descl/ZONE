@@ -149,6 +149,8 @@ class SourcesController < ApplicationController
       return
     end
 
+    puts params[:id]
+
     @oldSource = Source.find(params[:id])
 
     @newSource = Source.new(@oldSource.uri,{

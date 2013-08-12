@@ -37,11 +37,17 @@ window.dropSource = (ev, idTheme) ->
   sourceUrl = $(originalId).find("a.linkSource").html()
   
   #Url a appellé en ajax pour enregistrer la modification de theme
-  urlUpdate = "sources/changeCategory?id=" + sourceUrl + "&theme=" + idTheme
+  urlUpdate = "/sources/changeCategory?id=" + encodeURI(sourceUrl) + "&theme=" + encodeURI(idTheme)
+  alert(urlUpdate)
   
   #Ajout de la ligne dans le nouveau tableau
   $(idTheme).append "<tr id='" + tempId + "' draggable='true' ondragstart='drag(event)'>" + trContent + "</tr>"
-  $.ajax uri: urlUpdate
+  $.ajax
+    url: urlUpdate,
+    success: (data) ->
+      alert(data)
+    error: (jqXHR, textStatus, errorThrown) ->
+      alert(textStatus)
   
   #Remove the orignal line from the table where the drag first come from
   $(originalId).remove()
