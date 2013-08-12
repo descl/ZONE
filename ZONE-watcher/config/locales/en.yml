@@ -44,6 +44,8 @@ en:
     your:
       title:
         "Your sources"
+      loading:
+        "Loading..."
     new:
       title:
         "New source"
@@ -65,6 +67,8 @@ en:
       button:
         addall:
           "Add all"
+        ownsource:
+          "You must be log in"
     groups:
       title:
         "Manage sources group"

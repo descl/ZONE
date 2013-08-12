@@ -37,6 +37,8 @@ $(document).ready ->
         
   $('.label-tag').click ->
     if ($(this).attr("data-uri").indexOf("/search_filters?uri=http%3A%2F%2Fwww.dbpedia.org") is 0)
+      waitingScreen = getWaitingScreen()
+      $('.popover-content').html(waitingScreen + getPopoverButton($(this).html()))
       item = $(this)
       $.ajax
         url: item.attr("data-uri")
@@ -67,7 +69,7 @@ getPopoverButton = (tagHtml) ->
   btnMust = "<button type='button' class='btn btn-success span12 btnTag paddingMust' onclick='addTag(\"must\",\"" + tagHtml + "\",\"" + $(this).attr('filter-uri') + "\");closePop()'>"+ $("#titleAnd").html() + "</button><br>"
   btnBan = "<button type='button' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\",\"" + tagHtml + "\",\"" + $(this).attr('filter-uri') + "\");closePop()'>"+ $("#titleWithout").html() + "</button>"
     
-  tagContent = "<hr><div class='row-fluid'><div class='span12 text-center'><b class='adding-info'>"+$("#titlePopover").html()+"</b></div></div><div class='row-fluid'><div class='span12'>"+  btnOptionnal + "</div></div><div class='row-fluid'><div class='span12'>" + btnMust + "</div></div><div class='row-fluid'><div class='span12'>" + btnBan + "</div></div>"
+  tagContent = "<hr><div class='row-fluid'><div class='span12 text-center'><b class='adding-info'>"+$("#titlePopover").html()+"</b></div></div><div class='row-fluid'><div class='span12'>"+  btnMust + "</div></div><div class='row-fluid'><div class='span12'>" + btnOptionnal + "</div></div><div class='row-fluid'><div class='span12'>" + btnBan + "</div></div>"
   
   tagContent
   
@@ -75,3 +77,8 @@ getPopoverTitle = (tagHtml) ->
   titleTag = "<span class='titletag'>"+tagHtml + "</span><i class='icon-trash pull-right pointerMouse' title='Delete' onclick='deleteTag(\""+tagHtml+"\")'></i><i class='icon-edit pull-right pointerMouse' title='Edit' onclick='editTag(\""+tagHtml+"\")'></i>"
   
   titleTag 
+  
+getWaitingScreen = ->
+  text = "<div class='row-fluid'><i class='icon-refresh'></i> Loading ...</div>"
+    
+  text
