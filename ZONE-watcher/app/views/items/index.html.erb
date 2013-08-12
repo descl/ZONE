@@ -58,10 +58,10 @@
 <!-- rss feed and format page selection-->
 <div class="row-fluid">
 	<div class="btn-group pull-right">
-		<button id="btnCard" class="btn" onclick="changeItemFormat('card');">
+		<button id="btnCard" class="btn active" onclick="changeItemFormat('card');">
 			<i class="icon icon-th-large"></i>
 		</button>
-		<button id="btnList" class="btn active" onclick="changeItemFormat('list');">
+		<button id="btnList" class="btn" onclick="changeItemFormat('list');">
 			<i class="icon icon-th-list"></i>
 		</button>
 	</div>
@@ -85,8 +85,13 @@
             when 2 then "mediumSimilarity"
             else "highSimilarity"
           end
+          if id%2 == 1
+            cl = "pull-right clear-right"
+          else
+            cl = "pull-left clear-left"
+          end
           %>
-        <div class="well item-bloc <%= similarityColor%>">
+        <div class="well item-bloc <%=cl%> span6 <%= similarityColor%>">
             <div class="item_container" sourceid="<%= id %>"></div>
             <div class="item_wait" sourceid="<%= id%>">
                 <a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
