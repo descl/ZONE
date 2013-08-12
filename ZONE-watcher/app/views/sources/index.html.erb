@@ -119,8 +119,8 @@
 			<% end %>
 			<tr id="<%=numberSource%>" draggable="true" ondragstart="drag(event)">
 				<td class="text-center"><%= link_to "",edit_source_path(source) , :class => 'icon-edit', :title => t("edit")  %> <a href="/sources/<%= source.to_param%>/delete" title="<%= t("delete")%>"><i class="icon-trash"></i></a></td>
-				<td><%= source.label %></td>
-				<td><%= link_to source.uri, url_for(:controller => :searches, :action => :create,  :sources => {:rss => [source.uri]}), :method => "post", :class => "linkSource"%></td>
+				<td class="tdBreakable"><%= source.label %></td>
+				<td class="tdBreakable"><%= link_to source.uri, url_for(:controller => :searches, :action => :create,  :sources => {:rss => [source.uri]}), :method => "post", :class => "linkSource"%></td>
 				<td class="text-center"><%= source.lang.upcase %></td>
 			</tr>
 			<% actualTableTheme = source.theme%>

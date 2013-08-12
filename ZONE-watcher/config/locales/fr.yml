@@ -44,6 +44,8 @@ fr:
     your:
       title:
         "Vos sources"
+      loading:
+        "Chargement..."
     new:
       title:
         "Nouvelle source"
@@ -65,6 +67,8 @@ fr:
       button:
         addall:
           "Tout ajouter"
+        ownsource:
+          "Vous devez être connecté"
     groups:
       title:
         "Gérer vos groupes de sources"

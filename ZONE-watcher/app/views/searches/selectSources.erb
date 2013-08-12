@@ -1,25 +1,26 @@
 <table class="table table-striped">
-  <thead>
-  <tr>
-    <th>Thème</th>
-    <th>URL</th>
-    <th>Libellé</th>
-    <th>Action</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% if user_signed_in?
-       @sources.each do |source| %>
-          <tr>
-            <td class="span2"><%= source.theme %></td>
-            <td class="span5"><%= source.uri%></td>
-            <td class="span3"><%= source.label %></td>
-            <td class="span2">
-              <button class="btn btn-success" type="button" onclick="addPersonnalRss('<%= source.uri%>')">
-                Ajouter
-              </button></td>
-          </tr>
-      <% end %>
-  <% end %>
-  </tbody>
+	<thead>
+		<tr>
+			<th><%= t('source.list.action')%></th>
+			<th><%= t('source.list.theme')%></th>
+			<th><%= t('source.list.uri')%></th>
+			<th><%= t('source.list.label')%></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% if user_signed_in?
+		@sources = current_user.getSources
+		@sources.each do |source| %>
+		<tr>
+			<td class="span2">
+			<button class="btn btn-success" type="button" onclick="addPersonnalRss('<%= source.uri%>')">
+				Ajouter
+			</button></td>
+			<td class="span2"><%= source.theme %></td>
+			<td class="span5"><%= source.uri%></td>
+			<td class="span3"><%= source.label %></td>
+		</tr>
+		<% end %>
+		<% end %>
+	</tbody>
 </table>

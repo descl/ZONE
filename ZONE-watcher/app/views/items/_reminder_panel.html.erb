@@ -26,22 +26,22 @@
 						<h3><span class="numberFiltering smallNumberFiltering">2</span> <%= raw t 'newmodal.breadcrumb.filtering' %></h3>
 					</div>
 					<div class="row-fluid">
-						<p><b id="titleOr"><%= raw t 'newmodal.filtering.buttonOption' %></b></p>
-					</div>
-					<div class="row-fluid">
-						<div id="summaryOr" class="well summary span12 well-info" ondrop="drop(event)" ondragover="allowDrop(event)">
-                          <% @search.getOrFilters.each do |filter| %>
-                            <%= raw filter.getButton%>
-                          <%end%>
-						</div>
-					</div>
-					<div class="row-fluid">
 						<p><b id="titleAnd"><%= raw t 'newmodal.filtering.buttonMusthave' %></b></p>
 					</div>
 					<div class="row-fluid">
 						<div id="summaryAnd" class="well summary span12 well-success" ondrop="drop(event)" ondragover="allowDrop(event)">
                           <% @search.getAndFilters.each do |filter| %>
                               <%= raw filter.getButton%>
+                          <%end%>
+						</div>
+					</div>
+					<div class="row-fluid">
+						<p><b id="titleOr"><%= raw t 'newmodal.filtering.buttonOption' %></b></p>
+					</div>
+					<div class="row-fluid">
+						<div id="summaryOr" class="well summary span12 well-info" ondrop="drop(event)" ondragover="allowDrop(event)">
+                          <% @search.getOrFilters.each do |filter| %>
+                            <%= raw filter.getButton%>
                           <%end%>
 						</div>
 					</div>
