@@ -37,6 +37,8 @@ $(document).ready ->
         
   $('.label-tag').click ->
     if ($(this).attr("data-uri").indexOf("/search_filters?uri=http%3A%2F%2Fwww.dbpedia.org") is 0)
+      waitingScreen = getWaitingScreen()
+      $('.popover-content').html(waitingScreen + getPopoverButton($(this).html()))
       item = $(this)
       $.ajax
         url: item.attr("data-uri")
@@ -75,3 +77,8 @@ getPopoverTitle = (tagHtml) ->
   titleTag = "<span class='titletag'>"+tagHtml + "</span><i class='icon-trash pull-right pointerMouse' title='Delete' onclick='deleteTag(\""+tagHtml+"\")'></i><i class='icon-edit pull-right pointerMouse' title='Edit' onclick='editTag(\""+tagHtml+"\")'></i>"
   
   titleTag 
+  
+getWaitingScreen = ->
+  text = "<div class='row-fluid'><i class='icon-refresh'></i> Loading ...</div>"
+    
+  text
