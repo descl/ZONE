@@ -159,8 +159,11 @@ class SourcesController < ApplicationController
         :theme => params[:theme],
         :owner => @oldSource.owner
     })
-    if @newSource.valid? && @newSource.save
-      @oldSource.destroy
+    
+    @oldSource.destroy
+    
+    if @newSource.valid?
+      @newSource.save
     end
   end
 

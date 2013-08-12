@@ -36,8 +36,10 @@ window.dropSource = (ev, idTheme) ->
   #Source URL
   sourceUrl = $(originalId).find("a.linkSource").html()
   
+  theme= idTheme
+  
   #URL to call via ajax to save the update
-  urlUpdate = "/sources/changeCategory?id=" + encodeURI(sourceUrl) + "&theme=" + encodeURI(idTheme)
+  urlUpdate = "/sources/changeCategory?id=" + encodeURI(sourceUrl) + "&theme=" + encodeURI(theme)
   alert(urlUpdate)
   
   #ID of the new table
@@ -45,6 +47,7 @@ window.dropSource = (ev, idTheme) ->
   
   #Add the <tr> with his <td> to the new table
   $(idTheme).append "<tr id='" + tempId + "' draggable='true' ondragstart='drag(event)'>" + trContent + "</tr>"
+  
   $.ajax
     url: urlUpdate,
     success: (data) ->
