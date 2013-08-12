@@ -41,7 +41,6 @@ window.dropSource = (ev, idTheme) ->
   
   #URL to call via ajax to save the update
   urlUpdate = "/sources/changeCategory?id=" + encodeURI(sourceUrl) + "&theme=" + encodeURI(theme)
-  alert(urlUpdate)
   
   #ID of the new table
   idTheme = "#"+idTheme
@@ -55,12 +54,12 @@ window.dropSource = (ev, idTheme) ->
       $("#"+tempId).addClass("success")
       setTimeout (->
         $("#"+tempId).removeClass("success")
-      ),1000
+      ),2000
     error: (jqXHR, textStatus, errorThrown) ->
       $("#"+tempId).addClass("error")
       setTimeout (->
         $("#"+tempId).removeClass("error")
-      ),1000
+      ),2000
   
   #Remove the orignal line from the table where the drag first come from
   $(originalId).remove()
