@@ -23,7 +23,8 @@ class StatsController < ApplicationController
     SELECT DISTINCT COUNT(?concept) AS ?num
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     WHERE {
-      ?concept <http://zone-project.org/model/plugins/ExtractArticlesContent> ?pluginDefined.
+      ?concept <http://purl.org/rss/1.0/title> ?title.
+      OPTIONAL {?concept <http://zone-project.org/model/plugins/ExtractArticlesContent> ?pluginDefined}
       FILTER (!bound(?pluginDefined))
     }"
     @stats << {:kind => kind, :val => store.query(query)[0][:num]}
@@ -34,7 +35,8 @@ class StatsController < ApplicationController
     SELECT DISTINCT COUNT(?concept) AS ?num
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     WHERE {
-      ?concept <http://zone-project.org/model/plugins/WikiMeta> ?pluginDefined.
+      ?concept <http://purl.org/rss/1.0/title> ?title.
+      OPTIONAL {?concept <http://zone-project.org/model/plugins/WikiMeta> ?pluginDefined}
       FILTER (!bound(?pluginDefined))
     }"
     @stats << {:kind => kind, :val => store.query(query)[0][:num]}
@@ -45,7 +47,8 @@ class StatsController < ApplicationController
     SELECT DISTINCT COUNT(?concept) AS ?num
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     WHERE {
-      ?concept <http://zone-project.org/model/plugins/OpenCalais> ?pluginDefined.
+      ?concept <http://purl.org/rss/1.0/title> ?title.
+      OPTIONAL {?concept <http://zone-project.org/model/plugins/OpenCalais> ?pluginDefined}
       FILTER (!bound(?pluginDefined))
     }"
     @stats << {:kind => kind, :val => store.query(query)[0][:num]}
@@ -56,7 +59,8 @@ class StatsController < ApplicationController
     SELECT DISTINCT COUNT(?concept) AS ?num
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     WHERE {
-      ?concept <http://zone-project.org/model/plugins/INSEEGeo> ?pluginDefined.
+      ?concept <http://purl.org/rss/1.0/title> ?title.
+      OPTIONAL {?concept <http://zone-project.org/model/plugins/INSEEGeo> ?pluginDefined}
       FILTER (!bound(?pluginDefined))
     }"
     @stats << {:kind => kind, :val => store.query(query)[0][:num]}
