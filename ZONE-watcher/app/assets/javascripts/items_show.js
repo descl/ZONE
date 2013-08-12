@@ -38,7 +38,7 @@ $(document).ready(function() {
     })(document, 'script', 'facebook-jssdk');
     
     changeItemFormat('card');
-    
+
 });
 
 //Initiate the truncate of all text
@@ -175,4 +175,19 @@ function editTag(tag){
 	$(".label-tag").popover('hide');
 	$("#inputEditTag").attr("placeholder",tag);
 	$('#modalEditTag').modal('show');
+}
+
+function addFavorite(item){
+    var url = "/favorites/create?favorite="+item;
+    $.ajax({
+        url : url,
+        success: function(){
+            $(".btnFavorite").html = "ttt";
+        },
+        error: function (xhr, msg, ex)
+        {
+            alert("Failed: " + msg);
+        }
+    });
++  $("#"+data).remove();
 }
