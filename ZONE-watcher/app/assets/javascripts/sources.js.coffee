@@ -37,6 +37,7 @@ window.dropSource = (ev, idTheme) ->
   sourceUrl = $(originalId).find("a.linkSource").html()
   
   theme= idTheme
+  theme ="" if theme =="undefined"
   
   #URL to call via ajax to save the update
   urlUpdate = "/sources/changeCategory?id=" + encodeURI(sourceUrl) + "&theme=" + encodeURI(theme)
@@ -51,9 +52,15 @@ window.dropSource = (ev, idTheme) ->
   $.ajax
     url: urlUpdate,
     success: (data) ->
-      alert(data)
+      $("#"+tempId).addClass("success")
+      setTimeout (->
+        $("#"+tempId).removeClass("success")
+      ),1000
     error: (jqXHR, textStatus, errorThrown) ->
-      alert(textStatus)
+      $("#"+tempId).addClass("error")
+      setTimeout (->
+        $("#"+tempId).removeClass("error")
+      ),1000
   
   #Remove the orignal line from the table where the drag first come from
   $(originalId).remove()
