@@ -24,23 +24,23 @@ window.dropSource = (ev, idTheme) ->
   ev.preventDefault()
   data = ev.dataTransfer.getData("Text")
   
-  #Id de la ligne originale
+  #Original line id
   originalId = "#" + data
   
-  #Id temporaire pour le nouvel tr
+  #Temp ID for the new <tr>
   tempId = $(originalId).attr("id") + "c"
   
-  #Contenu du tr ( ensemble de ses td )
+  #Content of the <tr> ( all his <td> )
   trContent = $(originalId).html()
   
-  #Url de la source
+  #Source URL
   sourceUrl = $(originalId).find("a.linkSource").html()
   
-  #Url a appellé en ajax pour enregistrer la modification de theme
+  #URL to call via ajax to save the update
   urlUpdate = "/sources/changeCategory?id=" + encodeURI(sourceUrl) + "&theme=" + encodeURI(idTheme)
   alert(urlUpdate)
   
-  #Ajout de la ligne dans le nouveau tableau
+  #Add the <tr> with his <td> to the new table
   $(idTheme).append "<tr id='" + tempId + "' draggable='true' ondragstart='drag(event)'>" + trContent + "</tr>"
   $.ajax
     url: urlUpdate,
