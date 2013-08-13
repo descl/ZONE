@@ -182,9 +182,9 @@ private static final long serialVersionUID = 1L;
     
     public String concat(){
         String result = this.getElement(RSS.title)+".\n "+this.getElement(RSS.description);
-        String resFromArticleContent = this.getElements(ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_RES)[0];
-        if(resFromArticleContent != null) {
-            result = result+". " + resFromArticleContent;
+        String[] resFromArticleContent = this.getElements(ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_RES);
+        if(resFromArticleContent != null && resFromArticleContent.length > 0) {
+            result = result+". " + resFromArticleContent[0];
         }
         return result.replaceAll("<[^>]*>", "");
     }
