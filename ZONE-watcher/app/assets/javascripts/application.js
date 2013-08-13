@@ -8,6 +8,7 @@
 //Read all the tag selected ( sources and filters ) and create input with the map corresponding to these tags
 //Generate one hashmap for sources ( name : source) and one hashmap for filters ( name : filtering )
 function movingData() {
+	 window.onbeforeunload = "";
     $("#movedData").html("");
     var source = {};
     var filtering = {};
