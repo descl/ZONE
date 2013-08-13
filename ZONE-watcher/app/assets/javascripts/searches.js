@@ -41,6 +41,8 @@ $(document).ready(function() {
     window.onbeforeunload = function() { 
     	return I18n.t("source.noback");
     }; 
+   $('#btnyourRss').popover();
+   $('#btnOpml').popover();  
 });
 
 //slide down the source tab for the source selected
@@ -58,7 +60,8 @@ function slideDown(id) {
 function addSource(table, value) {
     if (table == "Twitter") {
     	var reg = new RegExp('[, ]+');
-        text = $(value).val().split(reg);
+    	text = $(value).val().replace(/^\s+/g,'').replace(/\s+$/g,'');
+        text = text.split(reg);
         if (value == "#searchTwitter"){
         	$.each(text,function(){
         		content = "#" + this;
