@@ -74,14 +74,7 @@ public abstract class VirtuosoDatabase {
     }
     
     private static Model getStore(String graph,int testNumber){
-        try{
-            return VirtModel.openDatabaseModel(graph, VIRTUOSO_SERVER, VIRTUOSO_USER, VIRTUOSO_PASS);
-        }catch(com.hp.hpl.jena.shared.JenaException e){
-            try {Thread.currentThread().sleep(10000);} catch (InterruptedException ex) {}
-            if(testNumber > 10)
-                throw e;
-            return getStore(graph,testNumber+1);
-        }
+        return VirtModel.openDatabaseModel(graph, VIRTUOSO_SERVER, VIRTUOSO_USER, VIRTUOSO_PASS);
     }
     
     public static void addItems(ArrayList<Item> items){
