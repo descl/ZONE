@@ -8,7 +8,11 @@ module ItemsHelper
     @TWITTER_MENTIONED_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#mentioned'
     @TWITTER_HASHTAG_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#hashtag'
 
-    labels = "label label-twitter label-tag"
+    @LABEL_PEOPLE = "label label-success label-tag"
+    @LABEL_PLACE = "label label-warning label-tag"
+    @LABEL_OTHER = "label label-twitter label-tag"
+    
+    labels = @LABEL_OTHER
 
     if(filter.value == "null")
       filter.value = "/null"
@@ -24,10 +28,12 @@ module ItemsHelper
       end
     elsif(filter.prop.starts_with? @INSEE_GEO_URI)
       filterval=filter.value[filter.value.rindex('/')+1, filter.value.length]
+      labels = @LABEL_PLACE
     elsif( (filter.prop.start_with? @SVM_PLUGIN_URI) || (filter.prop.start_with? @TWITTER_HASHTAG_PLUGIN_URI) || (filter.prop.starts_with? @OPEN_CALAIS_URI))
       filterval=filter.value
     elsif(filter.prop.start_with? @TWITTER_MENTIONED_PLUGIN_URI)
       filterval="@"+filter.value
+      labels = @LABEL_PEOPLE
     end
 
     if(filterval != "")
