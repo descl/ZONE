@@ -190,3 +190,12 @@ function addFavorite(item){
     });
 +  $("#"+data).remove();
 }
+
+//check the opacity of an item
+function checkOpacity(item){
+	var parent = $(item).parents(".item-bloc");
+	if ($(parent).css("opacity")=='0.5')
+		$(parent).css("opacity",1);
+	else
+		$(parent).css("opacity",0.5);
+}
