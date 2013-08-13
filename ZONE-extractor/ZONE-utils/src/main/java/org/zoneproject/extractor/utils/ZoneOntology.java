@@ -46,6 +46,8 @@ public class ZoneOntology {
     public static String PLUGIN_TWITTER_HASHTAG = PLUGIN_PREFIX+"/twitter#hashtag";
     public static String PLUGIN_TWITTER_AUTHOR = PLUGIN_PREFIX+"/twitter#author";
     public static String PLUGIN_TWITTER_MENTIONED = PLUGIN_PREFIX+"/twitter#mentioned";
+    public static String PLUGIN_TWITTER_POSITION_LONGITUDE = PLUGIN_PREFIX+"/twitter#position-longitude";
+    public static String PLUGIN_TWITTER_POSITION_LATITUDE = PLUGIN_PREFIX+"/twitter#position-latitude";
     
     public static String SOURCES_TYPE = SOURCES_PREFIX+"#Source";
     public static String SOURCES_LANG = SOURCES_PREFIX+"#lang";

@@ -258,7 +258,7 @@ public abstract class VirtuosoDatabase {
     public static Item getOneItemByURI(String uri){
         String request = "SELECT ?relation ?value FROM <http://zone-project.org/datas/items> WHERE{  <"+uri+"> ?relation ?value}";
         logger.info(uri);
-        System.out.println(request);
+        logger.info(request);
         ResultSet results = runSPARQLRequest(request);
         return new Item(uri,results,uri,"relation","?value");
     }
