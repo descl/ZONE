@@ -33,7 +33,6 @@ module ItemsHelper
       filterval=filter.value
     elsif(filter.prop.start_with? @TWITTER_MENTIONED_PLUGIN_URI)
       filterval="@"+filter.value
-      labels = @LABEL_PEOPLE
     end
 
     if(filterval != "")
