@@ -39,6 +39,10 @@
                 end
               %>
             </i>
+            <% if @item.uri.starts_with?('https://twitter.com') || @item.uri.starts_with?('http://twitter.com')  %>
+            	<br/>
+            	<i> Via <%= @item.props["http://zone-project.org/model/plugins/twitter#author"][0] %></i>
+            <% end %>
 		</div>
 
         <!--content news part -->

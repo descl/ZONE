@@ -58,4 +58,5 @@ gem "font-awesome-rails"
 
 gem 'rvm-capistrano'
 
+gem 'i18n-js', :github => 'fnando/i18n-js'
 

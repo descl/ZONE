@@ -1,3 +1,6 @@
+//= require i18n
+//= require i18n/translations
+
 /**
  *Source section
  */
@@ -35,12 +38,9 @@ $(document).ready(function() {
     $("#addAllTwitter").attr("disable", false);
     
     //Block the original backspace action, and reverse switch the tab of the search
-    $(document).keydown(function(e){
-    	if(e.keyCode == 8){
-    		reverseSwitchTab();
-    		e.preventDefault();
-    	}
-   })  
+    window.onbeforeunload = function() { 
+    	return I18n.t("source.noback");
+    }; 
 });
 
 //slide down the source tab for the source selected

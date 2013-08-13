@@ -95,6 +95,8 @@ en:
         "Your themes"
       gotop:
         "Go top"
+    noback:
+      "You will lost all you work if you do that."
   menu:
     home:
       "Home"

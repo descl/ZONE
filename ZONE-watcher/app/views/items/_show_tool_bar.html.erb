@@ -4,6 +4,9 @@
 <button class="btn btnFavorite btn-share" onclick='addFavorite("<%= @item.uri%>")'>
   <i class="icon icon-heart"></i>
 </button>
+<button class="btn btn-share" onclick='checkOpacity(this)'>
+  <i class="icon icon-check"></i>
+</button>
 <a class="shareLink btn-share" href="https://www.facebook.com/sharer.php?u=<%= @item.uri %>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
   <img class="littleCircleImage"src="assets/foregroundFB.png" height=30 width=30/>
 </a>

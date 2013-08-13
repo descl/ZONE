@@ -95,6 +95,8 @@ fr:
         "Vos thèmes"
       gotop:
         "Haut de page"
+    noback:
+      "Tout votre travail sera perdu si vous faites cela."
   menu:
     home:
       "Accueil"
