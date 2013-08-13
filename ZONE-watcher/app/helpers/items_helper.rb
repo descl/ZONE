@@ -29,10 +29,12 @@ module ItemsHelper
     elsif(filter.prop.starts_with? @INSEE_GEO_URI)
       filterval=filter.value[filter.value.rindex('/')+1, filter.value.length]
       labels = @LABEL_PLACE
-    elsif( (filter.prop.start_with? @SVM_PLUGIN_URI) || (filter.prop.start_with? @TWITTER_HASHTAG_PLUGIN_URI) || (filter.prop.starts_with? @OPEN_CALAIS_URI))
+    elsif( (filter.prop.start_with? @SVM_PLUGIN_URI) || (filter.prop.starts_with? @OPEN_CALAIS_URI))
       filterval=filter.value
+    elsif (filter.prop.start_with? @TWITTER_HASHTAG_PLUGIN_URI)
+      filterval='<i class="icon-twitter"></i> '+filter.value
     elsif(filter.prop.start_with? @TWITTER_MENTIONED_PLUGIN_URI)
-      filterval="@"+filter.value
+      filterval='<i class="icon-twitter"></i> @'+filter.value
     end
 
     if(filterval != "")
