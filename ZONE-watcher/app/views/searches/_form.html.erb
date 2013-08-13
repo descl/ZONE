@@ -163,14 +163,20 @@
 										<div class="row-fluid">
 											<div class="span1"></div>
 											<div class="span4">
-												<button class="btn btn-primary span12" type="button" title="<%= if !user_signed_in? 
-												t('source.rss.button.ownsource') end%>" onclick="showImportRss()" <%= if !user_signed_in? 
-													"disabled" end%>>
+												<button id="btnyourRss" class="btn btn-primary span12" type="button" data-toggle="popover" data-placement="bottom" data-delay="5000" title="" data-original-title="<%= if !user_signed_in? 
+												t('source.rss.button.ownsource') end%>" onclick="<%= if user_signed_in?
+														"showImportRss()"
+													end%>" >
 													<%= raw t 'newmodal.sources.rss.yourrss' %>
 												</button>
 											</div>
 											<div class="span4 offset2">
-												<button href="#modalopml" class="btn btn-danger span12" type="button" data-toggle="modal">
+												<button href="#modalopml" id="btnOpml" class="btn btn-danger span12" type="button" <%= if !user_signed_in?
+														"data-toggle=popover data-placement=bottom data-delay=5000"
+													else
+														"data-toggle=modal"
+													end%> data-original-title="<%= if !user_signed_in? 
+														t('source.rss.button.ownsource') end%>">
 													<%= raw t 'newmodal.sources.rss.opml' %>
 												</button>
 											</div>
