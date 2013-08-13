@@ -13,6 +13,8 @@ fr:
     err:
       notlogged:
         "Nous n'etes pas connectés avec un compte twitter."
+  noback:
+    "Tout votre travail sera perdu si vous faites cela."
   source:
     title:
       "Gestion des sources utilisateurs"
