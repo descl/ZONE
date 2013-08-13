@@ -85,9 +85,9 @@ public class App
                     VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
                 } catch (BoilerpipeProcessingException ex) {
                     VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
-                    VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_RESULT_URI,item.getElement(RSS.description)));
-                    Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(App.class.getName()).log(Level.WARNING, null, ex);
                 } catch (MalformedURLException ex) {
+                    VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
                     Logger.getLogger(App.class.getName()).log(Level.WARNING, null, ex);
                 }
             }
