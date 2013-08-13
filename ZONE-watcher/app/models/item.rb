@@ -48,6 +48,7 @@ class Item# < ActiveRecord::Base
     require 'uri'
     
     uri = CGI.unescape(URI.escape(CGI.unescape(param)))
+    uri = uri.gsub("%23","#")
     
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT ?prop ?value
@@ -55,6 +56,7 @@ class Item# < ActiveRecord::Base
     WHERE { <#{uri}> ?prop ?value.}"
     store = SPARQL::Client.new(endpoint)
     result = store.query(query)
+    puts query
     
     params = Hash.new
     result.each do |prop|
