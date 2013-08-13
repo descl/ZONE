@@ -90,10 +90,8 @@ public class TwitterApi {
             res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_MENTIONED,"@"+mentioned,true,true));
         }
         if(s.getGeoLocation() != null){
-            System.out.println("________________________________");
-            System.out.println(s.getGeoLocation().getLatitude());
-            System.out.println(s.getGeoLocation().getLongitude());
-            System.out.println(s.getGeoLocation().toString());
+            res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_POSITION_LONGITUDE,Double.toString(s.getGeoLocation().getLongitude()),true,true));
+            res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_POSITION_LATITUDE,Double.toString(s.getGeoLocation().getLatitude()),true,true));
         }
         res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_AUTHOR,"@"+s.getUser().getScreenName(),true,true));
         return res;
