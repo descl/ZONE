@@ -33,7 +33,7 @@ gem 'jquery-ui-rails'
 
 #gem "linkeddata"
 gem "rest-client"
-gem "sparql-client", "~> 1.0.4.1"
+gem "sparql-client", :github => 'descl/sparql-client'#, "~> 1.0.4.1"
 gem "rdf-virtuoso", "~> 0.1.1"
 
 #for variables parsing other javascript

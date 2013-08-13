@@ -1,10 +1,26 @@
 GIT
+  remote: git://github.com/descl/sparql-client.git
+  revision: 71b3d57f1a5e15109c23bdd5b0a7d4c054c56685
+  specs:
+    sparql-client (1.0.4.1)
+      json_pure (>= 1.4)
+      net-http-persistent (>= 1.4)
+      rdf (>= 1.0)
+
+GIT
   remote: git://github.com/feedbin/opml_saw.git
   revision: 61d8c2dd3d46e9cae38178754469dd9da7c8bd6a
   branch: master
   specs:
     opml_saw (0.0.2)
       nokogiri
+
+GIT
+  remote: git://github.com/fnando/i18n-js.git
+  revision: eab4137f83777963f0ebe6960704a7f64fd8911d
+  specs:
+    i18n-js (2.1.2)
+      i18n
 
 GEM
   remote: http://rubygems.org/
@@ -190,10 +206,6 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    sparql-client (1.0.4.1)
-      json_pure (>= 1.4)
-      net-http-persistent (>= 1.4)
-      rdf (>= 1.0)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -226,6 +238,7 @@ DEPENDENCIES
   devise
   font-awesome-rails
   gon
+  i18n-js!
   jquery-rails (= 2.3.0)
   jquery-ui-rails
   mysql
@@ -242,7 +255,7 @@ DEPENDENCIES
   rest-client
   rvm-capistrano
   sass-rails (~> 3.2.3)
-  sparql-client (~> 1.0.4.1)
+  sparql-client!
   sqlite3
   tag_it (~> 0.0.1)
   therubyracer

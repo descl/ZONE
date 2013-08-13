@@ -25,7 +25,7 @@ class LinkedWord
                 FILTER(regex(str(?label),\"^#{param}\",\"i\")).
                 ?o ?t ?link
              }ORDER BY DESC(?popularity)  LIMIT 10"
-    store = SPARQL::Client.new(endpoint)
+    store = SPARQL::Client.new(endpoint,{:read_timeout => 10})
     result = Array.new
 
     store.query(query).each do |item|
@@ -43,7 +43,7 @@ class LinkedWord
                 OPTIONAL{?o ?t ?links}
              }ORDER BY DESC(?popularity)  LIMIT 1"
     puts query
-    store = SPARQL::Client.new(endpoint)
+    store = SPARQL::Client.new(endpoint,{:read_timeout => 10})
     store.query(query).each do |item|
       return item[:o].to_s
     end
@@ -66,7 +66,7 @@ class LinkedWord
 
              }ORDER BY DESC(?popularity)"
 
-    store = SPARQL::Client.new(endpoint)
+    store = SPARQL::Client.new(endpoint,{:read_timeout => 10})
     result = Array.new
     store.query(query).each do |item|
       continue if item.linkedName.to_s == nil
