@@ -58,6 +58,12 @@ public class App
             for(Item item : items){
                 try {
                     logger.info("Add ExtractArticlesContent for item: "+item);
+                    
+                    if(item.uri.startsWith("https://twitter.com/")){
+                        VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
+                        continue;
+                    }
+                    
                     URL url = new URL(item.getUri());
                     String content= ArticleExtractor.INSTANCE.getText(url).replace("\u00A0", " ").trim();
 
