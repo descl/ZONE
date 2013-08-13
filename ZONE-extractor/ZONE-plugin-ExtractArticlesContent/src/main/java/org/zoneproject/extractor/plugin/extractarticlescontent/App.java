@@ -53,43 +53,10 @@ public class App
     public static void main(String[] args) {
         Item[] items = null;
         do{
-            items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,10);
+            items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,50);
             logger.info("ExtractArticlesContent has "+items.length+" items to annotate");
             for(Item item : items){
-                try {
-                    logger.info("Add ExtractArticlesContent for item: "+item);
-                    
-                    if(item.uri.startsWith("https://twitter.com/")){
-                        VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
-                        continue;
-                    }
-                    
-                    URL url = new URL(item.getUri());
-                    String content= ArticleExtractor.INSTANCE.getText(url).replace("\u00A0", " ").trim();
-
-                    String title = item.getTitle().trim();
-                    
-                    if(item.getDescription() != null){
-                        String description = item.getDescription().trim().substring(0,Math.min(item.getDescription().trim().length(),20));
-                    
-                        if(content.contains(description)){
-                            content = content.substring(content.indexOf(description));
-                        }
-                    }
-                    
-                    if(content.contains(title)){
-                        content = content.substring(content.indexOf(title)+title.length());
-                    }
-                    content = content.replace("\n", "<br/>");
-                    VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_RESULT_URI,content));
-                    VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
-                } catch (BoilerpipeProcessingException ex) {
-                    VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
-                    Logger.getLogger(App.class.getName()).log(Level.WARNING, null, ex);
-                } catch (MalformedURLException ex) {
-                    VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
-                    Logger.getLogger(App.class.getName()).log(Level.WARNING, null, ex);
-                }
+                new DownloadThread(item).start();
             }
         }while(items.length > 0);
     }
