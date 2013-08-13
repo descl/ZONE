@@ -169,13 +169,6 @@ function deleteTag(tag){
 	$('#modalDeleteTag').modal('show');
 }
 
-//Function that edit a tag
-function editTag(tag){
-	$(".label-tag").popover('hide');
-	$("#inputEditTag").attr("placeholder",tag);
-	$('#modalEditTag').modal('show');
-}
-
 function addFavorite(item){
     var url = "/favorites/create?favorite="+item;
     $.ajax({
