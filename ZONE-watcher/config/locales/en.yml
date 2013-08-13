@@ -13,8 +13,6 @@ en:
     err:
       notlogged:
         'You are not logged with a twitter account.'
-  noback:
-    "You will lost all you work if you do that."
   source:
     title:
       "User sources management"
@@ -97,6 +95,8 @@ en:
         "Your themes"
       gotop:
         "Go top"
+    noback:
+      "You will lost all you work if you do that."
   menu:
     home:
       "Home"
