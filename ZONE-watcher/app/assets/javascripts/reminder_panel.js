@@ -17,13 +17,13 @@ $(document).ready(function() {
 
 function showUpdate(){
 	var timer = setInterval(function(){
-		if($("#updateSearch").css("opacity")==1)
-			$("#updateSearch").css("opacity","0.5");
+		if($(".updater").css("opacity")==1)
+			$(".updater").css("opacity","0.5");
 		else
-			$("#updateSearch").css("opacity","1");
+			$(".updater").css("opacity","1");
 	},300);
 	setTimeout(function(){
 		clearInterval(timer);
-		$("#updateSearch").css("opacity","1");
+		$(".updater").css("opacity","1");
 	},2000);
 }
