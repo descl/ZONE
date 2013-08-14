@@ -68,7 +68,7 @@ getPopoverButton = (tagHtml) ->
   tagContent
   
 getPopoverTitle = (tagHtml) ->
-  titleTag = "<span class='titletag'>"+tagHtml + "</span><i class='icon-trash pull-right pointerMouse' title='Delete' onclick='deleteTag(\""+tagHtml+"\")'></i><i class='icon-edit pull-right pointerMouse' title='Edit' onclick='editTag(\""+tagHtml+"\")'></i>"
+  titleTag = "<span class='titletag'>"+tagHtml + "</span><i class='icon-trash pull-right pointerMouse' title='Delete' onclick='deleteTag(\""+tagHtml+"\")'></i>"
   
   titleTag 
   
