@@ -36,7 +36,7 @@ module ItemsHelper
       filterval='<i class="icon-twitter"></i> '+filter.value
       labels=@LABEL_TWITTER
     elsif(filter.prop.start_with? @TWITTER_MENTIONED_PLUGIN_URI)
-      filterval='<i class="icon-twitter"></i> @'+filter.value
+      filterval='<i class="icon-twitter"></i> '+filter.value
       labels=@LABEL_TWITTER
     end
 
