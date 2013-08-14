@@ -10,7 +10,8 @@ module ItemsHelper
 
     @LABEL_PEOPLE = "label label-success label-tag"
     @LABEL_PLACE = "label label-warning label-tag"
-    @LABEL_OTHER = "label label-twitter label-tag"
+    @LABEL_TWITTER = "label label-twitter label-tag"
+    @LABEL_OTHER = "label label-info label-tag"
     
     labels = @LABEL_OTHER
 
@@ -33,8 +34,10 @@ module ItemsHelper
       filterval=filter.value
     elsif (filter.prop.start_with? @TWITTER_HASHTAG_PLUGIN_URI)
       filterval='<i class="icon-twitter"></i> '+filter.value
+      labels=@LABEL_TWITTER
     elsif(filter.prop.start_with? @TWITTER_MENTIONED_PLUGIN_URI)
       filterval='<i class="icon-twitter"></i> @'+filter.value
+      labels=@LABEL_TWITTER
     end
 
     if(filterval != "")
