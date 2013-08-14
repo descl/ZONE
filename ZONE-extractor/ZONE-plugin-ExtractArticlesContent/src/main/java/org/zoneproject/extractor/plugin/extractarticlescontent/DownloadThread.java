@@ -38,33 +38,43 @@ public class DownloadThread extends Thread  {
     this.item = item;
   }
   public void run() {
-    try {
-        logger.info("Add ExtractArticlesContent for item: "+item);
+      run(0);
+  }
+  public void run(int restartLevel) {
+      if(restartLevel > 5) {
+          Logger.getLogger(App.class.getName()).log(Level.WARNING, null, "annotation process imposible for "+item.getUri());
+          return;
+      }
+      if(restartLevel>0)
+          try {Thread.currentThread().sleep(5000);} catch (InterruptedException ex1) {}
+      try {
+          logger.info("Add ExtractArticlesContent for item: "+item);
+
+          URL url = new URL(item.getUri());
+          String content= ArticleExtractor.INSTANCE.getText(url).replace("\u00A0", " ").trim();
 
 
+          String title = item.getTitle().trim();
 
-        URL url = new URL(item.getUri());
-        String content= ArticleExtractor.INSTANCE.getText(url).replace("\u00A0", " ").trim();
+          if(item.getDescription() != null){
+              String description = item.getDescription().trim().substring(0,Math.min(item.getDescription().trim().length(),20));
 
-        String title = item.getTitle().trim();
+              if(content.contains(description)){
+                  content = content.substring(content.indexOf(description));
+              }
+          }
 
-        if(item.getDescription() != null){
-            String description = item.getDescription().trim().substring(0,Math.min(item.getDescription().trim().length(),20));
-
-            if(content.contains(description)){
-                content = content.substring(content.indexOf(description));
-            }
-        }
-
-        if(content.contains(title)){
-            content = content.substring(content.indexOf(title)+title.length());
-        }
-        content = content.replace("\n", "<br/>");
-        VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_RESULT_URI,content));
-    } catch (BoilerpipeProcessingException ex) {
-        Logger.getLogger(App.class.getName()).log(Level.WARNING, null, ex);
-    } catch (MalformedURLException ex) {
-        Logger.getLogger(App.class.getName()).log(Level.WARNING, null, ex);
-    }
+          if(content.contains(title)){
+              content = content.substring(content.indexOf(title)+title.length());
+          }
+          content = content.replace("\n", "<br/>");
+          VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_RESULT_URI,content));
+      } catch (BoilerpipeProcessingException ex) {
+          run(restartLevel+1);
+      } catch (MalformedURLException ex) {
+          run(restartLevel+1);
+      } catch (java.io.IOException ex) {
+          run(restartLevel+1);
+      }
   }
 }

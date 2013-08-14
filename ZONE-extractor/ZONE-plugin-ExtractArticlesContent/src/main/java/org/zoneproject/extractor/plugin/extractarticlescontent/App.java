@@ -53,7 +53,7 @@ public class App
     public static void main(String[] args) {
         Item[] items = null;
         do{
-            items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,50);
+            items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,100);
             logger.info("ExtractArticlesContent has "+items.length+" items to annotate");
             for(Item item : items){
                 VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
