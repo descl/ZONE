@@ -1,5 +1,8 @@
-<button class="btn btn-share" data-toggle="collapse" data-parent="#accordion-<%= @item.getUriHash%>" href="#collapse-<%= @item.getUriHash%>">
+<!--<button class="btn btn-share" data-toggle="collapse" data-parent="#accordion-<%= @item.getUriHash%>" href="#collapse-<%= @item.getUriHash%>">
   <i class="icon icon-tag"></i>
+</button>-->
+<button class="btn btn-share" onclick="addItemtag(this)">
+	<i class="icon icon-tag"></i>
 </button>
 <button class="btn btnFavorite btn-share" onclick='addFavorite("<%= @item.uri%>")'>
   <i class="icon icon-star"></i>
