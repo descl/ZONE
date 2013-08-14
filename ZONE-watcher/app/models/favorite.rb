@@ -50,6 +50,7 @@ class Favorite
   end
 
   def destroy
+    graph = RDF::URI.new(ZoneOntology::GRAPH_ITEMS)
     subject = RDF::URI.new(@uri)
     userUri = RDF::URI.new(self.userUri)
     $repo.delete(RDF::Virtuoso::Query.delete_data([subject,RDF::URI.new(ZoneOntology::ZONE_FAVORITE),userUri]).graph(graph))

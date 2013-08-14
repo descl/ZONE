@@ -60,6 +60,7 @@ class StatsController < ApplicationController
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     WHERE {
       ?concept <http://purl.org/rss/1.0/title> ?title.
+      ?concept <http://www.opencalais.org/Entities#LOC> ?aa.
       OPTIONAL {?concept <http://zone-project.org/model/plugins/INSEEGeo> ?pluginDefined}
       FILTER (!bound(?pluginDefined))
     }"

@@ -33,6 +33,6 @@ class ZoneOntology < ActiveRecord::Base
   RSS_SOURCE= "http://purl.org/rss/1.0/source"
 
   ZONE_USER = "http://zone-project.org/datas/users/"
-  ZONE_FAVORITE = "http://zone-project.org/model/favorite/"
+  ZONE_FAVORITE = "http://zone-project.org/model/items#favorite"
   
 end
