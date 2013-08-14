@@ -44,7 +44,7 @@ import org.zoneproject.extractor.utils.Prop;
  */
 public class openCalaisExtractor {
     public static String EntitiesURI = "http://www.opencalais.org/Entities#";
-    
+    private static final int MAX_CONTENT_SIZE = 100000;
     
     public static CalaisResponse getResult(java.lang.String content) {
         return getResult(content,10);
@@ -59,6 +59,7 @@ public class openCalaisExtractor {
         CalaisClient client = new CalaisRestClient(license);
         CalaisResponse response = null;
         try {
+            content = content.substring(0,MAX_CONTENT_SIZE);
             response = client.analyze(content);
         }
         catch (mx.bigdata.jcalais.CalaisException ex){
