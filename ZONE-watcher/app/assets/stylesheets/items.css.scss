@@ -286,3 +286,8 @@ a.label:visited{
 .label-tag{
  white-space: pre-wrap;
 }
+
+.label{
+  white-space: pre-wrap;
+  word-break: break-all;
+}
