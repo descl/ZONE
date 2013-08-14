@@ -141,7 +141,7 @@
 											<div class="span12 input-prepend input-append">
 												<div class="span1"></div>
 												<span class="add-on"><i class="icon-search"></i></span>
-												<input name="inputSearch" id="searchRSS" type="text" class="inputSearch span9" autocomplete="off" placeholder="<%= raw t 'newmodal.sources.rss.holderurl' %>" onKeyPress="if (event.keyCode == 13 && $(this).val()!=''){addSource('RSS','#searchRSS');return false;}else if(event.keyCode == 13){return false;}">
+												<input name="inputSearch" id="searchRSS" type="url" class="inputSearch span9" autocomplete="off" placeholder="<%= raw t 'newmodal.sources.rss.holderurl' %>" onKeyPress="if (event.keyCode == 13 && $(this).val()!=''){addSource('RSS','#searchRSS');return false;}else if(event.keyCode == 13){return false;}">
 												<button type="button" class="btn btn-success" onclick="if ($('#searchRSS').val()!='') addSource('RSS','#searchRSS');return false;">
 													<%= raw t 'newmodal.sources.add' %>
 												</button>
