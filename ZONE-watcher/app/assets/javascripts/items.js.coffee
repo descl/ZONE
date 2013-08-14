@@ -21,26 +21,51 @@ $(document).ready ->
 
 
 $(document).ready ->
+  #Waiting screen for the tag
+  originalWaitingText = "<div class='infoPop'>"+getWaitingScreen()+"</div>" + getPopoverButton($(this).html())
+    
   #Generation of the popover of the tag
   $(".label-tag").each ->
-    $(this).popover
-        title: getPopoverTitle($(this).html())
-        content: getPopoverButton($(this).html())
-        placement: "bottom"
-        trigger: "manual"
-        
-  $('.label-tag').click ->
+    #If the tag can have more info
     if ($(this).attr("data-uri").indexOf("/search_filters?uri=http%3A%2F%2Fwww.dbpedia.org") is 0)
       waitingScreen = getWaitingScreen()
-      $('.popover-content').html(waitingScreen + getPopoverButton($(this).html()))
+      $(this).popover
+          title: getPopoverTitle($(this).html())
+          content: originalWaitingText
+          placement: "bottom"
+          trigger: "manual"
+    else
+      $(this).popover
+          title: getPopoverTitle($(this).html())
+          content: getPopoverButton($(this).html())
+          placement: "bottom"
+          trigger: "manual"
+        
+  $('.label-tag').click ->
+    #If popover visible and the the title is the same as the tag, nothing to do here
+    if( $('.popover').is(':visible') && $('.titletag').html()==$(this).html())
+      return
+    #If the tag can have more info
+    if ($(this).attr("data-uri").indexOf("/search_filters?uri=http%3A%2F%2Fwww.dbpedia.org") is 0)
+      popover = $(this).data('popover')
+      errorText = "<div class='infoPop'>error</div>" + getPopoverButton($(this).html())
+      #If popover got no loading screen and no error screen --> popover got info so no ajax call
+      if (popover.options.content != originalWaitingText && popover.options.content != errorText)
+        return
       item = $(this)
       $.ajax
         url: item.attr("data-uri")
         timeout: 5000
         success: (data) ->
-          $('.popover-content').html(data+getPopoverButton(item.html()))
+          #set the content of the popover of the tag (this do not refresh the content dynamically )
+          popover.options.content= "<div class='infoPop'>"+data+"</div>" + getPopoverButton($(this).html())
+          #Show the data to the user
+          $('.infoPop').html(data)
         error: ->
-          $('.popover-content').html(getPopoverButton(item.html()))
+          #set the content of the popover of the tag (this do not refresh the content dynamically )
+          popover.options.content= errorText
+          #Show the data to the user
+          $('.infoPop').html('error')
 
   #Disable the default action onclick on the tag
   $(".label-tag").on "click", ->

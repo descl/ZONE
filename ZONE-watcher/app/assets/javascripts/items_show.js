@@ -193,3 +193,11 @@ function checkOpacity(item){
 	else
 		$(parent).css("opacity",0.5);
 }
+
+//Add a tag to the item
+function addItemtag(item){
+	if ($(item).parent().siblings('.addtag').is(":visible"))
+		$(item).parent().siblings('.addtag').hide();
+	else
+		$(item).parent().siblings('.addtag').show();
+}
