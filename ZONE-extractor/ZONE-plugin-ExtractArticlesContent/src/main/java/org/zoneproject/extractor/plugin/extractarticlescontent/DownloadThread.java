@@ -41,10 +41,7 @@ public class DownloadThread extends Thread  {
     try {
         logger.info("Add ExtractArticlesContent for item: "+item);
 
-        if(item.uri.startsWith("https://twitter.com/")){
-            VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
-            return;
-        }
+
 
         URL url = new URL(item.getUri());
         String content= ArticleExtractor.INSTANCE.getText(url).replace("\u00A0", " ").trim();
@@ -64,12 +61,9 @@ public class DownloadThread extends Thread  {
         }
         content = content.replace("\n", "<br/>");
         VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_RESULT_URI,content));
-        VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
     } catch (BoilerpipeProcessingException ex) {
-        VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
         Logger.getLogger(App.class.getName()).log(Level.WARNING, null, ex);
     } catch (MalformedURLException ex) {
-        VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
         Logger.getLogger(App.class.getName()).log(Level.WARNING, null, ex);
     }
   }

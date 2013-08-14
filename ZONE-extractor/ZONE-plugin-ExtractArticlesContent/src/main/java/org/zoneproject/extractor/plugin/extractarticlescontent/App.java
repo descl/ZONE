@@ -56,6 +56,10 @@ public class App
             items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,50);
             logger.info("ExtractArticlesContent has "+items.length+" items to annotate");
             for(Item item : items){
+                VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
+                if(item.uri.startsWith("https://twitter.com/")){
+                    continue;
+                }
                 new DownloadThread(item).start();
             }
         }while(items.length > 0);
