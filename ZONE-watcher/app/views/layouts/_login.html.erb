@@ -1,6 +1,6 @@
 
 <ul class="nav user-box">
-  <li class="<%= 'active' if current_page?(twitter_path) %>"><%= link_to raw("<i class=\"icon icon-heart\" ></i>"), favorites_path %></li>
+  <li class="<%= 'active' if current_page?(twitter_path) %>"><%= link_to raw("<i class=\"icon icon-star\" ></i>"), favorites_path %></li>
   <% if user_signed_in? %>
     <li>
         <%= link_to 'Edit account', edit_user_registration_path %>
