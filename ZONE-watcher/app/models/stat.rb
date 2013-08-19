@@ -15,7 +15,7 @@ class Stat
         }"
     val = store.query(query)[0][:num]
     stats << {:kind => kind, :val => val}
-    StatHat::API.ez_post_count(kind,Rails.application.config.stathatId,val)
+    StatHat::API.ez_post_value(kind,Rails.application.config.stathatId,val)
 
     ###############################################################
     kind ="news not annotated for ExtractArticlesContent"
@@ -29,7 +29,7 @@ class Stat
         }"
     val = store.query(query)[0][:num]
     stats << {:kind => kind, :val => val}
-    StatHat::API.ez_post_count(kind,Rails.application.config.stathatId,val)
+    StatHat::API.ez_post_value(kind,Rails.application.config.stathatId,val)
 
     ###############################################################
     kind ="news not annotated for WikiMeta"
@@ -43,7 +43,7 @@ class Stat
         }"
     val = store.query(query)[0][:num]
     stats << {:kind => kind, :val => val}
-    StatHat::API.ez_post_count(kind,Rails.application.config.stathatId,val)
+    StatHat::API.ez_post_value(kind,Rails.application.config.stathatId,val)
 
     ###############################################################
     kind ="news not annotated for OpenCalais"
@@ -57,7 +57,7 @@ class Stat
         }"
     val = store.query(query)[0][:num]
     stats << {:kind => kind, :val => val}
-    StatHat::API.ez_post_count(kind,Rails.application.config.stathatId,val)
+    StatHat::API.ez_post_value(kind,Rails.application.config.stathatId,val)
 
     ###############################################################
     kind ="news not annotated for INSEEGeo"
@@ -72,7 +72,7 @@ class Stat
         }"
     val = store.query(query)[0][:num]
     stats << {:kind => kind, :val => val}
-    StatHat::API.ez_post_count(kind,Rails.application.config.stathatId,val)
+    StatHat::API.ez_post_value(kind,Rails.application.config.stathatId,val)
 
     ###############################################################
     stats << {:kind => "", :val => ""}
@@ -86,7 +86,7 @@ class Stat
         }"
     val = store.query(query)[0][:num]
     stats << {:kind => kind, :val => val}
-    StatHat::API.ez_post_count(kind,Rails.application.config.stathatId,val)
+    StatHat::API.ez_post_value(kind,Rails.application.config.stathatId,val)
 
     ###############################################################
     kind ="number of twitter accounts"
@@ -98,7 +98,7 @@ class Stat
         }"
     val = store.query(query)[0][:num]
     stats << {:kind => kind, :val => val}
-    StatHat::API.ez_post_count(kind,Rails.application.config.stathatId,val)
+    StatHat::API.ez_post_value(kind,Rails.application.config.stathatId,val)
 
     return stats
   end
