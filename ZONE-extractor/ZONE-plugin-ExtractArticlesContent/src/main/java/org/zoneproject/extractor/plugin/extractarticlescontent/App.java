@@ -49,12 +49,27 @@ public class App
             items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,100);
             logger.info("ExtractArticlesContent has "+items.length+" items to annotate");
             for(Item item : items){
-                VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
-                if(item.uri.startsWith("https://twitter.com/")){
-                    continue;
-                }
-                new DownloadThread(item).start();
+                App.startThread(item);
             }
         }while(items.length > 0);
+    }
+    private static void startThread(Item item) {
+        startThread(item,0);
+    }
+    private static void startThread(Item item, int restartLevel) {
+        if(restartLevel > 5) {
+            logger.warn("annotation process imposible for "+item.getUri());
+            return;
+        }
+        try{
+            VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
+            if(item.uri.startsWith("https://twitter.com/")){
+                return;
+            }
+           new DownloadThread(item).start();
+        }catch (com.hp.hpl.jena.shared.JenaException ex){
+            logger.warn("annotation process because of virtuoso partial error "+item.getUri());
+            startThread(item,restartLevel+1);
+        }
     }
 }
