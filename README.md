@@ -1,4 +1,4 @@
-[![Build Status](https://ci.inria.fr/zone/job/slave1/badge/icon)](https://ci.inria.fr/zone/job/slave1/)
+[![Build Status](https://ci.inria.fr/zone/job/Zone-run-tests/badge/icon)](https://ci.inria.fr/zone/job/Zone-run-tests/)
 
 # ZONE-Project
 #### A semantic RSS feed aggregator

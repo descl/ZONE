@@ -257,6 +257,8 @@ fr:
          </button></div>"
       smalltitle:
         "Ajouter le tag comme :"
+    newtag:
+      "Nouveau tag"
     modal:
       delete:
         title:
