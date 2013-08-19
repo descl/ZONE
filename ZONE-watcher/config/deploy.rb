@@ -62,3 +62,7 @@ before 'deploy:setup', 'rvm:create_gemset' # only create gemset
 
 #copy config file from shared folder to prod folder
 require "rvm/capistrano"
+
+#whenever config
+require "whenever/capistrano"
+set :whenever_command, "bundle exec whenever"
