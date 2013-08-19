@@ -54,7 +54,7 @@ public class App
             items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,SIM_DOWNLOADS);
             th = new DownloadThread[items.length];
             logger.info("ExtractArticlesContent has "+items.length+" items to annotate");
-            for(int curItem = 0; items.length < curItem; curItem++){
+            for(int curItem = 0; curItem < items.length ; curItem++){
                 VirtuosoDatabase.addAnnotation(items[curItem].getUri(), new Prop(App.PLUGIN_URI,"true"));
 
                 if(!items[curItem].uri.startsWith("https://twitter.com/")){
@@ -63,12 +63,12 @@ public class App
                 }
             }
             
-            
-            for(int curItem = 0; items.length < curItem; curItem++){
+            for(int curItem = 0; curItem < items.length ; curItem++){
                 try {
+                    if(th[curItem] == null)continue;
                     th[curItem].join();
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(App.class.getName()).log(Level.WARNING, null, ex);
+                logger.warn(ex);
                 }
             }
             
