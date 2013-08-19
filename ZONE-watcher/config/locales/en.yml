@@ -189,6 +189,10 @@ en:
         "All"
       addone:
         "Add"
+      addTheme:
+        "Add this theme"
+      addAllTheme:
+        "Add all"
     table: 
       keyword:
         "Source"
