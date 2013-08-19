@@ -104,7 +104,18 @@ public abstract class VirtuosoDatabase {
      * @param prop 
      */
     public static void addAnnotation(String itemUri, Prop prop){
-        addAnnotation(itemUri, prop, ZoneOntology.GRAPH_NEWS);
+        int i = 5;
+        while((i--)>0){
+            try{
+                addAnnotation(itemUri, prop, ZoneOntology.GRAPH_NEWS);
+                i=0;
+            }catch (com.hp.hpl.jena.shared.JenaException ex){
+                logger.warn("annotation process error because of virtuoso partial error "+itemUri);
+                try{Thread.currentThread().sleep(1000);}catch(InterruptedException ie){}
+            }
+            
+        }
+        
     }
     
     /**

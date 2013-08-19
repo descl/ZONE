@@ -21,6 +21,8 @@ package org.zoneproject.extractor.plugin.extractarticlescontent;
  * #L%
  */
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
 import org.zoneproject.extractor.utils.VirtuosoDatabase;
@@ -35,6 +37,7 @@ public class App
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT;
     public static String PLUGIN_RESULT_URI = ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_RES;
+    public static int SIM_DOWNLOADS = 100;
     
     public App(){
         String [] tmp = {};
@@ -44,32 +47,33 @@ public class App
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Item[] items = null;
+        Item[] items;
+        DownloadThread[] th;
+        
         do{
-            items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,100);
+            items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,SIM_DOWNLOADS);
+            th = new DownloadThread[items.length];
             logger.info("ExtractArticlesContent has "+items.length+" items to annotate");
-            for(Item item : items){
-                App.startThread(item);
+            for(int curItem = 0; items.length < curItem; curItem++){
+                VirtuosoDatabase.addAnnotation(items[curItem].getUri(), new Prop(App.PLUGIN_URI,"true"));
+
+                if(!items[curItem].uri.startsWith("https://twitter.com/")){
+                    th[curItem] = new DownloadThread(items[curItem]);
+                    th[curItem].start();
+                }
             }
+            
+            
+            for(int curItem = 0; items.length < curItem; curItem++){
+                try {
+                    th[curItem].join();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(App.class.getName()).log(Level.WARNING, null, ex);
+                }
+            }
+            
         }while(items.length > 0);
     }
     private static void startThread(Item item) {
-        startThread(item,0);
-    }
-    private static void startThread(Item item, int restartLevel) {
-        if(restartLevel > 5) {
-            logger.warn("annotation process imposible for "+item.getUri());
-            return;
-        }
-        try{
-            VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
-            if(item.uri.startsWith("https://twitter.com/")){
-                return;
-            }
-           new DownloadThread(item).start();
-        }catch (com.hp.hpl.jena.shared.JenaException ex){
-            logger.warn("annotation process because of virtuoso partial error "+item.getUri());
-            startThread(item,restartLevel+1);
-        }
     }
 }
