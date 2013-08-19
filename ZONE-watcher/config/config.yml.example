@@ -4,6 +4,8 @@ virtuosoPassword: "dba"
 
 zopimId: "1AfdKtAnFnyhyiv9K09kidoNONtAmgvV"
 
+stathatId: "mail@example.com"
+
 devise:
   twitter:
     auth: "v"

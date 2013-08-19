@@ -60,3 +60,5 @@ gem 'rvm-capistrano'
 
 gem 'i18n-js', :github => 'fnando/i18n-js'
 
+gem "stathat", "~> 0.1.7"
+gem 'whenever'

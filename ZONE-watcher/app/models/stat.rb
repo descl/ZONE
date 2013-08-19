@@ -1,0 +1,105 @@
+class Stat
+  def self.all
+    stats = Array.new
+    endpoint = Rails.application.config.virtuosoEndpoint
+    store = SPARQL::Client.new(endpoint)
+
+
+    kind ="number of news"
+    query = "PREFIX RSS: <http://purl.org/rss/1.0/>
+        SELECT DISTINCT COUNT(?concept) AS ?num
+        FROM <#{ZoneOntology::GRAPH_ITEMS}>
+        WHERE {
+          ?concept RSS:title ?title.
+          OPTIONAL { ?concept RSS:pubDateTime ?pubDateTime}.
+        }"
+    val = store.query(query)[0][:num]
+    stats << {:kind => kind, :val => val}
+    StatHat::API.ez_post_count(kind,Rails.application.config.stathatId,val)
+
+    ###############################################################
+    kind ="news not annotated for ExtractArticlesContent"
+    query = "PREFIX RSS: <http://purl.org/rss/1.0/>
+        SELECT DISTINCT COUNT(?concept) AS ?num
+        FROM <#{ZoneOntology::GRAPH_ITEMS}>
+        WHERE {
+          ?concept <http://purl.org/rss/1.0/title> ?title.
+          OPTIONAL {?concept <http://zone-project.org/model/plugins/ExtractArticlesContent> ?pluginDefined}
+          FILTER (!bound(?pluginDefined))
+        }"
+    val = store.query(query)[0][:num]
+    stats << {:kind => kind, :val => val}
+    StatHat::API.ez_post_count(kind,Rails.application.config.stathatId,val)
+
+    ###############################################################
+    kind ="news not annotated for WikiMeta"
+    query = "PREFIX RSS: <http://purl.org/rss/1.0/>
+        SELECT DISTINCT COUNT(?concept) AS ?num
+        FROM <#{ZoneOntology::GRAPH_ITEMS}>
+        WHERE {
+          ?concept <http://purl.org/rss/1.0/title> ?title.
+          OPTIONAL {?concept <http://zone-project.org/model/plugins/WikiMeta> ?pluginDefined}
+          FILTER (!bound(?pluginDefined))
+        }"
+    val = store.query(query)[0][:num]
+    stats << {:kind => kind, :val => val}
+    StatHat::API.ez_post_count(kind,Rails.application.config.stathatId,val)
+
+    ###############################################################
+    kind ="news not annotated for OpenCalais"
+    query = "PREFIX RSS: <http://purl.org/rss/1.0/>
+        SELECT DISTINCT COUNT(?concept) AS ?num
+        FROM <#{ZoneOntology::GRAPH_ITEMS}>
+        WHERE {
+          ?concept <http://purl.org/rss/1.0/title> ?title.
+          OPTIONAL {?concept <http://zone-project.org/model/plugins/OpenCalais> ?pluginDefined}
+          FILTER (!bound(?pluginDefined))
+        }"
+    val = store.query(query)[0][:num]
+    stats << {:kind => kind, :val => val}
+    StatHat::API.ez_post_count(kind,Rails.application.config.stathatId,val)
+
+    ###############################################################
+    kind ="news not annotated for INSEEGeo"
+    query = "PREFIX RSS: <http://purl.org/rss/1.0/>
+        SELECT DISTINCT COUNT(?concept) AS ?num
+        FROM <#{ZoneOntology::GRAPH_ITEMS}>
+        WHERE {
+          ?concept <http://purl.org/rss/1.0/title> ?title.
+          ?concept <http://www.opencalais.org/Entities#LOC> ?aa.
+          OPTIONAL {?concept <http://zone-project.org/model/plugins/INSEEGeo> ?pluginDefined}
+          FILTER (!bound(?pluginDefined))
+        }"
+    val = store.query(query)[0][:num]
+    stats << {:kind => kind, :val => val}
+    StatHat::API.ez_post_count(kind,Rails.application.config.stathatId,val)
+
+    ###############################################################
+    stats << {:kind => "", :val => ""}
+    ###############################################################
+    kind ="number of sources"
+    query = "PREFIX RSS: <http://purl.org/rss/1.0/>
+        SELECT DISTINCT COUNT(?concept) AS ?num
+        FROM <#{ZoneOntology::GRAPH_SOURCES}>
+        WHERE {
+          ?concept rdf:type <#{ZoneOntology::SOURCES_TYPE}>.
+        }"
+    val = store.query(query)[0][:num]
+    stats << {:kind => kind, :val => val}
+    StatHat::API.ez_post_count(kind,Rails.application.config.stathatId,val)
+
+    ###############################################################
+    kind ="number of twitter accounts"
+    query = "PREFIX RSS: <http://purl.org/rss/1.0/>
+        SELECT DISTINCT COUNT(?concept) AS ?num
+        FROM <#{ZoneOntology::GRAPH_SOURCES}>
+        WHERE {
+          ?concept rdf:type <#{ZoneOntology::SOURCES_TYPE_TWITTER}>.
+        }"
+    val = store.query(query)[0][:num]
+    stats << {:kind => kind, :val => val}
+    StatHat::API.ez_post_count(kind,Rails.application.config.stathatId,val)
+
+    return stats
+  end
+end
