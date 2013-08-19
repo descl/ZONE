@@ -42,7 +42,7 @@ public class DownloadThread extends Thread  {
   }
   public void run(int restartLevel) {
       if(restartLevel > 5) {
-          Logger.getLogger(App.class.getName()).log(Level.WARNING, null, "annotation process imposible for "+item.getUri());
+          logger.warn("annotation process imposible for "+item.getUri());
           return;
       }
       if(restartLevel>0)
@@ -70,10 +70,15 @@ public class DownloadThread extends Thread  {
           content = content.replace("\n", "<br/>");
           VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_RESULT_URI,content));
       } catch (BoilerpipeProcessingException ex) {
+          logger.warn("annotation process because of download error for "+item.getUri());
           run(restartLevel+1);
       } catch (MalformedURLException ex) {
-          run(restartLevel+1);
+          logger.warn("annotation process because of malformed Uri for "+item.getUri());
       } catch (java.io.IOException ex) {
+          logger.warn("annotation process because of download error for "+item.getUri());
+          run(restartLevel+1);
+      }catch (com.hp.hpl.jena.shared.JenaException ex){
+          logger.warn("annotation process because of virtuoso partial error "+item.getUri());
           run(restartLevel+1);
       }
   }
