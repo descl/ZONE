@@ -59,7 +59,7 @@ public class openCalaisExtractor {
         CalaisClient client = new CalaisRestClient(license);
         CalaisResponse response = null;
         try {
-            content = content.substring(0,MAX_CONTENT_SIZE);
+            content = content.substring(0,Math.min(content.length(),MAX_CONTENT_SIZE));
             response = client.analyze(content);
         }
         catch (mx.bigdata.jcalais.CalaisException ex){
