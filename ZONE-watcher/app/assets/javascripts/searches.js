@@ -26,9 +26,6 @@ $(document).ready(function() {
             	askUpdateKeywordTable();
            }
            $("#keyword").attr("filter-uri",ui.item.uri)
-           console.log( ui.item ?
-          "Selected: " + ui.item.value + " aka " + ui.item.uri :
-          "Nothing selected, input was " + this.value );
         },
         minLength : 3
     }).autocomplete("widget").addClass("span1");
@@ -282,4 +279,20 @@ function showImportRss(){
 function addPersonnalRss(url){
 	$("#wellSources").append("<span class='label-wrap label label-warning rssSource' >" + url + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();checkWell()'></i></span> ");
     $("#addAllRSS").attr("disabled", true);
+}
+
+function addAllPersonnalRss(){
+	$('tbody').each(function(){
+		$(this).find('.uri').each(function(){
+			addPersonnalRss($(this).html());
+		});
+	});
+	return false;
+}
+
+function addAllThemePersonnalRss(button){
+	$(button).next('table').find('.uri').each(function(){
+		addPersonnalRss($(this).html());
+	});
+	return false;
 }
