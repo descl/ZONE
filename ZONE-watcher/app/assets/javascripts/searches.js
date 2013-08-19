@@ -280,3 +280,19 @@ function addPersonnalRss(url){
 	$("#wellSources").append("<span class='label-wrap label label-warning rssSource' >" + url + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();checkWell()'></i></span> ");
     $("#addAllRSS").attr("disabled", true);
 }
+
+function addAllPersonnalRss(){
+	$('tbody').each(function(){
+		$(this).find('.uri').each(function(){
+			addPersonnalRss($(this).html());
+		});
+	});
+	return false;
+}
+
+function addAllThemePersonnalRss(button){
+	$(button).next('table').find('.uri').each(function(){
+		addPersonnalRss($(this).html());
+	});
+	return false;
+}
