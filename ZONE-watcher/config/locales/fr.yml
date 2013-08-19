@@ -189,6 +189,10 @@ fr:
         "Tout"
       addone:
         "Ajouter"
+      addTheme:
+        "Ajouter ce thème"
+      addAllTheme:
+        "Tout ajouter"
     table: 
       keyword:
         "Type"

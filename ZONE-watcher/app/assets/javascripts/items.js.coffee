@@ -21,9 +21,9 @@ $(document).ready ->
 
 
 $(document).ready ->
+  
   #Waiting screen for the tag
-  originalWaitingText = "<div class='infoPop'>"+getWaitingScreen()+"</div>" + getPopoverButton($(this).html())
-    
+  originalWaitingText = "<div class='infoPop'>"+getWaitingScreen()+"</div>"
   #Generation of the popover of the tag
   $(".label-tag").each ->
     #If the tag can have more info
@@ -31,7 +31,7 @@ $(document).ready ->
       waitingScreen = getWaitingScreen()
       $(this).popover
           title: getPopoverTitle($(this).html())
-          content: originalWaitingText
+          content: originalWaitingText + getPopoverButton($(this).html())
           placement: "bottom"
           trigger: "manual"
     else
@@ -50,7 +50,7 @@ $(document).ready ->
       popover = $(this).data('popover')
       errorText = "<div class='infoPop'>error</div>" + getPopoverButton($(this).html())
       #If popover got no loading screen and no error screen --> popover got info so no ajax call
-      if (popover.options.content != originalWaitingText && popover.options.content != errorText)
+      if (popover.options.content != (originalWaitingText+ getPopoverButton($(this).html())) && popover.options.content != errorText)
         return
       item = $(this)
       $.ajax
