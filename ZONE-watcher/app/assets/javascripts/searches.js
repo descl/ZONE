@@ -26,9 +26,6 @@ $(document).ready(function() {
             	askUpdateKeywordTable();
            }
            $("#keyword").attr("filter-uri",ui.item.uri)
-           console.log( ui.item ?
-          "Selected: " + ui.item.value + " aka " + ui.item.uri :
-          "Nothing selected, input was " + this.value );
         },
         minLength : 3
     }).autocomplete("widget").addClass("span1");
