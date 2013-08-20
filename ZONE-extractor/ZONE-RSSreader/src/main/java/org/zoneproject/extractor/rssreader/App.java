@@ -56,6 +56,8 @@ public class App
                     logger.warn(ex);
                 }
             }
+            
+            logger.info("["+i+"/"+sources.length+"] news annotated");
         }
         logger.info("Done");
     }
