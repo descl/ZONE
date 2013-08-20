@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -62,7 +63,9 @@ public class RSSGetter {
             String curUri = urls[i];
             logger.info("RSS Feed "+curUri);
             try{
-                XmlReader flux = new XmlReader(new URL(curUri));
+                URLConnection urlConnection = new URL(curUri).openConnection();
+                urlConnection.setConnectTimeout(10000);
+                XmlReader flux = new XmlReader(urlConnection);
                 result.addAll(RSSGetter.getFlux(curUri,flux));
                 
             } catch (IllegalArgumentException ex) {
