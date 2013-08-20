@@ -22,8 +22,6 @@ package org.zoneproject.extractor.rssreader;
  */
 
 import java.util.ArrayList;
-import org.zoneproject.extractor.utils.Config;
-import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 
 /**
@@ -39,21 +37,11 @@ public class App
     }
     public static void main( String[] args )
     {
-        ArrayList<Item>  items = new ArrayList<Item>();
         String [] fluxLinks = RSSGetter.getSources();
         
-        logger.info("========= Starting rss downloading==================");
-        ArrayList<Item> it = RSSGetter.getFlux(fluxLinks);
-        items.addAll(it);
-        
-        logger.info("========= Cleaning flow with already analysed items==================");
-        Database.verifyItemsList(items);
-        
-        logger.info("========= Printing result items==================");
-        for(int i=0; i< items.size();i++)logger.info("\n"+items.get(i));
-        
-        logger.info("========= saving to 4Store database==================");
-        Database.addItems(items);
+        for(String source: fluxLinks){
+            new DownloadNewsThread(source).start();
+        }
         logger.info("Done");
     }
 }
