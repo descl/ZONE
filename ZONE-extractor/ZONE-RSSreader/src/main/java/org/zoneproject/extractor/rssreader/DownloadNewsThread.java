@@ -38,7 +38,7 @@ public class DownloadNewsThread extends Thread  {
     }
     public void run() {
         try {Thread.currentThread().sleep(5000);} catch (InterruptedException ex1) {}
-        logger.info("Add ExtractArticlesContent for item: "+source);
+        logger.info("Add news for source: "+source);
         
         //Starting rss downloading
         ArrayList<Item> items = RSSGetter.getFlux(source);
@@ -51,5 +51,6 @@ public class DownloadNewsThread extends Thread  {
         
         //saving to 4Store database
         Database.addItems(items);     
+        logger.info("Done for source: "+source);
   }
 }
