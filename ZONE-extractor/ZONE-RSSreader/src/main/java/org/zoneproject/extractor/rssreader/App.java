@@ -31,16 +31,31 @@ import org.zoneproject.extractor.utils.Item;
 public class App 
 {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
+    public static int SIM_DOWNLOADS = 100;
     public App(){
         String [] tmp = {};
         App.main(tmp);
     }
     public static void main( String[] args )
     {
-        String [] fluxLinks = RSSGetter.getSources();
-        
-        for(String source: fluxLinks){
-            new DownloadNewsThread(source).start();
+        String [] sources = RSSGetter.getSources();
+        DownloadNewsThread[] th = new DownloadNewsThread[SIM_DOWNLOADS];
+        for(int i = 0; i < sources.length; i+=SIM_DOWNLOADS){
+            
+            for(int curSource = i; (curSource < (i+SIM_DOWNLOADS)) && (curSource < sources.length); curSource++){
+                th[curSource-i] = new DownloadNewsThread(sources[curSource]);
+                th[curSource-i].start();
+            }
+
+            for(int curSource = i; (curSource < (i+SIM_DOWNLOADS)) && (curSource < sources.length); curSource++){
+                try {
+                    if(th[curSource-i] == null)continue;
+                    th[curSource-i].join();
+                    th[curSource-i]=null;
+                } catch (InterruptedException ex) {
+                    logger.warn(ex);
+                }
+            }
         }
         logger.info("Done");
     }
