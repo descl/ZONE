@@ -102,7 +102,6 @@ public class WikiMetaRequest_API {
     public static ArrayList<LinkedHashMap> getNamedEntities(String f){
         f = f.replace("\\\",", "\",");
         f = f.replace("\"\\\"", "\"\"");
-        System.out.println(f);
         ObjectMapper mapper = new ObjectMapper();
         try {
             //first need to allow non-standard json
