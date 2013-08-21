@@ -130,4 +130,19 @@ public class WikiMetaRequestTest {
         }
         
     }
+    
+    @Test
+    public void testGetnamedEntities_String_JSONError(){
+        logger.info("getNamedEntities");
+        String texte = "L'horloge de Windows 8 n'a pas toujours la bonne heure";
+        ArrayList result = WikiMetaRequest.getProperties(texte);
+        logger.info(result);
+        ArrayList<Prop> expRes = new ArrayList<Prop>();
+        expRes.add(new Prop("http://www.wikimeta.org/Entities#prod","http://www.dbpedia.org/resource/Windows_8",false));
+        assertEquals(expRes.size(), result.size());
+        for(Prop p: expRes){
+            assertTrue(result.contains(p));
+        }
+        
+    }
 }

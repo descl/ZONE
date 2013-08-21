@@ -29,8 +29,11 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -59,7 +62,11 @@ public class WikiMetaRequest_API {
     }
     
     public static String getResult(String apiKey, Format format, String content, int treshold, int span, String lng, boolean semtag) {    
-        
+        try {
+            content = URLEncoder.encode(content,"UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(WikiMetaRequest_API.class.getName()).log(Level.WARNING, null, ex);
+        }
         String result = "";
         try {
             URL url = new URL("http://www.wikimeta.com/wapi/service");
