@@ -82,7 +82,7 @@ public class WikiMetaRequestTest {
         logger.info("getProperties");
         URI fileURI = getClass().getResource("/WikiMetaOutput_pip.json").toURI();
         ArrayList result = WikiMetaRequest.getProperties(new File(fileURI));
-        assertEquals(result.size(), 0);
+        assertEquals(4,result.size());
     }
     
     /**
@@ -143,6 +143,14 @@ public class WikiMetaRequestTest {
         for(Prop p: expRes){
             assertTrue(result.contains(p));
         }
+    }
         
+    @Test
+    public void testGetnamedEntities_String_JSONError_2(){
+        logger.info("getNamedEntities");
+        String texte = "Online Learning Gets Massive, Open.  by Garry Kranz, Workforce Recruiting company Aquent is using a new twist on online learning to help its clients hire next-generation Web developers. Faced with job requests from companies that it could not fill, the Boston-based specialized recruiter for ad agencies in 2012 launched a massive open online course, or MOOC, on skills related to HTML5, [...]. by Garry Kranz, WorkforceRecruiting company Aquent is using a new twist on online learning to help its clients hire next-generation Web developers. Faced with job requests from companies that it could not fill, the Boston-based specialized recruiter for ad agencies in 2012 launched a massive open online course, or MOOC, on skills related to HTML5, the latest version of the markup language that defines how Internet content gets structured. Ad agencies need Web developers well-versed in mobile technologies such as HTML5, yet many code writers seem to lack the necessary skills to compete for available jobs, said Alison Farmer, Aquents vice president of learning and development. Even though unemployment was high, companies were telling us that most candidates werent qualified, Farmer said. We wondered: How do we take candidates that may have been competitive a year ago and help them acquire emerging skills?";
+        ArrayList result = WikiMetaRequest.getProperties(texte);
+        logger.info(result);
+        assertEquals(16, result.size());
     }
 }

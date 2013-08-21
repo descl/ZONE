@@ -110,6 +110,7 @@ public class WikiMetaRequest_API {
         try {
             //first need to allow non-standard json
             mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+            mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
             Map<String,Object> map = mapper.readValue(f, Map.class);
             
             ArrayList<LinkedHashMap> documentElems = (ArrayList<LinkedHashMap>)map.get("document");
