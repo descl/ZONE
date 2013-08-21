@@ -88,7 +88,7 @@ public class WikiMetaRequest {
         for(int i=0; i< namedEntities.size();i++){
             
             LinkedHashMap cur = namedEntities.get(i);
-            if(cur.get("type").toString().equals("AMOUNT")) {
+            if(cur.get("type").toString().equals("AMOUNT")|| cur.get("type") == "") {
                 continue;
             }
             if(cur.containsKey("LINKEDDATA")){
