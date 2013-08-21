@@ -71,7 +71,7 @@ public class WikiMetaRequestTest {
         logger.info(result);
         assertEquals(1,result.size());
         Prop p = new Prop("http://www.wikimeta.org/Entities#loc.admi","http://www.dbpedia.org/resource/Antibes",false);
-        assertEquals(result.get(0), p);
+        assertEquals(p,result.get(0));
     }
 
     /**
@@ -152,5 +152,14 @@ public class WikiMetaRequestTest {
         ArrayList result = WikiMetaRequest.getProperties(texte);
         logger.info(result);
         assertEquals(16, result.size());
+    }
+    
+    @Test
+    public void testGetnamedEntities_String_JSONError_3(){
+        logger.info("getNamedEntities");
+        String texte = "l";
+        ArrayList result = WikiMetaRequest.getProperties(texte);
+        logger.info(result);
+        assertEquals(0, result.size());
     }
 }

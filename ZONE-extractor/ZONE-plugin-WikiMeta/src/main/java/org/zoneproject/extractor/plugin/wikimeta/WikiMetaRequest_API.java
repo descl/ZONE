@@ -40,7 +40,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.io.JsonStringEncoder;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -62,11 +64,7 @@ public class WikiMetaRequest_API {
     }
     
     public static String getResult(String apiKey, Format format, String content, int treshold, int span, String lng, boolean semtag) {    
-        try {
-            content = URLEncoder.encode(content,"UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(WikiMetaRequest_API.class.getName()).log(Level.WARNING, null, ex);
-        }
+        content = new String(JsonStringEncoder.getInstance().quoteAsString(content));
         String result = "";
         try {
             URL url = new URL("http://www.wikimeta.com/wapi/service");
