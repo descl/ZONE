@@ -162,4 +162,14 @@ public class WikiMetaRequestTest {
         logger.info(result);
         assertEquals(0, result.size());
     }
+    
+    @Test
+    public void testGetnamedEntities_String_JSONError_4(){
+        logger.info("getNamedEntities");
+        String texte = "Meuh.\n Parce";//rbelle.com Are farm-themed cookies on your to-do list? Then this cute. Parce que je suis normande et fière de l'êtreAre farm-themed cookies on your to-do list? Then this cute little cow cookie is just what you need. ";//Believe it0 commentaire(s)Votre nom (prénom ou pseudo)Votre emailMerci de recopier le texte de l'image ci-dessusRechercher :Le principe du siteLe site \"Un tour en cuisine\"       a pour vocation de présenter aux internautes des recettes       de cuisine venues de tous horizons. Deux thématiques sont abordées.Une fois par jour, sur le blog ,        une recette de cuisine est présentée.       Il s'agit d'une jolie recette qui comble autant les yeux que        les estomacs. On peut alors parler d'art culinaire.En parallèle du blog, des tours sont organisés pour favoriser le partage       entre blogueurs et la découverte de nouveaux blogs culinaires.       ";//Ces tours favorisent la découverte de recettes de tous les jours,       sans aucune obligation d'esthétique.Zoom sur le blogLe monde regorge de gens de talents.Chaque jour, à 21h, la photo d'une recette d'un autre blog est publiée       avec un lien vers l'article d'origine.        Il s'agit de découvrir le travail de quelqu'un        qui a concocté une recette originale et esthétique, une recette        à réaliser en famille, sous l\u0019oeil fasciné de vos enfants.Cela peut être des plantes fabriquées à partir de bonbons,        comme des animaux à partir de légumes.        Le mot clé de ce site est d'étonner et de donner envie de suivre        l'exemple de ces fabuleux cuisiniers dans la cuisine de Monsieur Madame        Tout Le Monde.Proposer votre recette !";
+        ArrayList result = WikiMetaRequest.getProperties(texte);
+        logger.info(result);
+        assertEquals    (0,0);
+        //assertEquals(0, result.size());
+    }
 }

@@ -29,11 +29,8 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -42,7 +39,6 @@ import java.util.logging.Logger;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.io.JsonStringEncoder;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.json.simple.JSONObject;
 
 /**
  *
@@ -104,6 +100,7 @@ public class WikiMetaRequest_API {
     }
     
     public static ArrayList<LinkedHashMap> getNamedEntities(String f){
+        f = f.replace("\"\\\"", "\"\"");
         ObjectMapper mapper = new ObjectMapper();
         try {
             //first need to allow non-standard json
