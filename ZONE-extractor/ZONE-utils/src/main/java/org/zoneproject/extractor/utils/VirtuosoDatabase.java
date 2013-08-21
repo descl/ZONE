@@ -238,7 +238,7 @@ public abstract class VirtuosoDatabase {
             requestPlugs += ". ?uri <"+curPlugin+"> ?deps"+i++ +" ";
         }
         
-        String request = "SELECT ?uri WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title "+requestPlugs+". OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined.  } FILTER (!bound(?pluginDefined)) }";
+        String request = "SELECT ?uri WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title "+requestPlugs+". OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined.  } FILTER (!bound(?pluginDefined)) } LIMIT "+limit;
         ResultSet results = runSPARQLRequest(request);
 
         while (results.hasNext()) {
