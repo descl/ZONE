@@ -21,7 +21,6 @@ package org.zoneproject.extractor;
  * #L%
  */
 
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,9 +29,9 @@ import java.util.logging.Logger;
  *
  * @author Desclaux Christophe <christophe@zouig.org>
  */
-public class ThreadApp extends TimerTask{
+public class ThreadApp extends Thread{
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(ThreadApp.class);
-    String app;
+    private String app;
     public ThreadApp(String app) {
         this.app = app;
     }
@@ -47,5 +46,8 @@ public class ThreadApp extends TimerTask{
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ThreadApp.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        try{  Thread.currentThread().sleep(30000);}catch(InterruptedException ie){}
+        this.run();
    }
 }

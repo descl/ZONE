@@ -30,10 +30,6 @@ import java.util.Timer;
 public class App {
     
     public static void main(String[] args)  {
-       Timer [] timer= new Timer[6];
-       for(int i=0; i < 6; i++)
-           timer[i] = new Timer();
-
        String [] apps = new String[6];
        
        apps[0] = "org.zoneproject.extractor.twitterreader.App";
@@ -43,7 +39,8 @@ public class App {
        apps[4] = "org.zoneproject.extractor.plugin.wikimeta.App";
        apps[5] = "org.zoneproject.extractor.plugin.inseegeo.App";
        
-       for(int i=0; i< 6;i++)
-           timer[i].scheduleAtFixedRate( new ThreadApp(apps[i]),0, 30000);
+       for(int i=0; i< 6;i++){
+           new ThreadApp(apps[i]).start();
+       }
     }
 }
