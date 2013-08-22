@@ -7,20 +7,23 @@ class ItemsController < ApplicationController
   def index
     @filters = []
     @sources = []
-    #@filters << Filter.new(:prop => "http://purl.org/rss/1.0/source", :value => tag)
 
     if params[:search] == nil
-      #flash[:error] = "you need to create a search!"
-      #redirect_to :back
       @search = Search.first
     else
       @search = Search.find(params[:search])
     end
 
+    if params[:per_page] != nil
+      per_page = params[:per_page].to_i
+    else
+      per_page = 10
+    end
+
     current_page = params[:page]
     current_page = 1 if current_page == nil
     current_page = Integer(current_page)
-    per_page = 10
+
     @itemsNumber = @search.getItemsNumber
     #if itemsNumber > (10000 - per_page +1)
     #  itemsNumber = (10000 - per_page +1)
