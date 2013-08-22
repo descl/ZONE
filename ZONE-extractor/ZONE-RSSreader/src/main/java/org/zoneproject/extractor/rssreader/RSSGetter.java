@@ -168,7 +168,6 @@ public class RSSGetter {
                     entry.getEnclosures().add(attr);
                 }
             }
-            System.out.println("--");
             Item cur = new Item(source, uri.toString(),entry.getTitle(),description,entry.getPublishedDate(),entry.getEnclosures());
 
             //add item to list
