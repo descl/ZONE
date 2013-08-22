@@ -26,6 +26,7 @@ package org.zoneproject.extractor.rssreader;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.sun.syndication.feed.synd.SyndEnclosureImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
@@ -40,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jdom.Element;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
@@ -148,6 +150,25 @@ public class RSSGetter {
             if(entry.getDescription() != null){
                 description = entry.getDescription().getValue();
             }
+            if(((List)entry.getForeignMarkup()).size() > 0){
+                int biggestVal = 0;
+                String biggestUrl = null;
+                for(Object o: (List)entry.getForeignMarkup()){
+                    Element e = (Element)o;
+                    if(!e.getName().contains("thumb"))continue;
+                    int size = Integer.valueOf(e.getAttributeValue("width"));
+                    if(size > biggestVal){
+                        biggestUrl = e.getAttributeValue("url");
+                        biggestVal = size;
+                    }
+                }
+                if(biggestUrl != null){
+                    SyndEnclosureImpl attr = new SyndEnclosureImpl();
+                    attr.setUrl(biggestUrl);
+                    entry.getEnclosures().add(attr);
+                }
+            }
+            System.out.println("--");
             Item cur = new Item(source, uri.toString(),entry.getTitle(),description,entry.getPublishedDate(),entry.getEnclosures());
 
             //add item to list
@@ -173,8 +194,10 @@ public class RSSGetter {
 
     public static void main(String[] args){
         
-        String fileURI = "http://europe1.fr.feedsportal.com/c/32376/f/546041/index.rss";
-        ArrayList result = RSSGetter.getFlux(fileURI);
-        logger.info(result);
+        String fileURI = "http://feeds.bbci.co.uk/news/world/rss.xml";
+        ArrayList<Item> result = RSSGetter.getFlux(fileURI);
+        for(Item i: result){
+            logger.info(i);
+        }
     }
 }
