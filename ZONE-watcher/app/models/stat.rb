@@ -38,6 +38,7 @@ class Stat
         FROM <#{ZoneOntology::GRAPH_ITEMS}>
         WHERE {
           ?concept <http://purl.org/rss/1.0/title> ?title.
+          ?concept <#{ZoneOntology::PLUGIN_EXTRACT_ARTICLES_CONTENT}> ?deps1.
           OPTIONAL {?concept <http://zone-project.org/model/plugins/WikiMeta> ?pluginDefined}
           FILTER (!bound(?pluginDefined))
         }"
