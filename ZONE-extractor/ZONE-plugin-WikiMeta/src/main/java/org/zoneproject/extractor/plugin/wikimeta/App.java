@@ -46,7 +46,7 @@ public class App
         Item[] items = null;
         String [] deps = {ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT};
         do{
-            items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps);
+            items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,100);
             logger.info("WikiMeta has "+items.length+" items to annotate");
             for(Item item : items){
                 logger.info("Add WikiMeta for item: "+item);
