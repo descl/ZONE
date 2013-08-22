@@ -36,6 +36,7 @@ public class App
 {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_WIKIMETA;
+    public static int SIM_DOWNLOADS = 20;
     
     public App(){
         String [] tmp = {};
@@ -45,17 +46,21 @@ public class App
     public static void main(String[] args) {
         Item[] items = null;
         String [] deps = {ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT};
+        WikiMetaRequestThread[] th = new WikiMetaRequestThread[SIM_DOWNLOADS];
         do{
-            items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,100);
+            items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
             logger.info("WikiMeta has "+items.length+" items to annotate");
-            for(Item item : items){
-                logger.info("Add WikiMeta for item: "+item);
+            for(int i=0; i < items.length; i++){
+                th[i] = new WikiMetaRequestThread(items[i]);
+                th[i].start();
+            }
             
-                ArrayList<Prop> content= WikiMetaRequest.getProperties(item.concat());
-                Database.addAnnotations(item.getUri(), content);
-            
-                Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
-
+            for(int i=0; i < items.length; i++){
+                try {
+                    th[i].join();
+                } catch (InterruptedException ex) {
+                    logger.warn(ex);
+                }
             }
         }while(items.length > 0);
     }
