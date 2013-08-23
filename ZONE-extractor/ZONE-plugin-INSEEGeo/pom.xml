@@ -34,25 +34,46 @@
                     </execution>
             </executions>
       </plugin>
+      
       <plugin>  
         <groupId>org.codehaus.mojo</groupId>  
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.2.1</version>
         <executions>  
           <execution>
+              <id>install-inseeGEO</id>
             <phase>compile</phase>
             <goals>  
               <goal>java</goal>  
             </goals>
+            <configuration>
+              <mainClass>org.zoneproject.extractor.plugin.inseegeo.Install</mainClass>
+              <arguments>
+                  <argument>${project.build.directory}/resources/inseeDB</argument>
+              </arguments>
+            </configuration>
           </execution>
+          <execution>
+              <phase>exec</phase>
+              <goals><goal>java</goal></goals>
+          </execution>  
         </executions>
-        <configuration>
-          <mainClass>org.zoneproject.extractor.plugin.inseegeo.Install</mainClass>
-          <arguments>
-              <argument>${project.build.directory}/resources/inseeDB</argument>
-          </arguments>
+        <configuration> 
+          <mainClass>org.zoneproject.extractor.plugin.inseegeo.App</mainClass>
         </configuration>
-        
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>org.zoneproject.extractor.plugin.inseegeo.App</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
       </plugin>
     </plugins>
   </build>
