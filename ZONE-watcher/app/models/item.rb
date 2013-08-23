@@ -13,7 +13,7 @@ class Item# < ActiveRecord::Base
   TWITTER_MENTIONED_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#mentioned'
   TWITTER_HASHTAG_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#hashtag'
 
-  attr_accessor :uri, :title, :props, :description, :date, :localURI, :similarity
+  attr_accessor :uri, :title, :props, :description, :date, :localURI, :similarity, :favorite
 
   def self.all(search = "",start=0,per_page=10)
     sparqlFilter = search.generateSPARQLRequest
@@ -42,18 +42,18 @@ class Item# < ActiveRecord::Base
     return {:result => items, :query => query}
   end
   
-  def self.find(param)
+  def self.find(param,user)
     endpoint = Rails.application.config.virtuosoEndpoint
     require 'cgi'
     require 'uri'
-    
     uri = CGI.unescape(URI.escape(CGI.unescape(param)))
     uri = uri.gsub("%23","#")
     
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT ?prop ?value
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
-    WHERE { <#{uri}> ?prop ?value.}"
+    WHERE { <#{uri}> ?prop ?value.";
+    query +="}"
     store = SPARQL::Client.new(endpoint)
     result = store.query(query)
     puts query
@@ -70,6 +70,13 @@ class Item# < ActiveRecord::Base
     item.date = params["http://purl.org/rss/1.0/pubDate"] if params["http://purl.org/rss/1.0/pubDate"] != nil
     item.description = params["http://purl.org/rss/1.0/description"] if params["http://purl.org/rss/1.0/description"] != nil
     item.props = params
+    if params["http://zone-project.org/model/items#favorite"] != nil && user != nil
+      params["http://zone-project.org/model/items#favorite"].each do |fav|
+        if fav == "#{ZoneOntology::ZONE_USER}#{user.id}"
+          item.favorite = true
+        end
+      end
+    end
     return item
   end
   
@@ -91,9 +98,9 @@ class Item# < ActiveRecord::Base
 
   def getTypePicture
     if uri.starts_with?('https://twitter.com') || uri.starts_with?('http://twitter.com')
-      return "assets/twitter.png"
+      return "/assets/twitter.png"
     else
-      return "assets/foregroundRSS.png"
+      return "/assets/foregroundRSS.png"
     end
   end
 

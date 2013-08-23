@@ -1,23 +1,39 @@
-<!--<button class="btn btn-share" data-toggle="collapse" data-parent="#accordion-<%= @item.getUriHash%>" href="#collapse-<%= @item.getUriHash%>">
+<button class="btn btn-share hidden" data-toggle="collapse" data-parent="#accordion-<%= @item.getUriHash%>" href="#collapse-<%= @item.getUriHash%>">
   <i class="icon icon-tag"></i>
-</button>-->
-<button class="btn btn-share" onclick="addItemtag(this)">
+</button>
+<!--<button class="btn btn-share" onclick="addItemtag(this)">
 	<i class="icon icon-tag"></i>
-</button>
-<button class="btn btnFavorite btn-share" onclick='addFavorite("<%= @item.uri%>")'>
-  <i class="icon icon-star"></i>
-</button>
-<button class="btn btn-share" onclick='checkOpacity(this)'>
+</button>-->
+
+<% if !user_signed_in? %>
+    <button
+        id="favBTN"
+        class="btn btnFavorite btn-share favBTN"
+        type="button"
+        data-toggle="popover"
+        data-placement="bottom"
+        data-original-title="<%= t("source.rss.button.ownsource")%>"
+    >
+      <i class="icon icon-star"></i>
+    </button>
+
+
+<%else%>
+  <button class="btn btnFavorite btn-share <%= (@item.favorite) ? "btn-success" : ""%>" onclick='addFavorite("<%= @item.uri%>",this)'>
+    <i class="icon icon-star"></i>
+  </button>
+<%end%>
+<!--<button class="btn btn-share" onclick='checkOpacity(this)'>
   <i class="icon icon-check"></i>
-</button>
+</button>-->
 <a class="shareLink btn-share" href="https://www.facebook.com/sharer.php?u=<%= @item.uri %>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
-  <img class="littleCircleImage"src="assets/foregroundFB.png" height=30 width=30/>
+  <img class="littleCircleImage"src="/assets/foregroundFB.png" height=30 width=30/>
 </a>
 <a class="shareLink btn-share" href="https://plus.google.com/share?url=<%= @item.uri %>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
-  <img class="littleCircleImage"src="assets/foregroundGoogle.png" alt="Share on Google+" height=30 width=30/>
+  <img class="littleCircleImage"src="/assets/foregroundGoogle.png" alt="Share on Google+" height=30 width=30/>
 </a>
 <a class="shareLink btn-share" href="https://twitter.com/share?url=<%= @item.uri %>&via=readornet&text=<%= @item.props["http://purl.org/rss/1.0/title"][0]%>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
-  <img class="littleCircleImage" src="assets/foregroundTwitter.png" height=30 width=30>
+  <img class="littleCircleImage" src="/assets/foregroundTwitter.png" height=30 width=30>
 </a>
 <a class="shareLink btn-share" target="_blank" href="http://www.diigo.com/post?url=<%= @item.uri %>&title=<%= @item.props["http://purl.org/rss/1.0/title"][0]%>">
 	<img style="border:none" src="http://www.diigo.com/images/diigo-icon/32.png" alt="Add to Diigo" height=30 width=30/>

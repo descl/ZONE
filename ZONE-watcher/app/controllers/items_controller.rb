@@ -68,7 +68,7 @@ class ItemsController < ApplicationController
     end
     uri = CGI.escape(uri)
     
-    @item = Item.find(uri)
+    @item = Item.find(uri,current_user)
 
     @filters = parseFilterParams(params)
     

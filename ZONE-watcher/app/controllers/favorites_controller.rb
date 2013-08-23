@@ -2,22 +2,22 @@ class FavoritesController < ApplicationController
   # GET /favorites
   # GET /favorites.json
   def index
-    gonItemsUri = Array.new
-    favs  =Favorite.all(current_user.id)
-    @sparqlRequest = favs[:query]
-    @favorites = favs[:result]
-    @favorites.each do |item|
-      gonItemsUri << item_path(:id => item.uri)
+    if !user_signed_in?
+      flash[:error] = t("devise.failure.unauthenticated")
+      redirect_to :back
+      return
     end
-    gon.gonItemsUri = gonItemsUri
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @favorites }
-    end
+    sourceURI =  "#{ZoneOntology::ZONE_USER}#{current_user.id}"
+    redirect_to url_for(:controller => :searches, :action => :create,  :filters => {:and => [{:uri =>sourceURI, :value=>"favorites"}]}), :method => 'post'Z
   end
 
   def create
+    if !user_signed_in?
+      flash[:error] = t("devise.failure.unauthenticated")
+      redirect_to :back
+      return
+    end
     @favorite = Favorite.new(params[:favorite],current_user.id)
     @favorite.save
     render  :layout => 'empty'
@@ -26,6 +26,11 @@ class FavoritesController < ApplicationController
   # DELETE /favorites/1
   # DELETE /favorites/1.json
   def destroy
+    if !user_signed_in?
+      flash[:error] = t("devise.failure.unauthenticated")
+      redirect_to :back
+      return
+    end
     @favorite = Favorite.new(params[:favorite],current_user.id)
     @favorite.destroy
 

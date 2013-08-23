@@ -5,6 +5,7 @@ ZONEWatcher::Application.routes.draw do
 
   #resources :favorites
   get "favorites/create", :action => "create", :controller => "favorites"
+  get "favorites/delete", :action => "destroy", :controller => "favorites"
   get "favorites", :action => "index", :controller => "favorites"
 
   resources :search_filters

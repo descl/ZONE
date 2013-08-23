@@ -170,18 +170,32 @@ function deleteTag(tag){
 	$('#modalDeleteTag').modal('show');
 }
 
-function addFavorite(item){
-    var url = "/favorites/create?favorite="+item;
-    $.ajax({
-        url : url,
-        success: function(){
-            $(".btnFavorite").html = "ttt";
-        },
-        error: function (xhr, msg, ex)
-        {
-            alert("Failed: " + msg);
-        }
-    });
+function addFavorite(item,context){
+    if($(context).hasClass('btn-success')){
+        var url = "/favorites/delete?favorite="+item;
+        $.ajax({
+            url : url,
+            success: function(){
+                $(context).removeClass('btn-success');
+            },
+            error: function (xhr, msg, ex)
+            {
+                alert("Failed: " + msg);
+            }
+        });
+    }else{
+        var url = "/favorites/create?favorite="+item;
+        $.ajax({
+            url : url,
+            success: function(){
+                $(context).addClass('btn-success');
+            },
+            error: function (xhr, msg, ex)
+            {
+                alert("Failed: " + msg);
+            }
+        });
+    }
 +  $("#"+data).remove();
 }
 
