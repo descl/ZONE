@@ -21,7 +21,7 @@ package org.zoneproject.extractor;
  * #L%
  */
 
-import java.util.Timer;
+import org.zoneproject.extractor.utils.Config;
 
 /**
  *
@@ -30,16 +30,9 @@ import java.util.Timer;
 public class App {
     
     public static void main(String[] args)  {
-       String [] apps = new String[6];
+        String[] apps =  Config.getArrayVar("zone-plugins");
        
-       apps[0] = "org.zoneproject.extractor.twitterreader.App";
-       apps[1] = "org.zoneproject.extractor.rssreader.App";
-       apps[2] = "org.zoneproject.extractor.plugin.extractarticlescontent.App";
-       apps[3] = "org.zoneproject.extractor.plugin.opencalais.App";
-       apps[4] = "org.zoneproject.extractor.plugin.wikimeta.App";
-       apps[5] = "org.zoneproject.extractor.plugin.inseegeo.App";
-       
-       for(int i=0; i< 6;i++){
+       for(int i=0; i< apps.length;i++){
            new ThreadApp(apps[i]).start();
        }
     }

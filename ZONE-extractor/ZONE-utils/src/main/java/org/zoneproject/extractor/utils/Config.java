@@ -21,34 +21,36 @@ package org.zoneproject.extractor.utils;
  * #L%
  */
 
-import java.io.IOException;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 /**
  *
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class Config {
-    private static Properties configFile = null;
+    private static Configuration configFile = null;
     
-    public static Properties getConfigFile(){
+    public static Configuration getConfigFile(){
         if(configFile == null){
             try {
-                configFile = new java.util.Properties();
                 java.net.URL url = Config.class.getClassLoader().getResource("zone.properties");
-                configFile.load(url.openStream());
-            } catch (IOException ex) {
+                configFile = new PropertiesConfiguration(url);
+            } catch (ConfigurationException ex) {
                 Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
             }
         }
         return configFile;
     }
     
     public static String getVar(String var){
-        return getConfigFile().getProperty(var);
+        return getConfigFile().getString(var);
     }
     
+    public static String[] getArrayVar(String var){
+        return getConfigFile().getStringArray(var);
+    }
 }

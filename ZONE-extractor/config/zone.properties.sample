@@ -15,3 +15,10 @@ Virtuoso-server-pass = dba
 #twitter OAuth 
 Twitter-OAuth-customer = OAuthCustomer
 Twitter-OAuth-customerKey = OAuthCustomerKey
+
+zone-plugins = org.zoneproject.extractor.twitterreader.App
+zone-plugins = org.zoneproject.extractor.rssreader.App
+zone-plugins = org.zoneproject.extractor.plugin.extractarticlescontent.App
+zone-plugins = org.zoneproject.extractor.plugin.opencalais.App
+zone-plugins = org.zoneproject.extractor.plugin.wikimeta.App
+zone-plugins = org.zoneproject.extractor.plugin.inseegeo.App
