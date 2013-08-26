@@ -6,7 +6,7 @@ xml.rss :version => "2.0" do
     #xml.link formatted_posts_url(:rss)
     
     for element in @items
-      @item = Item.find(element.uri)
+      @item = Item.find(element.uri,current_user)
 
       next if @item.title == nil
       next if @item.date == nil
