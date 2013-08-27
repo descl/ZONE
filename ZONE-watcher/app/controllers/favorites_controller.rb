@@ -9,7 +9,7 @@ class FavoritesController < ApplicationController
     end
 
     sourceURI =  "#{ZoneOntology::ZONE_USER}#{current_user.id}"
-    redirect_to url_for(:controller => :searches, :action => :create,  :filters => {:and => [{:uri =>sourceURI, :value=>"favorites"}]}), :method => 'post'Z
+    redirect_to url_for(:controller => :searches, :action => :create,  :filters => {:and => [{:uri =>sourceURI, :value=>"favorites"}]}), :method => 'post'
   end
 
   def create
