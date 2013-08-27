@@ -40,11 +40,13 @@ public class ThreadApp extends Thread{
         try {
             Class.forName(app).newInstance();
         } catch (InstantiationException ex) {
-            Logger.getLogger(ThreadApp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ThreadApp.class.getName()).log(Level.WARNING, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(ThreadApp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ThreadApp.class.getName()).log(Level.WARNING, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ThreadApp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ThreadApp.class.getName()).log(Level.WARNING, null, ex);
+        } catch (Exception ex){
+            Logger.getLogger(ThreadApp.class.getName()).log(Level.WARNING, null, ex);
         }
         
         try{  Thread.currentThread().sleep(30000);}catch(InterruptedException ie){}
