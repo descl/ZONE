@@ -70,10 +70,6 @@ public abstract class VirtuosoDatabase {
     }
     
     public static Model getStore(String graph){
-        return getStore(graph,0);
-    }
-    
-    private static Model getStore(String graph,int testNumber){
         return VirtModel.openDatabaseModel(graph, VIRTUOSO_SERVER, VIRTUOSO_USER, VIRTUOSO_PASS);
     }
     

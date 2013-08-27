@@ -51,7 +51,7 @@ public class InseeSparqlRequest {
                 "  ?ville geo:nom ?nom.\n"+
                 "  ?zone rdf:type ?type.\n"+
                 "  {\n" +
-                "    SELECT ?ville ?zone ?name WHERE{\n" +
+                "    SELECT ?ville ?zone WHERE{\n" +
                 "      {?zone geo:subdivision ?ville}\n" +
                 "    }\n" +
                 "  } OPTION ( transitive,\n" +
@@ -63,44 +63,15 @@ public class InseeSparqlRequest {
                 "}";
         logger.info(query);
         
-        ResultSet res = Database.runSPARQLRequest(query,"http://rdf.insee.fr/geo/2011/");
+        //ResultSet res = Database.runSPARQLRequest(query,"http://rdf.insee.fr/geo/2011/");
+        ResultSet res = Database.runSPARQLRequest(query);
+        //System.out.println(res.next());
         ArrayList<Prop> dims = new ArrayList<Prop>();
         while (res.hasNext()) {
             QuerySolution r = res.nextSolution();
+            System.out.println(r.toString());
             dims.add(new Prop(r.get("?type").toString(), r.get("?zone").toString(),false,true));
 
-        }
-        
-        return dims;
-    }
-    
-    public static ArrayList<Prop> getDimensionsTooLong(String city){
-        String query="PREFIX geo: <http://rdf.insee.fr/geo/>" +
-                "\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                  
-                "SELECT DISTINCT ?zone ?type WHERE\n" +
-                "{\n" +
-                "  ?ville geo:nom ?nom.\n"+
-                "  ?zone rdf:type ?type.\n"+
-                "  {\n" +
-                "    SELECT ?ville ?zone ?name WHERE{\n" +
-                "      {?zone geo:subdivision ?ville}\n" +
-                "    }\n" +
-                "  } OPTION ( transitive,\n" +
-                "            t_distinct,\n" +
-                "            t_in(?ville),\n" +
-                "            t_out(?zone),\n" +
-                "            t_min(1)) .\n" +
-                "  FILTER (regex(str(?nom), '"+city+"', 'i'))\n" +
-                "}";
-        logger.info(query);
-        
-        ResultSet res = Database.runSPARQLRequest(query);
-        ArrayList<Prop> dims = new ArrayList<Prop>();
-        while (res.hasNext()) {
-            QuerySolution r = res.nextSolution();
-            logger.info(r);
-            dims.add(new Prop(r.get("?type").toString(), r.get("?zone").toString(),false,true));
         }
         
         return dims;

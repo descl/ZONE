@@ -58,6 +58,7 @@ public class DBpediaRequestTest {
     /**
      * Test of getCityNameFromURI method, of class DBpediaRequest.
      */
+    /* not used anymore...
     @Test
     public void testGetCityNameFromURI_1() {
         logger.info("getCityNameFromURI");
@@ -106,5 +107,5 @@ public class DBpediaRequestTest {
         String expResult = "Antwerp";
         String result = DBpediaRequest.getCityNameFromURI(uri);
         assertEquals(expResult, result);
-    }
+    }*/
 }

@@ -28,9 +28,9 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
 /**
- *
- * @author Desclaux Christophe <christophe@zouig.org>
- */
+*
+* @author Desclaux Christophe <christophe@zouig.org>
+*/
 public class Config {
     private static Configuration configFile = null;
     
