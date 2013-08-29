@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	$(".items-box").hide();
     //Tweeter function
     ! function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -64,8 +63,7 @@ $(window).load(function(){
 	        lessAni: "fast" 
 		})
 	});
-	
-	$(".items-box").fadeIn();
+
 });
 
 

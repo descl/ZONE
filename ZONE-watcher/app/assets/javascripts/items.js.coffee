@@ -7,20 +7,15 @@ $(document).ready ->
     $('#number_items_container').append(data)
 
 
-$(document).ready ->
   for id,uri of gon.gonItemsFiltersUri
     $.ajax uri,
-      async: false
-      dataType: "html"
+      async: true
+      context: id
       success: (data) ->
-        $('[class=item_container][sourceid="'+id+'"]').append(data)
-        $('[class*=item_wait][sourceid="'+id+'"]').detach()
+        id = $(this)[0]
+        $('[class=item_container][sourceid="' + id + '"]').append(data)
+        $('[class*=item_wait][sourceid="' + id + '"]').detach()
 
-
-
-
-
-$(document).ready ->
   
   #Waiting screen for the tag
   originalWaitingText = "<div class='infoPop'>"+getWaitingScreen()+"</div>"
