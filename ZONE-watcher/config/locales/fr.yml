@@ -217,7 +217,7 @@ fr:
         "Ajouter"
     linkword:
       title:
-        "Mots-liés"
+        "Synonymes"
       selectall:
         "Tous"
       unselect:
@@ -337,7 +337,7 @@ fr:
       subtitle:
         "Ajouter un filtre"
       related:
-        "Choisir des mots-liés"
+        "Choisir des synonymes"
       filtertype:
         "Choisir le type"
       buttonOption:
