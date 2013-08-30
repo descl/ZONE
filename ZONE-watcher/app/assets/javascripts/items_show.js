@@ -54,13 +54,13 @@ $(window).load(function(){
 		$('.label-tag').not(this).popover('hide');
 		$(this).popover('toggle');
 		$('.popover').find('.textContent').jTruncate({
-			length: 200,  
-	        minTrail: 0,  
-	        moreText: "(...)",  
-	        lessText: "[-]",  
-	        ellipsisText: "",  
-	        moreAni: "fast",  
-	        lessAni: "fast" 
+			length: 200,
+	        minTrail: 0,
+	        moreText: "(...)",
+	        lessText: "[-]",
+	        ellipsisText: "",
+	        moreAni: "fast",
+	        lessAni: "fast"
 		})
 	});
 
@@ -80,7 +80,7 @@ function addTag(type, value, uri) {
     return false;
 };
 
-//Close all the popover after clicking on a selction
+//Close all the popover after clicking on a selection
 function closePop() {
     $(".label-tag").popover('hide');
     $('#openReminder').popover('show');
