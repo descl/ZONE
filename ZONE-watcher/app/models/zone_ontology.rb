@@ -27,12 +27,16 @@ class ZoneOntology < ActiveRecord::Base
   SOURCES_TWITTER_TOKEN = "#{SOURCES_PREFIX}#twitterToken"
   SOURCES_TWITTER_TOKEN_SECRET = "#{SOURCES_PREFIX}#twitterSecretToken"
 
-  SOURCES_TYPE_TWITTER_HASHTAG="http://zone-project.org/model/plugins/twitter#hashtag"
-  SOURCES_TYPE_TWITTER_AUTHOR="http://zone-project.org/model/plugins/twitter#author"
+  SOURCES_TYPE_TWITTER_HASHTAG="#{SOURCES_TYPE_TWITTER}/hashtag"
+  SOURCES_TYPE_TWITTER_AUTHOR="#{SOURCES_TYPE_TWITTER}/author"
+
+  PLUGIN_TYPE_TWITTER = "http://zone-project.org/model/plugins/twitter"
+  PLUGIN_TWITTER_HASHTAG="#{PLUGIN_TYPE_TWITTER}#hashtag"
+  PLUGIN_TWITTER_AUTHOR="#{PLUGIN_TYPE_TWITTER}#author"
 
   RSS_SOURCE= "http://purl.org/rss/1.0/source"
 
   ZONE_USER = "http://zone-project.org/datas/users/"
   ZONE_FAVORITE = "http://zone-project.org/model/items#favorite"
-  
+
 end

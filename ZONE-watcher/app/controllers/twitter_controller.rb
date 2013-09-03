@@ -28,7 +28,6 @@ class TwitterController < ApplicationController
         :owner => current_user.id, 
         :attrs => {
           RDF.type => ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE,
-          RDF.type => ZoneOntology::SOURCES_TYPE_TWITTER,
           ZoneOntology::SOURCES_TWITTER_TOKEN =>current_user.token, 
           ZoneOntology::SOURCES_TWITTER_TOKEN_SECRET => current_user.tokenSecret
         }
@@ -37,18 +36,5 @@ class TwitterController < ApplicationController
     @source.save
   end
 
-  def add_hashtag_to_sources(tag)
-
-    @source = Source.new(
-        "#{ZoneOntology::SOURCES_DATA_TWITTER_HASHTAG}/##{tag}",
-        {
-            :owner => current_user.id,
-            :attrs => {
-                RDF.type => ZoneOntology::SOURCES_TYPE_TWITTER_HASHTAG
-            }
-        }
-    )
-    @source.save
-  end
 
 end

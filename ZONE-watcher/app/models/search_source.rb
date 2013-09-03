@@ -8,6 +8,13 @@ class SearchSource < ActiveRecord::Base
     if value == "Toutes les sources RSS de Reador" || value == "Toutes les sources twitter"
       result.value = "all"
     end
+    if kind = "twitter"
+      if value.starts_with? "#"
+        Twitter.add_hashtag_to_sources(value[1..value.length])
+      elsif  value.starts_with? "@"
+        Twitter.add_user_to_sources(value[1..value.length])
+      end
+    end
     return result
   end
 
@@ -29,8 +36,7 @@ class SearchSource < ActiveRecord::Base
     end
     if kind == "twitter"
       if value.start_with? "#"
-        return "?concept <#{ZoneOntology::SOURCES_TYPE_TWITTER_HASHTAG}> \"#{value}\" "
-        #TODO need to be done...
+        return "?concept <#{ZoneOntology::PLUGIN_TWITTER_HASHTAG}> ?val. ?val bif:contains \"#{value}\" "
       elsif value.start_with? "@"
         return "?concept <#{ZoneOntology::SOURCES_TYPE_TWITTER_AUTHOR}> \"#{value[1..-1]}\""
       end
