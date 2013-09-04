@@ -15,6 +15,14 @@ class Item# < ActiveRecord::Base
 
   attr_accessor :uri, :title, :props, :description, :date, :localURI, :similarity, :favorite
 
+  endpoint = Rails.application.config.virtuosoEndpoint
+  update_uri = Rails.application.config.virtuosoEndpoint+"-auth"
+  $repo       = RDF::Virtuoso::Repository.new(endpoint,
+                                              :update_uri => update_uri,
+                                              :username => Rails.application.config.virtuosoLogin,
+                                              :password => Rails.application.config.virtuosoPassword,
+                                              :auth_method => 'digest')
+
   def self.all(search = "",start=0,per_page=10)
     sparqlFilter = search.generateSPARQLRequest
 
@@ -132,5 +140,23 @@ class Item# < ActiveRecord::Base
       end
     end
     return result
+  end
+
+  def deleteTag(tag)
+    puts tag
+    graph = RDF::URI.new(ZoneOntology::GRAPH_ITEMS)
+    subject = RDF::URI.new(@uri)
+    self.props.each do |prop|
+      prop[1].each do |value|
+        if value == tag
+          if tag.start_with? "http"
+            tagNode = RDF::URI.new(tag)
+          else
+            tagNode = tag
+          end
+          puts $repo.delete(RDF::Virtuoso::Query.delete_data([subject, RDF::URI.new(prop[0]), tagNode]).graph(graph))
+        end
+      end
+    end
   end
 end

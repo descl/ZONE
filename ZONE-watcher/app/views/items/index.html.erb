@@ -18,23 +18,39 @@
     });
 <% end %>
 
-<div id="modalDeleteTag" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel"><%= raw t 'items.modal.delete.title' %></h3>
-  </div>
-  <div class="modal-body deleteTag">
-  	<div class="row-fluid">
-	    <div class="span12">
-	    	<%= raw t 'items.modal.delete.content' %>
-	    </div>
+<% if user_signed_in?%>
+    <div id="modalDeleteTag" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel"><%= raw t 'items.modal.delete.title' %></h3>
+      </div>
+      <div class="modal-body deleteTag">
+        <div class="row-fluid">
+            <div class="span12">
+                <%= raw t 'items.modal.delete.content' %>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="modalDeleteTagButton" onClick="doDeleteTag($(this))" class="btn btn-success"><%= raw t 'items.modal.delete.delete' %></button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true"><%= raw t 'items.modal.delete.cancel' %></button>
+      </div>
     </div>
-  </div>
-  <div class="modal-footer">
-  	<button class="btn btn-success"><%= raw t 'items.modal.delete.delete' %></button>
-    <button class="btn" data-dismiss="modal" aria-hidden="true"><%= raw t 'items.modal.delete.cancel' %></button>
-  </div>
-</div>
+<%else%>
+    <div id="modalDeleteTag" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel"><%= raw t 'items.modal.delete.title' %></h3>
+      </div>
+      <div class="modal-body deleteTag">
+        <div class="row-fluid">
+          <div class="span12">
+            <%= raw t 'devise.failure.unauthenticated' %>
+          </div>
+        </div>
+      </div>
+    </div>
+<%end%>
 
 <div id="modalEditTag" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-header">

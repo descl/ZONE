@@ -136,17 +136,18 @@
         //Generation of the popover of the tag
         $(".label-tag").each(function() {
             var waitingScreen;
+            var itemUri = $(this).parent().parent().parent().children(".titleItem").attr("href");
             if ($(this).attr("data-uri").indexOf("/search_filters?uri=http%3A%2F%2Fwww.dbpedia.org") === 0) {
                 waitingScreen = getWaitingScreen();
                 return $(this).popover({
-                    title: getPopoverTitle($(this).html()),
+                    title: getPopoverTitle($(this),itemUri),
                     content: originalWaitingText + getPopoverButton($(this)),
                     placement: "bottom",
                     trigger: "manual"
                 });
             } else {
                 return $(this).popover({
-                    title: getPopoverTitle($(this).html()),
+                    title: getPopoverTitle($(this),itemUri),
                     content: getPopoverButton($(this)),
                     placement: "bottom",
                     trigger: "manual"
@@ -198,8 +199,18 @@
         return tagContent;
     };
 
-    function getPopoverTitle(tagHtml) {
-        return "<span class='titletag'>" + tagHtml + "</span><i class='icon-trash pull-right pointerMouse' title='Delete' onclick='deleteTag(\"" + tagHtml + "\")'></i>";
+    function getPopoverTitle(tag,itemUri) {
+        tagHtml = tag.html();
+        tagDelete = tagHtml;
+        tagUri = null;
+        if (tag.attr("data-uri").indexOf("/search_filters?uri=http%3A%2F%2Fwww.dbpedia.org") === 0) {
+            tagUri = tag.attr("data-uri").substr("/search_filters?uri=".length)
+        }
+        res = "<span class='titletag'>" + tagHtml + "</span>";
+        if (tagHtml.indexOf("#") ==-1 && tagHtml.indexOf("@") ==-1){
+            res += "<i class='icon-trash pull-right pointerMouse' title='Delete' onclick='deleteTag(\"" + tagHtml + "\",\"" + tagUri + "\",\"" + itemUri + "\")'></i>";
+        }
+        return res;
     };
 
     function getWaitingScreen() {

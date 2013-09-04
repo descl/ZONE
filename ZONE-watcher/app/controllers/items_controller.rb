@@ -74,6 +74,16 @@ class ItemsController < ApplicationController
     
     render  :layout => 'empty'
   end
-  
+
+  def deleteTag
+    tag = params[:tag]
+    if params[:tagUri] != "null"
+      tag = params[:tagUri]
+    end
+
+    @item = Item.find(params[:item],current_user)
+    @item.deleteTag(tag)
+    render :text => ""
+  end
 
 end

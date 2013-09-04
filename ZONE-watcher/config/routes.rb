@@ -42,7 +42,10 @@ ZONEWatcher::Application.routes.draw do
 
   get "home/index"
 
+  get "items/deleteTag", :action => "deleteTag", :controller => "items"
+  get "items/index", :action => "index", :controller => "items"
   resources :items
+  match 'items/:id' => 'items#show', :constraints  =>  {:id =>  /.*/ }
 
 
   get "filters/list", :action => "list", :controller => "filters"
@@ -50,9 +53,6 @@ ZONEWatcher::Application.routes.draw do
   resources :filters
 
   root :to => "home#index"
-  get "items/index", :action => "index", :controller => "items"
-  #match 'items/:id/:filter' => 'items#show'
-  match 'items/:id' => 'items#show', :constraints  =>  {:id =>  /.*/ }
 
   get "linked_words/:desc", :action => "listWords", :controller => "linked_words"
   get "complete_entities/:desc", :action => "autoComplete", :controller => "linked_words"

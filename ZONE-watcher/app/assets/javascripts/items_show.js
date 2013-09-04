@@ -122,50 +122,36 @@ function changeItemFormat(type) {
 
 }
 
-// truncate the items text. Derived from jTruncate but adapted to Reador.net
-// License : GPL. Author : Jeremy Martin.
-
-(function($){
-	$.fn.jTruncate=function(h){
-		var i={length:300,minTrail:20,moreText:"more",lessText:"less",ellipsisText:"...",moreAni:"",lessAni:""};
-		var h=$.extend(i,h);
-		return this.each(function(){
-			obj=$(this);
-			var a=obj.html();
-			if(a.length>h.length+h.minTrail){
-				var b=a.indexOf(' ',h.length);
-				if(b!=-1){
-					var b=a.indexOf(' ',h.length);
-					var c=a.substring(0,b);
-					var d=a.substring(b,a.length-1);
-					obj.html(c+'<span class="truncate_ellipsis">'+h.ellipsisText+'</span>'+'<span class="truncate_more">'+d+'</span>');
-					obj.find('.truncate_more').css("display","none");
-					obj.append('<a href="#" class="truncate_more_link">'+h.moreText+'</a>');
-					var e=$('.truncate_more_link',obj);
-					var f=$('.truncate_more',obj);
-					var g=$('.truncate_ellipsis',obj);
-					e.click(function(){
-						if(e.text()==h.moreText){
-							f.show(h.moreAni);
-							f.css("display","inline");
-							e.text(h.lessText);
-							g.css("display","none")
-						}else{
-							f.fadeOut(h.lessAni);
-							e.text(h.moreText);
-							g.css("display","inline")
-						}return false
-					})
-				}
-			}
-		})
-	}
-})(jQuery);
-
-//Function that delete a tag
-function deleteTag(tag){
+//Function that show the delete a tag pophover
+function deleteTag(tag,tagUri,item){
 	$(".label-tag").popover('hide');
 	$('#modalDeleteTag').modal('show');
+
+    $('#modalDeleteTagButton').attr('item', item);
+    $('#modalDeleteTagButton').attr('tag', tag);
+    $('#modalDeleteTagButton').attr('tagUri', tagUri);
+}
+
+//Function that delete a tag
+function doDeleteTag(context){
+    var item = context.attr("item");
+
+    var tag = context.attr("tag");
+    var tagUri = context.attr("tagUri");
+
+    var url = "/items/deleteTag?item="+item+"&tag="+tag+"&tagUri="+tagUri;
+    $.ajax({
+        url : url,
+        success: function(){
+            htmlTag = $(".titleItem[href='"+item+"']").parent().children("div.btn-toolbar").children("div:contains('"+tag+"')");
+            htmlTag.remove();
+        },
+        error: function (xhr, msg, ex)
+        {
+            alert("Failed to remove the tag");
+        }
+    });
+    $('#modalDeleteTag').modal('hide');
 }
 
 function addFavorite(item,context){
@@ -213,3 +199,43 @@ function addItemtag(item){
 	else
 		$(item).parent().siblings('.addtag').show();
 }
+
+// truncate the items text. Derived from jTruncate but adapted to Reador.net
+// License : GPL. Author : Jeremy Martin.
+
+(function($){
+    $.fn.jTruncate=function(h){
+        var i={length:300,minTrail:20,moreText:"more",lessText:"less",ellipsisText:"...",moreAni:"",lessAni:""};
+        var h=$.extend(i,h);
+        return this.each(function(){
+            obj=$(this);
+            var a=obj.html();
+            if(a.length>h.length+h.minTrail){
+                var b=a.indexOf(' ',h.length);
+                if(b!=-1){
+                    var b=a.indexOf(' ',h.length);
+                    var c=a.substring(0,b);
+                    var d=a.substring(b,a.length-1);
+                    obj.html(c+'<span class="truncate_ellipsis">'+h.ellipsisText+'</span>'+'<span class="truncate_more">'+d+'</span>');
+                    obj.find('.truncate_more').css("display","none");
+                    obj.append('<a href="#" class="truncate_more_link">'+h.moreText+'</a>');
+                    var e=$('.truncate_more_link',obj);
+                    var f=$('.truncate_more',obj);
+                    var g=$('.truncate_ellipsis',obj);
+                    e.click(function(){
+                        if(e.text()==h.moreText){
+                            f.show(h.moreAni);
+                            f.css("display","inline");
+                            e.text(h.lessText);
+                            g.css("display","none")
+                        }else{
+                            f.fadeOut(h.lessAni);
+                            e.text(h.moreText);
+                            g.css("display","inline")
+                        }return false
+                    })
+                }
+            }
+        })
+    }
+})(jQuery);
