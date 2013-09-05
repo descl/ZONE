@@ -1,0 +1,13 @@
+/**contribution from @yellowiscool https://twitter.com/yellowiscool**/
+
+
+.oeil, .pupille {
+    position:absolute;
+    background:white;
+    /*background:rgba(255,0,0,0.5);*/
+    border-radius:50%; /* pour faire des yeux ronds */
+}
+
+.pupille {
+    background:black;
+}
