@@ -9,7 +9,7 @@ class ItemsController < ApplicationController
     @sources = []
 
     if params[:search] == nil
-      @search = Search.first
+      @search = Search.find(Rails.application.config.defaultRequestId)
     else
       @search = Search.find(params[:search])
     end
