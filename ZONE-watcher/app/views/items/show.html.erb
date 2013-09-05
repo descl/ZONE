@@ -207,7 +207,7 @@
             tagUri = tag.attr("data-uri").substr("/search_filters?uri=".length)
         }
         res = "<span class='titletag'>" + tagHtml + "</span>";
-        if (tagHtml.indexOf("#") ==-1 && tagHtml.indexOf("@") ==-1){
+        if (tagHtml.indexOf("#") !=0 && tagHtml.indexOf("@") !=0){
             res += "<i class='icon-trash pull-right pointerMouse' title='Delete' onclick='deleteTag(\"" + tagHtml + "\",\"" + tagUri + "\",\"" + itemUri + "\")'></i>";
         }
         return res;
