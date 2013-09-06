@@ -9,6 +9,7 @@ zopimId: "1AfdKtAnFnyhyiv9K09kidoNONtAmgvV"
 stathatId: "mail@example.com"
 
 devise:
+  secretKey: 'YourSecretKey'
   twitter:
     auth: "v"
     pass: "v"
