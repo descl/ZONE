@@ -36,6 +36,9 @@ class Source
     store = SPARQL::Client.new(endpoint)
     sources = Array.new
     request = store.query(query)
+    if request.size == 0
+      return []
+    end
     curSource = Source.new(request[0].concept.to_s)
     request.each do |elem|
       if curSource.uri != elem.concept.to_s
