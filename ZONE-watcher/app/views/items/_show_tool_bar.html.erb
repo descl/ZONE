@@ -14,13 +14,13 @@
         data-placement="bottom"
         data-original-title="<%= t("source.rss.button.ownsource")%>"
     >
-      <i class="icon icon-star"></i>
+      <i class="icon icon-star-empty"></i>
     </button>
 
 
 <%else%>
   <button class="btn btnFavorite btn-share <%= (@item.favorite) ? "btn-success" : ""%>" onclick='addFavorite("<%= @item.uri%>",this)'>
-    <i class="icon icon-star"></i>
+    <i class="icon icon-star-empty"></i>
   </button>
 <%end%>
 <!--<button class="btn btn-share" onclick='checkOpacity(this)'>
