@@ -7,7 +7,7 @@ class Source
   require 'rubygems'
   require 'rest_client'
 
-  attr_accessor :id, :uri, :label, :lang, :licence, :owner, :thumb, :theme, :attrs
+  attr_accessor :id, :uri, :label, :lang, :licence, :owner, :thumb, :theme, :attrs, :persisted
   attr_reader   :errors
 
   validates_format_of :uri, :with => URI::regexp(%w(http https))
@@ -25,18 +25,36 @@ class Source
     endpoint = Rails.application.config.virtuosoEndpoint
 
     query = "PREFIX SOURCE: <#{ZoneOntology::SOURCES_PREFIX}>
-    SELECT DISTINCT ?concept
+    SELECT DISTINCT ?concept ?prop ?value
     FROM <#{ZoneOntology::GRAPH_SOURCES}>
     WHERE {
       ?concept rdf:type <#{ZoneOntology::SOURCES_TYPE}>.
+      ?concept ?prop ?value.
       #{param}
     }ORDER BY ?concept"#"
 
     store = SPARQL::Client.new(endpoint)
     sources = Array.new
-    store.query(query).each do |source|
-      sources << Source.find(source.concept.to_s)
+    request = store.query(query)
+    curSource = Source.new(request[0].concept.to_s)
+    request.each do |elem|
+      if curSource.uri != elem.concept.to_s
+        sources << curSource
+        curSource = Source.new(elem.concept.to_s,:persisted => true)
+      end
+
+      propName = elem.prop.to_s.rpartition("#").last
+
+      if curSource.respond_to? propName
+        curSource.send("#{propName}=",elem.value.to_s)
+      else
+        if curSource.attrs == nil
+          curSource.attrs= Array.new
+        end
+        curSource.attrs << {elem.prop.to_s => elem.value.to_s}
+      end
     end
+    sources << curSource
     return sources
   end
   
@@ -54,10 +72,14 @@ class Source
     FROM <#{ZoneOntology::GRAPH_SOURCES}>
     WHERE { <#{uri}> ?prop ?value.}"
     store = SPARQL::Client.new(endpoint)
-    result = store.query(query)
+    request = store.query(query)
 
-    source = Source.new(uri)
-    result.each do |prop|
+    if request.length == 0
+      return nil
+    end
+
+    source = Source.new(uri,:persisted => true)
+    request.each do |prop|
       propName = prop.prop.to_s.rpartition("#").last
 
       if source.respond_to? propName
@@ -68,9 +90,6 @@ class Source
         end
         source.attrs << {prop.prop.to_s => prop.value.to_s}
       end
-    end
-    if result.length == 0
-      return nil
     end
     return source
   end
@@ -97,6 +116,9 @@ class Source
   
   def persisted?
     return false if @uri == nil
+    return false if @uri == ""
+    return true if @persisted == true
+    puts self.to_json
     return Source.find(@uri.to_s) != nil
   end 
   

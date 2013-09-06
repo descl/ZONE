@@ -28,7 +28,7 @@
 				</button>
 			</div>
 			<div class="span5">
-				<%= form.submit t("source.opml.button.upload"),:class => 'btn btn-success span12', :onclick => '$("#fileTextName").html("")'%>
+				<%= form.submit t("source.opml.button.upload"),:class => 'btn btn-success span12', :onclick => '$("#fileTextName").html("");setTimeout(\'window.location.reload();\', 2000);'%>
 			</div>
 		</div>
 	<% end %>

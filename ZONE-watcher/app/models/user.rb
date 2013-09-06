@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
 
   def getSources
     return Source.all(
-        "?uri <#{ZoneOntology::SOURCES_OWNER}> ?owner.
+        "?concept <#{ZoneOntology::SOURCES_OWNER}> ?owner.
           Filter(str(?owner) = \"#{id}\")")
   end
 end

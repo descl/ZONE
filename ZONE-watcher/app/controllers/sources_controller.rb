@@ -182,8 +182,6 @@ class SourcesController < ApplicationController
   end
 
   def uploadopml
-    puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
-    puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
     xml =  params['upload']['datafile'].read
     opml = OpmlSaw::Parser.new(xml)
     opml.parse
@@ -199,9 +197,7 @@ class SourcesController < ApplicationController
         :theme => r[:tag]
       })
       @sourcesList << s.uri
-      puts "------------------------------------------------"
-      puts s.to_json
-      #s.save
+      s.save
     end
     flash[:notice] = 'Sources added'
     respond_to do |format|
