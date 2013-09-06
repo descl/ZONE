@@ -50,17 +50,10 @@ public class App
         do{
             items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
             logger.info("WikiMeta has "+items.length+" items to annotate");
-            for(int i=0; i < items.length; i++){
-                th[i] = new WikiMetaRequestThread(items[i]);
-                th[i].start();
-            }
-            
-            for(int i=0; i < items.length; i++){
-                try {
-                    th[i].join();
-                } catch (InterruptedException ex) {
-                    logger.warn(ex);
-                }
+            for(Item item : items){
+                ArrayList<Prop> content= WikiMetaRequest.getProperties(item.concat());
+                Database.addAnnotations(item.getUri(), content);
+                Database.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
             }
         }while(items.length > 0);
     }
