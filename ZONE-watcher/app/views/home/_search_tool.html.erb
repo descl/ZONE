@@ -7,10 +7,11 @@
 
 		<div class="row-fluid">
 			<div class="span12 btn-marged">
-				<a href="/searches/new">
+                <%= link_to new_search_path do %>
 				<button type="button" class="btn btn-success span12">
 					<h2><%= raw t 'search.gobutton' %></h2>
-				</button></a>
+				</button>
+                    <%end%>
 			</div>
 		</div>
 	</div>
