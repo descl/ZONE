@@ -1,4 +1,6 @@
 en:
+  close:
+    "Close"
   edit:
     "Edit"
   show:
@@ -112,8 +114,18 @@ en:
       "Sign in"
     signInWith:
       "Sign in with"
+    signUp:
+      "Sign up"
     signInWithReador:
       "Sign up on <b>Reador</b>"
+    editAccount:
+      "Your account"
+    twitterAccount:
+      "Twitter account"
+    logout:
+      "Loggout"
+    remember:
+      "Remember me"
   search:
     infobulle:
       "Can <u>Reador</u> help you?"

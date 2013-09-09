@@ -1,18 +1,50 @@
-<h2>Sign up with twitter</h2>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+<div id="signUpModal" class="modal hide fade" data-keyboard="false" data-backdrop="static">
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3><%= t("menu.signInWith") %> twitter</h3>
+      </div>
+      <div class="modal-body">
+        <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+
+      <%= devise_error_messages! %>
+
+      <div><%= f.label :email %><br />
+      <%= f.email_field :email %></div>
 
 
-  <div><%= f.label :login %><br />
-  <%= f.text_field :login, :value => session["devise.twitter_data"]["info"].nickname.to_s %></div>
+      <div><%= f.label :login %><br />
+      <%= f.text_field :login, :value => session["devise.twitter_data"]["info"].nickname.to_s %></div>
 
-  <div><%= f.label "Twitter account: " %>
-      <b><%= session["devise.twitter_data"]["info"].nickname.to_s %></b>
-  </div>
-  
-  <div><%= f.submit "Sign up" %></div>
+      <div><%= f.label "#{t("menu.twitterAccount")}: " %>
+          <b><%= session["devise.twitter_data"]["info"].nickname.to_s %></b>
+      </div>
+            </div>
+
+
+      <div class="modal-footer">
+        <a href="/" class="btn"><%= t("close")%></a>
+        <%= f.submit raw(t("menu.signUp")),:class => "btn" %>
+      </div>
 <% end %>
+
+</div>
+
+<script>
+    $('#signUpModal').modal('toggle')
+    $('#signUpModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    })
+</script>
+<style type="text/css">
+    #signUpModal form {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .modal-body{
+        margin-left:10px;
+    }
+</style>

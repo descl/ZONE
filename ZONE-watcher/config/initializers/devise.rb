@@ -210,8 +210,8 @@ Devise.setup do |config|
   raise "#{config_file} is missing!  please create it using #{config_file}.example" unless File.exists? config_file
   loaded_config = YAML.load_file(config_file)
   config.omniauth :twitter, loaded_config["devise"]["twitter"]["auth"], loaded_config["devise"]["twitter"]["pass"]
-  config.omniauth :github,  loaded_config["devise"]["github"]["auth"], loaded_config["devise"]["github"]["pass"]
-  config.omniauth :google_oauth2, loaded_config["devise"]["google"]["auth"], loaded_config["devise"]["google"]["pass"]
+  #config.omniauth :github,  loaded_config["devise"]["github"]["auth"], loaded_config["devise"]["github"]["pass"]
+  #config.omniauth :google_oauth2, loaded_config["devise"]["google"]["auth"], loaded_config["devise"]["google"]["pass"]
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

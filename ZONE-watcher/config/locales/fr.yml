@@ -1,4 +1,6 @@
 fr:
+  close:
+    "Fermer"
   edit:
     "Modifier"
   show:
@@ -112,8 +114,18 @@ fr:
       "Se connecter"
     signInWith:
       "Se connecter avec"
+    signUp:
+      "Creer son compte"
     signInWithReador:
       "Creer son compte <b>Reador</b>"
+    editAccount:
+      "Mon compte"
+    twitterAccount:
+      "Compte twitter"
+    logout:
+      "Se déconnecter"
+    remember:
+      "Se souvenir de moi"
   search:
     infobulle:
       "<u>Reador</u> pour vous servir!"

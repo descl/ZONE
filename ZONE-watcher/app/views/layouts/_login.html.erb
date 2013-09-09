@@ -3,10 +3,10 @@
   <li class="<%= 'active' if current_page?(twitter_path) %>"><%= link_to raw("<i class=\"icon-star-empty\" ></i>"), favorites_path %></li>
   <% if user_signed_in? %>
     <li>
-        <%= link_to 'Edit account', edit_user_registration_path %>
+        <%= link_to t("menu.editAccount"), edit_user_registration_path %>
     </li>
     <li>
-        <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
+        <%= link_to t("menu.logout"), destroy_user_session_path, :method=>'delete' %>
     </li>
   <% else %>
     <li class="dropdown">
@@ -19,8 +19,8 @@
         
           <% if devise_mapping.rememberable? -%>
             <div class="control-group">
-              <%= f.check_box :remember_me, :class=>"control-label"  %>
-              <%= f.label :remember_me, :class=>"control-label" -%>
+              <%= f.check_box :remember_me, :class=>"control-label"  %><!--t("menu.remember")-->
+              <%= f.label :remember_me, t("menu.remember"), :class=>"control-label" -%>
             </div>
           <% end -%>
         
