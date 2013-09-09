@@ -1,6 +1,6 @@
 #= require items_show
 #= require reminder_panel
-
+#= require "dino.js"
 $(document).ready ->
   $.get gon.uriForItemsNumber, (data) ->
     $('#number_items_wait').detach()
