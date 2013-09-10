@@ -142,8 +142,18 @@ class Item# < ActiveRecord::Base
     return result
   end
 
+  def addTag(tag)
+    graph = RDF::URI.new(ZoneOntology::GRAPH_ITEMS)
+    subject = RDF::URI.new(@uri)
+    if tag.start_with? "http"
+      tagNode = RDF::URI.new(tag)
+    else
+      tagNode = tag
+    end
+    $repo.insert(RDF::Virtuoso::Query.insert_data([subject,RDF::URI.new(ZoneOntology::PLUGIN_SOCIAL_ANNOTATION),tagNode]).graph(graph))
+  end
+
   def deleteTag(tag)
-    puts tag
     graph = RDF::URI.new(ZoneOntology::GRAPH_ITEMS)
     subject = RDF::URI.new(@uri)
     self.props.each do |prop|
@@ -154,7 +164,7 @@ class Item# < ActiveRecord::Base
           else
             tagNode = tag
           end
-          puts $repo.delete(RDF::Virtuoso::Query.delete_data([subject, RDF::URI.new(prop[0]), tagNode]).graph(graph))
+          $repo.delete(RDF::Virtuoso::Query.delete_data([subject, RDF::URI.new(prop[0]), tagNode]).graph(graph))
         end
       end
     end

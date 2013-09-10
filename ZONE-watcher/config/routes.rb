@@ -43,6 +43,7 @@ ZONEWatcher::Application.routes.draw do
   get "home/index"
 
   get "items/deleteTag", :action => "deleteTag", :controller => "items"
+  get "items/addTag", :action => "addTag", :controller => "items"
   get "items/index", :action => "index", :controller => "items"
   resources :items
   match 'items/:id' => 'items#show', :constraints  =>  {:id =>  /.*/ }

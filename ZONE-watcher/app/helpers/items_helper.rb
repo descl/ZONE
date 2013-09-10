@@ -30,6 +30,9 @@ module ItemsHelper
     elsif(filter.prop.starts_with? @INSEE_GEO_URI)
       filterval=filter.value[filter.value.rindex('/')+1, filter.value.length]
       labels = @LABEL_PLACE
+    elsif(filter.prop.starts_with? ZoneOntology::PLUGIN_SOCIAL_ANNOTATION)
+      filterval=filter.value
+      labels = @LABEL_PLACE
     elsif( (filter.prop.start_with? @SVM_PLUGIN_URI) || (filter.prop.starts_with? @OPEN_CALAIS_URI))
       filterval=filter.value
     elsif (filter.prop.start_with? @TWITTER_HASHTAG_PLUGIN_URI)
@@ -43,7 +46,7 @@ module ItemsHelper
     if(filterval != "")
       res=link_to filterval, itemURI, :class => labels, "data-uri" => search_filters_path(:uri => filter.uri ), "filter-uri" => filter.uri
     end
-    return res
+    return raw "<div class=\"btn-group btn-group-label btn-wrap\">#{res}</div>"
   end
   
   def getTitleSource(link)

@@ -47,7 +47,7 @@
         			@item.props["http://purl.org/rss/1.0/description"][0].html_safe 
         		end %>
 			</div>
-			<div class="btn-toolbar">
+			<div class="btn-toolbar tags-toolbar">
 				<% htmlval =""
 				@item.props.each do |item|
                     item[1].each do |value|
@@ -66,19 +66,9 @@
                         end
                         %>
 
-                        <div class="btn-group btn-group-label btn-wrap">
-                            <%= linkval %>
-                        </div>
+                        <%= linkval %>
                     <%end%>
                 <%end%>
-			</div>
-			<div class="addtag pull-left" hidden>
-				<div class="input-append span12">
-					<input class="span8" type="text" placeholder="<%= t('items.newtag')%>">
-					<button class="btn btn-success">
-						<%= raw t 'newmodal.sources.add' %>
-					</button>
-				</div>
 			</div>
 
           <!--footer news part with share buttons -->

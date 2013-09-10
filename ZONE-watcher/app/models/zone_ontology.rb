@@ -1,11 +1,13 @@
 class ZoneOntology < ActiveRecord::Base
-  PLUGIN_EXTRACT_ARTICLES_CONTENT =  "http://zone-project.org/model/plugins/ExtractArticlesContent"
-  PLUGIN_EXTRACT_ARTICLES_CONTENT_RES = "http://zone-project.org/model/plugins/ExtractArticlesContent#result"
-  PLUGIN_INSEEGEO = "http://zone-project.org/model/plugins/INSEEGeo"
-  PLUGIN_OPENCALAIS = "http://zone-project.org/model/plugins/OpenCalais"
-  PLUGIN_WIKIMETA = "http://zone-project.org/model/plugins/WikiMeta"
-  PLUGIN_SVM = "http://zone-project.org/model/plugins/Categorization_SVM"
-  PLUGIN_SVM_RES = "http://zone-project.org/model/plugins/Categorization_SVM#result"
+  PLUGIN = "http://zone-project.org/model/plugins"
+
+  PLUGIN_EXTRACT_ARTICLES_CONTENT =  "#{PLUGIN}/ExtractArticlesContent"
+  PLUGIN_EXTRACT_ARTICLES_CONTENT_RES = "#{PLUGIN}/ExtractArticlesContent#result"
+  PLUGIN_INSEEGEO = "#{PLUGIN}/INSEEGeo"
+  PLUGIN_OPENCALAIS = "#{PLUGIN}/OpenCalais"
+  PLUGIN_WIKIMETA = "#{PLUGIN}/WikiMeta"
+  PLUGIN_SVM = "#{PLUGIN}/Categorization_SVM"
+  PLUGIN_SVM_RES = "#{PLUGIN}Categorization_SVM#result"
   ANNOTATION = "http://zone-project.org/model/annotation"
   
   GRAPH_ITEMS = "http://zone-project.org/datas/items";
@@ -30,9 +32,11 @@ class ZoneOntology < ActiveRecord::Base
   SOURCES_TYPE_TWITTER_HASHTAG="#{SOURCES_TYPE_TWITTER}/hashtag"
   SOURCES_TYPE_TWITTER_AUTHOR="#{SOURCES_TYPE_TWITTER}/author"
 
-  PLUGIN_TYPE_TWITTER = "http://zone-project.org/model/plugins/twitter"
+  PLUGIN_TYPE_TWITTER = "#{PLUGIN}/twitter"
   PLUGIN_TWITTER_HASHTAG="#{PLUGIN_TYPE_TWITTER}#hashtag"
   PLUGIN_TWITTER_AUTHOR="#{PLUGIN_TYPE_TWITTER}#author"
+
+  PLUGIN_SOCIAL_ANNOTATION = "#{PLUGIN}/socialAnnotation"
 
   RSS_SOURCE= "http://purl.org/rss/1.0/source"
 

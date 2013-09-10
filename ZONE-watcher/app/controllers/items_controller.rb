@@ -86,4 +86,13 @@ class ItemsController < ApplicationController
     render :text => ""
   end
 
+  def addTag
+    tag = params[:tag]
+
+    @item = Item.find(params[:item],current_user)
+    @item.addTag(tag)
+    @filter = SearchFilter.new(:value =>  tag)
+    @filter.prop = ZoneOntology::PLUGIN_SOCIAL_ANNOTATION
+    render  :layout => 'empty'
+  end
 end

@@ -1,9 +1,6 @@
 <button class="btn btn-share hidden" data-toggle="collapse" data-parent="#accordion-<%= @item.getUriHash%>" href="#collapse-<%= @item.getUriHash%>">
   <i class="icon icon-tag"></i>
 </button>
-<!--<button class="btn btn-share" onclick="addItemtag(this)">
-	<i class="icon icon-tag"></i>
-</button>-->
 
 <% if !user_signed_in? %>
     <button
@@ -17,8 +14,18 @@
       <i class="icon icon-star-empty"></i>
     </button>
 
-
 <%else%>
+  <span class="btn-share input-append addtag" style="display: none;">
+      <input class="input-small tag" type="text" placeholder="<%= t('items.newtag')%>"/>
+      <button class="btn btn-success" onclick='doAddItemTag("<%= @item.uri%>",$(this).parent())'>
+        <%= raw t 'newmodal.sources.add' %>
+      </button>
+      <button class="btn btn-danger" onclick="addItemTag($(this).parent().parent())">X</button>
+  </span>
+
+    <button class="btn btn-share btn-addTag" onclick="addItemTag($(this).parent())">
+      <i class="icon icon-tag"/>
+    </button>
   <button class="btn btnFavorite btn-share <%= (@item.favorite) ? "btn-success" : ""%>" onclick='addFavorite("<%= @item.uri%>",this)'>
     <i class="icon icon-star-empty"></i>
   </button>
