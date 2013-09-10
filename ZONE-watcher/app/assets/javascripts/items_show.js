@@ -193,11 +193,38 @@ function checkOpacity(item){
 }
 
 //Add a tag to the item
-function addItemtag(item){
-	if ($(item).parent().siblings('.addtag').is(":visible"))
-		$(item).parent().siblings('.addtag').hide();
-	else
-		$(item).parent().siblings('.addtag').show();
+function addItemTag(item){
+	if ($(item).children('.addtag').is(":visible")){
+        //hide
+		$(item).children('.addtag').hide();
+        $(item).children('.btn-addTag').show();
+        $(item).show();
+
+    }else{
+        //show
+		$(item).children('.addtag').show();
+        $(item).children('.btn-addTag').hide();
+    }
+}
+
+//do the add of a tag
+function doAddItemTag(item,context){
+    value = $(context).children(".tag").val();
+    var url = "/items/addTag?item="+item+"&tag="+value;
+    $.ajax({
+        url : url,
+        success: function(data){
+            console.log($(context).parent().parent().children(".tags-toolbar").append(data));
+            $(context).children(".tag").val("");
+            $(context).parent().children('.addtag').hide();
+            $(context).parent().children('.btn-addTag').show();
+            $(context).parent().show();
+        },
+        error: function (xhr, msg, ex)
+        {
+            alert("Failed: " + msg);
+        }
+    });
 }
 
 // truncate the items text. Derived from jTruncate but adapted to Reador.net
