@@ -202,6 +202,8 @@ function doAddItemTag(item,context){
             $(context).parent().children('.addtag').hide();
             $(context).parent().children('.btn-addTag').show();
             $(context).parent().show();
+            console.log(data);
+            console.log($(context).parent().parent().children('.tags-toolbar'));
             $(context).parent().parent().children('.tags-toolbar').append(data);
         },
         error: function (xhr, msg, ex)
