@@ -13,8 +13,8 @@ $(document).ready ->
       context: id
       success: (data) ->
         id = $(this)[0]
-        $('[class=item_container][sourceid="' + id + '"]').append(data)
         $('[class*=item_wait][sourceid="' + id + '"]').detach()
+        $('[class=item_container][sourceid="' + id + '"]').append(data)
 
   $(".showFavorite").hover (->
     $(this).next(".row-favorite").fadeIn()

@@ -5,7 +5,6 @@ $(document).ready(function() {
     "use strict"
 
     var dino = $('#dino-logo img');
-    console.log(dino);
 
     function creerOeil(topPos, leftPos) {
 

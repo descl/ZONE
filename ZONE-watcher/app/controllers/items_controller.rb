@@ -95,4 +95,5 @@ class ItemsController < ApplicationController
     @filter.prop = ZoneOntology::PLUGIN_SOCIAL_ANNOTATION
     render  :layout => 'empty'
   end
+
 end

@@ -49,10 +49,8 @@ $(window).load(function(){
         moreAni: "fast",  
         lessAni: "fast" 
 	});
-	
+
 	$('.label-tag').on('click', function () {
-		$('.label-tag').not(this).popover('hide');
-		$(this).popover('toggle');
 		$('.popover').find('.textContent').jTruncate({
 			length: 200,
 	        minTrail: 0,
@@ -214,7 +212,6 @@ function doAddItemTag(item,context){
     $.ajax({
         url : url,
         success: function(data){
-            console.log($(context).parent().parent().children(".tags-toolbar").append(data));
             $(context).children(".tag").val("");
             $(context).parent().children('.addtag').hide();
             $(context).parent().children('.btn-addTag').show();
