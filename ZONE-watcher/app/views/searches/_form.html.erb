@@ -28,7 +28,7 @@
 	<% end %>
 </div>
 <!--modalopml-->
-<form action="/searches" method="POST" id="formModal">
+<%= form_for "formModal", :url => "/searches", method: :POST, html: { id: "formModal"} do |f| %>
 	<div class="row-fluid">
 		<div class="span1"></div>
 		<div class="span10">
@@ -372,4 +372,4 @@
 		</div>
 	</div>
 	<div id="movedData"></div>
-</form>
+<%end%>

@@ -1,4 +1,5 @@
-<form action="/searches" method="POST" id="formModal">
+<%= form_for "formModal", :url => "/searches", method: :POST, html: { id: "formModal"} do |f| %>
+
 <div class="row-fluid">
 	<div id="reminder" class="span5">
 		<div class="span11 reminderSources">
@@ -84,4 +85,4 @@
 		<div id="movedData"></div>
 	</div>
 </div>
-</form>
+<% end %>
