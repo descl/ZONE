@@ -31,12 +31,18 @@ $(document).ready(function() {
         return false;
     });
     $('.label-tag').on("click", function() {
-        $('.label-tag').not(this).popover('hide');
+        var popoverOpen = $('.popover').is(':visible');
+        var clickOnSame = ($('.titletag').html() === $(this).html());
+
+        if (popoverOpen) {
+            $('.label-tag').popover('hide');
+        }
+        if(clickOnSame){
+            return
+        }
+
         $(this).popover('toggle');
 
-        if ($('.popover').is(':visible') && $('.titletag').html() === $(this).html()) {
-            return;
-        }
         if ($(this).attr("data-uri").indexOf("/search_filters?uri=http%3A%2F%2Fwww.dbpedia.org") === 0) {
             var popover = $(this).data('popover');
             errorText = "<div class='infoPop'>error</div>" + getPopoverButton($(this));
@@ -57,6 +63,17 @@ $(document).ready(function() {
                 }
             });
         }
+
+        //truncate the dbpedia message
+        $('.popover').find('.textContent').jTruncate({
+            length: 200,
+            minTrail: 0,
+            moreText: "(...)",
+            lessText: "[-]",
+            ellipsisText: "",
+            moreAni: "fast",
+            lessAni: "fast"
+        })
     });
 });
 
