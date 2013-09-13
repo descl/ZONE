@@ -101,6 +101,12 @@ class Stat
     stats << {:kind => kind, :val => val}
     StatHat::API.ez_post_value(kind,Rails.application.config.stathatId,val)
 
+    ###############################################################
+    kind ="number of accounts"
+    val = User.count
+    stats << {:kind => kind, :val => val}
+    StatHat::API.ez_post_value(kind,Rails.application.config.stathatId,val)
+
     return stats
   end
 end
