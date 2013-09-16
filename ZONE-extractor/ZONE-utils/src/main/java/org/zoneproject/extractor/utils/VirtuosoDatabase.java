@@ -287,7 +287,9 @@ public abstract class VirtuosoDatabase {
             res = getStore().contains(r,p);
         }
         catch(Exception e){
+            deleteItem(uri);
             logger.warn("The item "+uri +" existance cannot be check due to encoding errors  ("+ e+")");
+            return false;
         }
         return res;
         
@@ -302,9 +304,14 @@ public abstract class VirtuosoDatabase {
         }
     }
     
-    public static void deleteItem(String uri) throws IOException{
-        Item item = getOneItemByURI(uri);
-        getStore(ZoneOntology.GRAPH_NEWS).remove(item.getModel());
+    public static void deleteItem(String uri){
+        try{
+            Item item = getOneItemByURI(uri);
+            getStore(ZoneOntology.GRAPH_NEWS).remove(item.getModel());
+        }catch(com.hp.hpl.jena.shared.JenaException ex){
+            String deleteRequest="DELETE{<"+uri+"> ?a ?b.}WHERE{<"+uri+"> ?a ?b.}";
+            runSPARQLRequest(deleteRequest,ZoneOntology.GRAPH_NEWS);
+        }
     }
     
     public static void loadFolder(String graphURI,String dir){
@@ -351,6 +358,7 @@ public abstract class VirtuosoDatabase {
         logger.info(VirtuosoDatabase.ItemURIExist("http://www.personnes.com#Margot"));
         * */
         //extractDB();
+        deleteItem("http://www.leparisien.fr/politique/report-de-la-taxe-diesel-noel-mamere-menace-de-quitter-eelv-16-09-2013-3141815.php");
         System.out.println(getItemsNotAnotatedForOnePlugin("http://zone-project.org/model/plugins/WikiMeta"));
         System.out.println(VIRTUOSO_SERVER);
         System.out.println(getOneItemByURI("https://twitter.com/SbayAlticus/status/352411307980500992aaaa"));
