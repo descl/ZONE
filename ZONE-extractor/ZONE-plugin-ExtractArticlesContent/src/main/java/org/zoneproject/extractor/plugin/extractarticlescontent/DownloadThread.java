@@ -2,10 +2,13 @@ package org.zoneproject.extractor.plugin.extractarticlescontent;
 
 import de.l3s.boilerpipe.BoilerpipeProcessingException;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.xml.sax.InputSource;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
 import org.zoneproject.extractor.utils.VirtuosoDatabase;
@@ -51,7 +54,10 @@ public class DownloadThread extends Thread  {
           logger.info("Add ExtractArticlesContent for item: "+item);
 
           URL url = new URL(item.getUri());
-          String content= ArticleExtractor.INSTANCE.getText(url).replace("\u00A0", " ").trim();
+          URLConnection conn = url.openConnection();
+          // fake request coming from browser
+          conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB;     rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13 (.NET CLR 3.5.30729)");
+          String content= ArticleExtractor.INSTANCE.getText(new InputSource(conn.getInputStream())).replace("\u00A0", " ").trim();
 
 
           String title = item.getTitle().trim();
