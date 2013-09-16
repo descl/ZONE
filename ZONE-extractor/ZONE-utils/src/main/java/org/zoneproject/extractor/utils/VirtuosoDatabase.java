@@ -107,6 +107,7 @@ public abstract class VirtuosoDatabase {
                 i=0;
             }catch (com.hp.hpl.jena.shared.JenaException ex){
                 logger.warn("annotation process error because of virtuoso partial error "+itemUri);
+                logger.warn(ex);
                 try{Thread.currentThread().sleep(1000);}catch(InterruptedException ie){}
             }
             
@@ -239,7 +240,10 @@ public abstract class VirtuosoDatabase {
 
         while (results.hasNext()) {
             QuerySolution result = results.nextSolution();
-            items.add(getOneItemByURI(result.get("?uri").toString()));
+            Item item = getOneItemByURI(result.get("?uri").toString());
+            if(item != null){
+                items.add(item);
+            }
         }
         return items.toArray(new Item[items.size()]);
     }
@@ -269,9 +273,14 @@ public abstract class VirtuosoDatabase {
      * @return 
      */
     public static Item getOneItemByURI(String uri){
-        String request = "SELECT ?relation ?value FROM <http://zone-project.org/datas/items> WHERE{  <"+uri+"> ?relation ?value}";
-        ResultSet results = runSPARQLRequest(request);
-        return new Item(uri,results,uri,"relation","?value");
+        try{
+            String request = "SELECT ?relation ?value FROM <http://zone-project.org/datas/items> WHERE{  <"+uri+"> ?relation ?value}";
+            ResultSet results = runSPARQLRequest(request);
+            return new Item(uri,results,uri,"relation","?value");
+        }catch(com.hp.hpl.jena.shared.JenaException ex){
+            deleteItem(uri);
+            return null;
+        }
     }
 
     public static boolean ItemURIExist(String uri){
