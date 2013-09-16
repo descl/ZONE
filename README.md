@@ -12,6 +12,7 @@ Go to our [demonstration](http://demo.zone-project.org) page, and clic on some f
 #### Run your own server
 
 If you want to have your own aggregating service:
+Install virtuoso and Rails, configure the ZONE-extractor/config/zone.properties, ZONE-watcher/config/database.yml and ZONE-watcher/config/config.yml
 
     git clone https://github.com/descl/ZONE
     cd ZONE-extractor
