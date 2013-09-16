@@ -60,7 +60,7 @@ public class WikiMetaRequest_API {
     }
     
     public static String getResult(String apiKey, Format format, String content, int treshold, int span, String lng, boolean semtag) {    
-        content = new String(JsonStringEncoder.getInstance().quoteAsString(content));
+        content = new String(JsonStringEncoder.getInstance().quoteAsString(content.substring(0,Math.min(content.length(),60000))));
         String result = "";
         try {
             URL url = new URL("http://www.wikimeta.com/wapi/service");
@@ -103,6 +103,7 @@ public class WikiMetaRequest_API {
         f = f.replace("\\\",", "\",");
         f = f.replace("\"\\\"", "\"\"");
         ObjectMapper mapper = new ObjectMapper();
+        
         try {
             //first need to allow non-standard json
             mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
