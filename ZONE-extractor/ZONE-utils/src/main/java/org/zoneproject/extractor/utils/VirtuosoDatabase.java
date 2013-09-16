@@ -314,13 +314,9 @@ public abstract class VirtuosoDatabase {
     }
     
     public static void deleteItem(String uri){
-        try{
-            Item item = getOneItemByURI(uri);
-            getStore(ZoneOntology.GRAPH_NEWS).remove(item.getModel());
-        }catch(com.hp.hpl.jena.shared.JenaException ex){
-            String deleteRequest="DELETE{<"+uri+"> ?a ?b.}WHERE{<"+uri+"> ?a ?b.}";
-            runSPARQLRequest(deleteRequest,ZoneOntology.GRAPH_NEWS);
-        }
+        if(uri == null || uri == "" || !uri.startsWith("http"))return;
+        String deleteRequest="DELETE{<"+uri+"> ?a ?b.}WHERE{<"+uri+"> ?a ?b.}";
+        runSPARQLRequest(deleteRequest,ZoneOntology.GRAPH_NEWS);
     }
     
     public static void loadFolder(String graphURI,String dir){
