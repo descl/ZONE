@@ -51,7 +51,7 @@ public class DownloadThread extends Thread  {
       if(restartLevel>0)
           try {Thread.currentThread().sleep(5000);} catch (InterruptedException ex1) {}
       try {
-          logger.info("Add ExtractArticlesContent for item: "+item);
+          logger.info("Add ExtractArticlesContent for item: "+item.getUri());
 
           URL url = new URL(item.getUri());
           URLConnection conn = url.openConnection();
