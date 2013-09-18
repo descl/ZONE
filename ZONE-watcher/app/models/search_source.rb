@@ -36,9 +36,9 @@ class SearchSource < ActiveRecord::Base
     end
     if kind == "twitter"
       if value.start_with? "#"
-        return "?concept <#{ZoneOntology::PLUGIN_TWITTER_HASHTAG}> ?val. ?val bif:contains \"#{value}\" "
+        return "?concept <#{ZoneOntology::PLUGIN_TWITTER_HASHTAG}> ?val. ?val bif:contains '\"#{value}\"' "
       elsif value.start_with? "@"
-        return "?concept <#{ZoneOntology::SOURCES_TYPE_TWITTER_AUTHOR}> \"#{value[1..-1]}\""
+        return "?concept <#{ZoneOntology::PLUGIN_TWITTER_AUTHOR}> \"#{value[0..-1]}\""
       end
     elsif kind == "rss"
       return "?concept <#{ZoneOntology::RSS_SOURCE}> <#{self.getUri}>"
