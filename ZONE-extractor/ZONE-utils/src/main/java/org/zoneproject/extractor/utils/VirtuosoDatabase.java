@@ -98,8 +98,18 @@ public abstract class VirtuosoDatabase {
      * @param prop 
      */
     public static void addAnnotation(String itemUri, Prop prop){
+        addAnnotation(itemUri, prop, ZoneOntology.GRAPH_NEWS);
+    }
+    
+    /**
+     * Add annotation for a news
+     * @param itemUri
+     * @param prop 
+     * @param graph
+     */
+    public static void addAnnotation(String itemUri, Prop prop, String graph){
         Model model = getModelForAnnotation(itemUri, prop);
-        addModelToStore(model,ZoneOntology.GRAPH_NEWS);
+        addModelToStore(model,graph);
     }
     
     /**
