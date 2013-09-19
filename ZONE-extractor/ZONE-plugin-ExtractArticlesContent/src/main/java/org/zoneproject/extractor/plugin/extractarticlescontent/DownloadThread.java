@@ -53,27 +53,8 @@ public class DownloadThread extends Thread  {
       try {
           logger.info("Add ExtractArticlesContent for item: "+item.getUri());
 
-          URL url = new URL(item.getUri());
-          URLConnection conn = url.openConnection();
-          // fake request coming from browser
-          conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB;     rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13 (.NET CLR 3.5.30729)");
-          String content= ArticleExtractor.INSTANCE.getText(new InputSource(conn.getInputStream())).replace("\u00A0", " ").trim();
-
-
-          String title = item.getTitle().trim();
-
-          if(item.getDescription() != null){
-              String description = item.getDescription().trim().substring(0,Math.min(item.getDescription().trim().length(),20));
-
-              if(content.contains(description)){
-                  content = content.substring(content.indexOf(description));
-              }
-          }
-
-          if(content.contains(title)){
-              content = content.substring(content.indexOf(title)+title.length());
-          }
-          content = content.replace("\n", "<br/>");
+          String content = ExtractArticleContent.getContent(item);
+          
           VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_RESULT_URI,content));
       } catch (BoilerpipeProcessingException ex) {
           logger.warn("annotation process because of download error for "+item.getUri());

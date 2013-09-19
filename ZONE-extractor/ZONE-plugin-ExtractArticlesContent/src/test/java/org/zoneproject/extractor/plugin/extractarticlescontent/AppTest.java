@@ -21,9 +21,15 @@ package org.zoneproject.extractor.plugin.extractarticlescontent;
  * #L%
  */
 
+import de.l3s.boilerpipe.BoilerpipeProcessingException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.zoneproject.extractor.utils.Item;
 
 /**
  *
@@ -55,6 +61,17 @@ public class AppTest
      */
     public void testApp()
     {
+        String itemUri = "http://www.tactiphone.com/apple-ne-pourra-pas-deposer-la-marque-iwatch-aux-usa.html";
+        Item i = new Item(itemUri);
+        try {
+            String content = ExtractArticleContent.getContent(i);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(AppTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AppTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (BoilerpipeProcessingException ex) {
+            Logger.getLogger(AppTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         assertTrue( true );
     }
 }
