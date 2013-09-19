@@ -39,12 +39,12 @@ class Search < ActiveRecord::Base
   def getItemsNumber
     endpoint = Rails.application.config.virtuosoEndpoint
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
-    SELECT COUNT(?concept) as ?number
+    SELECT COUNT(DISTINCT ?concept) as ?number
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     FROM <#{ZoneOntology::GRAPH_SOURCES}> WHERE {\n"
     query +="?concept RSS:title ?title."
     query += self.generateSPARQLRequest
-    query += "} LIMIT 1"
+    query += "} "
     store = SPARQL::Client.new(endpoint)
     if store.query(query).length == 0
       return 0
