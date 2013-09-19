@@ -77,21 +77,19 @@ public abstract class VirtuosoDatabase {
         addItems(items.toArray(new Item[items.size()]));
     }
     
-    public static void addItems(Item[] items){        
-        for(int i=0; i < items.length;i++){
-            addItem(items[i]);
-        }
+    public static void addItems(Item[] items){ 
+        Model model = getModelForItems(items);
+        addModelToStore(model, ZoneOntology.GRAPH_NEWS);
     }
 
     public static void addItem(Item item){
-        addAnnotations(item.getUri(), item.getElements());
+        Model model = getModelForAnnotations(item.getUri(), item.getElements());
+        addModelToStore(model, ZoneOntology.GRAPH_NEWS);
     }
     
     public static void addAnnotations(String itemUri, ArrayList<Prop> props){
-        for (Iterator<Prop> it = props.iterator(); it.hasNext();) {
-            Prop prop = it.next();
-            addAnnotation(itemUri, prop);
-        }
+        Model model = getModelForAnnotations(itemUri, props);
+        addModelToStore(model, ZoneOntology.GRAPH_NEWS);
     }
     
     /**
@@ -100,33 +98,57 @@ public abstract class VirtuosoDatabase {
      * @param prop 
      */
     public static void addAnnotation(String itemUri, Prop prop){
-        int i = 5;
-        while((i--)>0){
-            try{
-                addAnnotation(itemUri, prop, ZoneOntology.GRAPH_NEWS);
-                i=0;
-            }catch (com.hp.hpl.jena.shared.JenaException ex){
-                logger.warn("annotation process error because of virtuoso partial error "+itemUri);
-                logger.warn(ex);
-                try{Thread.currentThread().sleep(1000);}catch(InterruptedException ie){}
-            }
-            
+        Model model = getModelForAnnotation(itemUri, prop);
+        addModelToStore(model,ZoneOntology.GRAPH_NEWS);
+    }
+    
+    /**
+     * get the rdf model for items
+     * @param items
+     */
+    public static Model getModelForItems(Item[] items){    
+        Model model = ModelFactory.createDefaultModel();
+        for(int i=0; i < items.length;i++){
+            getModelForItem(items[i]);
         }
+        return model;
+    }
+    
+    /**
+     * get the rdf model for an item
+     * @param item
+     */
+    public static Model getModelForItem(Item item){
+        return getModelForAnnotations(item.getUri(), item.getElements());
+    }
+    
+    /**
+     * get the rdf model for annotations
+     * @param itemUri
+     * @param props
+     */
+    public static Model getModelForAnnotations(String itemUri, ArrayList<Prop> props){
+        Model model = ModelFactory.createDefaultModel();
+        for (Iterator<Prop> it = props.iterator(); it.hasNext();) {
+            Prop prop = it.next();
+            model.add(getModelForAnnotation(itemUri, prop));
+        }
+        return model;
         
     }
     
     /**
-     * Add annotation for an item of any graph
+     * Get the model corresponding to an annotation
      * @param itemUri
      * @param prop
-     * @param graph 
      */
-    public static void addAnnotation(String itemUri, Prop prop, String graph){
+    public static Model getModelForAnnotation(String itemUri, Prop prop){
+        Model model = ModelFactory.createDefaultModel();
         try {
+            
             if(prop.isIsSearchable()) {
-                VirtuosoDatabase.addAnnotation(prop.getType().getURI(),new Prop(ZoneOntology.ANNOTATION, "true",true));
+                model.add(VirtuosoDatabase.getModelForAnnotation(prop.getType().getURI(),new Prop(ZoneOntology.ANNOTATION, "true",true)));
             }
-            Model model = ModelFactory.createDefaultModel();
             Resource itemNode = model.createResource(itemUri);
             String val = prop.getValue();
             if(val == null)
@@ -140,9 +162,21 @@ public abstract class VirtuosoDatabase {
             else{
                 itemNode.addProperty(prop.getType(), model.createResource(val));
             }
-            getStore(graph).add(model);
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return model;
+    }
+    
+    public static void addModelToStore(Model model, String graph){
+        int i = 5;
+        while((i--)>0){
+            try {
+                getStore(graph).add(model);
+            } catch (com.hp.hpl.jena.shared.JenaException ex) {
+                logger.warn("annotation process error because of virtuoso partial error");
+                try{Thread.currentThread().sleep(1000);}catch(InterruptedException ie){}
+            }
         }
     }
 
