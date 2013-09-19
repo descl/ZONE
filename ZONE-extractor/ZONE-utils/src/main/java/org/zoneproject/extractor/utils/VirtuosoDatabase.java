@@ -245,11 +245,14 @@ public abstract class VirtuosoDatabase {
         ArrayList<Item> items = new ArrayList<Item>();
         String request = "SELECT DISTINCT ?uri  FROM <http://zone-project.org/datas/items> WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title  OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined} FILTER (!bound(?pluginDefined)) } LIMIT "+limit;
         ResultSet results = runSPARQLRequest(request);
-
+        Item cur = null;
         while (results.hasNext()) {
             QuerySolution result = results.nextSolution();
             try{
-                items.add(getOneItemByURI(result.get("?uri").toString()));
+                cur = getOneItemByURI(result.get("?uri").toString());
+                if(cur != null){
+                    items.add(cur);
+                }
             }catch(com.hp.hpl.jena.shared.JenaException e){
                 Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, e);
                 getStore(ZoneOntology.GRAPH_NEWS).removeAll(ResourceFactory.createResource(result.get("?uri").toString()),null,null);
