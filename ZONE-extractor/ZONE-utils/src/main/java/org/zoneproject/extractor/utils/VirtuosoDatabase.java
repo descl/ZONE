@@ -119,7 +119,7 @@ public abstract class VirtuosoDatabase {
     public static Model getModelForItems(Item[] items){    
         Model model = ModelFactory.createDefaultModel();
         for(int i=0; i < items.length;i++){
-            getModelForItem(items[i]);
+            model.add(getModelForItem(items[i]));
         }
         return model;
     }
@@ -183,8 +183,12 @@ public abstract class VirtuosoDatabase {
         while((i--)>0){
             try {
                 getStore(graph).add(model);
+                return;
             } catch (com.hp.hpl.jena.shared.JenaException ex) {
-                logger.warn("annotation process error because of virtuoso partial error");
+                if(i==0){
+                    logger.warn("annotation process error because of virtuoso partial error");
+                    logger.warn(ex);
+                }
                 try{Thread.currentThread().sleep(1000);}catch(InterruptedException ie){}
             }
         }
@@ -325,6 +329,8 @@ public abstract class VirtuosoDatabase {
             ResultSet results = runSPARQLRequest(request);
             return new Item(uri,results,uri,"relation","?value");
         }catch(com.hp.hpl.jena.shared.JenaException ex){
+            logger.warn(ex);
+            logger.warn(uri);
             deleteItem(uri);
             return null;
         }
