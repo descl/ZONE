@@ -99,7 +99,7 @@ public class RSSGetter {
             Database.addAnnotation(url, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
             Logger.getLogger(RSSGetter.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return new ArrayList<Item>();
     }
     
     /**

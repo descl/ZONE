@@ -54,7 +54,7 @@ public class App
                 }
             }
             
-            logger.info("["+(i+SIM_DOWNLOADS)+"/"+sources.length+"] news annotated");
+            logger.info("["+(i+Math.min(sources.length%SIM_DOWNLOADS,SIM_DOWNLOADS))+"/"+sources.length+"] news annotated");
         }
         logger.info("Done");
     }
