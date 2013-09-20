@@ -21,9 +21,6 @@ package org.zoneproject.extractor.rssreader;
  * #L%
  */
 
-import java.util.ArrayList;
-import org.zoneproject.extractor.utils.Item;
-
 /**
  *
  * @author Desclaux Christophe <christophe@zouig.org>
@@ -57,7 +54,7 @@ public class App
                 }
             }
             
-            logger.info("["+i+"/"+sources.length+"] news annotated");
+            logger.info("["+(i+SIM_DOWNLOADS)+"/"+sources.length+"] news annotated");
         }
         logger.info("Done");
     }
