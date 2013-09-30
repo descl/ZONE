@@ -1,6 +1,6 @@
-<%= form_for "formModal", :url => "/searches", method: :POST, html: { id: "formModal"} do |f| %>
+<%= form_for "formModal", :url => url_for( :controller =>'searches', :action => 'index'), method: :POST, html: { id: "formModal"} do |f| %>
 
-<div class="row-fluid">
+    <div class="row-fluid">
 	<div id="reminder" class="span5">
 		<div class="span11 reminderSources">
 			<div class="row-fluid">
