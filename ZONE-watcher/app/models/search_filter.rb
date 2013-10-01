@@ -20,6 +20,9 @@ class SearchFilter < ActiveRecord::Base
 
   def getSparqlTriple
     if self.uri != nil
+      if self.uri.start_with? "http://dbpedia.org"
+        self.uri = self.uri.insert 7, "www."
+      end
       return "?concept ?filter#{self.id} <#{self.uri}>"
     else
       return "?concept ?filter#{self.id} \"#{self.value}\""
