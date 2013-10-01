@@ -25,15 +25,14 @@ class Item# < ActiveRecord::Base
 
   def self.all(search = "",start=0,per_page=10)
     sparqlFilter = search.generateSPARQLRequest
-    filtersId = ""
+    filtersIds = search.getOrFilters.map {|elem| "?filter#{elem.id}"}.join(',')
 
     endpoint = Rails.application.config.virtuosoEndpoint
     #if start > (10000 - per_page)
     #  return Array.new
     #end
-    #SELECT DISTINCT(?concept), ?title {#filtersIds}
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
-    SELECT DISTINCT(?concept), ?title
+    SELECT DISTINCT(?concept),?pubDateTime,  ?title, CONCAT( #{filtersIds} ) AS ?filtersVals
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     FROM <#{ZoneOntology::GRAPH_SOURCES}>
     WHERE {
@@ -46,7 +45,7 @@ class Item# < ActiveRecord::Base
     store = SPARQL::Client.new(endpoint)
     items = Array.new
     store.query(query).each do |item|
-      similarity = item.count - 3 - search.getAndFilters.size
+      similarity = item.filtersVals.to_s.scan(/http/).count
       items << Item.new(item.concept.to_s, item.title, similarity)
     end
     return {:result => items, :query => query}
