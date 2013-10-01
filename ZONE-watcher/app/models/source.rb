@@ -69,6 +69,9 @@ class Source
     #uri = CGI.unescape(URI.escape(CGI.unescape(param)))
     uri = param
     id = uri
+    if (!uri.start_with? "http://") && (!uri.start_with? "https://")
+      uri.insert 6, "/"
+    end
     
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT ?prop ?value
