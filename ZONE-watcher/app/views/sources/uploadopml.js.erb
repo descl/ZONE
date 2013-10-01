@@ -1,6 +1,6 @@
 <%= remotipart_response do %>
     <% @sourcesList.each do |source|%>
-        $("#wellSources").append("<span class='label-wrap label label-warning rssSource' ><%=source%><i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();checkWell()'></i></span> ");
+        $("#wellSources").append("<span class='label-wrap label label-warning rssSource' ><%=source%> <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();checkWell()'></i></span> ");
         $("#addAllRSS").attr("disabled", true);
     <%end%>
 <% end %>

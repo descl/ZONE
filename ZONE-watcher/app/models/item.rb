@@ -25,13 +25,15 @@ class Item# < ActiveRecord::Base
 
   def self.all(search = "",start=0,per_page=10)
     sparqlFilter = search.generateSPARQLRequest
+    filtersId = ""
 
     endpoint = Rails.application.config.virtuosoEndpoint
     #if start > (10000 - per_page)
     #  return Array.new
     #end
+    #SELECT DISTINCT(?concept), ?title {#filtersIds}
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
-    SELECT DISTINCT *
+    SELECT DISTINCT(?concept), ?title
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     FROM <#{ZoneOntology::GRAPH_SOURCES}>
     WHERE {
