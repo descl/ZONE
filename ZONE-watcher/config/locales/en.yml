@@ -343,6 +343,9 @@ en:
           "Add your personnal<br/>RSS flows"
         opml:
           "Import an<br>OPML file"
+      googlePlus:
+        unavaible:
+          "The google+ plugin is unavaible for the moment"
     filtering:
       title:
         "Select your filters"

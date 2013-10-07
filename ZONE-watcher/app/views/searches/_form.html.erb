@@ -64,8 +64,16 @@
 							</div>
 							<div class="span2"></div>
 							<div class="span2" id="imgGoogle">
-								<img class="circleImage thumbnail accordion-toggle" src="/assets/foregroundGoogleGray.png"/>
+								<img class="circleImage thumbnail " src="/assets/foregroundGoogleGray.png"/>
 							</div>
+                          <script>
+                              $('#imgGoogle').popover({
+                                  trigger: 'hover',
+                                  placement: 'bottom',
+                                  html: true,
+                                  content: "<%=  t 'newmodal.sources.googlePlus.unavaible' %>"
+                              });
+                          </script>
 							<div class="span2"></div>
 							<div class="span2" id="imgRSS">
 								<img class="circleImage thumbnail accordion-toggle" src="/assets/foregroundRSS.png" onclick="slideDown('#formRSS');"/>

@@ -343,6 +343,9 @@ fr:
           "Ajouter vos propres<br/>flux RSS"
         opml:
           "Importer un fichier<br/>OPML"
+      googlePlus:
+        unavaible:
+          "Le plugin google+ n'est pas encore disponible"
     filtering:
       title:
         "Sélectionner vos filtres"
