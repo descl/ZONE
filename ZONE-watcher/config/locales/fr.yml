@@ -126,6 +126,8 @@ fr:
       "Se déconnecter"
     remember:
       "Se souvenir de moi"
+    password:
+      "Mot de passe"
   search:
     disclaimer:
       "Filtre crée, les sources que vous avez ajoutées vont être traitées d'ici quelques minutes. Merci de patienter"
@@ -351,6 +353,8 @@ fr:
     filtering:
       title:
         "Sélectionner vos filtres"
+      generateRSS:
+        "Récupérer le flux RSS correspondant"
       subtitle:
         "Ajouter un filtre"
       related:

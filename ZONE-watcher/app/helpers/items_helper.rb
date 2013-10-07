@@ -27,6 +27,10 @@ module ItemsHelper
       else
         filterval=filter.value[filter.value.rindex('/')+1, filter.value.length]
       end
+      if filter.prop.start_with? "http://www.wikimeta.org/Entities#TIME"
+        return
+      end
+
     elsif(filter.prop.starts_with? @INSEE_GEO_URI)
       filterval=filter.value[filter.value.rindex('/')+1, filter.value.length]
       labels = @LABEL_PLACE

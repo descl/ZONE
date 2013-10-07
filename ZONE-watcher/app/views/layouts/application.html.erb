@@ -2,6 +2,9 @@
 <html>
 <head>
   <title><%=  t("title")%></title>
+  <% if @feed_url != nil %>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="<%=@feed_url%>" />
+  <%end%>
   <%= include_gon %>
   <%= stylesheet_link_tag("/bootstrap/css/bootstrap.min.css") %>
 
@@ -25,7 +28,10 @@
 <body>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
+
       <div class="container">
+
+        <!--for responsive design-->
         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -39,10 +45,10 @@
             <li class="<%= 'active' if current_page?(twitter_path) %>"><%= link_to t("menu.twitter"), twitter_path %></li>
             <li><%= link_to t("menu.help"), "http://www.zone-project.org/?p=718", :target => "_blank" %></li>
           </ul>
-        </div>
-        <div class="nav-collapse collapse pull-right">
-          <%= render 'layouts/login' %>
-          <%= render 'layouts/lang' %>
+            <ul class="nav user-box pull-right">
+              <%= render 'layouts/login' %>
+              <%= render 'layouts/lang' %>
+            </ul>
         </div>
       </div>
     </div>

@@ -126,6 +126,8 @@ en:
       "Loggout"
     remember:
       "Remember me"
+    password:
+      "Password"
   search:
     disclaimer:
       "Filter created, the new sources will be download soon, please be patient."
@@ -349,6 +351,8 @@ en:
         unavaible:
           "The google+ plugin is unavaible for the moment"
     filtering:
+      generateRSS:
+        "Get corresponding RSS feed"
       title:
         "Select your filters"
       subtitle:

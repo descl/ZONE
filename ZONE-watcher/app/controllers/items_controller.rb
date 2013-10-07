@@ -49,6 +49,9 @@ class ItemsController < ApplicationController
     @uriForItemsNumber = filters_getNumber_path(:old => @filters)
     gon.uriForItemsNumber = @uriForItemsNumber
 
+    #define the feed uri
+    @feed_url= url_for(:controller => 'items', :action => 'index', :search => @search.id, :format => :rss)
+
     respond_to do |format|
       format.html
       format.json { render json: @items }

@@ -85,6 +85,14 @@
 	<%= link_to(params.merge(:format => :rss)) do%>
 		<button id="buttonRss" class="btn btn-warning pull-right"><i class="icon-rss"></i></button>
 	<%end%>
+    <script>
+        $('#buttonRss').popover({
+            trigger: 'hover',
+            placement: 'bottom',
+            html: true,
+            content: "<%=  t 'newmodal.filtering.generateRSS' %>"
+        });
+    </script>
 	<span class="numberItem pull-right"><%= @itemsNumber %> items</span>
 </div>
 

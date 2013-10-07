@@ -1,37 +1,30 @@
+<% if user_signed_in? %>
+  <li>
+    <%= link_to t("menu.editAccount"), edit_user_registration_path %>
+  </li>
+  <li>
+    <%= link_to t("menu.logout"), destroy_user_session_path, :method=>'delete' %>
+  </li>
+<% else %>
+  <li class="dropdown">
+    <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= t("menu.signIn")%> <strong class="caret"></strong></a>
+    <div class="dropdown-menu" style="padding: 10px; padding-bottom: 0px;">
 
-<ul class="nav user-box">
-  <li class="<%= 'active' if current_page?(twitter_path) %>"><%= link_to raw("<i class=\"icon-star-empty\" ></i>"), favorites_path %></li>
-  <% if user_signed_in? %>
-    <li>
-        <%= link_to t("menu.editAccount"), edit_user_registration_path %>
-    </li>
-    <li>
-        <%= link_to t("menu.logout"), destroy_user_session_path, :method=>'delete' %>
-    </li>
-  <% else %>
-    <li class="dropdown">
-      <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= t("menu.signIn")%> <strong class="caret"></strong></a>
-      <div class="dropdown-menu" style="padding: 10px; padding-bottom: 0px;">
+      <%= bootstrap_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+        <%= f.email_field :email, label: :none, placeholder: 'Email'  %>
+        <%= f.password_field :password, label: :none, placeholder: t('menu.password') %>
 
-        <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal" }) do |f| %>
-          <div><%= f.email_field :email, :value=>"Email",:width=>4 %></div>
-          <div><%= f.password_field :password, :value=>"Password" %></div>
-        
-          <% if devise_mapping.rememberable? -%>
-            <div class="control-group">
-              <%= f.check_box :remember_me, :class=>"control-label"  %><!--t("menu.remember")-->
-              <%= f.label :remember_me, t("menu.remember"), :class=>"control-label" -%>
-            </div>
-          <% end -%>
-        
-          <div>
-            <%= f.submit t("menu.signIn"), :class => "btn btn-primary", :style => "clear: left; width: 100%; height: 32px; font-size: 13px;" %>
-            <br/><br/>
-            <%= link_to raw( t("menu.signInWithReador")), new_user_registration_path, :class=>"btn-auth btn-zone", :style => "width: 194px;" %>
-            <%= link_to raw( t("menu.signInWith")+" <b>Twitter</b>"), user_omniauth_authorize_path(:twitter), :class=>"btn-auth btn-twitter", :style => "width: 194px;" %>
-          </div>
-        <% end %>
-      </div>
-    </li>
-  <% end %>
-</ul>
+        <% if devise_mapping.rememberable? -%>
+          <%= f.check_box :remember_me, label: t('menu.remember') %>
+        <% end -%>
+
+
+          <%= f.submit t("menu.signIn"), :class => "btn-zone btn btn-primary", :style => "width: 225px; margin-bottom:5px;" %>
+          <br/>
+          <%= link_to raw( t("menu.signInWithReador")), new_user_registration_path, :class=>"btn-auth btn-zone", :style => "width: 194px;" %><br/>
+          <%= link_to raw( t("menu.signInWith")+" <b>Twitter</b>"), user_omniauth_authorize_path(:twitter), :class=>"btn-auth btn-twitter", :style => "width: 194px;" %>
+
+      <% end %>
+    </div>
+  </li>
+<% end %>
