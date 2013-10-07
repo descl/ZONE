@@ -127,6 +127,8 @@ fr:
     remember:
       "Se souvenir de moi"
   search:
+    disclaimer:
+      "Filtre crée, les sources que vous avez ajoutées vont être traitées d'ici quelques minutes. Merci de patienter"
     infobulle:
       "Reador pour vous servir!"
     sources:
@@ -139,7 +141,7 @@ fr:
       "Nouvelle recherche"
   index:
     disclaimer:
-      "Reador.NET est actuellement en <b>cours de développement</b>, un tas de bug sont présents et l'import de vos flux RSS et Twitter risque de ne pas fonctionner en temps réel, soyez patients!"
+      "Reador.NET est actuellement en <b>cours de développement</b>, quelques bugs présents, soyez patients!"
   moreabout:
     title:
       "En savoir plus sur Reador!"

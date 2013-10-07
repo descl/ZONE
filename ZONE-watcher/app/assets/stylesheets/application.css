@@ -11,3 +11,17 @@
  *= require_self
  *= require_tree .
  */
+
+.navbar-brand {
+    margin-left: -15px;
+}
+.navbar-brand {
+    color: #777777;
+}
+.navbar-brand, .navbar-brand:hover {
+    transition: color 0.2s ease-in-out 0s;
+}
+.navbar-brand {
+    float: left;
+    font-size: 18px;
+}

@@ -13,6 +13,9 @@ class ItemsController < ApplicationController
     else
       @search = Search.find(params[:search])
     end
+    if params[:isNew] == "true"
+      flash[:notice] = t('search.disclaimer')
+    end
 
     if params[:per_page] != nil
       per_page = params[:per_page].to_i
@@ -45,9 +48,9 @@ class ItemsController < ApplicationController
     
     @uriForItemsNumber = filters_getNumber_path(:old => @filters)
     gon.uriForItemsNumber = @uriForItemsNumber
-        
+
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @items }
       format.rss { render rss: @items }
     end
