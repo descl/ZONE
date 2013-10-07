@@ -1,5 +1,9 @@
 fr:
   devise:
+    areYouSure:
+      "Etes-vous sûr?"
+    cancelAccount:
+      "Supprimer mon compte"
     confirmations:
       confirmed: Votre compte a été confirmé avec succès. Vous êtes désormais connecté(e).
       send_instructions: Vous allez recevoir sous quelques minutes un email comportant des instructions pour confirmer votre compte.

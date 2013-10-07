@@ -40,6 +40,7 @@ gem "rdf-virtuoso", "~> 0.1.1"
 gem "gon"
 
 gem "will_paginate"
+gem "will_paginate-bootstrap"
 
 gem 'devise'
 gem 'omniauth'

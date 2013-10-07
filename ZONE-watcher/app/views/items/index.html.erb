@@ -127,6 +127,6 @@
         <% id+=1; end %>
     </div>
     <div class="span12">
-        <%= will_paginate @page_results %>
+        <%= will_paginate @page_results, renderer: BootstrapPagination::Rails, class: "pagination pagination-centered" %>
     </div>
 </div>

@@ -12,6 +12,10 @@ en:
         other: "%{count} errors prohibited this %{resource} from being saved:"
 
   devise:
+    areYouSure:
+      "Are you sure?"
+    cancelAccount:
+      "Cancel my account"
     failure:
       already_authenticated: 'You are already signed in.'
       unauthenticated: 'You need to sign in or sign up before continuing.'
