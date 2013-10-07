@@ -7,14 +7,23 @@ $(document).ready ->
     $('#number_items_container').append(data)
 
 
-  for id,uri of gon.gonItemsFiltersUri
+  downloadNewsDatas = (id,uri) ->
+    console.log(id)
     $.ajax uri,
       async: true
       context: id
       success: (data) ->
-        id = $(this)[0]
         $('[class*=item_wait][sourceid="' + id + '"]').detach()
         $('[class=item_container][sourceid="' + id + '"]').append(data)
+
+      error: (xhr, ajaxOptions, thrownError) ->
+        if (xhr.status == 500)
+          downloadNewsDatas(id,uri)
+
+
+
+  for id,uri of gon.gonItemsFiltersUri
+    downloadNewsDatas(id,uri)
 
   $(".showFavorite").hover (->
     $(this).next(".row-favorite").fadeIn()

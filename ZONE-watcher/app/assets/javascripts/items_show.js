@@ -100,8 +100,9 @@ function changeItemFormat(type) {
         $('.item-bloc').removeClass('clear-left');
         $('.item-bloc').addClass('longWell');
 
-        $(".row-list").hide();
-        $(".showFavorite").show();
+        $(".row-favorite").hide();
+        $(".showFavorite").hide();
+        $(".row-list").show();
     }
 
 }
