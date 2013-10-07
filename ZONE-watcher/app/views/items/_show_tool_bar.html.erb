@@ -4,6 +4,24 @@
 
 <% if !user_signed_in? %>
     <button
+    id="tagsBTN"
+    class="btn btn-share btn-addTag"
+    type="button"
+    data-toggle="popover"
+    data-placement="bottom"
+    data-original-title="<%= t("source.rss.button.ownsource")%>"
+    >
+      <i class="icon icon-tag"/>
+    </button>
+    <script>
+        $(function () {
+            $('#tagsBTN').popover({trigger: "hover"});
+
+        });
+    </script>
+
+
+    <button
         id="favBTN"
         class="btn btnFavorite btn-share favBTN"
         type="button"
@@ -13,6 +31,12 @@
     >
       <i class="icon icon-star-empty"></i>
     </button>
+    <script>
+  $(function () {
+  $('.favBTN').popover({trigger: "hover"});
+
+  });
+</script>
 
 <%else%>
   <span class="btn-share input-append addtag" style="display: none;">
