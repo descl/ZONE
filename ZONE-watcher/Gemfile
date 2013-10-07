@@ -58,7 +58,11 @@ gem "font-awesome-rails"
 
 gem 'rvm-capistrano'
 
+gem 'rails-i18n' #in order to have activerecord translations
 gem 'i18n-js', :github => 'fnando/i18n-js'
+gem 'devise-i18n'
 
 gem "stathat", "~> 0.1.7"
 gem 'whenever'
+
+gem 'bootstrap_form'
