@@ -40,7 +40,7 @@ class SearchesController < ApplicationController
     @search = Search.build_from_form(params)
     respond_to do |format|
       if @search.save
-        format.html { redirect_to items_path(:search => @search.id, :isNew => true )  }
+        format.html { redirect_to items_path(:search => @search.id, :isNew => params[:isNew] )  }
         format.json { render json: @search, status: :created, location: @search }
       else
         format.html { render action: "new" }
@@ -56,7 +56,7 @@ class SearchesController < ApplicationController
 
     respond_to do |format|
       if @search.update_attributes(params[:search])
-        format.html { redirect_to items_path(:search => @search.id, :isNew => true )  }
+        format.html { redirect_to items_path(:search => @search.id )  }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

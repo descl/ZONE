@@ -39,7 +39,7 @@
 				<li id="breadcrumbFiltering" onclick="switchTab()">
 					<%= raw t 'newmodal.breadcrumb.filtering' %><span class="divider"><i class="icon-chevron-right"></i></span>
 				</li>
-				<li onclick="movingData();submit()">
+				<li onclick="movingData(true);submit()">
 					<%= raw t 'newmodal.breadcrumb.results' %>
 				</li>
 			</ul>
@@ -230,7 +230,7 @@
               <div class="row-fluid">
                 <div class="span4"></div>
                 <div class="span4">
-                  <button class="btn span12 btn-success goItem" type="submit" onclick="movingData()">
+                  <button class="btn span12 btn-success goItem" type="submit" onclick="movingData(true)">
                     <h3><%= raw t 'newmodal.sources.goreador' %></h3>
                   </button>
                 </div>
@@ -370,7 +370,7 @@
 				<div class="row-fluid">
 					<div class="span4"></div>
 					<div class="span4">
-						<button class="btn btn-success span12 goItem" type="submit" onclick="movingData()">
+						<button class="btn btn-success span12 goItem" type="submit" onclick="movingData(true)">
 							<h3><%= raw t 'newmodal.sources.goreador' %></h3>
 						</button>
 					</div>
