@@ -1,4 +1,18 @@
 fr:
+
+  activerecord:
+    errors:
+      messages:
+        empty: "doit être rempli"
+        blank: "doit être rempli"
+
+    attributes:
+      user:
+        email: "Email"
+        login: "Nom d'utilisateur"
+        password: "Mot de passe"
+        current_password: "Mot de passe actuel"
+        password_confirmation: "Vérification du mot de passe"
   devise:
     areYouSure:
       "Etes-vous sûr?"
@@ -36,6 +50,10 @@ fr:
       updated: Votre mot de passe a été modifié avec succès. Vous êtes maintenant connecté(e).
       updated_not_active: Votre mot de passe a été modifié avec succès.
     registrations:
+      edit:
+        edit: "Modifier"
+        password_instruction: Ne pas remplir si vous ne voulez pas le changer
+        current_password_instruction: Vous devez remplir votre mot de passe en cours pour confirmer vos changement
       destroyed: Au revoir ! Votre compte a été annulé avec succès. Nous espérons vous revoir bientôt.
       signed_up: Bienvenue ! Vous vous êtes enregistré(e) avec succès.
       signed_up_but_inactive: Vous vous êtes enregistré(e) avec succès. Cependant, nous n’avons pas pu vous connecter car votre compte n’a pas encore été activé.
@@ -44,7 +62,7 @@ fr:
       update_needs_confirmation: Vous avez modifié votre compte avec succès, mais nous devons vérifier votre nouvelle adresse email. Veuillez consulter vos emails et cliquer sur le lien de confirmation pour finalizer votre nouvelle adresse.
       updated: Votre compte a été modifié avec succès.
     sessions:
-      signed_in: Connecté avec succès.
+      signed_in: Vous vous êtes connecté avec succès.
       signed_out: Vous vous êtes déconnecté avec succès.
     unlocks:
       send_instructions: Vous allez recevoir un email sous quelques minutes contenant les instructions nécessaires au déblocage de votre compte.

@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-    <li class="<%= 'active' if current_page?(favorites_path) %>"><%= link_to raw("<i class=\"icon-star\" ></i>"), favorites_path %></li>
+    <li class="<%= 'active' if current_page?(favorites_path) %>"><%= link_to raw("<i class=\"icon-star\" ></i>"), favorites_path, :title => t('menu.favoris') %></li>
     <li><%= link_to t("menu.editAccount"), edit_user_registration_path %></li>
   <li>
     <%= link_to t("menu.logout"), destroy_user_session_path, :method=>'delete' %>

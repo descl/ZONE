@@ -128,6 +128,8 @@ fr:
       "Se souvenir de moi"
     password:
       "Mot de passe"
+    favoris:
+      "Vos favoris"
   search:
     disclaimer:
       "Filtre crée, les sources que vous avez ajoutées vont être traitées d'ici quelques minutes. Merci de patienter"
