@@ -16,8 +16,11 @@ en:
       notlogged:
         'You are not logged with a twitter account.'
   source:
+    disclaimer:
+      "<strong>Welcome!</strong> This page contains a list of all RSS feeds that you have imported on Reador.NET. Currently you have imported any feed, to solve this problem you can add one manually or import your OPML file from your favorite RSS feed aggregator!"
+
     title:
-      "User sources management"
+      "Your sources management"
     elemsNumber:
       "elements"
     list:
@@ -145,7 +148,7 @@ en:
       "New search"
   index:
     disclaimer:
-      "Reador.NET is currently <b>under development</b>, a lot of bugs are present and your feeds will probably not work as well as needed, don't worry, be patient!"
+      "Reador.NET is currently <b>under devlopment</b>, please say us all problems you can encounter using  <a href='javascript:void($zopim.livechat.window.openPopout())'>this link</a>!"
   moreabout:
     title:
       "More about Reador!"

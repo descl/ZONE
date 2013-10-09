@@ -51,8 +51,8 @@
       <i class="icon icon-tag"/>
     </button>
     <% if (@item.favorite) %>
-      <button class="btn btnFavorite btn-share btn-success" onclick='addFavorite("<%= @item.uri%>",this)'>
-        <i class="icon icon-star" style="color:yellow"></i>
+      <button class="btn btnFavorite btn-share btnFavorite-on" onclick='addFavorite("<%= @item.uri%>",this)'>
+        <i class="icon icon-star"></i>
       </button>
     <%else%>
       <button class="btn btnFavorite btn-share <%= (@item.favorite) ? "btn-success" : ""%>" onclick='addFavorite("<%= @item.uri%>",this)'>

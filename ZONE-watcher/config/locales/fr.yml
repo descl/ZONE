@@ -16,8 +16,10 @@ fr:
       notlogged:
         "Nous n'etes pas connectés avec un compte twitter."
   source:
+    disclaimer:
+      "<strong>Bienvenue!</strong> Cette page contient la liste des flux RSS que vous avez importés dans Reador.NET. Actuellement, vous n'avez importé aucun flux, pour résoudre le problème vous pouvez en ajouter un manuellement ou en importer à l'aide d'un fichier OPML en provenance de votre aggrégateur de flux favoris!"
     title:
-      "Gestion des sources utilisateurs"
+      "Gestion de vos sources"
     elemsNumber:
       "éléments"
     list:
@@ -145,7 +147,7 @@ fr:
       "Nouvelle recherche"
   index:
     disclaimer:
-      "Reador.NET est actuellement en <b>cours de développement</b>, quelques bugs présents, soyez patients!"
+      "Reador.NET est en <b>cours de développement</b>, merci de nous faire remonter les problèmes que vous rencontrez en <a href='javascript:void($zopim.livechat.window.openPopout())'>cliquant ici</a>!"
   moreabout:
     title:
       "En savoir plus sur Reador!"

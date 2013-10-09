@@ -140,12 +140,12 @@ function doDeleteTag(context){
 }
 
 function addFavorite(item,context){
-    if($(context).hasClass('btn-success')){
+    if($(context).hasClass('btnFavorite-on')){
         var url = "/favorites/delete?favorite="+item;
         $.ajax({
             url : url,
             success: function(){
-                $(context).removeClass('btn-success');
+                $(context).removeClass('btnFavorite-on');
             },
             error: function (xhr, msg, ex)
             {
@@ -157,7 +157,7 @@ function addFavorite(item,context){
         $.ajax({
             url : url,
             success: function(){
-                $(context).addClass('btn-success');
+                $(context).addClass('btnFavorite-on');
             },
             error: function (xhr, msg, ex)
             {
