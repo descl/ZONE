@@ -48,27 +48,11 @@
         		end %>
 			</div>
 			<div class="btn-toolbar tags-toolbar">
-				<% htmlval =""
-				@item.props.each do |item|
-                    item[1].each do |value|
-                        filter = SearchFilter.new(:value =>  value)
-                        if value.start_with?("http")
-                          filter.uri = value
-                        end
-                        filter.prop = item[0]
-                        #filter.save
-                        #if filter.prop.starts_with? ZoneOntology::PLUGIN_EXTRACT_ARTICLES_CONTENT_RES
-                        #    htmlval= filter.value
-                        #end
-                        linkval = getButtonForFilter(filter)
-                        if !linkval then
-                            next
-                        end
-                        %>
+              <%@item.filters.each do |filter|%>
+                <%= raw filter.getButtonInNews %>
+              <%end%>
 
-                        <%= linkval %>
-                    <%end%>
-                <%end%>
+
 			</div>
 
           <!--footer news part with share buttons -->

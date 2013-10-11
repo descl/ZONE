@@ -13,7 +13,7 @@ class Item# < ActiveRecord::Base
   TWITTER_MENTIONED_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#mentioned'
   TWITTER_HASHTAG_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#hashtag'
 
-  attr_accessor :uri, :title, :props, :description, :date, :localURI, :similarity, :favorite
+  attr_accessor :uri, :title, :props, :description, :date, :localURI, :similarity, :favorite, :filters
 
   endpoint = Rails.application.config.virtuosoEndpoint
   update_uri = Rails.application.config.virtuosoEndpoint+"-auth"
@@ -79,6 +79,8 @@ class Item# < ActiveRecord::Base
     item.date = params["http://purl.org/rss/1.0/pubDate"] if params["http://purl.org/rss/1.0/pubDate"] != nil
     item.description = params["http://purl.org/rss/1.0/description"] if params["http://purl.org/rss/1.0/description"] != nil
     item.props = params
+    item.filters = Array.new
+
     if params["http://zone-project.org/model/items#favorite"] != nil && user != nil
       params["http://zone-project.org/model/items#favorite"].each do |fav|
         if fav == "#{ZoneOntology::ZONE_USER}#{user.id}"
@@ -86,6 +88,20 @@ class Item# < ActiveRecord::Base
         end
       end
     end
+
+    item.props.each do |key|
+      key[1].each do |value|
+        filter = SearchFilter.new(:value =>  value)
+        if value.start_with?("http")
+          filter.uri = value
+        end
+        filter.prop = key[0]
+        filter.item = item
+
+        item.filters << filter
+      end
+    end
+
     return item
   end
   
