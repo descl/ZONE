@@ -5,75 +5,46 @@ $(document).ready(function() {
     $(".label-tag").each(function() {
 
         //check if the tag is already "popoverised"
-        if( $(this).data('popover') != null){
+        if( $(this).data('clickover') != null){
             return;
         }
 
         //create the popover
-        var waitingScreen;
-        var itemUri = $(this).parent().parent().parent().children(".titleItem").attr("href");
-        if ($(this).attr("data-uri").indexOf("/search_filters?uri=http%3A%2F%2Fwww.dbpedia.org") === 0) {
-            waitingScreen = getWaitingScreen();
-            $(this).popover({
-                title: getPopoverTitle($(this),itemUri),
-                content: originalWaitingText + getPopoverButton($(this)),
-                placement: "bottom",
-                trigger: "manual"
-            });
-        } else {
-            $(this).popover({
-                title: getPopoverTitle($(this),itemUri),
-                content: getPopoverButton($(this)),
-                placement: "bottom",
-                trigger: "manual"
-            });
-        }
+        $(this).clickover({ placement: 'bottom' })
 
         //add the onclick action
         $(this).on("click", function() {
-            var popoverOpen = $('.popover').is(':visible');
-            var clickOnSame = ($('.titletag').html() === $(this).html());
-
-            if (popoverOpen) {
-                $('.label-tag').popover('hide');
-            }
-            if(clickOnSame){
-                return false;
-            }
-
-            $(this).popover('toggle');
 
             if ($(this).attr("data-uri").indexOf("/search_filters?uri=http%3A%2F%2Fwww.dbpedia.org") === 0) {
-                var popover = $(this).data('popover');
+                var popover = $(this).data('clickover');
                 errorText = "<div class='infoPop'>error</div>" + getPopoverButton($(this));
-                if (popover.options.content !== (originalWaitingText + getPopoverButton($(this))) && popover.options.content !== errorText) {
-                    return;
-                }
                 var item = $(this);
-                return $.ajax({
+                $.ajax({
                     url: item.attr("data-uri"),
                     timeout: 5000,
                     success: function(data) {
                         popover.options.content = "<div class='infoPop'>" + data + "</div>" + getPopoverButton($(this));
-                        return $('.infoPop').html(data);
+
+                        $('.infoPop').html(data);
+
+                        //truncate the dbpedia message
+                        $('.popover').find('.textContent').jTruncate({
+                            length: 200,
+                            minTrail: 0,
+                            moreText: "(...)",
+                            lessText: "[-]",
+                            ellipsisText: "",
+                            moreAni: "fast",
+                            lessAni: "fast"
+                        })
+
                     },
                     error: function() {
                         popover.options.content = errorText;
-                        return $('.infoPop').html('error');
+                        return $('.infoPop').html('');
                     }
                 });
             }
-
-            //truncate the dbpedia message
-            $('.popover').find('.textContent').jTruncate({
-                length: 200,
-                minTrail: 0,
-                moreText: "(...)",
-                lessText: "[-]",
-                ellipsisText: "",
-                moreAni: "fast",
-                lessAni: "fast"
-            })
             return false;
         });
     });

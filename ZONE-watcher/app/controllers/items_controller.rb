@@ -83,12 +83,19 @@ class ItemsController < ApplicationController
 
   def deleteTag
     tag = params[:tag]
-    if params[:tagUri] != "null"
+    if params[:tagUri] != nil && params[:tagUri] != ""
       tag = params[:tagUri]
     end
-
-    @item = Item.find(params[:item],current_user)
-    @item.deleteTag(tag)
+    if tag != ""
+      @item = Item.find(params[:item],current_user)
+      puts @item.to_json
+      if @item == nil
+        raise "item not found"
+      end
+      @item.deleteTag(tag)
+    else
+      raise "tag not found"
+    end
     render :text => ""
   end
 
@@ -98,6 +105,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:item],current_user)
     @item.addTag(tag)
     @filter = SearchFilter.new(:value =>  tag)
+    @filter.item = @item
     @filter.prop = ZoneOntology::PLUGIN_SOCIAL_ANNOTATION
     render  :layout => 'empty'
   end

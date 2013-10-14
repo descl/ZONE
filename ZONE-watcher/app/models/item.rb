@@ -65,6 +65,9 @@ class Item# < ActiveRecord::Base
     query +="}"
     store = SPARQL::Client.new(endpoint)
     result = store.query(query)
+    if result.size == 0
+      return nil
+    end
     puts query
     
     params = Hash.new

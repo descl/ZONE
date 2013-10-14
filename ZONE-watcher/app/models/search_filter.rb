@@ -1,4 +1,9 @@
 class SearchFilter < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
+  include ActionView::Helpers::UrlHelper
+  include ActionView::Helpers
+  include SearchesHelper
+
   attr_accessible :value, :kind, :uri
   attr_accessor :prop,:item
 
@@ -88,7 +93,7 @@ class SearchFilter < ActiveRecord::Base
       labels=@LABEL_TWITTER
     end
 
-    return button_link(self.uri, labels,filterVal)
+    return button_link(self.uri, labels,filterVal, self.item.uri)
   end
 
   def getInfos

@@ -66,7 +66,6 @@ function addTag(type, value, uri) {
 
 //Close all the popover after clicking on a selection
 function closePop() {
-    $(".label-tag").popover('hide');
     $('#openReminder').popover('show');
     setTimeout(function() {
         $('#openReminder').popover('hide');
