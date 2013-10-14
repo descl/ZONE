@@ -14,7 +14,7 @@ fr:
       "Votre compte twitter a été ajouté à notre base. Vous pourrez filtrer vos tweets d'ici 5 à 10 minutes."
     err:
       notlogged:
-        "Nous n'etes pas connectés avec un compte twitter."
+        "Vous n'êtes pas connectés avec un compte twitter."
   source:
     disclaimer:
       "<strong>Bienvenue!</strong> Cette page contient la liste des flux RSS que vous avez importés dans Reador.NET. Actuellement, vous n'avez importé aucun flux, pour résoudre le problème vous pouvez en ajouter un manuellement ou en importer à l'aide d'un fichier OPML en provenance de votre aggrégateur de flux favoris!"
@@ -348,7 +348,7 @@ fr:
         holderurl:
           "Ajouter un flux RSS à surveiller"
         yourrss:
-          "Ajouter vos propres<br/>flux RSS"
+          "Utiliser les flux RSS <br/>de votre compte"
         opml:
           "Importer un fichier<br/>OPML"
       googlePlus:

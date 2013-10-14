@@ -53,7 +53,7 @@ fr:
       edit:
         edit: "Modifier"
         password_instruction: Ne pas remplir si vous ne voulez pas le changer
-        current_password_instruction: Vous devez remplir votre mot de passe en cours pour confirmer vos changement
+        current_password_instruction: Vous devez remplir votre mot de passe en cours pour confirmer vos changements
       destroyed: Au revoir ! Votre compte a été annulé avec succès. Nous espérons vous revoir bientôt.
       signed_up: Bienvenue ! Vous vous êtes enregistré(e) avec succès.
       signed_up_but_inactive: Vous vous êtes enregistré(e) avec succès. Cependant, nous n’avons pas pu vous connecter car votre compte n’a pas encore été activé.
