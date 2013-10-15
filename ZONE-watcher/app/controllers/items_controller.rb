@@ -39,21 +39,18 @@ class ItemsController < ApplicationController
       pager.replace(itemsTab[:result])
     end
 
-    gonItemsFiltersUri = Array.new
     @items.each do |element|
       element.localURI = item_path(:id => element, :old => @filters)
-      gonItemsFiltersUri << element.localURI
     end
-    gon.gonItemsFiltersUri = gonItemsFiltersUri
     
     @uriForItemsNumber = filters_getNumber_path(:old => @filters)
-    gon.uriForItemsNumber = @uriForItemsNumber
 
     #define the feed uri
     @feed_url= url_for(:controller => 'items', :action => 'index', :search => @search.id, :format => :rss)
 
     respond_to do |format|
       format.html
+      format.js
       format.json { render json: @items }
       format.rss { render rss: @items }
     end

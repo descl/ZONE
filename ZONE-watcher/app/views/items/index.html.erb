@@ -74,12 +74,14 @@
 <!-- rss feed and format page selection-->
 <div class="row-fluid">
 	<div class="btn-group pull-right">
+      <!--
+      TODO : put back the oneperline view (problem with infinite scroll)
 		<button id="btnCard" class="btn active" onclick="changeItemFormat('card');">
 			<i class="icon icon-th-large"></i>
 		</button>
 		<button id="btnList" class="btn" onclick="changeItemFormat('list');">
 			<i class="icon icon-th-list"></i>
-		</button>
+		</button>-->
 	</div>
 	<div id="titlePopover" hidden><%= raw t 'items.popover.smalltitle' %></div>
 	<%= link_to(params.merge(:format => :rss)) do%>
@@ -100,33 +102,15 @@
 
 <!-- items printing-->
 <div class="items-box">
-    <div class="row-fluid">
-        <% id=0; @items.each do |item| %>
-          <%
-          similarityColor = case item.similarity
-            when 0 then ""
-            when 1 then "lowSimilarity"
-            when 2 then "mediumSimilarity"
-            else "highSimilarity"
-          end
-          if id%2 == 1
-            cl = "pull-right clear-right"
-          else
-            cl = "pull-left clear-left"
-          end
-          %>
-        <div class="well item-bloc <%=cl%> span6 <%= similarityColor%>">
-            <div class="item_container" sourceid="<%= id %>"></div>
-            <div class="item_wait" sourceid="<%= id%>">
-                <a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
-                <a href="<%= item.uri%>"><%= item.title%></a>
+    <div class="row-fluid items-list">
+        <%= render :partial => "items", :items => @items %>
 
-            </div>
-        </div>
-
-        <% id+=1; end %>
     </div>
     <div class="span12">
-        <%= will_paginate @page_results, renderer: BootstrapPagination::Rails, class: "pagination pagination-centered" %>
+      <%= link_to 'Load More ITEMS', items_path(:page => @items.next_page, :search => @search.id), :class => 'btn load-more-items', :remote => true if @items.next_page != nil%>
+
+        <%= # will_paginate @page_results, renderer: BootstrapPagination::Rails, class: "pagination pagination-centered"
+        %>
     </div>
+
 </div>

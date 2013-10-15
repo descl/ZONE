@@ -1,29 +1,27 @@
 #= require items_show
 #= require reminder_panel
 #= require "dino.js"
-$(document).ready ->
-  $.get gon.uriForItemsNumber, (data) ->
-    $('#number_items_wait').detach()
-    $('#number_items_container').append(data)
 
+downloadNewsDatas = (uri) ->
+  $.ajax uri,
+    async: true
+    context: uri
+    success: (data) ->
+      item = $('.item-bloc[local-uri="'+uri+'"]')
+      if(item.length > 0)
+        $(item).removeAttr("local-uri")
+        $(item).find('[class*=item_wait]').detach()
+        $(item).find('[class=item_container]').append(data)
 
-  downloadNewsDatas = (id,uri) ->
-    console.log(id)
-    $.ajax uri,
-      async: true
-      context: id
-      success: (data) ->
-        $('[class*=item_wait][sourceid="' + id + '"]').detach()
-        $('[class=item_container][sourceid="' + id + '"]').append(data)
+    error: (xhr, ajaxOptions, thrownError) ->
+      if (xhr.status == 500)
+        downloadNewsDatas(uri)
 
-      error: (xhr, ajaxOptions, thrownError) ->
-        if (xhr.status == 500)
-          downloadNewsDatas(id,uri)
-
-
-
-  for id,uri of gon.gonItemsFiltersUri
-    downloadNewsDatas(id,uri)
+$ ->
+  #load items content for each item
+  $('.item-bloc[local-uri]').each (id, element) ->
+    localUri = $(element).attr('local-uri')
+    downloadNewsDatas(localUri)
 
   $(".showFavorite").hover (->
     $(this).next(".row-favorite").fadeIn()
@@ -36,3 +34,8 @@ $(document).ready ->
   ), ->
     $(this).hide()
     $(this).prev(".showFavorite").fadeIn()
+
+  #activate the infinite scroll
+  $('a.load-more-items').on 'inview', (e, visible) ->
+    return unless visible
+    $.getScript $(this).attr('href')

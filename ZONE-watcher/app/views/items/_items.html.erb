@@ -1,0 +1,24 @@
+<% id=0; @items.each do |item| %>
+    <%
+       similarityColor = case item.similarity
+                           when 0 then ""
+                           when 1 then "lowSimilarity"
+                           when 2 then "mediumSimilarity"
+                           else "highSimilarity"
+                         end
+       if id%2 == 1
+         cl = "pull-right clear-right"
+       else
+         cl = "pull-left clear-left"
+       end
+    %>
+    <div class="well item-bloc <%=cl%> span6 <%= similarityColor%>" local-uri="<%= item.localURI %>">
+      <div class="item_container" sourceid="<%= id %>"></div>
+      <div class="item_wait" sourceid="<%= id%>">
+        <a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
+        <a href="<%= item.uri%>"><%= item.title%></a>
+
+      </div>
+    </div>
+
+<% id+=1; end %>

@@ -92,9 +92,6 @@ GEM
       multipart-post (~> 1.2.0)
     font-awesome-rails (3.2.1.3)
       railties (>= 3.2, < 5.0)
-    gon (4.1.1)
-      actionpack (>= 2.3.0)
-      json
     hashie (2.0.5)
     highline (1.6.19)
     hike (1.2.3)
@@ -253,7 +250,6 @@ DEPENDENCIES
   devise
   devise-i18n
   font-awesome-rails
-  gon
   i18n-js!
   jquery-rails (= 2.3.0)
   jquery-ui-rails
