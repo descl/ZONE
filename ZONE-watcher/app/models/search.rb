@@ -6,6 +6,7 @@ class Search < ActiveRecord::Base
 
   def self.build_from_form(params,user)
     result = Search.new
+    result.user_id = user
 
     if params[:sources].class == String
       inputSources = JSON.parse params[:sources]

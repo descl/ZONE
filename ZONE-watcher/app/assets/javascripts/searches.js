@@ -32,9 +32,9 @@ $(document).ready(function() {
     $("#addAllTwitter").attr("disable", false);
     
     //Block the original backspace action, and reverse switch the tab of the search
-    window.onbeforeunload = function() { 
+    /*window.onbeforeunload = function() {
     	return I18n.t("source.noback");
-    }; 
+    };*/
    $('#btnyourRss').popover();
    $('#btnOpml').popover();  
 });

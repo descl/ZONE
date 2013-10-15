@@ -1,27 +1,41 @@
-<h1>Listing searches</h1>
+<h1><%= t("menu.yourFilters")%></h1>
 
-<table>
+<table class="table table-hover  table-bordered">
+  <thead>
   <tr>
-    <th>Sources</th>
-    <th>Filters</th>
-    <th>User</th>
-    <th></th>
-    <th></th>
+    <th><%= t("menu.sources")%></th>
+    <th><%= t("menu.filters")%></th>
     <th></th>
   </tr>
+  </thead>
 
+  <tbody>
 <% @searches.each do |search| %>
   <tr>
-    <td><%= search.sources %></td>
-    <td><%= search.filters %></td>
-    <td><%= search.user %></td>
-    <td><%= link_to 'Show', search %></td>
-    <td><%= link_to 'Edit', edit_search_path(search) %></td>
-    <td><%= link_to 'Destroy', search, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td>
+      <% search.sources.each do |source| %>
+          <%= raw source.getButton %>
+      <%end%>
+    </td>
+    <td>
+      <% search.filters.each do |filter| %>
+        <%= raw filter.getButton %>
+      <%end%>
+    </td>
+    <td class="btn-toolbar">
+      <div class="btn-group">
+      <%= link_to t('show'), search, :class => "btn btn-info btn-mini" %>
+    <%= link_to t('edit'), edit_search_path(search), :class => "btn btn-warning btn-mini" %>
+    <%= link_to t('delete'), search, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-mini" %></td>
+    </div>
   </tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />
+<div class="span12">
+  <%= will_paginate @page_results, renderer: BootstrapPagination::Rails, class: "pagination pagination-centered" %>
+</div>
 
-<%= link_to 'New Search', new_search_path %>
+<%= link_to t('search.gobutton'), new_search_path %>

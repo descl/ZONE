@@ -41,8 +41,9 @@
         <div class="nav-collapse collapse">
           <ul class="nav">
             <li><%= link_to "Reador.NET", root_path, :class=>"navbar-brand" %></li>
+            <li class="<%= 'active' if current_page?(searches_path) %>"><%= link_to t("menu.yourFilters"), searches_path %></li>
             <li class="<%= 'active' if current_page?(items_path) %>"><%= link_to t("menu.news"), items_path %></li>
-            <li class="<%= 'active' if current_page?(sources_path) %>"><%= link_to t("menu.sources"), sources_path %></li>
+            <li class="<%= 'active' if current_page?(sources_path) %>"><%= link_to t("menu.yourSources"), sources_path %></li>
             <li class="<%= 'active' if current_page?(twitter_path) %>"><%= link_to t("menu.twitter"), twitter_path %></li>
             <li><%= link_to t("menu.help"), "http://www.zone-project.org/?p=718", :target => "_blank" %></li>
           </ul>

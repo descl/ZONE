@@ -5,6 +5,7 @@
 //= require jquery.remotipart
 //= require i18n
 //= require i18n/translations
+//= require jquery.inview.min.js
 
 //Prepare the input with all data
 //Read all the tag selected ( sources and filters ) and create input with the map corresponding to these tags

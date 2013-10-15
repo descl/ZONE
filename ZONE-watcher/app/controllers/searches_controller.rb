@@ -4,7 +4,12 @@ class SearchesController < ApplicationController
   # GET /searches
   # GET /searches.json
   def index
-    @searches = Search.all
+    if !user_signed_in?
+      flash[:error] = t("devise.failure.unauthenticated")
+      redirect_to :back
+      return
+    end
+    @searches = Search.where(:user_id => current_user.id).paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

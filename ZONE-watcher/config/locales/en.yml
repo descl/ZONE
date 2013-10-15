@@ -107,8 +107,16 @@ en:
       "Home"
     news:
       "News"
+    yourFilters:
+      "Your filters"
+    yourSources:
+      "Your sources"
+    filters:
+      "filters"
     sources:
-      "Sources"
+      "sources"
+    tags:
+      "tags"
     twitter:
       "Your twitter timeline!"
     help:

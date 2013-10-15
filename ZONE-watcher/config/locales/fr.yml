@@ -106,8 +106,16 @@ fr:
       "Accueil"
     news:
       "News"
+    yourFilters:
+      "Vos filtres"
+    yourSources:
+      "Vos sources"
+    filters:
+      "filtres"
     sources:
-      "Sources"
+      "sources"
+    tags:
+      "tags"
     twitter:
       "Votre timeline twitter!"
     help:
@@ -121,7 +129,7 @@ fr:
     signInWithReador:
       "Creer son compte <b>Reador</b>"
     editAccount:
-      "Mon compte"
+      "Votre compte"
     twitterAccount:
       "Compte twitter"
     logout:
