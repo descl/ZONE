@@ -26,11 +26,11 @@ fr:
       action:
         "Actions"
       uri:
-        "Uri"
+        "Url"
       num:
         "Nombre d'éléments"
       label:
-        "Label"
+        "Description"
       lang:
         "Langue"
       owner:
