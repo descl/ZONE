@@ -37,7 +37,10 @@ class SearchesController < ApplicationController
   # POST /searches
   # POST /searches.json
   def create
-    @search = Search.build_from_form(params)
+    if user_signed_in?
+      userId = current_user.id
+    end
+    @search = Search.build_from_form(params,userId)
     respond_to do |format|
       if @search.save
         format.html { redirect_to items_path(:search => @search.id, :isNew => params[:isNew] )  }

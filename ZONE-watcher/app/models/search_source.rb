@@ -1,20 +1,30 @@
 class SearchSource < ActiveRecord::Base
   attr_accessible :value, :kind
   belongs_to :search
-  def self.build_from_form(value,kind)
+  def self.build_from_form(value,kind,user)
     result = SearchSource.new
     result.value = value
     result.kind = kind
     if value == "Toutes les sources RSS de Reador" || value == "Toutes les sources twitter"
       result.value = "all"
     end
-    if kind = "twitter"
+    if kind == "twitter"
       if value.starts_with? "#"
         Twitter.add_hashtag_to_sources(value[1..value.length])
       elsif  value.starts_with? "@"
         Twitter.add_user_to_sources(value[1..value.length])
       end
+    elsif kind == "rss"
+      source = Source.find(value)
+      if source == nil
+        source = Source.new(value)
+        if user != nil
+          source.owner = user
+        end
+        source.save
+      end
     end
+
     return result
   end
 
@@ -36,7 +46,7 @@ class SearchSource < ActiveRecord::Base
     end
     if kind == "twitter"
       if value.start_with? "#"
-        return "?concept <#{ZoneOntology::PLUGIN_TWITTER_HASHTAG}> ?val. ?val bif:contains '\"#{value}\"' "
+        return "{?concept <#{ZoneOntology::PLUGIN_TWITTER_HASHTAG}> ?val. ?val bif:contains '\"#{value}\"'} UNION { ?concept <#{ZoneOntology::PLUGIN_TWITTER_HASHTAG}> \"#{value}\" } "
       elsif value.start_with? "@"
         return "?concept <#{ZoneOntology::PLUGIN_TWITTER_AUTHOR}> \"#{value[0..-1]}\""
       end
