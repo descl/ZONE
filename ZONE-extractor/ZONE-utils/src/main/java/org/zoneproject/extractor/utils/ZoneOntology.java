@@ -39,6 +39,7 @@ public class ZoneOntology {
     public static String PLUGIN_INSEEGEO = PLUGIN_PREFIX+"/INSEEGeo";
     public static String PLUGIN_OPENCALAIS = PLUGIN_PREFIX+"/OpenCalais";
     public static String PLUGIN_WIKIMETA = PLUGIN_PREFIX+"/WikiMeta";
+    public static String PLUGIN_SPOTLIGHT = PLUGIN_PREFIX+"/Spotlight";
     
     public static String PLUGIN_SVM = PLUGIN_PREFIX+"/Categorization_SVM";
     public static String PLUGIN_SVM_RES = PLUGIN_SVM+"#result";
@@ -59,13 +60,20 @@ public class ZoneOntology {
     public static String SOURCES_TYPE_TWITTER = SOURCES_PREFIX+"#twitter";
 
     public static String SOURCES_TYPE_TWITTER_TIMELINE = SOURCES_TYPE_TWITTER+"/timeline";
+    public static String SOURCES_TYPE_TWITTER_HASHTAG= SOURCES_TYPE_TWITTER+"/hashtag";
+    public static String SOURCES_TYPE_TWITTER_AUTHOR= SOURCES_TYPE_TWITTER+"/author";
+    
     public static String SOURCES_TWITTER_TOKEN = SOURCES_PREFIX+"#twitterToken";
     public static String SOURCES_TWITTER_TOKEN_SECRET = SOURCES_PREFIX+"#twitterSecretToken";
 
-    public static String SOURCES_TYPE_TWITTER_HASHTAG= SOURCES_TYPE_TWITTER+"/hashTag";
     
     public static String GRAPH_NEWS = "http://zone-project.org/datas/items";
     public static String GRAPH_SOURCES = "http://zone-project.org/datas/sources";
     
+    public static String PLUGIN_DBPEDIA_GEO = PLUGIN_PREFIX+"/DBPedia-geo";
+    public static String WIKIMETA_ENTITIES = "http://www.wikimeta.org/Entities#";
+    public static String WIKIMETA_LOC = WIKIMETA_ENTITIES+"LOC.ADMI";
     
+    public static String PLUGIN_LANG = PLUGIN_PREFIX+"#lang";
+            
 }

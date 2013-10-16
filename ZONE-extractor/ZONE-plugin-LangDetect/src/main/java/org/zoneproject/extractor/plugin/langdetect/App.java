@@ -1,4 +1,4 @@
-package org.zoneproject.extractor.plugin.spotlight;
+package org.zoneproject.extractor.plugin.langdetect;
 
 /*
  * #%L

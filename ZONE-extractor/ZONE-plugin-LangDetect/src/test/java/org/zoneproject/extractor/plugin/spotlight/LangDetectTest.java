@@ -20,6 +20,7 @@ package org.zoneproject.extractor.plugin.spotlight;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
+import org.zoneproject.extractor.plugin.langdetect.LangDetect;
 import com.cybozu.labs.langdetect.DetectorFactory;
 import org.junit.After;
 import org.junit.AfterClass;
