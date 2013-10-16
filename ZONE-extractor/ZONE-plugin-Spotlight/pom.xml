@@ -1,0 +1,61 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.zoneproject.extractor</groupId>
+    <artifactId>ZONE-extractor</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  
+  <artifactId>ZONE-plugin-Spotlight</artifactId>
+  <name>ZONE-plugin-Spotlight</name>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+     <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>org.zoneproject.extractor.plugin.spotlight.App</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources/</directory>
+      </testResource>
+    </testResources>
+  </build>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>1.6.1</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>org.zoneproject.extractor</groupId>
+      <artifactId>ZONE-utils</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

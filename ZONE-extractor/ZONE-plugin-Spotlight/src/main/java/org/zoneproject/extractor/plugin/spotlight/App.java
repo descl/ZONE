@@ -1,8 +1,8 @@
-package org.zoneproject.extractor.plugin.wikimeta;
+package org.zoneproject.extractor.plugin.spotlight;
 
 /*
  * #%L
- * ZONE-plugin-WikiMeta
+ * ZONE-plugin-Spotlight
  * %%
  * Copyright (C) 2012 ZONE-project
  * %%
@@ -20,7 +20,6 @@ package org.zoneproject.extractor.plugin.wikimeta;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-
 import java.util.ArrayList;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
@@ -35,7 +34,7 @@ import org.zoneproject.extractor.utils.ZoneOntology;
 public class App 
 {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
-    public static String PLUGIN_URI = ZoneOntology.PLUGIN_WIKIMETA;
+    public static String PLUGIN_URI = ZoneOntology.PLUGIN_SPOTLIGHT;
     public static int SIM_DOWNLOADS = 20;
     
     public App(){
@@ -45,15 +44,15 @@ public class App
     
     public static void main(String[] args) {
         Item[] items = null;
-        String [] deps = {ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT};
-        WikiMetaRequestThread[] th = new WikiMetaRequestThread[SIM_DOWNLOADS];
+        String [] deps = {ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT,ZoneOntology.PLUGIN_LANG};
         do{
             items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
-            logger.info("WikiMeta has "+items.length+" items to annotate");
+            logger.info("Spotlight has "+items.length+" items to annotate");
             for(Item item : items){
-                ArrayList<Prop> content= WikiMetaRequest.getProperties(item.concat());
+                ArrayList<Prop> content= SpotlightRequest.getProperties(item);
                 Database.addAnnotations(item.getUri(), content);
-                Database.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
+                if(content != null)
+                    Database.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
             }
         }while(items.length > 0);
     }

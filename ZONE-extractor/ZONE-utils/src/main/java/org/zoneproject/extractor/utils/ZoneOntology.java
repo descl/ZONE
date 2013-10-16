@@ -40,6 +40,7 @@ public class ZoneOntology {
     public static String PLUGIN_OPENCALAIS = PLUGIN_PREFIX+"/OpenCalais";
     public static String PLUGIN_WIKIMETA = PLUGIN_PREFIX+"/WikiMeta";
     public static String PLUGIN_SPOTLIGHT = PLUGIN_PREFIX+"/Spotlight";
+    public static String PLUGIN_SPOTLIGHT_ENTITIES = PLUGIN_SPOTLIGHT+"#entities";
     
     public static String PLUGIN_SVM = PLUGIN_PREFIX+"/Categorization_SVM";
     public static String PLUGIN_SVM_RES = PLUGIN_SVM+"#result";

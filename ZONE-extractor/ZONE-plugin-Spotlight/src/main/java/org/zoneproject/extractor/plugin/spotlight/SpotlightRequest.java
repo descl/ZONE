@@ -1,11 +1,8 @@
-/**
- * requests for WikiMeta
- */
-package org.zoneproject.extractor.plugin.wikimeta;
+package org.zoneproject.extractor.plugin.spotlight;
 
 /*
  * #%L
- * ZONE-plugin-WikiMeta
+ * ZONE-plugin-Spotlight
  * %%
  * Copyright (C) 2012 ZONE-project
  * %%
@@ -23,88 +20,129 @@ package org.zoneproject.extractor.plugin.wikimeta;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.zoneproject.extractor.utils.Config;
+import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
+import org.zoneproject.extractor.utils.ZoneOntology;
 
 /**
  *
  * @author Desclaux Christophe <christophe@zouig.org>
  */
-public class WikiMetaRequest {
-    public static String EntitiesURI = "http://www.wikimeta.org/Entities#";
-    
-    /*public static ArrayList<Prop> getProperties(Item item){
-        return getProperties(item.concat());
+public class SpotlightRequest {
+    public enum Endpoints {
+	EN("http://spotlight.sztaki.hu:2222/rest"),
+	FR("http://spotlight.sztaki.hu:2225/rest"),
+	//NL("http://nl.dbpedia.org/spotlight/rest"),
+	DE("http://de.dbpedia.org/spotlight/rest");
+	/*HU("http://spotlight.sztaki.hu:2229/rest"),
+	IT("http://spotlight.sztaki.hu:2230/rest"),
+	PT("http://spotlight.sztaki.hu:2228/rest"),
+	RU("http://spotlight.sztaki.hu:2227/rest"),
+	ES("http://spotlight.sztaki.hu:2231/rest"),
+	TR("http://spotlight.sztaki.hu:2235/rest");
+        */
+        private final String value;
+	Endpoints(String value) {this.value = value;}
+	public String getValue() {return this.value;}
     }
     
-    */
-    public static ArrayList<Prop> getProperties(String texte){
-        String f = WikiMetaRequest_API.getResult(Config.getVar("wikiMeta-key"), WikiMetaRequest_API.Format.JSON, texte);
-        return analyseWikiMetaResult(f);
+    public static ArrayList<Prop> getProperties(Item item){
+        try {
+            ArrayList<Prop> result = new ArrayList<Prop>();
+            String itemLang = item.getElements(ZoneOntology.PLUGIN_LANG)[0].toUpperCase();
+            
+            String endpoint;
+            try{
+                endpoint = Endpoints.valueOf(itemLang).getValue();
+            }catch(java.lang.IllegalArgumentException ex){
+                endpoint = Endpoints.valueOf("EN").getValue();
+            }
+            String json = getResponse(item.concat(), endpoint);
+            String[] entities = SpotlightRequest.getNamedEntities(json);
+            for(String e : entities){
+                Prop p = new Prop(ZoneOntology.PLUGIN_SPOTLIGHT_ENTITIES, e, false,true);
+                result.add(p);
+            }
+            return result;
+        } catch (IOException ex) {
+            Logger.getLogger(SpotlightRequest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
-    
-    /**
-     * used in debug mode in order to parse a result previously download from WikiMeta
-     * @param file the output of WikiMeta
-     * @return the list of properties
-     */
-    public static ArrayList<Prop> getProperties(File file){
-        
-        String content = "";
-        try{
-            FileInputStream fstream = new FileInputStream(file.getPath());
-            DataInputStream in = new DataInputStream(fstream);
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            String strLine;
-            while ((strLine = br.readLine()) != null)   {
-                content += "\n"+strLine;
+        public static String getResponse(String text,String endPoint) throws IOException {
+            URL dbpedia;
+            HttpURLConnection dbpedia_connection;
+            dbpedia = new URL(endPoint+"/annotate");
+            dbpedia_connection = (HttpURLConnection) dbpedia.openConnection();
+            dbpedia_connection.setDoOutput(true);
+            dbpedia_connection.setRequestMethod("GET");
+            dbpedia_connection.setRequestProperty("Accept", "application/json");
+            String urlParameters = "confidance=0.5&support=80&text=";
+            urlParameters = urlParameters.concat(URLEncoder.encode(text));
+
+            dbpedia_connection.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(dbpedia_connection.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+            dbpedia_connection.connect();
+            BufferedReader in = new BufferedReader(
+                                new InputStreamReader(
+                                                dbpedia_connection.getInputStream()));
+            String inputLine;
+            String output = "";
+            while ((inputLine = in.readLine()) != null) {
+                output += inputLine;
             }
             in.close();
-        }catch (Exception e){
-            Logger.getLogger(WikiMetaRequest.class.getName()).log(Level.SEVERE, null, e);
-        }
-        return analyseWikiMetaResult(content);
-    }
-    
-    /**
-     * 
-     * @param content the json result content
-     * @return the list of propertyes
-     */
-    private static ArrayList<Prop> analyseWikiMetaResult(String JSONcontent){
-        ArrayList<Prop> result = new ArrayList<Prop>();
+            return output;
+        }   
         
-        ArrayList<LinkedHashMap> namedEntities = WikiMetaRequest_API.getNamedEntities(JSONcontent);
-        for(int i=0; i< namedEntities.size();i++){
+    public static String[] getNamedEntities(String f){
+        ObjectMapper mapper = new ObjectMapper();
+        LinkedHashSet<String> result = new LinkedHashSet<String>();
+        
+        try {
+            //first need to allow non-standard json
+            mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+            mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
+            mapper.configure(JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);
+            Map<String,Object> map = mapper.readValue(f, Map.class);
             
-            LinkedHashMap cur = namedEntities.get(i);
-            if(cur.get("type").toString().equals("AMOUNT")|| cur.get("type") == "") {
-                continue;
-            }
-            if(cur.containsKey("LINKEDDATA")){
-                Prop p;
-                if(cur.get("LINKEDDATA").equals("") || cur.get("LINKEDDATA").equals("null")){
-                    p = new Prop(WikiMetaRequest.EntitiesURI+""+cur.get("type").toString(), cur.get("EN").toString(), true,true);
-                }
-                else {
-                    p = new Prop(WikiMetaRequest.EntitiesURI+""+cur.get("type").toString(), cur.get("LINKEDDATA").toString(), false,true);
-                }
-                if(!result.contains(p)) {
-                    result.add(p);
+            ArrayList<LinkedHashMap> documentElems = (ArrayList<LinkedHashMap>)map.get("Resources");
+            if(documentElems != null){
+                for(int i=0; i < documentElems.size();i++){
+                    LinkedHashMap cur = (LinkedHashMap) documentElems.get(i);
+                    result.add(cur.get("@URI").toString());
                 }
             }
+        } catch (Exception ex) {
+            Logger.getLogger(SpotlightRequest.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return result;
+        return result.toArray(new String[result.size()]);
     }
-    
+    public static void main(String[] args) throws IOException {
+        String text = "Un nouveau portail pour notre documentation en ligne.\\n Antidot met à disposition de l’ensemble de ses clients et partenaires un nouveau portail pour l’accès en ligne à la documentation de ses produits. Ce portail documentaire a pour ambition de faciliter vos recherches et de simplifier votre navigation au sein de près de 2000 pages de Guides, Notes techniques et Notes de version : […]. Antidot met à disposition de l’ensemble de ses clients et partenaires un nouveau portail pour l’accès en ligne à la documentation de ses produits .Ce portail documentaire a pour ambition de faciliter vos recherches et de simplifier votre navigation au sein de près de 2000 pages de Guides, Notes techniques et Notes de version :Ce service vous est aujourd’hui ouvert en version beta. N’hésitez pas à nous faire part de vos retours : tous les commentaires et suggestions que nous recueillerons seront étudiés avec la plus grande attention.Pour la petite histoire, ce portail documentaire est réalisé intégralement à partir de nos solutions dont il exploite les fonctionnalités avancées :AIF – Information Factory : pour la recomposition et l’analyse des unités documentaires fines,AFS – Finder Suite : pour le moteur de recherche et la lecture dynamique et continue.Il sera bientôt enrichi des fonctions d’alertes et d’annotation apportées par notre produit ACS – Collaboration Services .Nous vous remercions de votre confiance.Partagez";
+        text = "Réserve parlementaire: Chevènement et Hue demandent à Fabius des explications sur des fuites dans \"Le Monde\".\n Dépêche AFP, mardi 10 septembre 2013, 17h46. Les sénateurs Jean-Pierre Chevènement et Robert Hue ont demandé lundi au ministre des Affaires étrangères Laurent Fabius, dans une lettre commune, des explications sur un \"fichier\" que le Quai d'Orsay aurait communiqué au journal Le Monde concernant l'usage par des élus de leur réserve parlementaire. Dans son édition datée de dimanche-lundi, Le Monde affirmait s'être vu communiquer par le ministère des Affaires étrangères un fichier détaillant les versements de députés et sénateurs en faveur de programmes de développement ou relatifs à l'action extérieure de la France. Pointant du doigt l'utilisation par certains élus de leur réserve parlementaire 2011 ou 2012 pour financer leurs propres associations, le journal citait MM. Hue, président du Mouvement unitaire progressiste (MUP), Chevènement, président d'honneur du Mouvement républicain et citoyen (MRC), et l'ancien président Valéry Giscard d'Estaing. \"J'observe que M. Giscard d'Estaing,";
+        
+        text = "la\",Syrie";
+        String json = SpotlightRequest.getResponse(text,"http://spotlight.sztaki.hu:2225/rest");
+        getNamedEntities(json);
+    }
 }
