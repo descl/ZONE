@@ -5,7 +5,7 @@
 <% if !user_signed_in? %>
     <button
     id="tagsBTN"
-    class="disabled btn btn-share btn-addTag"
+    class="disabled btn btn-share btn-addTag tagsBTN"
     type="button"
     data-toggle="popover"
     data-placement="bottom"
@@ -13,13 +13,6 @@
     >
       <i class="icon icon-tag"/>
     </button>
-    <script>
-        $(function () {
-            $('#tagsBTN').popover({trigger: "hover"});
-
-        });
-    </script>
-
 
     <button
         id="favBTN"
@@ -33,7 +26,8 @@
     </button>
     <script>
   $(function () {
-  $('.favBTN').popover({trigger: "hover"});
+      $('.tagsBTN').popover({trigger: "hover"});
+      $('.favBTN').popover({trigger: "hover"});
 
   });
 </script>
