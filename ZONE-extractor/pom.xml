@@ -42,10 +42,13 @@
     <module>ZONE-plugin-ExtractArticlesContent</module>
     <module>ZONE-plugin-OpenCalais</module>
     <module>ZONE-extractor-start</module>
-    <module>ZONE-plugin-INSEEGeo</module>
+    <!--<module>ZONE-plugin-INSEEGeo</module>-->
     <!-- Enable SVM here!-->
     <!--<module>ZONE-plugin-categorization_SVM</module>-->
     <module>ZONE-TwitterReader</module>
+    <!--<module>ZONE-plugin-DBPedia-geo</module>-->
+    <module>ZONE-plugin-LangDetect</module>
+
   </modules>
   
   <properties>
