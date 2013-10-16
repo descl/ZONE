@@ -47,13 +47,14 @@ class Stat
     StatHat::API.ez_post_value(kind,Rails.application.config.stathatId,val)
 
     ###############################################################
-    kind ="news not annotated for OpenCalais"
+    kind ="news not annotated for langDetect"
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
         SELECT DISTINCT COUNT(?concept) AS ?num
         FROM <#{ZoneOntology::GRAPH_ITEMS}>
         WHERE {
           ?concept <http://purl.org/rss/1.0/title> ?title.
-          OPTIONAL {?concept <http://zone-project.org/model/plugins/OpenCalais> ?pluginDefined}
+          ?concept <#{ZoneOntology::PLUGIN_EXTRACT_ARTICLES_CONTENT}> ?deps1.
+          OPTIONAL {?concept <http://zone-project.org/model/plugins#lang> ?pluginDefined}
           FILTER (!bound(?pluginDefined))
         }"
     val = store.query(query)[0][:num]
@@ -61,19 +62,20 @@ class Stat
     StatHat::API.ez_post_value(kind,Rails.application.config.stathatId,val)
 
     ###############################################################
-    kind ="news not annotated for INSEEGeo"
+    kind ="news not annotated for spotlight"
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
         SELECT DISTINCT COUNT(?concept) AS ?num
         FROM <#{ZoneOntology::GRAPH_ITEMS}>
         WHERE {
           ?concept <http://purl.org/rss/1.0/title> ?title.
-          ?concept <http://www.opencalais.org/Entities#LOC> ?aa.
-          OPTIONAL {?concept <http://zone-project.org/model/plugins/INSEEGeo> ?pluginDefined}
+          ?concept <http://zone-project.org/model/plugins#lang> ?dep1
+          OPTIONAL {?concept <http://zone-project.org/model/plugins/Spotlight> ?pluginDefined}
           FILTER (!bound(?pluginDefined))
         }"
     val = store.query(query)[0][:num]
     stats << {:kind => kind, :val => val}
     StatHat::API.ez_post_value(kind,Rails.application.config.stathatId,val)
+
 
     ###############################################################
     stats << {:kind => "", :val => ""}
