@@ -291,9 +291,14 @@ public abstract class VirtuosoDatabase {
 
         while (results.hasNext()) {
             QuerySolution result = results.nextSolution();
-            Item item = getOneItemByURI(result.get("?uri").toString());
-            if(item != null){
-                items.add(item);
+            try{
+                Item item = getOneItemByURI(result.get("?uri").toString());
+                if(item != null){
+                    items.add(item);
+                }
+            }catch(com.hp.hpl.jena.shared.JenaException e){
+                Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, e);
+                getStore(ZoneOntology.GRAPH_NEWS).removeAll(ResourceFactory.createResource(result.get("?uri").toString()),null,null);
             }
         }
         return items.toArray(new Item[items.size()]);
