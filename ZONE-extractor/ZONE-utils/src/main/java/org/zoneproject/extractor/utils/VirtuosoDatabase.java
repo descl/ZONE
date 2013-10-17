@@ -204,7 +204,7 @@ public abstract class VirtuosoDatabase {
      * @param queryString the SPARQL request
      * @return the set of results
      */
-    public static ResultSet runSPARQLRequest(String queryString){
+    public static ResultSet runSPARQLRequest(String queryString)throws Exception{
         return VirtuosoDatabase.runSPARQLRequest(queryString, getStore());
     }
     
@@ -214,11 +214,11 @@ public abstract class VirtuosoDatabase {
      * @param graphUri the Graph in which work
      * @return the set of results
      */
-    public static ResultSet runSPARQLRequest(String queryString, String graphUri){
+    public static ResultSet runSPARQLRequest(String queryString, String graphUri)throws Exception{
         return VirtuosoDatabase.runSPARQLRequest(queryString, getStore(graphUri));
     }
     
-    public static ResultSet runSPARQLRequest(String queryString, Model store){
+    public static ResultSet runSPARQLRequest(String queryString, Model store)throws Exception{
     
         QueryExecution q = VirtuosoQueryExecutionFactory.create(queryString,store);
         ResultSet res = null;
@@ -226,11 +226,11 @@ public abstract class VirtuosoDatabase {
         try {
             res = executor.submit(new ThreadExec(q)).get(10, TimeUnit.SECONDS);
         } catch (InterruptedException ex) {
-            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
         } catch (ExecutionException ex) {
-            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
         } catch (TimeoutException ex) {
-            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
         }
         executor.shutdownNow();
         return res;
@@ -241,7 +241,12 @@ public abstract class VirtuosoDatabase {
     
     public static ResultSet getRelationsForURI(String uri, String graphUri){
         String query = "SELECT DISTINCT ?relation ?object { <"+uri+"> ?relation ?object.}";
-        return runSPARQLRequest(query,graphUri);
+        try{
+            return runSPARQLRequest(query,graphUri);
+        }catch(Exception ex){
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
+            return null;
+        }
     }
     /**
      * Get a map of concepts/objects for a particular Uri
@@ -271,7 +276,13 @@ public abstract class VirtuosoDatabase {
     public static Item[] getItemsNotAnotatedForOnePlugin(String pluginURI, int limit){
         ArrayList<Item> items = new ArrayList<Item>();
         String request = "SELECT DISTINCT ?uri  FROM <http://zone-project.org/datas/items> WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title  OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined} FILTER (!bound(?pluginDefined)) } LIMIT "+limit;
-        ResultSet results = runSPARQLRequest(request);
+        ResultSet results;
+        try{
+        results = runSPARQLRequest(request);
+        }catch(Exception ex){
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
+            return items.toArray(new Item[items.size()]);
+        }
         Item cur = null;
         while (results.hasNext()) {
             QuerySolution result = results.nextSolution();
@@ -310,8 +321,13 @@ public abstract class VirtuosoDatabase {
         }
         
         String request = "SELECT ?uri WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title "+requestPlugs+". OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined.  } FILTER (!bound(?pluginDefined)) } LIMIT "+limit;
-        ResultSet results = runSPARQLRequest(request);
-
+        ResultSet results;
+        try{
+            results = runSPARQLRequest(request);
+        }catch(Exception ex){
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
+            return items.toArray(new Item[items.size()]);
+        }
         while (results.hasNext()) {
             QuerySolution result = results.nextSolution();
             try{
@@ -337,7 +353,13 @@ public abstract class VirtuosoDatabase {
         String requestPlugs ="";
         
         String request = "SELECT DISTINCT(?uri) WHERE{?uri <http://purl.org/rss/1.0/source> <"+source+">.}";
-        ResultSet results = runSPARQLRequest(request);
+        ResultSet results;
+        try{
+            results = runSPARQLRequest(request);
+        }catch(Exception ex){
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
+            return items;
+        }
 
         while (results.hasNext()) {
             QuerySolution result = results.nextSolution();
@@ -356,7 +378,7 @@ public abstract class VirtuosoDatabase {
             String request = "SELECT ?relation ?value FROM <http://zone-project.org/datas/items> WHERE{  <"+uri+"> ?relation ?value}";
             ResultSet results = runSPARQLRequest(request);
             return new Item(uri,results,uri,"relation","?value");
-        }catch(com.hp.hpl.jena.shared.JenaException ex){
+        }catch(Exception ex){
             logger.warn(ex);
             logger.warn(uri);
             deleteItem(uri);
@@ -397,7 +419,11 @@ public abstract class VirtuosoDatabase {
     public static void deleteItem(String uri){
         if(uri == null || uri == "" || !uri.startsWith("http"))return;
         String deleteRequest="DELETE{<"+uri+"> ?a ?b.}WHERE{<"+uri+"> ?a ?b.}";
-        runSPARQLRequest(deleteRequest,ZoneOntology.GRAPH_NEWS);
+        try {
+            runSPARQLRequest(deleteRequest,ZoneOntology.GRAPH_NEWS);
+        } catch (Exception ex) {
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
+        }
     }
     
     public static void loadFolder(String graphURI,String dir){
@@ -444,7 +470,8 @@ public abstract class VirtuosoDatabase {
         logger.info(VirtuosoDatabase.ItemURIExist("http://www.personnes.com#Margot"));
         * */
         //extractDB();
-        deleteItem("http://www.leparisien.fr/politique/report-de-la-taxe-diesel-noel-mamere-menace-de-quitter-eelv-16-09-2013-3141815.php");
+        String uri = "http://rss.lefigaro.fr/~r/lefigaro/laune/~3/HKViz2m0_3Q/story01.htm";
+        deleteItem(uri);
         System.out.println(getItemsNotAnotatedForOnePlugin("http://zone-project.org/model/plugins/WikiMeta"));
         System.out.println(VIRTUOSO_SERVER);
         System.out.println(getOneItemByURI("https://twitter.com/SbayAlticus/status/352411307980500992aaaa"));
