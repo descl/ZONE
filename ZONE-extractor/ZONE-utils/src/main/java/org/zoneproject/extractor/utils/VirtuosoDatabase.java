@@ -40,6 +40,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import virtuoso.jena.driver.VirtGraph;
@@ -200,7 +205,7 @@ public abstract class VirtuosoDatabase {
      * @return the set of results
      */
     public static ResultSet runSPARQLRequest(String queryString){
-        return VirtuosoQueryExecutionFactory.create(queryString,getStore()).execSelect() ;
+        return VirtuosoDatabase.runSPARQLRequest(queryString, getStore());
     }
     
     /**
@@ -210,7 +215,25 @@ public abstract class VirtuosoDatabase {
      * @return the set of results
      */
     public static ResultSet runSPARQLRequest(String queryString, String graphUri){
-        return VirtuosoQueryExecutionFactory.create(queryString,getStore(graphUri)).execSelect() ;
+        return VirtuosoDatabase.runSPARQLRequest(queryString, getStore(graphUri));
+    }
+    
+    public static ResultSet runSPARQLRequest(String queryString, Model store){
+    
+        QueryExecution q = VirtuosoQueryExecutionFactory.create(queryString,store);
+        ResultSet res = null;
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        try {
+            res = executor.submit(new ThreadExec(q)).get(10, TimeUnit.SECONDS);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExecutionException ex) {
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TimeoutException ex) {
+            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        executor.shutdownNow();
+        return res;
     }
     public static boolean runSPARQLAsk(String queryString){
         return VirtuosoQueryExecutionFactory.create(queryString,getStore()).execAsk() ;
