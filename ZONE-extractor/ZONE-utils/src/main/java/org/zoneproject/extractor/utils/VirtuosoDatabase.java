@@ -231,21 +231,9 @@ public abstract class VirtuosoDatabase {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         try {
             Future<ResultSet> task = executor.submit(new ThreadExec(q));
-            res = task.get(10, TimeUnit.SECONDS);
-            //executor.invokeAll(Arrays.asList(new ThreadExec(q)), 10, TimeUnit.SECONDS);
-            //executor.awaitTermination(1, TimeUnit.SECONDS);
-            //we try to force the end of process
-            /*executor.shutdownNow();
-            executor.awaitTermination(1, TimeUnit.SECONDS);
-            while(!executor.isTerminated()){
-                logger.warn("unable to shutdown the process comming from SPARQL request: "+queryString);
-                executor.shutdownNow();
-                executor.awaitTermination(10, TimeUnit.SECONDS);
-            }*/
-
-            //return q.execSelect();
+            res = task.get(20, TimeUnit.SECONDS);
         } catch (InterruptedException ex) {
-            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
+            logger.warn(ex);
         } catch (ExecutionException ex) {
             Throwable t = ex.getCause();
             if( t instanceof JenaException ) {
@@ -254,7 +242,7 @@ public abstract class VirtuosoDatabase {
                 throw new RuntimeException( t );
             }
         } catch (TimeoutException ex) {
-            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
+            logger.warn(ex);
         }finally{
             if(!executor.isTerminated()){
                 executor.shutdown();
@@ -319,7 +307,7 @@ public abstract class VirtuosoDatabase {
         try{
             results = runSPARQLRequest(request);
         }catch(JenaException ex){
-            logger.warn("Encoding error in some uri's");
+            logger.warn("Encoding error in some uri's request:"+request);
             return new Item[0];
         }
         Item item;
