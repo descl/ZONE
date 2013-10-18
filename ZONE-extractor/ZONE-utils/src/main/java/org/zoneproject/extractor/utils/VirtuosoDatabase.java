@@ -21,6 +21,7 @@ package org.zoneproject.extractor.utils;
  * #L%
  */
 
+import com.hp.hpl.jena.db.impl.ResultSetIterator;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -49,7 +50,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import virtuoso.jena.driver.VirtGraph;
 import virtuoso.jena.driver.VirtModel;
-import virtuoso.jena.driver.VirtuosoQueryExecutionFactory; 
+import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
+import com.hp.hpl.jena.shared.JenaException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  *
@@ -189,12 +194,13 @@ public abstract class VirtuosoDatabase {
             try {
                 getStore(graph).add(model);
                 return;
-            } catch (com.hp.hpl.jena.shared.JenaException ex) {
+            } catch (JenaException ex) {
                 if(i==0){
                     logger.warn("annotation process error because of virtuoso partial error");
                     logger.warn(ex);
                 }
-                try{Thread.currentThread().sleep(1000);}catch(InterruptedException ie){}
+                //TODO : clean
+                //try{Thread.currentThread().sleep(1000);}catch(InterruptedException ie){}
             }
         }
     }
@@ -204,7 +210,7 @@ public abstract class VirtuosoDatabase {
      * @param queryString the SPARQL request
      * @return the set of results
      */
-    public static ResultSet runSPARQLRequest(String queryString)throws Exception{
+    public static ResultSet runSPARQLRequest(String queryString)throws JenaException{
         return VirtuosoDatabase.runSPARQLRequest(queryString, getStore());
     }
     
@@ -214,25 +220,46 @@ public abstract class VirtuosoDatabase {
      * @param graphUri the Graph in which work
      * @return the set of results
      */
-    public static ResultSet runSPARQLRequest(String queryString, String graphUri)throws Exception{
+    public static ResultSet runSPARQLRequest(String queryString, String graphUri)throws JenaException{
         return VirtuosoDatabase.runSPARQLRequest(queryString, getStore(graphUri));
     }
     
-    public static ResultSet runSPARQLRequest(String queryString, Model store)throws Exception{
-    
+    public static ResultSet runSPARQLRequest(String queryString, Model store)throws JenaException{
         QueryExecution q = VirtuosoQueryExecutionFactory.create(queryString,store);
         ResultSet res = null;
+
         ExecutorService executor = Executors.newSingleThreadExecutor();
         try {
-            res = executor.submit(new ThreadExec(q)).get(10, TimeUnit.SECONDS);
+            Future<ResultSet> task = executor.submit(new ThreadExec(q));
+            res = task.get(10, TimeUnit.SECONDS);
+            //executor.invokeAll(Arrays.asList(new ThreadExec(q)), 10, TimeUnit.SECONDS);
+            //executor.awaitTermination(1, TimeUnit.SECONDS);
+            //we try to force the end of process
+            /*executor.shutdownNow();
+            executor.awaitTermination(1, TimeUnit.SECONDS);
+            while(!executor.isTerminated()){
+                logger.warn("unable to shutdown the process comming from SPARQL request: "+queryString);
+                executor.shutdownNow();
+                executor.awaitTermination(10, TimeUnit.SECONDS);
+            }*/
+
+            //return q.execSelect();
         } catch (InterruptedException ex) {
             Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
         } catch (ExecutionException ex) {
-            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
+            Throwable t = ex.getCause();
+            if( t instanceof JenaException ) {
+                throw (JenaException)t;
+            }else{
+                throw new RuntimeException( t );
+            }
         } catch (TimeoutException ex) {
             Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
+        }finally{
+            if(!executor.isTerminated()){
+                executor.shutdown();
+            }
         }
-        executor.shutdownNow();
         return res;
     }
     public static boolean runSPARQLAsk(String queryString){
@@ -274,44 +301,11 @@ public abstract class VirtuosoDatabase {
         return getItemsNotAnotatedForOnePlugin(pluginURI,100);
     }
     public static Item[] getItemsNotAnotatedForOnePlugin(String pluginURI, int limit){
-        ArrayList<Item> items = new ArrayList<Item>();
-        String request = "SELECT DISTINCT ?uri  FROM <http://zone-project.org/datas/items> WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title  OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined} FILTER (!bound(?pluginDefined)) } LIMIT "+limit;
-        ResultSet results;
-        try{
-        results = runSPARQLRequest(request);
-        }catch(Exception ex){
-            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
-            return items.toArray(new Item[items.size()]);
-        }
-        Item cur = null;
-        while (results.hasNext()) {
-            QuerySolution result = results.nextSolution();
-            try{
-                cur = getOneItemByURI(result.get("?uri").toString());
-                if(cur != null){
-                    items.add(cur);
-                }
-            }catch(com.hp.hpl.jena.shared.JenaException e){
-                Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, e);
-                getStore(ZoneOntology.GRAPH_NEWS).removeAll(ResourceFactory.createResource(result.get("?uri").toString()),null,null);
-            }
-        }
-        return items.toArray(new Item[items.size()]);
+        return getItemsNotAnotatedForPluginsWithDeps(pluginURI,new  String[0],limit);
     }
-
-    /**
-     * get all items which has not been annotated for a plugin
-     * @param pluginURI the plugin URI
-     * @return the items
-     */
     public static Item[] getItemsNotAnotatedForPluginsWithDeps(String pluginURI, String []deps){
         return getItemsNotAnotatedForPluginsWithDeps(pluginURI, deps,10);
     }
-    /**
-     * get all items which has not been annotated for a plugin
-     * @param pluginURI the plugin URI
-     * @return the items
-     */
     public static Item[] getItemsNotAnotatedForPluginsWithDeps(String pluginURI, String []deps, int limit){
         ArrayList<Item> items = new ArrayList<Item>();
         String requestPlugs ="";
@@ -320,24 +314,21 @@ public abstract class VirtuosoDatabase {
             requestPlugs += ". ?uri <"+curPlugin+"> ?deps"+i++ +" ";
         }
         
-        String request = "SELECT ?uri WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title "+requestPlugs+". OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined.  } FILTER (!bound(?pluginDefined)) } LIMIT "+limit;
+        String request = "SELECT DISTINCT ?uri FROM <http://zone-project.org/datas/items> WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title "+requestPlugs+". OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined.  } FILTER (!bound(?pluginDefined)) } LIMIT "+limit;
         ResultSet results;
         try{
             results = runSPARQLRequest(request);
-        }catch(Exception ex){
-            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
-            return items.toArray(new Item[items.size()]);
+        }catch(JenaException ex){
+            logger.warn("Encoding error in some uri's");
+            return new Item[0];
         }
+        Item item;
+        QuerySolution result;
         while (results.hasNext()) {
-            QuerySolution result = results.nextSolution();
-            try{
-                Item item = getOneItemByURI(result.get("?uri").toString());
-                if(item != null){
-                    items.add(item);
-                }
-            }catch(com.hp.hpl.jena.shared.JenaException e){
-                Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, e);
-                getStore(ZoneOntology.GRAPH_NEWS).removeAll(ResourceFactory.createResource(result.get("?uri").toString()),null,null);
+            result = results.nextSolution();
+            item = getOneItemByURI(result.get("?uri").toString());
+            if(item != null){
+                items.add(item);
             }
         }
         return items.toArray(new Item[items.size()]);
@@ -356,7 +347,7 @@ public abstract class VirtuosoDatabase {
         ResultSet results;
         try{
             results = runSPARQLRequest(request);
-        }catch(Exception ex){
+        }catch(JenaException ex){
             Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
             return items;
         }
@@ -378,9 +369,9 @@ public abstract class VirtuosoDatabase {
             String request = "SELECT ?relation ?value FROM <http://zone-project.org/datas/items> WHERE{  <"+uri+"> ?relation ?value}";
             ResultSet results = runSPARQLRequest(request);
             return new Item(uri,results,uri,"relation","?value");
-        }catch(Exception ex){
-            logger.warn(ex);
-            logger.warn(uri);
+        }catch(JenaException ex){
+            logger.warn("There are encoding errors on item "+uri+" the item will be deleted");
+            //descl
             deleteItem(uri);
             return null;
         }
@@ -421,8 +412,8 @@ public abstract class VirtuosoDatabase {
         String deleteRequest="DELETE{<"+uri+"> ?a ?b.}WHERE{<"+uri+"> ?a ?b.}";
         try {
             runSPARQLRequest(deleteRequest,ZoneOntology.GRAPH_NEWS);
-        } catch (Exception ex) {
-            Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.WARNING, null, ex);
+        } catch (JenaException ex) {
+            logger.warn("Impossible to delete the item "+uri +"\n"+ex);
         }
     }
     

@@ -39,7 +39,7 @@ public class App
 {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_LANG;
-    public static int SIM_DOWNLOADS = 50;
+    public static int SIM_DOWNLOADS = 100;
     
     public App(){
         String [] tmp = {};
@@ -65,6 +65,7 @@ public class App
                 Prop p = new Prop(ZoneOntology.PLUGIN_LANG, lang, true,true);
                 Database.addAnnotation(item.getUri(), p);
             }
+            logger.info("done");
         }while(items.length > 0);
     }
 }

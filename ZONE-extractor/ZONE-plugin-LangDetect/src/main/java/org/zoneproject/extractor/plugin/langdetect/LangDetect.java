@@ -84,7 +84,6 @@ public class LangDetect {
             }
             return betterLang;
         } catch (LangDetectException ex) {
-            Logger.getLogger(LangDetect.class.getName()).log(Level.SEVERE, null, ex);
             return "en";
         }
     }
