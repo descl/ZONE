@@ -45,8 +45,8 @@ import org.zoneproject.extractor.utils.ZoneOntology;
  */
 public class SpotlightRequest {
     public enum Endpoints {
-	EN("http://spotlight.sztaki.hu:2222/rest"),
-	FR("http://localhost:2225/rest"),
+	EN("http://spotlight.dbpedia.org/rest/"),
+	FR("http://spotlight.sztaki.hu:2225/rest"),
 	//NL("http://nl.dbpedia.org/spotlight/rest"),
 	DE("http://de.dbpedia.org/spotlight/rest"),
 	//HU("http://spotlight.sztaki.hu:2229/rest"),
