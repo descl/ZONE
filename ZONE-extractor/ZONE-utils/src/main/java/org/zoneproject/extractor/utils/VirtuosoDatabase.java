@@ -21,7 +21,6 @@ package org.zoneproject.extractor.utils;
  * #L%
  */
 
-import com.hp.hpl.jena.db.impl.ResultSetIterator;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -30,7 +29,6 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.util.FileManager;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,8 +50,6 @@ import virtuoso.jena.driver.VirtGraph;
 import virtuoso.jena.driver.VirtModel;
 import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 import com.hp.hpl.jena.shared.JenaException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.Future;
 
 /**
@@ -295,11 +291,19 @@ public abstract class VirtuosoDatabase {
         return getItemsNotAnotatedForPluginsWithDeps(pluginURI, deps,10);
     }
     public static Item[] getItemsNotAnotatedForPluginsWithDeps(String pluginURI, String []deps, int limit){
+        Prop [] depsProps = new Prop[deps.length];
+        for(int i=0; i < deps.length; i++){
+            depsProps[i] = new Prop(deps[i],"?deps"+i);
+        }
+        return getItemsNotAnotatedForPluginsWithDeps(pluginURI, depsProps, limit);
+    }
+    
+    public static Item[] getItemsNotAnotatedForPluginsWithDeps(String pluginURI, Prop []deps, int limit){
         ArrayList<Item> items = new ArrayList<Item>();
         String requestPlugs ="";
         int i=0;
-        for(String curPlugin : deps){
-            requestPlugs += ". ?uri <"+curPlugin+"> ?deps"+i++ +" ";
+        for(Prop curPlugin : deps){
+            requestPlugs += ". ?uri <"+curPlugin.getProp()+"> "+curPlugin.getValue()+" ";
         }
         
         String request = "SELECT DISTINCT ?uri FROM <http://zone-project.org/datas/items> WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title "+requestPlugs+". OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined.  } FILTER (!bound(?pluginDefined)) } LIMIT "+limit;

@@ -80,6 +80,10 @@ public class Prop {
     public String getValue() {
         return value;
     }
+    
+    public String getProp(){
+        return getType().toString();
+    }
 
     public void setValue(String value) {
         this.value = value;

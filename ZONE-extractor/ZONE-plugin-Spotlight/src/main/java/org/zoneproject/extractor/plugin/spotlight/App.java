@@ -35,7 +35,7 @@ public class App
 {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_SPOTLIGHT;
-    public static int SIM_DOWNLOADS = 20;
+    public static int SIM_DOWNLOADS = 40;
     
     public App(){
         String [] tmp = {};
@@ -44,16 +44,21 @@ public class App
     
     public static void main(String[] args) {
         Item[] items = null;
-        String [] deps = {ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT,ZoneOntology.PLUGIN_LANG};
+        Prop [] deps = {new Prop(ZoneOntology.PLUGIN_LANG, "\"fr\"")};
         do{
             items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
+            if(items == null){
+                continue;
+            }
             logger.info("Spotlight has "+items.length+" items to annotate");
             for(Item item : items){
-                ArrayList<Prop> content= SpotlightRequest.getProperties(item);
-                Database.addAnnotations(item.getUri(), content);
+                logger.info(item.getTitle());
+                //ArrayList<Prop> content= SpotlightRequest.getProperties(item);
+                //logger.info(content);
+                /*Database.addAnnotations(item.getUri(), content);
                 if(content != null)
-                    Database.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
+                    Database.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));*/
             }
-        }while(items.length > 0);
+        }while(items == null || items.length > 0);
     }
 }

@@ -49,10 +49,10 @@ public class App
         Item[] items = null;
         do{
             items = Database.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,10);
-            logger.info("OpenCalais has "+items.length+" items to annotate");
             if(items == null){
                 continue;
             }
+            logger.info("OpenCalais has "+items.length+" items to annotate");
             for(Item item : items){
                 logger.info("Add ExtractArticlesContent for item: "+item);
                 ArrayList<Prop> props = new ArrayList<Prop>();
@@ -62,6 +62,6 @@ public class App
                 Database.addAnnotations(item.getUri(), props);
                 Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
             }
-        }while(items.length > 0);
+        }while(items == null || items.length > 0);
     }
 }

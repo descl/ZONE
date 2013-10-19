@@ -59,7 +59,6 @@ public class App
         
         do{
             items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
-            logger.info("LangDetect has "+items.length+" items to annotate");
             if(items == null){
                 continue;
             }
@@ -69,6 +68,6 @@ public class App
                 Database.addAnnotation(item.getUri(), p);
             }
             logger.info("done");
-        }while(items.length > 0);
+        }while(items == null || items.length > 0);
     }
 }

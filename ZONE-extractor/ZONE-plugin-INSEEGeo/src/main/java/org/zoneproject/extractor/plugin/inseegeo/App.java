@@ -47,10 +47,10 @@ public class App
         Item[] items = null;
         do {
             items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps);
-            logger.info("INSEEGeo has "+items.length+" items to annotate");
             if(items == null){
                 continue;
             }
+            logger.info("INSEEGeo has "+items.length+" items to annotate");
             for(Item item : items){
                 logger.info("Add INSEEGeo for item: "+item);
                 ArrayList<Prop> props;
@@ -59,6 +59,6 @@ public class App
                 Database.addAnnotation(item.getUri(), new Prop(PLUGIN_URI,"true"));
             }
         }
-        while(items.length > 0);
+        while(items == null || items.length > 0);
     }
 }

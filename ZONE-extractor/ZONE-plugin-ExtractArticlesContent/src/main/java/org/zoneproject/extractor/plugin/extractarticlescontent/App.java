@@ -53,10 +53,10 @@ public class App
         do{
             items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,SIM_DOWNLOADS);
             th = new DownloadThread[items.length];
-            logger.info("ExtractArticlesContent has "+items.length+" items to annotate");
             if(items == null){
                 continue;
             }
+            logger.info("ExtractArticlesContent has "+items.length+" items to annotate");
             for(int curItem = 0; curItem < items.length ; curItem++){
                 VirtuosoDatabase.addAnnotation(items[curItem].getUri(), new Prop(App.PLUGIN_URI,"true"));
 
@@ -75,7 +75,7 @@ public class App
                 }
             }
             
-        }while(items.length > 0);
+        }while(items == null || items.length > 0);
     }
     private static void startThread(Item item) {
     }

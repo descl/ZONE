@@ -49,15 +49,15 @@ public class App
         WikiMetaRequestThread[] th = new WikiMetaRequestThread[SIM_DOWNLOADS];
         do{
             items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
-            logger.info("WikiMeta has "+items.length+" items to annotate");
             if(items == null){
                 continue;
             }
+            logger.info("WikiMeta has "+items.length+" items to annotate");
             for(Item item : items){
                 ArrayList<Prop> content= WikiMetaRequest.getProperties(item.concat());
                 Database.addAnnotations(item.getUri(), content);
                 Database.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
             }
-        }while(items.length > 0);
+        }while(items == null || items.length > 0);
     }
 }
