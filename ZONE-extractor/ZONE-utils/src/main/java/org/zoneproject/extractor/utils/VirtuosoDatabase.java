@@ -308,7 +308,7 @@ public abstract class VirtuosoDatabase {
             results = runSPARQLRequest(request);
         }catch(JenaException ex){
             logger.warn("Encoding error in some uri's request:"+request);
-            return new Item[0];
+            return null;
         }
         Item item;
         QuerySolution result;
@@ -318,6 +318,11 @@ public abstract class VirtuosoDatabase {
             if(item != null){
                 items.add(item);
             }
+        }
+        
+        //manage case with no items in output but with other items to proceed
+        if(results.getRowNumber() > 0  && items.size() == 0){
+            return null;
         }
         return items.toArray(new Item[items.size()]);
     }

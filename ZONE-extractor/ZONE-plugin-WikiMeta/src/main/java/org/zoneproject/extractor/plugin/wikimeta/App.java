@@ -50,6 +50,9 @@ public class App
         do{
             items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
             logger.info("WikiMeta has "+items.length+" items to annotate");
+            if(items == null){
+                continue;
+            }
             for(Item item : items){
                 ArrayList<Prop> content= WikiMetaRequest.getProperties(item.concat());
                 Database.addAnnotations(item.getUri(), content);

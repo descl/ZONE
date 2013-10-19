@@ -54,6 +54,9 @@ public class App
             items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,SIM_DOWNLOADS);
             th = new DownloadThread[items.length];
             logger.info("ExtractArticlesContent has "+items.length+" items to annotate");
+            if(items == null){
+                continue;
+            }
             for(int curItem = 0; curItem < items.length ; curItem++){
                 VirtuosoDatabase.addAnnotation(items[curItem].getUri(), new Prop(App.PLUGIN_URI,"true"));
 

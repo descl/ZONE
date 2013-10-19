@@ -48,6 +48,9 @@ public class App
         do {
             items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps);
             logger.info("INSEEGeo has "+items.length+" items to annotate");
+            if(items == null){
+                continue;
+            }
             for(Item item : items){
                 logger.info("Add INSEEGeo for item: "+item);
                 ArrayList<Prop> props;

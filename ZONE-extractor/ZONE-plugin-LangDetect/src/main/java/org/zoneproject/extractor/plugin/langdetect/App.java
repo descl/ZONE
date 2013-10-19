@@ -60,6 +60,9 @@ public class App
         do{
             items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
             logger.info("LangDetect has "+items.length+" items to annotate");
+            if(items == null){
+                continue;
+            }
             for(Item item : items){
                 String lang = LangDetect.detectLang(item.concat());
                 Prop p = new Prop(ZoneOntology.PLUGIN_LANG, lang, true,true);

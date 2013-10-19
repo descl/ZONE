@@ -50,6 +50,9 @@ public class App
         do{
             items = Database.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,10);
             logger.info("OpenCalais has "+items.length+" items to annotate");
+            if(items == null){
+                continue;
+            }
             for(Item item : items){
                 logger.info("Add ExtractArticlesContent for item: "+item);
                 ArrayList<Prop> props = new ArrayList<Prop>();
