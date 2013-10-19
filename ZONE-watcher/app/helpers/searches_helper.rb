@@ -3,7 +3,7 @@ module SearchesHelper
     if(filterVal != "" && uri != "")
       waitingText = ""
       tagUri = uri
-      if uri != nil && (uri.start_with? "http://www.dbpedia.org")
+      if uri != nil && (uri.include? "dbpedia.org")
         wait =  "<div class='row-fluid'><i class='icon-refresh'></i> Loading ...</div>";
         waitingText = "<div class='infoPop'>"+wait+"</div>"
       end

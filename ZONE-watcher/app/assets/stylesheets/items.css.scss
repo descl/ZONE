@@ -2,6 +2,12 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.bs-docs-sidenav .icon-trash {
+  float: right;
+  margin-right: -6px;
+  margin-top: 2px;
+  opacity: 0.25;
+}
 
 #rss-button{
   position: absolute;

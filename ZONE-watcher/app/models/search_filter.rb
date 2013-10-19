@@ -49,15 +49,18 @@ class SearchFilter < ActiveRecord::Base
     @OPEN_CALAIS_URI = 'http://www.opencalais.org/Entities#'
     @WIKI_META_URI = 'http://www.wikimeta.org/Entities#'
     @INSEE_GEO_URI = 'http://rdf.insee.fr/geo/'
+    @SPOTLIGHT_URI = 'http://zone-project.org/model/plugins/Spotlight#entities'
+    @LANG_URI = 'http://zone-project.org/model/plugins#lang'
     @RSS_URI = 'http://purl.org/rss/1.0/'
     @SVM_PLUGIN_URI = 'http://zone-project.org/model/plugins/Categorization_SVM#result'
     @TWITTER_MENTIONED_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#mentioned'
     @TWITTER_HASHTAG_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#hashtag'
 
-    @LABEL_PEOPLE = "label label-success label-tag"
+    @LABEL_DBPEDIA = "label label-success label-tag"
     @LABEL_PLACE = "label label-warning label-tag"
     @LABEL_TWITTER = "label label-twitter label-tag"
     @LABEL_OTHER = "label label-info label-tag"
+    @LABEL_LANG = "label label-info label-tag"
 
     labels = @LABEL_OTHER
 
@@ -76,6 +79,11 @@ class SearchFilter < ActiveRecord::Base
         return
       end
       labels= @LABEL_OTHER
+
+
+    elsif(self.prop.starts_with? @SPOTLIGHT_URI)
+      filterVal=self.value[self.value.rindex('/')+1, self.value.length]
+      labels= @LABEL_DBPEDIA
 
     elsif(self.prop.starts_with? @INSEE_GEO_URI)
       filterVal=self.value[filter.value.rindex('/')+1, filter.value.length]
@@ -104,12 +112,19 @@ class SearchFilter < ActiveRecord::Base
       self.uri = "http://#{self.uri[11,self.uri.length]}"
     end
 
-    endpointDBpedia = "http://dbpedia.org/sparql"
+    if self.uri.start_with? "http://fr.dbpedia"
+      endpointDBpedia = "http://fr.dbpedia.org/sparql"
+      lang = "fr"
+    else
+      endpointDBpedia = "http://dbpedia.org/sparql"
+      lang = "en"
+    end
+
     queryStr = "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
             select * where {
               {<#{uri}> dbpedia-owl:abstract ?abstract.
               OPTIONAL{ <#{uri}> dbpedia-owl:thumbnail ?thumb}.
-              Filter(lang(?abstract) = \"fr\")}
+              Filter(lang(?abstract) = \"#{lang}\")}
               UNION { <#{uri}> <http://dbpedia.org/ontology/wikiPageRedirects> ?sameAs}
             } LIMIT 1"
     store = SPARQL::Client.new(endpointDBpedia)

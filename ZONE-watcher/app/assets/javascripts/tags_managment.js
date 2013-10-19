@@ -15,7 +15,7 @@ $(document).ready(function() {
         //add the onclick action
         $(this).on("click", function() {
 
-            if ($(this).attr("data-uri").indexOf("/search_filters?uri=http%3A%2F%2Fwww.dbpedia.org") === 0) {
+            if ($(this).attr("filter-uri").indexOf("dbpedia.org") != -1) {
                 var popover = $(this).data('clickover');
                 errorText = "<div class='infoPop'>error</div>" + getPopoverButton($(this));
                 var item = $(this);
@@ -66,8 +66,8 @@ function getPopoverTitle(tag,itemUri) {
 
     tagDelete = tagHtml;
     tagUri = null;
-    if (tag.attr("data-uri").indexOf("/search_filters?uri=http%3A%2F%2Fwww.dbpedia.org") === 0) {
-        tagUri = tag.attr("data-uri").substr("/search_filters?uri=".length)
+    if (tag.attr("filter-uri").indexOf("dbpedia.org") != -1) {
+        tagUri = tag.attr("filter-uri")
     }
     res = "<span class='titletag'>" + tagHtml + "</span>";
     if (tagHtml.indexOf("#") !=0 && tagHtml.indexOf("@") !=0){

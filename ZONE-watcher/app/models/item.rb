@@ -12,6 +12,7 @@ class Item# < ActiveRecord::Base
   SVM_PLUGIN_URI = 'http://zone-project.org/model/plugins/Categorization_SVM#result'
   TWITTER_MENTIONED_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#mentioned'
   TWITTER_HASHTAG_PLUGIN_URI = 'http://zone-project.org/model/plugins/twitter#hashtag'
+  LANG_URI = 'http://zone-project.org/model/plugins#lang'
 
   attr_accessor :uri, :title, :props, :description, :date, :localURI, :similarity, :favorite, :filters
 
@@ -188,5 +189,17 @@ class Item# < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def getLang()
+    lang = self.props[LANG_URI]
+    if lang != nil
+      lang =  lang[0]
+      if lang == "en"
+        return "gb"
+      end
+    end
+    return lang
+
   end
 end

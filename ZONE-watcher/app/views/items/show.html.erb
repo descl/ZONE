@@ -48,6 +48,9 @@
         		end %>
 			</div>
 			<div class="btn-toolbar tags-toolbar">
+              <div class="btn-group btn-group-label btn-wrap">
+              <img src="/assets/langs/<%= @item.getLang()%>.png" alt="<%= @item.getLang()%>">
+                </div>
               <%@item.filters.each do |filter|%>
                 <%= raw filter.getButtonInNews %>
               <%end%>
@@ -58,43 +61,6 @@
           <!--footer news part with share buttons -->
 			<div class="pull-right row-list">
                 <%= render 'show_tool_bar', :item => @item %>
-			</div>
-		</div>
-	</div>
-
-    <!-- debug tool to print the tags ;) -->
-	<div class="row-fluid">
-		<div class="accordion" id="accordion-<%= @item.getUriHash %>" style="margin-bottom: 0px;">
-			<div class="accordion-group borderLess">
-				<div id="collapse-<%= @item.getUriHash%>" class="accordion-body collapse">
-					<div class="accordion-inner" style="padding: 0px;">
-						<table class="table table-striped">
-							<% i=0; @item.props.each do |prop,values|
-							values.each do |value|
-							i=i+1
-							%>
-							<tr>
-								<td><%= prop %></td>
-								<td> <% if prop.starts_with? ZoneOntology::PLUGIN_EXTRACT_ARTICLES_CONTENT_RES %>
-								<%= value %> <a href= "<%= @uri %>"> (...) </a> <% elsif (prop.starts_with? 'http://rdf.insee') || (prop.starts_with? 'http://www.dbpedia') %>
-								<%= link_to value, "getOne?element="+value,:id => "elem"+i.to_s(), :remote => true %>
-								<%= javascript_tag do %>
-                                    $("#elem<%= i%>").bind("ajax:complete", function(et, e){
-                                    $("#elem<%= i.to_s()%>").html(e.responseText); // insert content
-                                    event.preventDefault(); // Prevent link from following its href
-                                    });
-								<%end%>
-								<%elsif (value.starts_with? 'http://')%>
-								<%= link_to value,value %>
-								<%else%>
-								<%= value %>
-								<%end%> </td>
-							</tr>
-							<% end%>
-							<%end%>
-						</table>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>

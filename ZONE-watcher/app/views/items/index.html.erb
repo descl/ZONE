@@ -1,5 +1,27 @@
+  <div class="row">
+
+    <div class="span2 bs-docs-sidebar">
+      <%= render "searches/left_panel", :searches => @searches %>
+    </div>
+
+    <script>
+        /*$('.bs-docs-sidenav').affix({
+            offset: { x: 0 }
+        })*/
+    </script>
+    <div class="span10">
+
+
+
+
 <%= render 'home/search_tool'%>
-<%= render 'reminder_panel'%>
+<%= #render 'reminder_panel'
+%>
+
+
+
+
+
 
 <div class="hidden">
     <%= @search.to_json %>
@@ -113,4 +135,7 @@
         %>
     </div>
 
+</div>
+
+  </div>
 </div>

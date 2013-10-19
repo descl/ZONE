@@ -1,0 +1,46 @@
+
+
+
+<ul class="nav nav-list bs-docs-sidenav" style="max-width: 180px">
+  <% @searches.each do |curSearch| %>
+      <% curSearch.name ||= "Recherche #{curSearch.id}"%>
+
+    <li id="test<%=curSearch.id%>" class="<%= "active" if curSearch.id == @search.id%>">
+
+
+      <%
+         maVar  = render partial: "items/reminder_panel", object: curSearch, as: 'search'
+      %>
+
+          <% #link_to  search,
+             #          :id => "test#{search.id}",
+             #          "data-original-title" =>"Name: <b>#{search.name}</b>",
+             #          "data-content" => raw("\"#{maVar}\""),
+             #          :rel => "popoverx" do
+          %>
+              <a href= "#" rel="popoverx" data-original-title="title test" data-content="<%=maVar.gsub('\"', '\'') %>">
+
+        <div  class="test">
+          <i class="icon-trash" onclick="alert(\"tt\")"></i>
+          <%= curSearch.name%>
+        </div>
+
+      <%#end
+      %>
+        </a>
+    </li>
+  <%end%>
+</ul>
+
+<script type="text/javascript">
+    $(function() {
+        $('[rel="popoverx"]').popoverx({
+            fire_on : 'hover',
+            hover_delay_close : 1000,
+            ensure_visiable: true
+        });
+    })
+</script>
+
+<div id="transparentDiv" class="span1"></div>
+<div id="movedData"></div>
