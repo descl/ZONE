@@ -46,27 +46,28 @@ import org.zoneproject.extractor.utils.ZoneOntology;
 public class SpotlightRequest {
     public enum Endpoints {
 	EN("http://spotlight.sztaki.hu:2222/rest"),
-	FR("http://spotlight.sztaki.hu:2225/rest"),
+	FR("http://localhost:2225/rest"),
 	//NL("http://nl.dbpedia.org/spotlight/rest"),
-	DE("http://de.dbpedia.org/spotlight/rest");
-	/*HU("http://spotlight.sztaki.hu:2229/rest"),
+	DE("http://de.dbpedia.org/spotlight/rest"),
+	//HU("http://spotlight.sztaki.hu:2229/rest"),
 	IT("http://spotlight.sztaki.hu:2230/rest"),
-	PT("http://spotlight.sztaki.hu:2228/rest"),
-	RU("http://spotlight.sztaki.hu:2227/rest"),
-	ES("http://spotlight.sztaki.hu:2231/rest"),
-	TR("http://spotlight.sztaki.hu:2235/rest");
-        */
+	//PT("http://spotlight.sztaki.hu:2228/rest"),
+	//RU("http://spotlight.sztaki.hu:2227/rest"),
+	ES("http://spotlight.sztaki.hu:2231/rest");
+	//TR("http://spotlight.sztaki.hu:2235/rest");
+        
         private final String value;
 	Endpoints(String value) {this.value = value;}
 	public String getValue() {return this.value;}
     }
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(SpotlightRequest.class);
     
     public static ArrayList<Prop> getProperties(Item item){
+        String endpoint="";
         try {
             ArrayList<Prop> result = new ArrayList<Prop>();
             String itemLang = item.getElements(ZoneOntology.PLUGIN_LANG)[0].toUpperCase();
             
-            String endpoint;
             try{
                 endpoint = Endpoints.valueOf(itemLang).getValue();
             }catch(java.lang.IllegalArgumentException ex){
@@ -80,9 +81,9 @@ public class SpotlightRequest {
             }
             return result;
         } catch (IOException ex) {
-            Logger.getLogger(SpotlightRequest.class.getName()).log(Level.SEVERE, null, ex);
+            logger.warn("The server "+ endpoint + " is not responding");
+            return null;
         }
-        return null;
     }
         public static String getResponse(String text,String endPoint) throws IOException {
             URL dbpedia;
