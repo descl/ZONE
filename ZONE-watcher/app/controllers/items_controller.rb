@@ -48,7 +48,7 @@ class ItemsController < ApplicationController
     #define the feed uri
     @feed_url= url_for(:controller => 'items', :action => 'index', :search => @search.id, :format => :rss)
 
-    @searches = Search.where(:user_id => current_user.id).limit(20)
+    @searches = Search.where(:user_id => current_user.id).limit(20).order("id desc")
 
     respond_to do |format|
       format.html

@@ -1,78 +1,78 @@
 <%= form_for "formModal", :url => url_for( :controller =>'searches', :action => 'index'), method: :POST, html: { id: "formModal"} do |f| %>
+    <div id="movedData"></div>
+    <div id="popover-<%= search.id%>">
+        <div class="row-fluid">
+            <div class="span1"></div>
+            <div class="span10">
+                <div class="row-fluid">
+                    <h3><span class="numberFiltering smallNumberFiltering">1</span> <%= raw t 'newmodal.breadcrumb.sources' %></h3>
+                </div>
+                <div class="row-fluid">
+                  <div id="wellSources" class="well summary span12">
+                    <% search.sources.each do |source| %>
+                      <%= raw source.getButton %>
+                    <%end%>
+                  </div>
 
-		<div class="">
-			<div class="row-fluid">
-				<div class="span1"></div>
-				<div class="span10">
-					<div class="row-fluid">
-						<h3><span class="numberFiltering smallNumberFiltering">1</span> <%= raw t 'newmodal.breadcrumb.sources' %></h3>
-					</div>
-					<div class="row-fluid">
-                      <div id="wellSources" class="well summary span12">
-                        <% search.sources.each do |source| %>
-                          <%= raw source.getButton %>
-                        <%end%>
-                      </div>
-
-					</div>
-				</div>
-			</div>
-			<div class="row-fluid">
-				<div class="span1"></div>
-				<div class="span10">
-					<div class="row-fluid">
-						<h3><span class="numberFiltering smallNumberFiltering">2</span> <%= raw t 'newmodal.breadcrumb.filtering' %></h3>
-					</div>
-					<div class="row-fluid">
-						<p><b id="titleAnd"><%= raw t 'newmodal.filtering.buttonMusthave' %></b></p>
-					</div>
-					<div class="row-fluid">
-						<div id="summaryAnd" class="well summary span12 well-success" ondrop="drop(event)" ondragover="allowDrop(event)">
-                          <% search.getAndFilters.each do |filter| %>
-                              <%= raw filter.getButton%>
-                          <%end%>
-						</div>
-					</div>
-					<div class="row-fluid">
-						<p><b id="titleOr"><%= raw t 'newmodal.filtering.buttonOption' %></b></p>
-					</div>
-					<div class="row-fluid">
-						<div id="summaryOr" class="well summary span12 well-info" ondrop="drop(event)" ondragover="allowDrop(event)">
-                          <% search.getOrFilters.each do |filter| %>
-                            <%= raw filter.getButton%>
-                          <%end%>
-						</div>
-					</div>
-					<div class="row-fluid">
-						<p><b id="titleWithout"><%= raw t 'newmodal.filtering.buttonBan' %></b></p>
-					</div>
-					<div class="row-fluid">
-						<div id="summaryWithout" class="well summary span12 well-danger" ondrop="drop(event)" ondragover="allowDrop(event)">
-                          <% search.getWithoutFilters.each do |filter| %>
-                              <%= raw filter.getButton%>
-                          <%end%>
-						</div>
-					</div>
-				</div>
-			</div>
-			<hr>
-			<div class="row-fluid bottomDiv">
-				<div class="span1"></div>
-				<div class="span4">
-					<button class="btn btn-info span12" type="submit" onclick="
-                    movingData();
-                    $('#formModal').attr('action','/searches/<%=search.id%>/edit');
-                    $('#formModal').attr('method','GET');
-                    ">
-						<%= raw t 'items.reminder.change' %>
-					</button>
-				</div>
-				<div class="span2"></div>
-				<div class="span4">
-					<button id="updateSearch" class="btn btn-success span12 updater" type="submit" onclick="movingData()">
-						<%= raw t 'items.reminder.update' %>
-					</button>
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span1"></div>
+            <div class="span10">
+                <div class="row-fluid">
+                    <h3><span class="numberFiltering smallNumberFiltering">2</span> <%= raw t 'newmodal.breadcrumb.filtering' %></h3>
+                </div>
+                <div class="row-fluid">
+                    <p><b id="titleAnd"><%= raw t 'newmodal.filtering.buttonMusthave' %></b></p>
+                </div>
+                <div class="row-fluid">
+                    <div id="summaryAnd" class="well summary span12 well-success" ondrop="drop(event)" ondragover="allowDrop(event)">
+                      <% search.getAndFilters.each do |filter| %>
+                          <%= raw filter.getButton%>
+                      <%end%>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <p><b id="titleOr"><%= raw t 'newmodal.filtering.buttonOption' %></b></p>
+                </div>
+                <div class="row-fluid">
+                    <div id="summaryOr" class="well summary span12 well-info" ondrop="drop(event)" ondragover="allowDrop(event)">
+                      <% search.getOrFilters.each do |filter| %>
+                        <%= raw filter.getButton%>
+                      <%end%>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <p><b id="titleWithout"><%= raw t 'newmodal.filtering.buttonBan' %></b></p>
+                </div>
+                <div class="row-fluid">
+                    <div id="summaryWithout" class="well summary span12 well-danger" ondrop="drop(event)" ondragover="allowDrop(event)">
+                      <% search.getWithoutFilters.each do |filter| %>
+                          <%= raw filter.getButton%>
+                      <%end%>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row-fluid bottomDiv">
+            <div class="span1"></div>
+            <div class="span4">
+                <button class="btn btn-info span12" type="submit" onclick="
+                movingData('<%=search.id%>');
+                $('#formModal').attr('action','/searches/<%=search.id%>/edit');
+                $('#formModal').attr('method','GET');
+                ">
+                    <%= raw t 'items.reminder.change' %>
+                </button>
+            </div>
+            <div class="span2"></div>
+            <div class="span4">
+                <button id="updateSearch" class="btn btn-success span12 updater" type="submit" onclick="movingData('<%=search.id%>')">
+                    <%= raw t 'items.reminder.update' %>
+                </button>
+            </div>
+        </div>
+    </div>
 <% end %>

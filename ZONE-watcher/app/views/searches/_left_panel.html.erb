@@ -12,13 +12,7 @@
          maVar  = render partial: "items/reminder_panel", object: curSearch, as: 'search'
       %>
 
-          <% #link_to  search,
-             #          :id => "test#{search.id}",
-             #          "data-original-title" =>"Name: <b>#{search.name}</b>",
-             #          "data-content" => raw("\"#{maVar}\""),
-             #          :rel => "popoverx" do
-          %>
-              <a href= "#" rel="popoverx" data-original-title="title test" data-content="<%=maVar.gsub('\"', '\'') %>">
+              <a href= "<%= url_for(curSearch)%>" rel="popoverx" data-original-title="title test" data-content="<%=maVar.gsub('\"', '\'') %>">
 
         <div  class="test">
           <i class="icon-trash" onclick="alert(\"tt\")"></i>
@@ -43,4 +37,3 @@
 </script>
 
 <div id="transparentDiv" class="span1"></div>
-<div id="movedData"></div>

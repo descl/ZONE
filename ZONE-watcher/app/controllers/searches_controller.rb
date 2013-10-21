@@ -36,19 +36,16 @@ class SearchesController < ApplicationController
 
   # GET /searches/1/edit
   def edit
-    @search = Search.find(params[:id])
+    @search = retrieveSearchFromForm(params)
   end
 
   # POST /searches
   # POST /searches.json
   def create
-    if user_signed_in?
-      userId = current_user.id
-    end
-    @search = Search.build_from_form(params,userId)
+    @search = retrieveSearchFromForm(params)
     respond_to do |format|
       if @search.save
-        format.html { redirect_to items_path(:search => @search.id, :isNew => params[:isNew] )  }
+        format.html { redirect_to items_path(:search => @search.id, :itemid => params[:itemId] )  }
         format.json { render json: @search, status: :created, location: @search }
       else
         format.html { render action: "new" }
@@ -60,7 +57,7 @@ class SearchesController < ApplicationController
   # PUT /searches/1
   # PUT /searches/1.json
   def update
-    @search = Search.find(params[:id])
+    @search = retrieveSearchFromForm(params)
 
     respond_to do |format|
       if @search.update_attributes(params[:search])
@@ -88,5 +85,25 @@ class SearchesController < ApplicationController
   def selectSources
     @sources = current_user.getSources
     render  :layout => 'empty'
+  end
+
+  def retrieveSearchFromForm(form)
+    if user_signed_in?
+      userId = current_user.id
+    else
+      userId=0
+    end
+
+    search = Search.new
+    if form[:itemId] != ''
+      search = Search.find(form[:itemId])
+      search.filters = Array.new
+      search.sources = Array.new
+    else
+      search = Search.new
+    end
+
+    search.build_from_form(form,userId)
+    return search
   end
 end

@@ -10,7 +10,7 @@
 //Prepare the input with all data
 //Read all the tag selected ( sources and filters ) and create input with the map corresponding to these tags
 //Generate one hashmap for sources ( name : source) and one hashmap for filters ( name : filtering )
-function movingData(isNew) {
+function movingData(itemId) {
 	 window.onbeforeunload = "";
     $("#movedData").html("");
     var source = {};
@@ -114,7 +114,8 @@ function movingData(isNew) {
     filtering.and = tabAnd;
     filtering.without = tabWithout;
 
-    $('#movedData').html($('#movedData').html() + "<input name='sources' type='hidden' value='" + JSON.stringify(source) + "'>" + "<input name='filters' type='hidden' value='" + JSON.stringify(filtering) + "'><input name='isNew' type='hidden' value='" + isNew + "'>");
+    inputDatas = "<input name='sources' type='hidden' value='" + JSON.stringify(source) + "'>" + "<input name='filters' type='hidden' value='" + JSON.stringify(filtering) + "'><input name='itemId' type='hidden' value='" + itemId + "'>";
+    $('#movedData').html($('#movedData').html() + inputDatas);
 
 	$('#formModal').submit();
 }

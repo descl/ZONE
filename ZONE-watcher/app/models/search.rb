@@ -4,9 +4,8 @@ class Search < ActiveRecord::Base
   has_many :sources, class_name: "SearchSource"
   has_many :filters, class_name: "SearchFilter"
 
-  def self.build_from_form(params,user)
-    result = Search.new
-    result.user_id = user
+  def build_from_form(params,user)
+    self.user_id = user
 
     if params[:sources].class == String
       inputSources = JSON.parse params[:sources]
@@ -22,7 +21,7 @@ class Search < ActiveRecord::Base
     if inputSources != nil
       inputSources.each do |kind,vals|
         vals.each do |value|
-          result.sources << SearchSource.build_from_form(CGI.unescape(value),kind,user)
+          self.sources << SearchSource.build_from_form(CGI.unescape(value),kind,user)
         end
       end
     end
@@ -30,11 +29,10 @@ class Search < ActiveRecord::Base
     if inputFilters != nil
       inputFilters.each do |kind,vals|
         vals.each do |filter|
-          result.filters << SearchFilter.build_from_form(filter,kind)
+          self.filters << SearchFilter.build_from_form(filter,kind)
         end
       end
     end
-    return result
   end
 
   def getItemsNumber
