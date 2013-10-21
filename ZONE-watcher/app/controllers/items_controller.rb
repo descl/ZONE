@@ -8,11 +8,25 @@ class ItemsController < ApplicationController
     @filters = []
     @sources = []
 
-    if params[:search] == nil
+    if params[:search] == nil && params[:search] != Rails.application.config.defaultRequestId.to_s
       @search = Search.find(Rails.application.config.defaultRequestId)
     else
       @search = Search.find(params[:search])
     end
+
+    if user_signed_in?
+      @searches = Search.where(:user_id => current_user.id).limit(20).order("id desc")
+      if @searches.size > 0 && params[:search] == nil
+        @search = @searches.first
+      end
+    else
+      @searches = []
+      if params[:search] != nil && params[:search] != Rails.application.config.defaultRequestId.to_s
+        @searches << Search.find(Rails.application.config.defaultRequestId)
+      end
+      @searches << @search
+    end
+
     if params[:isNew] == "true"
       flash[:notice] = t('search.disclaimer')
     end
@@ -48,7 +62,7 @@ class ItemsController < ApplicationController
     #define the feed uri
     @feed_url= url_for(:controller => 'items', :action => 'index', :search => @search.id, :format => :rss)
 
-    @searches = Search.where(:user_id => current_user.id).limit(20).order("id desc")
+
 
     respond_to do |format|
       format.html

@@ -95,7 +95,7 @@ class SearchesController < ApplicationController
     end
 
     search = Search.new
-    if form[:itemId] != ''
+    if form[:itemId] != '' && form[:itemId]!= Rails.application.config.defaultRequestId.to_s
       search = Search.find(form[:itemId])
       search.filters = Array.new
       search.sources = Array.new

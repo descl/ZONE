@@ -285,10 +285,8 @@ fr:
       title:
         "Confirmation"
       content:
-        "<div class='row-fluid'>Tag bien ajouté</div><div class='row-fluid'>
-        <button id='updateSearch' class='btn btn-success span12 updater' type='button' onclick='movingData();'>
-            Actualiser
-         </button></div>"
+        added: "Tag bien ajouté"
+        update: "Actualiser"
       smalltitle:
         "Ajouter le tag comme :"
     newtag:

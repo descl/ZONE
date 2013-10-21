@@ -286,10 +286,8 @@ en:
       title:
         "Confirmation"
       content:
-        "<div class='row-fluid'>Tag added</div><div class='row-fluid'>
-        <button id='updateSearch' class='btn btn-success span12 updater' type='button' onclick='movingData();'>
-            Update
-         </button></div>"
+        added: "Tag added"
+        update: "Update"
       smalltitle:
         "Add the tag as :"
     newtag:

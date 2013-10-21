@@ -53,22 +53,36 @@ $(window).load(function(){
 
 //Add the tag to the summary panel
 function addTag(type, value, uri) {
+    var searchId = "";
+    var formZone = $($(".openReminder").children("a").attr("data-content"))
+
 	var id = getId();
     if (type == 'opt')
-        $(".well-info").append('<span id="'+id+'" class="label label-info" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value+ ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
+        formZone.find(".well-info").append('<span id="'+id+'" class="label label-info" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value+ ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
     else if (type == 'must')
-        $(".well-success").append('<span id="'+id+'" class="label label-success" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
+        formZone.find(".well-success").append('<span id="'+id+'" class="label label-success" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
     else if (type == 'no')
-        $(".well-danger").append('<span id="'+id+'" class="label label-danger" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
+        formZone.find(".well-danger").append('<span id="'+id+'" class="label label-danger" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
+
+    var formContent = $("<form/>").append(formZone.clone()).html()
+    $(".openReminder").children("a").attr("data-content",formContent)
+
     showUpdate();
     return false;
 };
+function saveFormToHtml(doc){
+    console.log(doc);
+}
+function removeElement(id){
+    $(id).remove();
+    showUpdate();
+}
 
 //Close all the popover after clicking on a selection
-function closePop() {
-    $('#openReminder').popover('show');
+function openReminderOnChange() {
+    $(".openReminder").children("a").popoverx('show');
     setTimeout(function() {
-        $('#openReminder').popover('hide');
+        $(".openReminder").children("a").popoverx('hide');
     }, 5000);
     return false;
 }

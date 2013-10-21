@@ -5,17 +5,32 @@
   <% @searches.each do |curSearch| %>
       <% curSearch.name ||= "Recherche #{curSearch.id}"%>
 
-    <li id="test<%=curSearch.id%>" class="<%= "active" if curSearch.id == @search.id%>">
+      <% if curSearch.id == @search.id%>
+          <li
+            rel="popoverx"
+            id="search<%=curSearch.id%>"
+            class="openReminder active"
+            data-toggle="popover"
+            data-placement="right"
+            data-original-title="<%= raw t 'items.popover.title' %>"
+            title=""
+            data-content="</li><div class='row-fluid'><%= t('items.popover.content.added')%></div><div class='row-fluid'><button id='updateSearch' class='btn btn-success span12 updater' type='button' onclick='movingData(<%=curSearch.id%>);'><%= t('items.popover.content.update')%></button></div>"
+          >
+      <%else%>
+          <li  rel="popoverx" id="search<%=curSearch.id%>">
+      <%end%>
 
 
       <%
          maVar  = render partial: "items/reminder_panel", object: curSearch, as: 'search'
       %>
 
-              <a href= "<%= url_for(curSearch)%>" rel="popoverx" data-original-title="title test" data-content="<%=maVar.gsub('\"', '\'') %>">
+              <a href= "<%= url_for(curSearch)%>" rel="popoverx" data-original-title="<%= curSearch.name %>" data-content="<%=maVar.gsub('\"', '\'') %>">
 
-        <div  class="test">
-          <i class="icon-trash" onclick="alert(\"tt\")"></i>
+
+
+        <div  class="test" >
+          <!--<i class="icon-trash" onclick="alert(\"tt\")"></i>-->
           <%= curSearch.name%>
         </div>
 
@@ -31,9 +46,20 @@
         $('[rel="popoverx"]').popoverx({
             fire_on : 'hover',
             hover_delay_close : 1000,
-            ensure_visiable: true
+            onHidden :
+                    function() {
+                        saveFormToHtml(this);
+                    }
         });
     })
 </script>
 
+<script type="text/javascript">
+    $(function() {
+        $('.openReminder').popoverx({
+            fire_on : 'manual',
+            hover_delay_close : 6000
+        });
+    })
+</script>
 <div id="transparentDiv" class="span1"></div>

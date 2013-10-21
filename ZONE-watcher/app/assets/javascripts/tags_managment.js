@@ -54,9 +54,9 @@ function getPopoverButton(tag) {
     var name = tag.html();
     var uri = tag.attr('filter-uri');
     var btnBan, btnMust, btnOptionnal, tagContent;
-    btnOptionnal = "<button type='button' class='btn btn-info span12 btnTag' onclick='addTag(\"opt\",\"" + name + "\",\"" + uri + "\");closePop()'>" + $("#titleOr").html() + "</button><br>";
-    btnMust = "<button type='button' class='btn btn-success span12 btnTag paddingMust' onclick='addTag(\"must\",\"" + name + "\",\"" + uri + "\");closePop()'>" + $("#titleAnd").html() + "</button><br>";
-    btnBan = "<button type='button' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\",\"" + name + "\",\"" + uri + "\");closePop()'>" + $("#titleWithout").html() + "</button>";
+    btnOptionnal = "<button type='button' class='btn btn-info span12 btnTag' onclick='addTag(\"opt\",\"" + name + "\",\"" + uri + "\");'>" + $("#titleOr").html() + "</button><br>";
+    btnMust = "<button type='button' class='btn btn-success span12 btnTag paddingMust' onclick='addTag(\"must\",\"" + name + "\",\"" + uri + "\");'>" + $("#titleAnd").html() + "</button><br>";
+    btnBan = "<button type='button' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\",\"" + name + "\",\"" + uri + "\");'>" + $("#titleWithout").html() + "</button>";
     tagContent = "<hr><div class='row-fluid'><div class='span12 text-center'><b class='adding-info'>" + $("#titlePopover").html() + "</b></div></div><div class='row-fluid'><div class='span12'>" + btnMust + "</div></div><div class='row-fluid'><div class='span12'>" + btnOptionnal + "</div></div><div class='row-fluid'><div class='span12'>" + btnBan + "</div></div>";
     return tagContent;
 };
