@@ -35,31 +35,32 @@ public class App
     }
     public static void main( String[] args )
     {
-        String [] sources = RSSGetter.getSources();
         DownloadNewsThread[] th = new DownloadNewsThread[SIM_DOWNLOADS];
         
         DownloadLastsNewsThread lastsThread = new DownloadLastsNewsThread();
-        lastsThread.start();
         
-        for(int i = 0; i < sources.length; i+=SIM_DOWNLOADS){
-            
-            for(int curSource = i; (curSource < (i+SIM_DOWNLOADS)) && (curSource < sources.length); curSource++){
-                th[curSource-i] = new DownloadNewsThread(sources[curSource]);
-                th[curSource-i].start();
-            }
+        while(true){
+            String [] sources = RSSGetter.getSources();
+            for(int i = 0; i < sources.length; i+=SIM_DOWNLOADS){
 
-            for(int curSource = i; (curSource < (i+SIM_DOWNLOADS)) && (curSource < sources.length); curSource++){
-                try {
-                    if(th[curSource-i] == null)continue;
-                    th[curSource-i].join();
-                    th[curSource-i]=null;
-                } catch (InterruptedException ex) {
-                    logger.warn(ex);
+                for(int curSource = i; (curSource < (i+SIM_DOWNLOADS)) && (curSource < sources.length); curSource++){
+                    th[curSource-i] = new DownloadNewsThread(sources[curSource]);
+                    th[curSource-i].start();
                 }
+
+                for(int curSource = i; (curSource < (i+SIM_DOWNLOADS)) && (curSource < sources.length); curSource++){
+                    try {
+                        if(th[curSource-i] == null)continue;
+                        th[curSource-i].join();
+                        th[curSource-i]=null;
+                    } catch (InterruptedException ex) {
+                        logger.warn(ex);
+                    }
+                }
+
+                logger.info("["+(i+Math.min(sources.length%SIM_DOWNLOADS,SIM_DOWNLOADS))+"/"+sources.length+"] news annotated");
             }
-            
-            logger.info("["+(i+Math.min(sources.length%SIM_DOWNLOADS,SIM_DOWNLOADS))+"/"+sources.length+"] news annotated");
+            logger.info("Done");
         }
-        logger.info("Done");
     }
 }

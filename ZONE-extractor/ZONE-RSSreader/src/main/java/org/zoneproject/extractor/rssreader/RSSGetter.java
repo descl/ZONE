@@ -207,11 +207,13 @@ public class RSSGetter {
         return sources.toArray(new String[sources.size()]);
     }
     public static void main(String[] args){
-        
-        String fileURI = "http://feeds.bbci.co.uk/news/world/rss.xml";
+        String[] res = getLastsSources(5);
+        for(String r: res)
+            System.out.println(r);
+        /*String fileURI = "http://feeds.bbci.co.uk/news/world/rss.xml";
         ArrayList<Item> result = RSSGetter.getFlux(fileURI);
         for(Item i: result){
             logger.info(i);
-        }
+        }*/
     }
 }
