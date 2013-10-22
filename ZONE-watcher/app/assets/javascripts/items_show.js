@@ -70,7 +70,8 @@ function addTag(type, value, uri) {
     return false;
 };
 function saveFormToHtml(doc){
-    console.log(doc);
+    contentToSave = $('.popover-content').children('p').html();
+    $("#"+doc.options.id).attr("data-content",contentToSave)
 }
 function removeElement(id){
     $(id).remove();
