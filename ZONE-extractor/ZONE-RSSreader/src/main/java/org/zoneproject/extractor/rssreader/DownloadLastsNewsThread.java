@@ -29,27 +29,25 @@ import org.zoneproject.extractor.utils.VirtuosoDatabase;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-public class DownloadNewsThread extends Thread  {
-    private String source;
+public class DownloadLastsNewsThread extends Thread  {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
 
-    public DownloadNewsThread(String source) {
-      this.source = source;
+    public DownloadLastsNewsThread() {
     }
     public void run() {
-        //try {Thread.currentThread().sleep(5000);} catch (InterruptedException ex1) {}
-        
-        //Starting rss downloading
-        ArrayList<Item> items = RSSGetter.getFlux(source);
-
-        //Cleaning flow with already analysed items
-        Database.verifyItemsList(items);
-
-        //Printing result items
-        //for(int i=0; i< items.size();i++)logger.info("\n"+items.get(i));
-        
-        //saving to 4Store database
-        Database.addItems(items);     
-        logger.info("["+items.size()+"] Done for source: "+source);
+        String lastRss = "";
+        while(true){
+            
+            String [] sources = RSSGetter.getLastsSources(100);
+            for(String cur: sources){
+                if(cur == lastRss){
+                    break;
+                }
+                logger.info("QUICKANNOTATE:"+cur);
+                new DownloadNewsThread(cur).start();
+            }
+            lastRss = sources[0];
+            try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
+        }
   }
 }
