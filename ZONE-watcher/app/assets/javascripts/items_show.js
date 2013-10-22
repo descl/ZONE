@@ -54,8 +54,7 @@ $(window).load(function(){
 //Add the tag to the summary panel
 function addTag(type, value, uri) {
     var searchId = "";
-    var formZone = $($(".openReminder").children("a").attr("data-content"))
-
+    var formZone = $($(".searchItem.active").attr("data-content"))
 	var id = getId();
     if (type == 'opt')
         formZone.find(".well-info").append('<span id="'+id+'" class="label label-info" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value+ ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
@@ -65,7 +64,7 @@ function addTag(type, value, uri) {
         formZone.find(".well-danger").append('<span id="'+id+'" class="label label-danger" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
 
     var formContent = $("<form/>").append(formZone.clone()).html()
-    $(".openReminder").children("a").attr("data-content",formContent)
+    $(".searchItem.active").attr("data-content",formContent)
 
     showUpdate();
     return false;

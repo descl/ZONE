@@ -17,7 +17,7 @@
 
           id="<%="searchBox#{curSearch.id}"%>"
           data-id="<%="searchBox#{curSearch.id}"%>"
-          class="<%= "active" if (curSearch.id == @search.id)%>"
+          class="searchItem <%= "active" if (curSearch.id == @search.id)%>"
           rel="popoverx"
           data-content="<%= descriptionSearchBox.gsub('\"','\'') %>"
           >
