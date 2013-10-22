@@ -23,7 +23,7 @@ $(document).ready(function() {
                     url: item.attr("data-uri"),
                     timeout: 5000,
                     success: function(data) {
-                        popover.options.content = "<div class='infoPop'>" + data + "</div>" + getPopoverButton($(this));
+                        //popover.options.content = "<div class='infoPop'>" + data + "</div>" + getPopoverButton($(this));
 
                         $('.infoPop').html(data);
 
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
                     },
                     error: function() {
-                        popover.options.content = errorText;
+                        //popover.options.content = errorText;
                         return $('.infoPop').html('');
                     }
                 });

@@ -42,7 +42,7 @@ class SearchFilter < ActiveRecord::Base
     
     self.uri = "undefined" if self.uri == nil
 
-    return "<span id=\"#{self.id}\" class=\"label label-#{type}\" draggable=\"true\" ondragstart=\"drag(event)\" filter-uri=\"#{self.uri}\">#{self.value} <i class=\"icon-remove pointerMouse\" onclick=\"removeElement('#{self.id}');\"></i></span>"
+    return "<span id=\"filter#{self.id}\" class=\"label label-#{type}\" draggable=\"true\" ondragstart=\"drag(event)\" filter-uri=\"#{self.uri}\">#{self.value} <i class=\"icon-remove pointerMouse\" onclick=\"removeElement('#{self.id}');\"></i></span>"
   end
 
   def getButtonInNews
@@ -70,40 +70,55 @@ class SearchFilter < ActiveRecord::Base
 
     filterVal=""
     if(self.prop.starts_with? @WIKI_META_URI)
-      if(self.value.rindex('/') == nil)
-        filterVal=self.value
-      else
-        filterVal=self.value[self.value.rindex('/')+1, self.value.length]
-      end
       if self.prop.start_with? "http://www.wikimeta.org/Entities#TIME"
         return
       end
       labels= @LABEL_OTHER
 
-
     elsif(self.prop.starts_with? @SPOTLIGHT_URI)
-      filterVal=self.value[self.value.rindex('/')+1, self.value.length]
       labels= @LABEL_DBPEDIA
 
     elsif(self.prop.starts_with? @INSEE_GEO_URI)
-      filterVal=self.value[filter.value.rindex('/')+1, filter.value.length]
       labels = @LABEL_PLACE
     elsif(self.prop.starts_with? ZoneOntology::PLUGIN_SOCIAL_ANNOTATION)
-      filterVal=self.value
       labels = @LABEL_PLACE
+    elsif( (self.prop.start_with? @SVM_PLUGIN_URI) || (self.prop.starts_with? @OPEN_CALAIS_URI))
+    elsif (self.prop.start_with? @TWITTER_HASHTAG_PLUGIN_URI)
+      labels=@LABEL_TWITTER
+    elsif(self.prop.start_with? @TWITTER_MENTIONED_PLUGIN_URI)
+      labels=@LABEL_TWITTER
+    end
+
+    filterVal = getPrettyPrintingValue()
+    return button_link(self.uri, labels,filterVal, self.item.uri)
+  end
+
+  def getPrettyPrintingValue
+    filterVal = ""
+    if(self.prop.starts_with? @WIKI_META_URI)
+      if(self.value.rindex('/') == nil)
+        filterVal=self.value
+      else
+        filterVal=self.value[self.value.rindex('/')+1, self.value.length]
+      end
+
+    elsif(self.prop.starts_with? @SPOTLIGHT_URI)
+      filterVal=self.value[self.value.rindex('/')+1, self.value.length]
+
+    elsif(self.prop.starts_with? @INSEE_GEO_URI)
+      filterVal=self.value[filter.value.rindex('/')+1, filter.value.length]
+    elsif(self.prop.starts_with? ZoneOntology::PLUGIN_SOCIAL_ANNOTATION)
+      filterVal=self.value
     elsif( (self.prop.start_with? @SVM_PLUGIN_URI) || (self.prop.starts_with? @OPEN_CALAIS_URI))
       filterVal=self.value
     elsif (self.prop.start_with? @TWITTER_HASHTAG_PLUGIN_URI)
       filterVal=self.value
-      labels=@LABEL_TWITTER
     elsif(self.prop.start_with? @TWITTER_MENTIONED_PLUGIN_URI)
       filterVal=self.value
-      labels=@LABEL_TWITTER
     end
 
-    return button_link(self.uri, labels,filterVal, self.item.uri)
+    return filterVal.gsub "_", " "
   end
-
   def getInfos
     if self.uri == nil
       return {:abstract => nil, :thumbnail => nil}

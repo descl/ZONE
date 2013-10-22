@@ -37,6 +37,7 @@ class SearchesController < ApplicationController
   # GET /searches/1/edit
   def edit
     @search = retrieveSearchFromForm(params)
+    @search.save
   end
 
   # POST /searches
@@ -73,11 +74,13 @@ class SearchesController < ApplicationController
   # DELETE /searches/1
   # DELETE /searches/1.json
   def destroy
-    @search = Search.find(params[:id])
-    @search.destroy
+    if params[:id] != Rails.application.config.defaultRequestId.to_s
+      @search = Search.find(params[:id])
+      @search.destroy
+    end
 
     respond_to do |format|
-      format.html { redirect_to searches_url }
+      format.html { redirect_to(:back) }
       format.json { head :no_content }
     end
   end
@@ -95,12 +98,15 @@ class SearchesController < ApplicationController
     end
 
     search = Search.new
-    if form[:itemId] != '' && form[:itemId]!= Rails.application.config.defaultRequestId.to_s
+    if form[:itemId] != nil && form[:itemId] != '' && form[:itemId]!= Rails.application.config.defaultRequestId.to_s
       search = Search.find(form[:itemId])
       search.filters = Array.new
       search.sources = Array.new
     else
       search = Search.new
+    end
+    if form[:searchName] != nil
+      search.name = form[:searchName]
     end
 
     search.build_from_form(form,userId)

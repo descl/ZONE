@@ -123,13 +123,6 @@ a.label:visited{
   overflow:auto;
 }
 
-.pointerMouse{
-  cursor:  pointer;
-}
-
-.basicMouse{
-  cursor:  default;
-}
 
 .td-info{
   background-image : linear-gradient(to bottom,rgba(91, 192, 222, 0.1),rgba(47, 150, 180, 0.1));
@@ -308,4 +301,20 @@ a.label:visited{
 
 .btnFavorite-on{
   background-color: hsl(42, 100%, 56%) !important; background-repeat: repeat-x; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffda84", endColorstr="#ffbb1e"); background-image: -khtml-gradient(linear, left top, left bottom, from(#ffda84), to(#ffbb1e)); background-image: -moz-linear-gradient(top, #ffda84, #ffbb1e); background-image: -ms-linear-gradient(top, #ffda84, #ffbb1e); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffda84), color-stop(100%, #ffbb1e)); background-image: -webkit-linear-gradient(top, #ffda84, #ffbb1e); background-image: -o-linear-gradient(top, #ffda84, #ffbb1e); background-image: linear-gradient(#ffda84, #ffbb1e); border-color: #ffbb1e #ffbb1e hsl(42, 100%, 51%);  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.33); -webkit-font-smoothing: antialiased;color:white;
+}
+
+.editNameInputFrom{
+  margin-bottom:0px !important;
+  margin-top:0px !important;
+  padding-top:0px !important;
+  padding-bottom:0px !important;
+  border:0px !important;
+  background-color: transparent ! important;
+  box-shadow: none !important;
+}
+
+.popover-content{
+  padding-right:0px !important;
+  padding-left:0px !important;
+
 }

@@ -7,25 +7,54 @@ class ItemsController < ApplicationController
   def index
     @filters = []
     @sources = []
-
-    if params[:search] == nil && params[:search] != Rails.application.config.defaultRequestId.to_s
-      @search = Search.find(Rails.application.config.defaultRequestId)
-    else
-      @search = Search.find(params[:search])
-    end
+    @searches = []
 
     if user_signed_in?
-      @searches = Search.where(:user_id => current_user.id).limit(20).order("id desc")
-      if @searches.size > 0 && params[:search] == nil
-        @search = @searches.first
+      @searches = Search.where(:user_id => current_user.id).limit(20).order("updated_at desc")
+      if params[:search] == nil
+        if @searches.size > 0
+          @search = @searches.first
+        else
+          @search = Search.find(Rails.application.config.defaultRequestId)
+          @searches << @search
+        end
+      else
+        begin
+          @search = Search.find(params[:search])
+          if !@searches.include? @search
+            @searches << @search
+          end
+        rescue
+          if @searches.size == 0
+            @search = Search.find(Rails.application.config.defaultRequestId)
+          else
+            @search = @searches.first
+          end
+          respond_to do |format|
+            format.html { redirect_to(@search) }
+          end
+          return
+        end
       end
     else
-      @searches = []
-      if params[:search] != nil && params[:search] != Rails.application.config.defaultRequestId.to_s
-        @searches << Search.find(Rails.application.config.defaultRequestId)
+
+      @searches << Search.find(Rails.application.config.defaultRequestId)
+
+      if params[:search] == nil
+        @search = Search.find(Rails.application.config.defaultRequestId)
+      else
+        begin
+          @search = Search.find(params[:search])
+          if !@searches.include? @cearch
+            @searches << @search
+          end
+        rescue e
+          @search = Search.find(Rails.application.config.defaultRequestId)
+        end
       end
-      @searches << @search
     end
+
+
 
     if params[:isNew] == "true"
       flash[:notice] = t('search.disclaimer')

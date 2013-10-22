@@ -5,38 +5,33 @@
   <% @searches.each do |curSearch| %>
       <% curSearch.name ||= "Recherche #{curSearch.id}"%>
 
-      <% if curSearch.id == @search.id%>
+      <% #if curSearch.id == @search.id
+      %>
+
+          <%
+             descriptionSearchBox  = render partial: "items/reminder_panel", object: curSearch, as: 'search'
+             #if params[:id] != Rails.application.config.defaultRequestId.to_s
+                       %>
+
           <li
-            rel="popoverx"
-            id="search<%=curSearch.id%>"
-            class="openReminder active"
-            data-toggle="popover"
-            data-placement="right"
-            data-original-title="<%= raw t 'items.popover.title' %>"
-            title=""
-            data-content="</li><div class='row-fluid'><%= t('items.popover.content.added')%></div><div class='row-fluid'><button id='updateSearch' class='btn btn-success span12 updater' type='button' onclick='movingData(<%=curSearch.id%>);'><%= t('items.popover.content.update')%></button></div>"
+
+          id="<%="searchBox#{curSearch.id}"%>"
+          data-id="<%="searchBox#{curSearch.id}"%>"
+          class="<%= "active" if (curSearch.id == @search.id)%>"
+          rel="popoverx"
+          data-content="<%= descriptionSearchBox.gsub('\"','\'') %>"
           >
-      <%else%>
-          <li  rel="popoverx" id="search<%=curSearch.id%>">
-      <%end%>
 
 
-      <%
-         maVar  = render partial: "items/reminder_panel", object: curSearch, as: 'search'
-      %>
-
-              <a href= "<%= url_for(curSearch)%>" rel="popoverx" data-original-title="<%= curSearch.name %>" data-content="<%=maVar.gsub('\"', '\'') %>">
-
-
-
-        <div  class="test" >
-          <!--<i class="icon-trash" onclick="alert(\"tt\")"></i>-->
-          <%= curSearch.name%>
-        </div>
-
-      <%#end
-      %>
-        </a>
+          <!--
+          data-original-title="<%= %>"
+          <i class="icon-trash" onclick="alert(\"tt\")"></i>-->
+          <!--<span class="section">-->
+            <%= link_to curSearch do %>
+              <%= curSearch.name[0,20]%>
+              <span class=" icon-chevron-right pull-right searchmoreButton"/>
+            <%end%>
+          </span>
     </li>
   <%end%>
 </ul>
@@ -50,15 +45,6 @@
                     function() {
                         saveFormToHtml(this);
                     }
-        });
-    })
-</script>
-
-<script type="text/javascript">
-    $(function() {
-        $('.openReminder').popoverx({
-            fire_on : 'manual',
-            hover_delay_close : 6000
         });
     })
 </script>
