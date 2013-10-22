@@ -135,11 +135,12 @@ class Source
     subject = RDF::URI.new(@uri)
 
     res = $repo.insert(RDF::Virtuoso::Query.insert_data([subject,RDF.type,RDF::URI.new(ZoneOntology::SOURCES_TYPE)]).graph(graph))
-    $repo.insert(RDF::Virtuoso::Query.insert_data([subject,RDF::URI.new("http://www.w3.org/2000/01/rdf-schema#label"),@label]).graph(graph)) if @label != nil
-    $repo.insert(RDF::Virtuoso::Query.insert_data([subject,RDF::URI.new(ZoneOntology::SOURCES_LANG),@lang]).graph(graph)) if @lang != nil
-    $repo.insert(RDF::Virtuoso::Query.insert_data([subject,RDF::URI.new(ZoneOntology::SOURCES_THUMB),@thumb]).graph(graph)) if @thumb != nil
-    $repo.insert(RDF::Virtuoso::Query.insert_data([subject,RDF::URI.new(ZoneOntology::SOURCES_THEME),@theme]).graph(graph)) if @theme != nil
-    $repo.insert(RDF::Virtuoso::Query.insert_data([subject,RDF::URI.new(ZoneOntology::SOURCES_OWNER),@owner.to_s]).graph(graph)) if @owner != nil
+    $repo.insert(RDF::Virtuoso::Query.insert_data([subject,RDF::URI.new("http://www.w3.org/2000/01/rdf-schema#label"),@label]).graph(graph)) if (@label != nil && @label != "")
+    $repo.insert(RDF::Virtuoso::Query.insert_data([subject,RDF::URI.new(ZoneOntology::SOURCES_LANG),@lang]).graph(graph)) if (@lang != nil && @lang != "")
+    $repo.insert(RDF::Virtuoso::Query.insert_data([subject,RDF::URI.new(ZoneOntology::SOURCES_THUMB),@thumb]).graph(graph)) if (@thumb != nil && @thumb != "")
+    $repo.insert(RDF::Virtuoso::Query.insert_data([subject,RDF::URI.new(ZoneOntology::SOURCES_THEME),@theme]).graph(graph)) if (@theme != nil && @theme != "")
+    $repo.insert(RDF::Virtuoso::Query.insert_data([subject,RDF::URI.new(ZoneOntology::SOURCES_OWNER),@owner.to_s]).graph(graph)) if (@owner != nil && @owner != "")
+    $repo.insert(RDF::Virtuoso::Query.insert_data([subject,RDF::URI.new("http://purl.org/rss/1.0/pubDateTime"),Time.now.to_i.to_s]).graph(graph))
     if attrs != nil
       attrs.each do |attr,valStr|
         if valStr.start_with? 'http'

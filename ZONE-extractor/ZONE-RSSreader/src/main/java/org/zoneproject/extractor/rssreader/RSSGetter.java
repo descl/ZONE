@@ -190,7 +190,22 @@ public class RSSGetter {
         }
         return sources.toArray(new String[sources.size()]);
     }
-
+    
+    public static String [] getLastsSources(int limit){
+        String query = "SELECT *  WHERE {"
+                + "?uri rdf:type <"+ZoneOntology.SOURCES_TYPE+">."
+                + "?uri <http://purl.org/rss/1.0/pubDateTime> ?pubDate."
+                + "FILTER (!bif:exists ((select (1) where { ?uri <http://zone-project.org/model/sources#offline> \"true\" } )))"
+                + "FILTER (!bif:exists ((select (1) where { ?uri rdf:type <http://zone-project.org/model/sources#twitter> } )))"
+                + "}ORDER BY DESC(?pubDate) LIMIT "+limit+" ";
+        ResultSet res = Database.runSPARQLRequest(query, ZoneOntology.GRAPH_SOURCES);
+        ArrayList<String> sources = new ArrayList<String>();
+        while (res.hasNext()) {
+            QuerySolution r = res.nextSolution();
+            sources.add(r.get("?uri").toString());
+        }
+        return sources.toArray(new String[sources.size()]);
+    }
     public static void main(String[] args){
         
         String fileURI = "http://feeds.bbci.co.uk/news/world/rss.xml";

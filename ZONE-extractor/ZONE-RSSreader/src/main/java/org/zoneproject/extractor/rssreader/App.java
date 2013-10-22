@@ -37,6 +37,10 @@ public class App
     {
         String [] sources = RSSGetter.getSources();
         DownloadNewsThread[] th = new DownloadNewsThread[SIM_DOWNLOADS];
+        
+        DownloadLastsNewsThread lastsThread = new DownloadLastsNewsThread();
+        lastsThread.start();
+        
         for(int i = 0; i < sources.length; i+=SIM_DOWNLOADS){
             
             for(int curSource = i; (curSource < (i+SIM_DOWNLOADS)) && (curSource < sources.length); curSource++){
