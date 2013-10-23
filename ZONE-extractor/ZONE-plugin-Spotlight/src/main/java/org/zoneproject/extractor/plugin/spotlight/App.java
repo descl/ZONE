@@ -47,28 +47,33 @@ public class App
         Prop [] deps = {new Prop(ZoneOntology.PLUGIN_LANG, "\"fr\"")};
         
         AnnotationThread[] th;
-        do{
-            items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
-            if(items == null){
-                continue;
-            }
-            th = new AnnotationThread[items.length];
-
-            logger.info("Spotlight has "+items.length+" items to annotate");
-            for(int curItem = 0; curItem < items.length ; curItem++){
-                th[curItem] = new AnnotationThread(items[curItem]);
-                th[curItem].start();
-            }
-            for(int curItem = 0; curItem < items.length ; curItem++){
-                try {
-                    if(th[curItem] == null)continue;
-                    th[curItem].join();
-                } catch (InterruptedException ex) {
-                logger.warn(ex);
+        while(true){
+            do{
+                items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
+                if(items == null){
+                    continue;
                 }
-            }
+                th = new AnnotationThread[items.length];
+
+                logger.info("Spotlight has "+items.length+" items to annotate");
+                for(int curItem = 0; curItem < items.length ; curItem++){
+                    th[curItem] = new AnnotationThread(items[curItem]);
+                    th[curItem].start();
+                }
+                for(int curItem = 0; curItem < items.length ; curItem++){
+                    try {
+                        if(th[curItem] == null)continue;
+                        th[curItem].join();
+                    } catch (InterruptedException ex) {
+                    logger.warn(ex);
+                    }
+                }
+
+            }while(items == null || items.length > 0);
+            logger.info("done");
+            try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
             
-        }while(items == null || items.length > 0);
+        }
     }
 }
 
@@ -81,7 +86,7 @@ class AnnotationThread extends Thread  {
         this.item = item;
     }
     public void run() {
-        logger.info("[-] Start for item: "+item.getUri()+" -- " + item.concat().replaceAll("\n", ""));
+        logger.info("[-] Start for item: "+item.getUri());
         //try {Thread.currentThread().sleep(5000);} catch (InterruptedException ex1) {}
         
         //Starting annotations downloading

@@ -315,7 +315,7 @@ public abstract class VirtuosoDatabase {
         }
         
         String request = "SELECT DISTINCT ?uri FROM <http://zone-project.org/datas/items> WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title "+requestPlugs+". OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined.  } FILTER (!bound(?pluginDefined)) } LIMIT "+limit;
-        logger.info(request);
+
         ResultSet results;
         try{
             results = runSPARQLRequest(request);
@@ -325,6 +325,7 @@ public abstract class VirtuosoDatabase {
                 try{Thread.currentThread().sleep(5000);}catch(InterruptedException ie){}
                 return getItemsNotAnotatedForPluginsWithDeps(pluginURI, deps, limit);
             }else{
+                logger.warn(ex);
                 logger.warn("Encoding error in some uri's request:"+request);
                 return null;
             }

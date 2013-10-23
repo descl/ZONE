@@ -28,7 +28,7 @@ package org.zoneproject.extractor.rssreader;
 public class App 
 {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
-    public static int SIM_DOWNLOADS = 100;
+    public static int SIM_DOWNLOADS = 20;
     public App(){
         String [] tmp = {};
         App.main(tmp);

@@ -36,9 +36,9 @@ public class DownloadLastsNewsThread extends Thread  {
     }
     public void run() {
         String lastRss = "";
+        String [] sources;
         while(true){
-            
-            String [] sources = RSSGetter.getLastsSources(100);
+            sources = RSSGetter.getLastsSources(50);
             for(String cur: sources){
                 if(cur == lastRss){
                     break;

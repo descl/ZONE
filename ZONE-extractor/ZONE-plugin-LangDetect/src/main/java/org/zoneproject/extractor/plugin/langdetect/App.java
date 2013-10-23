@@ -56,18 +56,22 @@ public class App
         } catch (IOException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        do{
-            items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
-            if(items == null){
-                continue;
-            }
-            for(Item item : items){
-                String lang = LangDetect.detectLang(item.concat());
-                Prop p = new Prop(ZoneOntology.PLUGIN_LANG, lang, true,true);
-                Database.addAnnotation(item.getUri(), p);
-            }
+        while(true){
+            do{
+                items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
+                if(items == null){
+                    continue;
+                }
+                logger.info("LangDetect has "+items.length+" items to annotate");
+                for(Item item : items){
+                    String lang = LangDetect.detectLang(item.concat());
+                    Prop p = new Prop(ZoneOntology.PLUGIN_LANG, lang, true,true);
+                    Database.addAnnotation(item.getUri(), p);
+                }
+            }while(items == null || items.length > 0);
+            
             logger.info("done");
-        }while(items == null || items.length > 0);
+            try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
+        }
     }
 }
