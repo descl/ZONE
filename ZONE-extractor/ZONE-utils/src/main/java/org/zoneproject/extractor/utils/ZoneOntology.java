@@ -35,6 +35,7 @@ public class ZoneOntology {
     
     public static String PLUGIN_EXTRACT_ARTICLES_CONTENT =  PLUGIN_PREFIX+"/ExtractArticlesContent";
     public static String PLUGIN_EXTRACT_ARTICLES_CONTENT_RES = PLUGIN_EXTRACT_ARTICLES_CONTENT+"#result";
+    public static String PLUGIN_EXTRACT_ARTICLES_CONTENT_LINK = PLUGIN_EXTRACT_ARTICLES_CONTENT+"#link";
     
     public static String PLUGIN_INSEEGEO = PLUGIN_PREFIX+"/INSEEGeo";
     public static String PLUGIN_OPENCALAIS = PLUGIN_PREFIX+"/OpenCalais";

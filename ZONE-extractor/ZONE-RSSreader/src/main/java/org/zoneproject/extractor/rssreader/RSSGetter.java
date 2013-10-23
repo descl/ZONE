@@ -35,6 +35,7 @@ import com.sun.syndication.io.XmlReader;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -144,6 +145,12 @@ public class RSSGetter {
             if(uri.equals("")) {
                 continue;
             }
+            try {
+                uri = new URI(null,uri,null).toASCIIString();
+            } catch (URISyntaxException ex) {
+                logger.warn("Impossible to parse the uri"+ uri+" the news will not be saved");
+                continue;
+            }
 
             //create item
             String description = "";
@@ -207,13 +214,14 @@ public class RSSGetter {
         return sources.toArray(new String[sources.size()]);
     }
     public static void main(String[] args){
-        String[] res = getLastsSources(5);
+        /*String[] res = getLastsSources(5);
         for(String r: res)
-            System.out.println(r);
-        /*String fileURI = "http://feeds.bbci.co.uk/news/world/rss.xml";
+            System.out.println(r);*/
+        String fileURI = "http://feeds.bbci.co.uk/news/world/rss.xml";
+        fileURI = "http://camarade.over-blog.org/rss-articles.xml";
         ArrayList<Item> result = RSSGetter.getFlux(fileURI);
         for(Item i: result){
             logger.info(i);
-        }*/
+        }
     }
 }

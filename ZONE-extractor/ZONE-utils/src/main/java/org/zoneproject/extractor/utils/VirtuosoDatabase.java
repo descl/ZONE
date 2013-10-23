@@ -50,6 +50,8 @@ import virtuoso.jena.driver.VirtGraph;
 import virtuoso.jena.driver.VirtModel;
 import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 import com.hp.hpl.jena.shared.JenaException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.concurrent.Future;
 
 /**
@@ -315,7 +317,7 @@ public abstract class VirtuosoDatabase {
         }
         
         String request = "SELECT DISTINCT ?uri FROM <http://zone-project.org/datas/items> WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title "+requestPlugs+". OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined.  } FILTER (!bound(?pluginDefined)) } LIMIT "+limit;
-
+        logger.info(request);
         ResultSet results;
         try{
             results = runSPARQLRequest(request);
@@ -384,8 +386,6 @@ public abstract class VirtuosoDatabase {
             return new Item(uri,results,uri,"relation","?value");
         }catch(JenaException ex){
             logger.warn("There are encoding errors on item "+uri+" the item will be deleted");
-            //descl
-            deleteItem(uri);
             return null;
         }
     }
