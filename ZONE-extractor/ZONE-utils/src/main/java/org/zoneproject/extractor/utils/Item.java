@@ -28,7 +28,6 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RSS;
-import com.sun.syndication.feed.rss.Enclosure;
 import com.sun.syndication.feed.synd.SyndEnclosureImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
 import java.io.IOException;
@@ -57,6 +56,13 @@ public class Item implements Serializable{
 private static final long serialVersionUID = 1L;
     public String uri;
     public ArrayList<Prop> values;
+    
+    String xml10pattern = "[^"
+                + "\u0009\r\n"
+                + "\u0020-\uD7FF"
+                + "\uE000-\uFFFD"
+                + "\ud800\udc00-\udbff\udfff"
+                + "]";
 
     public Item(){
         this("");
@@ -186,7 +192,9 @@ private static final long serialVersionUID = 1L;
         if(resFromArticleContent != null && resFromArticleContent.length > 0) {
             result = result+". " + resFromArticleContent[0];
         }
-        return result.replaceAll("<[^>]*>", "");
+        result = result.replaceAll("<[^>]*>", "");
+        result = result.replaceAll(xml10pattern, "");
+        return result;
     }
 
     public String getUri() {

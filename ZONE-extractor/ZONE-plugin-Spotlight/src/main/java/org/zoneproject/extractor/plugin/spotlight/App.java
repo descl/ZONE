@@ -35,7 +35,7 @@ public class App
 {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_SPOTLIGHT;
-    public static int SIM_DOWNLOADS = 40;
+    public static int SIM_DOWNLOADS = 10;
     
     public App(){
         String [] tmp = {};
@@ -45,20 +45,51 @@ public class App
     public static void main(String[] args) {
         Item[] items = null;
         Prop [] deps = {new Prop(ZoneOntology.PLUGIN_LANG, "\"fr\"")};
+        
+        AnnotationThread[] th;
         do{
             items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
             if(items == null){
                 continue;
             }
+            th = new AnnotationThread[items.length];
+
             logger.info("Spotlight has "+items.length+" items to annotate");
-            for(Item item : items){
-                logger.info(item.getTitle());
-                //ArrayList<Prop> content= SpotlightRequest.getProperties(item);
-                //logger.info(content);
-                /*Database.addAnnotations(item.getUri(), content);
-                if(content != null)
-                    Database.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));*/
+            for(int curItem = 0; curItem < items.length ; curItem++){
+                th[curItem] = new AnnotationThread(items[curItem]);
+                th[curItem].start();
             }
+            for(int curItem = 0; curItem < items.length ; curItem++){
+                try {
+                    if(th[curItem] == null)continue;
+                    th[curItem].join();
+                } catch (InterruptedException ex) {
+                logger.warn(ex);
+                }
+            }
+            
         }while(items == null || items.length > 0);
+    }
+}
+
+
+class AnnotationThread extends Thread  {
+    private Item item;
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
+
+    public AnnotationThread(Item item) {
+        this.item = item;
+    }
+    public void run() {
+        logger.info("[-] Start for item: "+item.getUri()+" -- " + item.concat().replaceAll("\n", ""));
+        //try {Thread.currentThread().sleep(5000);} catch (InterruptedException ex1) {}
+        
+        //Starting annotations downloading
+        ArrayList<Prop> content= SpotlightRequest.getProperties(item);
+
+        if(content != null){
+            Database.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
+            Database.addAnnotations(item.getUri(), content);
+        }
     }
 }

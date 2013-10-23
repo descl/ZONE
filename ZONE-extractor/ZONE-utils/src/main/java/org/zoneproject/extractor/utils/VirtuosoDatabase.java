@@ -89,11 +89,14 @@ public abstract class VirtuosoDatabase {
     }
 
     public static void addItem(Item item){
-        Model model = getModelForAnnotations(item.getUri(), item.getElements());
+        Model model = getModelForItem(item);
         addModelToStore(model, ZoneOntology.GRAPH_NEWS);
     }
     
     public static void addAnnotations(String itemUri, ArrayList<Prop> props){
+        if(props == null){
+            return;
+        }
         Model model = getModelForAnnotations(itemUri, props);
         addModelToStore(model, ZoneOntology.GRAPH_NEWS);
     }
@@ -147,6 +150,9 @@ public abstract class VirtuosoDatabase {
         Model model = ModelFactory.createDefaultModel();
         for (Iterator<Prop> it = props.iterator(); it.hasNext();) {
             Prop prop = it.next();
+            if(prop.getChildren() != null){
+                model.add(getModelForAnnotations(prop.getValue(), prop.getChildren()));
+            }
             model.add(getModelForAnnotation(itemUri, prop));
         }
         return model;
@@ -307,6 +313,7 @@ public abstract class VirtuosoDatabase {
         }
         
         String request = "SELECT DISTINCT ?uri FROM <http://zone-project.org/datas/items> WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title "+requestPlugs+". OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined.  } FILTER (!bound(?pluginDefined)) } LIMIT "+limit;
+        logger.info(request);
         ResultSet results;
         try{
             results = runSPARQLRequest(request);

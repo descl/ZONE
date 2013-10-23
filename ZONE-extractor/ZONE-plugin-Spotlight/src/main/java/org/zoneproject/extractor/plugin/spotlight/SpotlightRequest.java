@@ -28,8 +28,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,9 +45,11 @@ import org.zoneproject.extractor.utils.ZoneOntology;
  * @author Desclaux Christophe <christophe@zouig.org>
  */
 public class SpotlightRequest {
+    private final static int NUMBER_OF_ANNOTATIONS = 10;
     public enum Endpoints {
-	EN("http://spotlight.dbpedia.org/rest/"),
-	FR("http://spotlight.sztaki.hu:2225/rest"),
+	//EN("http://spotlight.dbpedia.org/rest/"),
+	EN("http://localhost:2222/rest"),
+	FR("http://localhost:2225/rest"),
 	//NL("http://nl.dbpedia.org/spotlight/rest"),
 	DE("http://de.dbpedia.org/spotlight/rest"),
 	//HU("http://spotlight.sztaki.hu:2229/rest"),
@@ -74,14 +77,16 @@ public class SpotlightRequest {
                 endpoint = Endpoints.valueOf("EN").getValue();
             }
             String json = getResponse(item.concat(), endpoint);
-            String[] entities = SpotlightRequest.getNamedEntities(json);
-            for(String e : entities){
-                Prop p = new Prop(ZoneOntology.PLUGIN_SPOTLIGHT_ENTITIES, e, false,true);
+            Annotation[] entities = SpotlightRequest.getNamedEntities(json);
+            Arrays.sort(entities);
+            for(int i=0; i < entities.length && i < NUMBER_OF_ANNOTATIONS; i++){
+                Annotation e = entities[i];
+                Prop p = new Prop(ZoneOntology.PLUGIN_SPOTLIGHT_ENTITIES, e.getUri(), false,true);
                 result.add(p);
             }
             return result;
         } catch (IOException ex) {
-            logger.warn("The server "+ endpoint + " is not responding");
+            logger.warn("The server "+ endpoint + " is not responding"+ ex);
             return null;
         }
     }
@@ -114,9 +119,9 @@ public class SpotlightRequest {
             return output;
         }   
         
-    public static String[] getNamedEntities(String f){
+    public static Annotation[] getNamedEntities(String f){
         ObjectMapper mapper = new ObjectMapper();
-        LinkedHashSet<String> result = new LinkedHashSet<String>();
+        HashMap<String,Annotation> result = new HashMap<String,Annotation>();
         
         try {
             //first need to allow non-standard json
@@ -129,14 +134,19 @@ public class SpotlightRequest {
             if(documentElems != null){
                 for(int i=0; i < documentElems.size();i++){
                     LinkedHashMap cur = (LinkedHashMap) documentElems.get(i);
-                    result.add(cur.get("@URI").toString());
+                    Annotation a = new Annotation(cur.get("@URI").toString(),Double.parseDouble(cur.get("@similarityScore").toString()),cur.get("@types").toString(),Integer.parseInt(cur.get("@offset").toString()));
+                    if(!result.containsKey(a.getUri())){
+                        result.put(a.getUri(),a);
+                    }else{
+                        result.get(a.getUri()).addScore(a.getScore());
+                    }
                 }
             }
         } catch (Exception ex) {
             Logger.getLogger(SpotlightRequest.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        return result.toArray(new String[result.size()]);
+        return result.values().toArray(new Annotation[result.size()]);
     }
     public static void main(String[] args) throws IOException {
         String text = "Un nouveau portail pour notre documentation en ligne.\\n Antidot met à disposition de l’ensemble de ses clients et partenaires un nouveau portail pour l’accès en ligne à la documentation de ses produits. Ce portail documentaire a pour ambition de faciliter vos recherches et de simplifier votre navigation au sein de près de 2000 pages de Guides, Notes techniques et Notes de version : […]. Antidot met à disposition de l’ensemble de ses clients et partenaires un nouveau portail pour l’accès en ligne à la documentation de ses produits .Ce portail documentaire a pour ambition de faciliter vos recherches et de simplifier votre navigation au sein de près de 2000 pages de Guides, Notes techniques et Notes de version :Ce service vous est aujourd’hui ouvert en version beta. N’hésitez pas à nous faire part de vos retours : tous les commentaires et suggestions que nous recueillerons seront étudiés avec la plus grande attention.Pour la petite histoire, ce portail documentaire est réalisé intégralement à partir de nos solutions dont il exploite les fonctionnalités avancées :AIF – Information Factory : pour la recomposition et l’analyse des unités documentaires fines,AFS – Finder Suite : pour le moteur de recherche et la lecture dynamique et continue.Il sera bientôt enrichi des fonctions d’alertes et d’annotation apportées par notre produit ACS – Collaboration Services .Nous vous remercions de votre confiance.Partagez";

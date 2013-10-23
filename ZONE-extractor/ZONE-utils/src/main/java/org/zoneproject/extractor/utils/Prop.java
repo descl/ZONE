@@ -28,6 +28,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,6 +42,7 @@ public class Prop {
     private String value="";
     private boolean isLiteral;
     private boolean isSearchable=false;
+    private ArrayList<Prop> children = null;
 
     public Prop(Property t, String value){
         this(t,value,true,false);
@@ -112,10 +114,18 @@ public class Prop {
     public void setIsSearchable(boolean isSearchable) {
         this.isSearchable = isSearchable;
     }
-    
+
+    public ArrayList<Prop> getChildren() {
+        return children;
+    }
+
+    public void setChildren(ArrayList<Prop> children) {
+        this.children = children;
+    }
+
     @Override
     public String toString(){
-        return "Prop("+this.getType()+","+this.getValue()+","+this.isLiteral()+")";
+        return "Prop("+this.getType()+","+this.getValue()+","+this.isLiteral()+","+this.getChildren()+")";
     }
 
     @Override
