@@ -90,6 +90,8 @@ class AnnotationThread extends Thread  {
         if(content != null){
             Database.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
             Database.addAnnotations(item.getUri(), content);
+        }else{
+            logger.warn("Error while annotating" + item.getUri());
         }
     }
 }

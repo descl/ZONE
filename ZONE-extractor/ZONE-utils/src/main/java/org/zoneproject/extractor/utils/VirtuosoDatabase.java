@@ -61,7 +61,6 @@ public abstract class VirtuosoDatabase {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     private static Model st = null;
     private static String VIRTUOSO_SERVER = Config.getVar("Virtuoso-server-uri");
-    //private static String VIRTUOSO_SERVER = "jdbc:virtuoso://localhost:12346";
     private static String VIRTUOSO_USER = Config.getVar("Virtuoso-server-user");
     private static String VIRTUOSO_PASS = Config.getVar("Virtuoso-server-pass");
     public static String ZONE_URI = ZoneOntology.GRAPH_NEWS;
@@ -191,18 +190,21 @@ public abstract class VirtuosoDatabase {
     }
     
     public static void addModelToStore(Model model, String graph){
-        int i = 5;
-        while((i--)>0){
+        int i = 0;
+        while((i++)>=0){
             try {
                 getStore(graph).add(model);
                 return;
             } catch (JenaException ex) {
-                if(i==0){
+                if(ex.getMessage().contains("timeout")){
+                    logger.warn("connection lost with server (wait 5 secondes)("+i+ " try)");
+                }else{
                     logger.warn("annotation process error because of virtuoso partial error");
-                    logger.warn(ex);
                 }
-                //TODO : clean
-                //try{Thread.currentThread().sleep(1000);}catch(InterruptedException ie){}
+                /*if(i==0){
+                    return;
+                }*/
+                try{Thread.currentThread().sleep(5000);}catch(InterruptedException ie){}
             }
         }
     }
@@ -318,8 +320,14 @@ public abstract class VirtuosoDatabase {
         try{
             results = runSPARQLRequest(request);
         }catch(JenaException ex){
-            logger.warn("Encoding error in some uri's request:"+request);
-            return null;
+            if(ex.getMessage().contains("timeout")){
+                logger.warn("connection lost with server (wait 5 secondes)");
+                try{Thread.currentThread().sleep(5000);}catch(InterruptedException ie){}
+                return getItemsNotAnotatedForPluginsWithDeps(pluginURI, deps, limit);
+            }else{
+                logger.warn("Encoding error in some uri's request:"+request);
+                return null;
+            }
         }
         Item item;
         QuerySolution result;
