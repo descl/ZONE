@@ -3,11 +3,14 @@ package org.zoneproject.extractor.plugin.extractarticlescontent;
 import de.l3s.boilerpipe.BoilerpipeProcessingException;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import org.xml.sax.InputSource;
 import org.zoneproject.extractor.utils.Item;
+import org.zoneproject.extractor.utils.ZoneOntology;
 
 /*
  * #%L
@@ -30,31 +33,52 @@ import org.zoneproject.extractor.utils.Item;
  * #L%
  */
 public class ExtractArticleContent {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
 
     public static String getContent(Item item) throws MalformedURLException, IOException, BoilerpipeProcessingException{
-        URL url = new URL(item.getUri());
-        URLConnection conn = url.openConnection();
-        // fake request coming from browser
-        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB;     rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13 (.NET CLR 3.5.30729)");
-        String content= ArticleExtractor.INSTANCE.getText(new InputSource(conn.getInputStream())).replace("\u00A0", " ").trim();
-
-        String title = "abcdefghijklmnopqstuvwxyz";
-        if(item.getTitle() != null){
-            title = item.getTitle().trim();
-        }
-
-        if(item.getDescription() != null){
-            String description = item.getDescription().trim().substring(0,Math.min(item.getDescription().trim().length(),20));
-
-            if(content.contains(description)){
-                content = content.substring(content.indexOf(description));
+        String content = "";
+        
+        for(String curLink: item.getElements(ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_LINK)){
+            String curContent = getContent(curLink);
+            String title = "abcdefghijklmnopqstuvwxyz";
+            if(item.getTitle() != null){
+                title = item.getTitle().trim();
             }
-        }
 
-        if(content.contains(title)){
-            content = content.substring(content.indexOf(title)+title.length());
+            if(item.getDescription() != null){
+                String description = item.getDescription().trim().substring(0,Math.min(item.getDescription().trim().length(),20));
+
+                if(curContent.contains(description)){
+                    curContent = curContent.substring(curContent.indexOf(description));
+                }
+            }
+
+            if(curContent.contains(title)){
+                curContent = curContent.substring(curContent.indexOf(title)+title.length());
+            }
+            curContent = curContent.replace("\n", "<br/>");
+            content += curContent+"<br/>";
         }
-        content = content.replace("\n", "<br/>");
         return content;
+    }
+    public static String getContent(String uri) throws MalformedURLException, IOException, BoilerpipeProcessingException{
+        try{
+            URL url = new URL(uri);
+            HttpURLConnection.setFollowRedirects(true);
+            URLConnection conn = url.openConnection();
+            if(!uri.contains("http://t.co/")){
+                // fake request coming from browser
+                conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");            //((HttpURLConnection) conn).setInstanceFollowRedirects(true);
+            }
+            //start the connect in order to pass throw the redirects
+            conn.connect();
+            conn.getInputStream();
+
+            return ArticleExtractor.INSTANCE.getText(new InputSource(conn.getInputStream())).replace("\u00A0", " ").trim()+"\n";
+        
+        }catch(java.io.FileNotFoundException ex){
+            logger.warn("annotation process because of download error for "+uri);
+            return "";
+        }
     }
 }

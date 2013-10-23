@@ -1,14 +1,7 @@
 package org.zoneproject.extractor.plugin.extractarticlescontent;
 
 import de.l3s.boilerpipe.BoilerpipeProcessingException;
-import de.l3s.boilerpipe.extractors.ArticleExtractor;
-import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.xml.sax.InputSource;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
 import org.zoneproject.extractor.utils.VirtuosoDatabase;
@@ -44,29 +37,23 @@ public class DownloadThread extends Thread  {
       run(0);
   }
   public void run(int restartLevel) {
-      if(restartLevel > 5) {
-          logger.warn("annotation process imposible for "+item.getUri());
-          return;
-      }
-      if(restartLevel>0)
-          try {Thread.currentThread().sleep(5000);} catch (InterruptedException ex1) {}
       try {
           logger.info("Add ExtractArticlesContent for item: "+item.getUri());
 
           String content = ExtractArticleContent.getContent(item);
-          
+
+          VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
           VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_RESULT_URI,content));
       } catch (BoilerpipeProcessingException ex) {
           logger.warn("annotation process because of download error for "+item.getUri());
-          run(restartLevel+1);
       } catch (MalformedURLException ex) {
           logger.warn("annotation process because of malformed Uri for "+item.getUri());
       } catch (java.io.IOException ex) {
           logger.warn("annotation process because of download error for "+item.getUri());
-          run(restartLevel+1);
       }catch (com.hp.hpl.jena.shared.JenaException ex){
           logger.warn("annotation process because of virtuoso partial error "+item.getUri());
-          run(restartLevel+1);
+      }finally{
+          VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
       }
   }
 }
