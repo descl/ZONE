@@ -23,14 +23,11 @@ package org.zoneproject.extractor.utils;
 
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  *
@@ -43,6 +40,7 @@ public class Prop {
     private boolean isLiteral;
     private boolean isSearchable=false;
     private ArrayList<Prop> children = null;
+    private static Pattern unicodeOutliers = Pattern.compile("[^\\x00-\\x7F]", Pattern.UNICODE_CASE | Pattern.CANON_EQ| Pattern.CASE_INSENSITIVE);
 
     public Prop(Property t, String value){
         this(t,value,true,false);
@@ -58,16 +56,17 @@ public class Prop {
         this(ResourceFactory.createProperty(t),value,isLi,isSearchable);
     }
     
-    public Prop(Property t, String value, boolean isLi, boolean isS){
+    public Prop(Property t, String val, boolean isLi, boolean isS){
         this.type = t;
         byte[] utf8;
-        try {
-            utf8 = value.getBytes("UTF-8");
-        this.value= new String(utf8, "UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(Prop.class.getName()).log(Level.WARNING, null, ex);
-        }
-        this.isLiteral = isLi;
+        val = StringEscapeUtils.unescapeJava(val);
+        utf8 = val.getBytes(Charset.forName("UTF-8"));
+        this.value= new String(utf8, Charset.forName("UTF-8"));
+        Matcher unicodeOutlierMatcher = unicodeOutliers.matcher(this.value);
+        this.value = unicodeOutlierMatcher.replaceAll(" ");
+        
+        
+        System.out.println(this.value);
         this.isSearchable = isS;
     }
     
