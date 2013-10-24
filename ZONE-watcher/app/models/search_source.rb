@@ -58,7 +58,7 @@ class SearchSource < ActiveRecord::Base
   def getButton
     type= "info"
     self.kind == "rss" ? "warning" : "info"
-    return "<span id='filter#{self.id}' class=\"label label-#{self.kind == "rss" ? "warning" : "info"} #{self.kind}Source\">#{self.value} <i class=\"icon-remove pointerMouse\" onclick=\"removeElement('#{self.id}');\"></i></span>"
+    return "<span id='filter#{self.id}' class=\"label label-#{self.kind == "rss" ? "warning" : "info"} #{self.kind}Source\">#{self.value} <i class=\"icon-remove pointerMouse\" onclick=\"removeElement('#{self.id}',event);\"></i></span>"
   end
 
 end

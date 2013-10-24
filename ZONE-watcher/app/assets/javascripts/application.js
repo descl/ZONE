@@ -199,6 +199,11 @@ function updateFilename(path) {
 		$('#fileTextName').html($('#fileTextName').attr('data-initial'));
 }
 
+function removeElement(id,e){
+    e.stopPropagation();
+    $("#filter"+id).remove();
+    showUpdate();
+}
 
 // truncate the items text. Derived from jTruncate but adapted to Reador.net
 // License : GPL. Author : Jeremy Martin.

@@ -57,11 +57,11 @@ function addTag(type, value, uri) {
     var formZone = $($(".searchItem.active").attr("data-content"))
 	var id = getId();
     if (type == 'opt')
-        formZone.find(".well-info").append('<span id="'+id+'" class="label label-info" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value+ ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
+        formZone.find(".well-info").append('<span id="'+id+'" class="label label-info" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value+ ' <i class="icon-remove" onclick="removeElement(id,event);"></i></span>');
     else if (type == 'must')
-        formZone.find(".well-success").append('<span id="'+id+'" class="label label-success" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
+        formZone.find(".well-success").append('<span id="'+id+'" class="label label-success" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove" onclick="removeElement(id,event);"></i></span>');
     else if (type == 'no')
-        formZone.find(".well-danger").append('<span id="'+id+'" class="label label-danger" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove" onclick="$(this).closest(&quot;span&quot;).remove();showUpdate()"></i></span>');
+        formZone.find(".well-danger").append('<span id="'+id+'" class="label label-danger" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove" onclick="removeElement(id,event);"></i></span>');
 
     var formContent = $("<form/>").append(formZone.clone()).html()
     $(".searchItem.active").attr("data-content",formContent)
@@ -70,20 +70,25 @@ function addTag(type, value, uri) {
     return false;
 };
 function saveFormToHtml(doc){
-    contentToSave = $('.popover-content').children('p').html();
+    var contentToSave = $('.popover-content').children('p').html();
     $("#"+doc.options.id).attr("data-content",contentToSave)
-}
-function removeElement(id){
-    $(id).remove();
-    showUpdate();
 }
 
 //Close all the popover after clicking on a selection
 function openReminderOnChange() {
-    $(".openReminder").children("a").popoverx('show');
-    setTimeout(function() {
-        $(".openReminder").children("a").popoverx('hide');
-    }, 5000);
+    var defaultItem = $('.searchItem.active');
+    defaultItem.removeClass('active');
+
+    var timer = setInterval(function(){
+        if(defaultItem.hasClass('active'))
+            defaultItem.removeClass('active')
+        else
+            defaultItem.addClass('active')
+    },300);
+    setTimeout(function(){
+        clearInterval(timer);
+        defaultItem.addClass('active')
+    },2100);
     return false;
 }
 

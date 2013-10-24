@@ -15,6 +15,9 @@ class Stat
         }"
     val = store.query(query)[0][:num]
     stats << {:kind => kind, :val => val}
+    if val == 0
+      return
+    end
     StatHat::API.ez_post_value(kind,Rails.application.config.stathatId,val)
 
     ###############################################################
