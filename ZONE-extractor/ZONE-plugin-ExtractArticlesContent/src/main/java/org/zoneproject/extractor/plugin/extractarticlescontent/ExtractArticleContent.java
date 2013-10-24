@@ -7,12 +7,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.xml.sax.InputSource;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.ZoneOntology;
+import sun.net.util.URLUtil;
 
 /*
  * #%L
@@ -84,7 +86,7 @@ public class ExtractArticleContent {
     }
     public static String getContent(String uri) throws MalformedURLException, IOException, BoilerpipeProcessingException{
         try{
-            URL url = new URL(uri);
+            URL url = new URL(java.net.URLDecoder.decode(uri, "UTF-8"));
             HttpURLConnection.setFollowRedirects(true);
             URLConnection conn = url.openConnection();
             if(!uri.contains("http://t.co/")){

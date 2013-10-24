@@ -61,10 +61,13 @@ public class Prop {
         byte[] utf8;
         val = StringEscapeUtils.unescapeJava(val);
         utf8 = val.getBytes(Charset.forName("UTF-8"));
-        this.value= new String(utf8, Charset.forName("UTF-8"));
-        Matcher unicodeOutlierMatcher = unicodeOutliers.matcher(this.value);
-        this.value = unicodeOutlierMatcher.replaceAll(" ");
-        
+        val= new String(utf8, Charset.forName("UTF-8"));
+        Matcher unicodeOutlierMatcher = unicodeOutliers.matcher(val);
+        val = unicodeOutlierMatcher.replaceAll(" ");
+        if(val.equals("")) {
+            val = "_";
+        }
+        this.value = val;
         this.isSearchable = isS;
     }
     

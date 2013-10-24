@@ -29,6 +29,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.shared.JenaException;
 import com.hp.hpl.jena.util.FileManager;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,6 +43,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
@@ -49,10 +51,6 @@ import java.util.logging.Logger;
 import virtuoso.jena.driver.VirtGraph;
 import virtuoso.jena.driver.VirtModel;
 import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
-import com.hp.hpl.jena.shared.JenaException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.concurrent.Future;
 
 /**
  *
@@ -193,7 +191,7 @@ public abstract class VirtuosoDatabase {
     
     public static void addModelToStore(Model model, String graph){
         int i = 0;
-        while((i++)>=0){
+        while((i++)<=5){
             try {
                 getStore(graph).add(model);
                 return;
@@ -201,7 +199,7 @@ public abstract class VirtuosoDatabase {
                 if(ex.getMessage().contains("timeout")){
                     logger.warn("connection lost with server (wait 5 secondes)("+i+ " try)");
                 }else{
-                    logger.warn("annotation process error because of virtuoso partial error");
+                    logger.warn("annotation process error because of virtuoso partial error(wait 5 secondes)("+i+ " try)");
                 }
                 /*if(i==0){
                     return;
