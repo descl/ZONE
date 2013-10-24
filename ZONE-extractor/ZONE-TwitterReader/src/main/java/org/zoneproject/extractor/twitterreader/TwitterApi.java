@@ -112,7 +112,7 @@ public class TwitterApi {
             
             return result;
         } catch (TwitterException ex) {
-            Logger.getLogger(TwitterApi.class.getName()).log(Level.WARNING, null, ex);
+            logger.warn(ex.getErrorMessage());
             return result;
         }
     }
