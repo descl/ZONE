@@ -57,11 +57,11 @@ function addTag(type, value, uri) {
     var formZone = $($(".searchItem.active").attr("data-content"))
 	var id = getId();
     if (type == 'opt')
-        formZone.find(".well-info").append('<span id="'+id+'" class="label label-info" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value+ ' <i class="icon-remove" onclick="removeElement(id,event);"></i></span>');
+        formZone.find(".well-info").append('<span id="filter'+id+'" class="label label-info" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value+ ' <i class="icon-remove pointerMouse" onclick="removeElement('+id+',event);"></i></span>');
     else if (type == 'must')
-        formZone.find(".well-success").append('<span id="'+id+'" class="label label-success" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove" onclick="removeElement(id,event);"></i></span>');
+        formZone.find(".well-success").append('<span id="filter'+id+'" class="label label-success" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove pointerMouse" onclick="removeElement('+id+',event);"></i></span>');
     else if (type == 'no')
-        formZone.find(".well-danger").append('<span id="'+id+'" class="label label-danger" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove" onclick="removeElement(id,event);"></i></span>');
+        formZone.find(".well-danger").append('<span id="filter'+id+'" class="label label-danger" draggable="true" ondragstart="drag(event)" filter-uri=\"'+uri+'\">' + value + ' <i class="icon-remove pointerMouse" onclick="removeElement('+id+',event);"></i></span>');
 
     var formContent = $("<form/>").append(formZone.clone()).html()
     $(".searchItem.active").attr("data-content",formContent)

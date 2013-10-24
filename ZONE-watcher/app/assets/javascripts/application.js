@@ -135,7 +135,14 @@ function drop(ev)
 {
 	ev.preventDefault();
 	var data=ev.dataTransfer.getData("Text");
-	ev.target.appendChild(document.getElementById(data));
+
+    //check if putting the item in another item
+    var target = ev.target;
+    if($(target).hasClass('label')){
+        target = $(target).parent()[0];
+    }
+
+	target.appendChild(document.getElementById(data));
 	showUpdate();
 	checkColor();
 }
@@ -244,3 +251,17 @@ function removeElement(id,e){
         })
     }
 })(jQuery);
+
+
+function showUpdate(){
+    var timer = setInterval(function(){
+        if($(".updater").css("opacity")==1)
+            $(".updater").css("opacity","0.5");
+        else
+            $(".updater").css("opacity","1");
+    },300);
+    setTimeout(function(){
+        clearInterval(timer);
+        $(".updater").css("opacity","1");
+    },2000);
+}

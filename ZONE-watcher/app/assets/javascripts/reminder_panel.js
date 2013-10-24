@@ -14,16 +14,3 @@ $(document).ready(function() {
         $("#reminder").css("left", "-1%");
     },function(){});
 });
-
-function showUpdate(){
-	var timer = setInterval(function(){
-		if($(".updater").css("opacity")==1)
-			$(".updater").css("opacity","0.5");
-		else
-			$(".updater").css("opacity","1");
-	},300);
-	setTimeout(function(){
-		clearInterval(timer);
-		$(".updater").css("opacity","1");
-	},2000);
-}
