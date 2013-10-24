@@ -40,7 +40,7 @@ public class DownloadLastsNewsThread extends Thread  {
         while(true){
             sources = RSSGetter.getLastsSources(50);
             for(String cur: sources){
-                if(cur == lastRss){
+                if(cur.equals(lastRss)){
                     break;
                 }
                 logger.info("QUICKANNOTATE:"+cur);
