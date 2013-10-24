@@ -65,8 +65,6 @@ public class Prop {
         Matcher unicodeOutlierMatcher = unicodeOutliers.matcher(this.value);
         this.value = unicodeOutlierMatcher.replaceAll(" ");
         
-        
-        System.out.println(this.value);
         this.isSearchable = isS;
     }
     
