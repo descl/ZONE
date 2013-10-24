@@ -77,8 +77,9 @@ public class ExtractArticleContent {
                 curContent = curContent.substring(curContent.indexOf(title)+title.length());
             }
             curContent = curContent.replace("\n", "<br/>");
-            content += curContent+"<br/>";
+            if(!curContent.equals("")) content += curContent+"<br/>";
         }
+        if(content.equals(""))return null;
         return content;
     }
     public static String getContent(String uri) throws MalformedURLException, IOException, BoilerpipeProcessingException{

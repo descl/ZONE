@@ -43,7 +43,7 @@ public class DownloadThread extends Thread  {
           String content = ExtractArticleContent.getContent(item);
 
           VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
-          VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_RESULT_URI,content));
+          if(content != null) VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_RESULT_URI,content));
       } catch (BoilerpipeProcessingException ex) {
           logger.warn("annotation process because of download error for "+item.getUri());
       } catch (MalformedURLException ex) {
