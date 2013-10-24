@@ -63,22 +63,7 @@ public class App
                 for(int curItemId = 0; curItemId < items.length ; curItemId++){
                     curItem = items[curItemId];
 
-                    if(curItem.getUri().startsWith("https://twitter.com/")){
-                        //try to get links in tweets
-                        Pattern p = Pattern.compile(URL_REGEX);
-                        Matcher m = p.matcher(curItem.getDescription());
-                        String url;
-                        while(m.find()) {
-                            String urlStr = m.group();
-                            if (urlStr.startsWith("(") && urlStr.endsWith(")")){
-                            urlStr = urlStr.substring(1, urlStr.length() - 1);
-                            }
-                            url= urlStr;
-                            curItem.addElement(ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_LINK, urlStr);
-                        }
-                    }else{
-                        curItem.addElement(ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_LINK, curItem.getUri());
-                    }
+
 
 
                     th[curItemId] = new DownloadThread(curItem);

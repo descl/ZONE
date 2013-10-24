@@ -421,7 +421,7 @@ public abstract class VirtuosoDatabase {
     }
     
     public static void deleteItem(String uri){
-        if(uri == null || uri == "" || !uri.startsWith("http"))return;
+        if(uri == null || uri.equals("") || !uri.startsWith("http"))return;
         String deleteRequest="DELETE{<"+uri+"> ?a ?b.}WHERE{<"+uri+"> ?a ?b.}";
         try {
             runSPARQLRequest(deleteRequest,ZoneOntology.GRAPH_NEWS);
@@ -475,10 +475,13 @@ public abstract class VirtuosoDatabase {
         * */
         //extractDB();
         String uri = "http://rss.lefigaro.fr/~r/lefigaro/laune/~3/HKViz2m0_3Q/story01.htm";
-        deleteItem(uri);
+        uri = "https://twitter.com/furyGnu/status/393050712168730624";
+        /*deleteItem(uri);
         System.out.println(getItemsNotAnotatedForOnePlugin("http://zone-project.org/model/plugins/WikiMeta"));
-        System.out.println(VIRTUOSO_SERVER);
-        System.out.println(getOneItemByURI("https://twitter.com/SbayAlticus/status/352411307980500992aaaa"));
+        System.out.println(VIRTUOSO_SERVER);*/
+        System.out.println(getOneItemByURI(uri));
+        
+        Prop p = new Prop("http://test", "RT @mordorion: Cantat et Polanski en couv’ de magasines, l’exception culturelle française ");
         }
     
     public static void extractDB(){

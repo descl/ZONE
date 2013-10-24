@@ -8,6 +8,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.xml.sax.InputSource;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.ZoneOntology;
@@ -34,10 +36,28 @@ import org.zoneproject.extractor.utils.ZoneOntology;
  */
 public class ExtractArticleContent {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
+    private static final String URL_REGEX = "\\(?\\b(http://|www[.]|https://)[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
 
     public static String getContent(Item item) throws MalformedURLException, IOException, BoilerpipeProcessingException{
-        String content = "";
+        if(item.getUri().startsWith("https://twitter.com/")){
+            //try to get links in tweets
+            Pattern p = Pattern.compile(URL_REGEX);
+            Matcher m = p.matcher(item.getDescription());
+            String url;
+            while(m.find()) {
+                String urlStr = m.group();
+                if (urlStr.startsWith("(") && urlStr.endsWith(")")){
+                urlStr = urlStr.substring(1, urlStr.length() - 1);
+                }
+                url= urlStr;
+                item.addElement(ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_LINK, urlStr);
+            }
+        }else{
+            item.addElement(ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_LINK, item.getUri());
+        }
         
+        
+        String content = "";
         for(String curLink: item.getElements(ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_LINK)){
             String curContent = getContent(curLink);
             String title = "abcdefghijklmnopqstuvwxyz";

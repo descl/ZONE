@@ -33,6 +33,8 @@ import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
 import org.zoneproject.extractor.utils.ZoneOntology;
+import twitter4j.Query;
+import twitter4j.QueryResult;
 import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -47,6 +49,8 @@ import twitter4j.auth.AccessToken;
 public class TwitterApi {
     private static Extractor extractor = new Extractor();
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(TwitterApi.class);
+    private static TwitterFactory factory = new TwitterFactory();
+    
     /**
      * Get all the items from twitter for an user timeline list
      * @param sources the list of sources URIs
@@ -54,22 +58,79 @@ public class TwitterApi {
      */
     public static ArrayList<Item> getFlux(String[] sources) {
         ArrayList<Item> result = new ArrayList<Item>();
-        TwitterFactory factory = new TwitterFactory();
         
         for(String sourceUri : sources){
-            AccessToken userToken = TwitterApi.getAccessToken(sourceUri);
-            Twitter twitter = factory.getInstance();
-            twitter.setOAuthConsumer(Config.getVar("Twitter-OAuth-customer"),Config.getVar("Twitter-OAuth-customerKey"));
-            twitter.setOAuthAccessToken(userToken);
-            ResponseList<Status> status;
-            try {
-                status = twitter.getHomeTimeline();
-                for(Status r :status){
-                    result.add(TwitterApi.getItemFromStatus(r,sourceUri));
-                }
-            } catch (Exception ex) {
-                logger.info(ex);
+            if(sourceUri.startsWith(ZoneOntology.SOURCES_TYPE_TWITTER_AUTHOR)){
+                String user = sourceUri.substring(ZoneOntology.SOURCES_TYPE_TWITTER_AUTHOR.length()+1);
+                result.addAll(getFluxFromUser(user,sourceUri));
+                
+            }else if(sourceUri.startsWith(ZoneOntology.SOURCES_TYPE_TWITTER_HASHTAG)){
+                String tag = sourceUri.substring(ZoneOntology.SOURCES_TYPE_TWITTER_HASHTAG.length()+1);
+                result.addAll(getFluxFromSearch("#"+tag,sourceUri));
+                
+            }else if(sourceUri.startsWith(ZoneOntology.SOURCES_TYPE_TWITTER_TIMELINE)){
+                result.addAll(getFluxFromTimeline(sourceUri));
+                
             }
+
+        }
+        return result;
+    }
+    public static ArrayList<Item> getFluxFromSearch(String search, String sourceUri) {
+        ArrayList<Item> result = new ArrayList<Item>();
+        try {
+            
+            Twitter twitter = new TwitterFactory().getInstance();
+            twitter.setOAuthConsumer(Config.getVar("Twitter-OAuth-customer"),Config.getVar("Twitter-OAuth-customerKey"));
+            twitter.setOAuthAccessToken(new AccessToken(Config.getVar("Twitter-OAuth-access"),Config.getVar("Twitter-OAuth-accessKey")));
+
+            Query query = new Query(search);
+            QueryResult items = twitter.search(query);
+            for(Status r :items.getTweets()){
+                result.add(TwitterApi.getItemFromStatus(r,sourceUri));
+            }
+            
+            return result;
+        } catch (TwitterException ex) {
+            Logger.getLogger(TwitterApi.class.getName()).log(Level.WARNING, null, ex);
+            return result;
+        }
+    }
+    
+    public static ArrayList<Item> getFluxFromUser(String user, String sourceUri) {
+        ArrayList<Item> result = new ArrayList<Item>();
+        try {
+            
+            Twitter twitter = new TwitterFactory().getInstance();
+            twitter.setOAuthConsumer(Config.getVar("Twitter-OAuth-customer"),Config.getVar("Twitter-OAuth-customerKey"));
+            twitter.setOAuthAccessToken(new AccessToken(Config.getVar("Twitter-OAuth-access"),Config.getVar("Twitter-OAuth-accessKey")));
+
+            List<Status> statusess = twitter.getUserTimeline(user);
+            for(Status r :statusess){
+                result.add(TwitterApi.getItemFromStatus(r,sourceUri));
+            }
+            
+            return result;
+        } catch (TwitterException ex) {
+            Logger.getLogger(TwitterApi.class.getName()).log(Level.WARNING, null, ex);
+            return result;
+        }
+    }
+        
+    public static ArrayList<Item> getFluxFromTimeline(String sourceUri) {
+        ArrayList<Item> result = new ArrayList<Item>();
+        AccessToken userToken = TwitterApi.getAccessToken(sourceUri);
+        Twitter twitter = factory.getInstance();
+        twitter.setOAuthConsumer(Config.getVar("Twitter-OAuth-customer"),Config.getVar("Twitter-OAuth-customerKey"));
+        twitter.setOAuthAccessToken(userToken);
+        ResponseList<Status> status;
+        try {
+            status = twitter.getHomeTimeline();
+            for(Status r :status){
+                result.add(TwitterApi.getItemFromStatus(r,sourceUri));
+            }
+        } catch (Exception ex) {
+            logger.info(ex);
         }
         return result;
     }
@@ -81,7 +142,11 @@ public class TwitterApi {
      * @return the item created
      */
     private static Item getItemFromStatus(Status s, String source){
-        Item res = new Item(source, "https://twitter.com/"+s.getUser().getScreenName()+"/status/"+Long.toString(s.getId()), s.getText(), s.getText(), s.getCreatedAt());
+        String text = s.getText();
+        if(s.isRetweet()){
+            text = s.getRetweetedStatus().getText();
+        }
+        Item res = new Item(source, "https://twitter.com/"+s.getUser().getScreenName()+"/status/"+Long.toString(s.getId()), text, text, s.getCreatedAt());
         String[] hashtags = getHashTags(res.getDescription());
         for(String hashtag: hashtags){
             res.addProp(new Prop(ZoneOntology.PLUGIN_TWITTER_HASHTAG,hashtag,true,true));
@@ -124,7 +189,12 @@ public class TwitterApi {
      * @return List of sources URI
      */
     public static String [] getSources(){
-        String query = "SELECT *  WHERE {?uri rdf:type <"+ZoneOntology.SOURCES_TYPE_TWITTER+">.}";
+        String query = "SELECT *  WHERE {"
+                + "{?uri rdf:type <"+ZoneOntology.SOURCES_TYPE_TWITTER+">}"
+                + "UNION {?uri rdf:type <"+ZoneOntology.SOURCES_TYPE_TWITTER_TIMELINE+">}"
+                + "UNION {?uri rdf:type <"+ZoneOntology.SOURCES_TYPE_TWITTER_AUTHOR+">}"
+                + "UNION {?uri rdf:type <"+ZoneOntology.SOURCES_TYPE_TWITTER_HASHTAG+">}"
+                + "}";
         logger.info(query);
         ResultSet res = Database.runSPARQLRequest(query, ZoneOntology.GRAPH_SOURCES);
         ArrayList<String> sources = new ArrayList<String>();
@@ -147,5 +217,19 @@ public class TwitterApi {
             result[i] = "#"+tags.get(i);
         }
         return result;
+    }
+    
+    public static void main(String[] args){
+        /*String[] res = getLastsSources(5);
+        for(String r: res)
+            System.out.println(r);*/
+        String fileURI = "http://feeds.bbci.co.uk/news/world/rss.xml";
+        fileURI = "http://camarade.over-blog.org/rss-articles.xml";
+        String source = "http://zone-project.org/model/sources#twitter/timeline/PierreTran";
+        ArrayList<Item> result =TwitterApi.getFluxFromUser("HerveKabla", source);//;.getFluxFromTimeline("http://zone-project.org/model/sources#twitter/timeline/uju_");// RSSGetter.getFlux(fileURI);
+        
+        for(Item i: result){
+            logger.info(i);
+        }
     }
 }
