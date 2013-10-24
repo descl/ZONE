@@ -143,7 +143,7 @@ en:
       "Your favorites news"
   search:
     disclaimer:
-      "Filter created, the new sources will be download soon, please be patient."
+      "Filter created, the new sources will be download soon, please be patient and reload the page."
     infobulle:
       "Can Reador help you?"
     sources:

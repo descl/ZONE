@@ -44,10 +44,15 @@ class SearchesController < ApplicationController
   # POST /searches.json
   def create
     @search = retrieveSearchFromForm(params)
+    isNew = (@search.id == nil)
     respond_to do |format|
       if @search.save
-        format.html { redirect_to items_path(:search => @search.id, :itemid => params[:itemId] )  }
-        format.json { render json: @search, status: :created, location: @search }
+        if isNew
+          format.html { redirect_to items_path(:search => @search.id, :isNew => true )  }
+        else
+          format.html { redirect_to items_path(:search => @search.id )  }
+        end
+          format.json { render json: @search, status: :created, location: @search }
       else
         format.html { render action: "new" }
         format.json { render json: @search.errors, status: :unprocessable_entity }
