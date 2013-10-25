@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.jsoup.helper.HttpConnection;
 import org.xml.sax.InputSource;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.ZoneOntology;
@@ -90,13 +91,18 @@ public class ExtractArticleContent {
             URL url = new URL(java.net.URLDecoder.decode(uri, "UTF-8"));
             HttpURLConnection.setFollowRedirects(true);
             URLConnection conn = url.openConnection();
+                conn.setConnectTimeout(100000);
+                conn.setReadTimeout(100000);
             
             //follow redirects
             do{
                 url = conn.getURL();
                 conn = (url).openConnection();
+                conn.setConnectTimeout(100000);
+                conn.setReadTimeout(100000);
                 if(!conn.getURL().toString().contains("t.co/")){
                     conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+
                 }
                 conn.connect();
                 conn.getInputStream();
