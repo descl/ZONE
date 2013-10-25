@@ -7,14 +7,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.xml.sax.InputSource;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.ZoneOntology;
-import sun.net.util.URLUtil;
 
 /*
  * #%L
@@ -79,9 +76,13 @@ public class ExtractArticleContent {
                 curContent = curContent.substring(curContent.indexOf(title)+title.length());
             }
             curContent = curContent.replace("\n", "<br/>");
-            if(!curContent.equals("")) content += curContent+"<br/>";
+            if(!curContent.equals("") && !curContent.equals("<br/>")) {
+                content += curContent+"<br/>";
+            }
         }
-        if(content.equals(""))return null;
+        if(content.equals("")) {
+            return null;
+        }
         return content;
     }
     public static String getContent(String uri) throws MalformedURLException, IOException, BoilerpipeProcessingException{
@@ -89,18 +90,31 @@ public class ExtractArticleContent {
             URL url = new URL(java.net.URLDecoder.decode(uri, "UTF-8"));
             HttpURLConnection.setFollowRedirects(true);
             URLConnection conn = url.openConnection();
-            if(!uri.contains("http://t.co/")){
-                // fake request coming from browser
-                conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");            //((HttpURLConnection) conn).setInstanceFollowRedirects(true);
-            }
-            //start the connect in order to pass throw the redirects
-            conn.connect();
-            conn.getInputStream();
+            
+            //follow redirects
+            do{
+                url = conn.getURL();
+                conn = (url).openConnection();
+                if(!conn.getURL().toString().contains("t.co/")){
+                    conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+                }
+                conn.connect();
+                conn.getInputStream();
+            }while(!conn.getURL().equals(url));
+            
+            String urlString = conn.getURL().toString().toLowerCase();
+            
+            //check if the url is only an image
+            if(urlString.endsWith("png")|| urlString.endsWith("jpg") || urlString.endsWith("gif") || urlString.endsWith("jpeg") )
+                return "";
 
             return ArticleExtractor.INSTANCE.getText(new InputSource(conn.getInputStream())).replace("\u00A0", " ").trim()+"\n";
         
         }catch(java.io.FileNotFoundException ex){
             logger.warn("annotation process because of download error for "+uri);
+            return "";
+        }catch(java.io.IOException ex){
+            logger.warn("annotation process because of download error for "+uri+" "+ ex.getLocalizedMessage());
             return "";
         }
     }
