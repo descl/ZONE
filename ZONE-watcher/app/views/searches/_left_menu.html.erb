@@ -9,7 +9,7 @@
       %>
 
           <%
-             descriptionSearchBox  = render partial: "items/reminder_panel", object: curSearch, as: 'search'
+             descriptionSearchBox  = render partial: "searches/reminder_panel", object: curSearch, as: 'search'
              #if params[:id] != Rails.application.config.defaultRequestId.to_s
                        %>
 
@@ -28,7 +28,7 @@
           <i class="icon-trash" onclick="alert(\"tt\")"></i>-->
           <!--<span class="section">-->
             <%= link_to curSearch do %>
-              <%= curSearch.name[0,20]%>
+              <%= curSearch.name[0,18]%>
               <span class=" icon-chevron-right pull-right searchmoreButton"/>
             <%end%>
           </span>

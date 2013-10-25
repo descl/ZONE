@@ -1,6 +1,6 @@
 <%= form_for "formModal", :url => url_for( :controller =>'searches', :action => 'index'), method: :POST, html: { id: "formModal"} do |f| %>
     <% if search.id != Rails.application.config.defaultRequestId.to_s
-            editButton = "<input name='searchName' class='editNameInputFrom' type='text' value='#{search.name}' onkeypress='console.log(this.value);$(this).attr('value',this.value)'/><span class='icon-pencil pointerMouse' onclick=\"$($(this).parent()).children('.editNameInputFrom').focus();showUpdate();\"/>"
+            editButton = "<input name='searchName' class='editNameInputFrom input-small' type='text' value='#{search.name}' onkeypress='console.log(this.value);$(this).attr('value',this.value)'/><span class='icon-pencil pointerMouse' onclick=\"$($(this).parent()).children('.editNameInputFrom').focus();showUpdate();\"/>"
             descriptionSearchBoxTitle = "#{editButton}      #{link_to '', search, method: :delete, data: { confirm: 'Are you sure?' }, :class => "icon-trash pull-right"}"
        else
          descriptionSearchBoxTitle = search.name
@@ -67,7 +67,7 @@
         <hr>
         <div class="row-fluid bottomDiv">
             <div class="span1"></div>
-            <div class="span4">
+            <div class="span5">
                 <button class="btn btn-info span12" type="submit" onclick="
                 movingData('<%=search.id%>');
                 $('#formModal').attr('action','/searches/<%=search.id%>/edit');
@@ -76,12 +76,12 @@
                     <%= raw t 'items.reminder.change' %>
                 </button>
             </div>
-            <div class="span2"></div>
-            <div class="span4">
+            <div class="span5">
                 <button style="height:50px" id="updateSearch" class="btn btn-success span12 updater" type="submit" onclick="movingData('<%=search.id%>')">
                     <%= raw t 'items.reminder.update' %>
                 </button>
             </div>
+          <div class="span1"></div>
         </div>
     </div>
 <% end %>
