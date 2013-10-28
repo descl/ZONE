@@ -6,7 +6,15 @@ class SearchesController < ApplicationController
   def index
     if !user_signed_in?
       flash[:error] = t("devise.failure.unauthenticated")
-      redirect_to :back
+        begin
+          begin
+            redirect_to(:back)
+          rescue ActionController::RedirectBackError
+            redirect_to root_path
+          end
+        rescue ActionController::RedirectBackError
+          redirect_to root_path
+        end
       return
     end
     @searches = Search.where(:user_id => current_user.id).paginate(:page => params[:page])
@@ -85,7 +93,17 @@ class SearchesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to(:back) }
+      format.html {
+        begin
+          begin
+            redirect_to(:back)
+          rescue ActionController::RedirectBackError
+            redirect_to root_path
+          end
+        rescue ActionController::RedirectBackError
+          redirect_to root_path
+        end
+      }
       format.json { head :no_content }
     end
   end

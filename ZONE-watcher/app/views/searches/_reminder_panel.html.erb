@@ -68,6 +68,11 @@
         <div class="row-fluid bottomDiv">
             <div class="span1"></div>
             <div class="span5">
+                <button style="height:50px" id="updateSearch" class="btn btn-success span12 updater" type="submit" onclick="movingData('<%=search.id%>')">
+                  <%= raw t 'items.reminder.update' %>
+                </button>
+            </div>
+            <div class="span5">
                 <button class="btn btn-info span12" type="submit" onclick="
                 movingData('<%=search.id%>');
                 $('#formModal').attr('action','/searches/<%=search.id%>/edit');
@@ -76,11 +81,7 @@
                     <%= raw t 'items.reminder.change' %>
                 </button>
             </div>
-            <div class="span5">
-                <button style="height:50px" id="updateSearch" class="btn btn-success span12 updater" type="submit" onclick="movingData('<%=search.id%>')">
-                    <%= raw t 'items.reminder.update' %>
-                </button>
-            </div>
+
           <div class="span1"></div>
         </div>
     </div>

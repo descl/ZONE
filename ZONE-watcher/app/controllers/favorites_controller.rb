@@ -4,7 +4,11 @@ class FavoritesController < ApplicationController
   def index
     if !user_signed_in?
       flash[:error] = t("devise.failure.unauthenticated")
-      redirect_to :back
+      begin
+        redirect_to(:back)
+      rescue ActionController::RedirectBackError
+        redirect_to root_path
+      end
       return
     end
 
@@ -29,7 +33,11 @@ class FavoritesController < ApplicationController
   def create
     if !user_signed_in?
       flash[:error] = t("devise.failure.unauthenticated")
-      redirect_to :back
+      begin
+        redirect_to(:back)
+      rescue ActionController::RedirectBackError
+        redirect_to root_path
+      end
       return
     end
     @favorite = Favorite.new(params[:favorite],current_user.id)
@@ -42,7 +50,11 @@ class FavoritesController < ApplicationController
   def destroy
     if !user_signed_in?
       flash[:error] = t("devise.failure.unauthenticated")
-      redirect_to :back
+      begin
+        redirect_to(:back)
+      rescue ActionController::RedirectBackError
+        redirect_to root_path
+      end
       return
     end
     @favorite = Favorite.new(params[:favorite],current_user.id)

@@ -7,7 +7,11 @@ class TwitterController < ApplicationController
   def index
     if !user_signed_in? || current_user.provider != "twitter"
       flash[:error] = t("twitter.err.notlogged")
-        redirect_to :back 
+      begin
+        redirect_to(:back)
+      rescue ActionController::RedirectBackError
+        redirect_to root_path
+      end
         return
     end
     

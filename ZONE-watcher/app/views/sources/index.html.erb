@@ -76,14 +76,13 @@
 			<% end %>
 			<% if startNewTable %>
 				<fieldset id="source<%= source.theme %>">
-					Theme :<%= source.theme %>
+					<%= raw t('source.list.theme')%> :<%= source.theme %>
 					<table id="<%=source.theme%>" class="table table-bordered table-striped">
 						<thead>
 							<tr>
 								<th class="span1 text-center"><%= t("source.list.action")%></th>
 								<th class="span3"><%= t("source.list.label")%></th>
 								<th class="span5"><%= t("source.list.uri")%></th>
-								<th class="span1 text-center"><%= t("source.list.lang")%></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -92,7 +91,6 @@
 				<td class="text-center"><%= link_to "",edit_source_path(source) , :class => 'icon-edit', :title => t("edit")  %> <a href="/sources/<%= source.to_param%>/delete" title="<%= t("delete")%>"><i class="icon-trash"></i></a></td>
 				<td class="tdBreakable"><%= source.label %></td>
 				<td class="tdBreakable"><%= link_to source.uri, url_for(:controller => :searches, :action => :create,  :sources => {:rss => [source.uri]}), :method => "post", :class => "linkSource"%></td>
-				<td class="text-center"><%= source.lang.upcase %></td>
 			</tr>
 			<% actualTableTheme = source.theme%>
 			<% startNewTable = false%>

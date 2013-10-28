@@ -11,7 +11,11 @@ class SourcesController < ApplicationController
       format.html {
         if !user_signed_in?
           flash[:error] = t("devise.failure.unauthenticated")
-          redirect_to :back
+          begin
+            redirect_to(:back)
+          rescue ActionController::RedirectBackError
+            redirect_to root_path
+          end
           return
         else
           @sources = current_user.getSources
@@ -46,7 +50,11 @@ class SourcesController < ApplicationController
   def new
     if !user_signed_in?
       flash[:error] = t("devise.failure.unauthenticated")
-      redirect_to :back
+      begin
+        redirect_to(:back)
+      rescue ActionController::RedirectBackError
+        redirect_to root_path
+      end
       return
     end
     @themes = Filter.find(:prop => ZoneOntology::SOURCES_THEME)
@@ -92,7 +100,11 @@ class SourcesController < ApplicationController
   def edit
     if !user_signed_in?
       flash[:error] =  t("devise.failure.unauthenticated")
-      redirect_to :back
+      begin
+        redirect_to(:back)
+      rescue ActionController::RedirectBackError
+        redirect_to root_path
+      end
       return
     end
     @source = Source.find(params[:id])
@@ -103,7 +115,11 @@ class SourcesController < ApplicationController
   def create(update=false)
     if !user_signed_in?
       flash[:error] =  t("devise.failure.unauthenticated")
-      redirect_to :back
+      begin
+        redirect_to(:back)
+      rescue ActionController::RedirectBackError
+        redirect_to root_path
+      end
       return
     end
     @source = Source.new(params[:source][:uri],{
@@ -133,7 +149,11 @@ class SourcesController < ApplicationController
   def update
     if !user_signed_in?
       flash[:error] = t("devise.failure.unauthenticated")
-      redirect_to :back
+      begin
+        redirect_to(:back)
+      rescue ActionController::RedirectBackError
+        redirect_to root_path
+      end
       return
     end
     @source = Source.find(params[:id])
@@ -145,7 +165,11 @@ class SourcesController < ApplicationController
   def changeCategory
     if !user_signed_in?
       flash[:error] =  t("devise.failure.unauthenticated")
-      redirect_to :back
+      begin
+        redirect_to(:back)
+      rescue ActionController::RedirectBackError
+        redirect_to root_path
+      end
       return
     end
 
