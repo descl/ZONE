@@ -22,7 +22,7 @@ package org.zoneproject.extractor.plugin.spotlight;
  */
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashMap;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
@@ -50,8 +50,10 @@ public class App
         Prop [] en = {new Prop(ZoneOntology.PLUGIN_LANG, "\"en\"")};
         
         AnnotationThread[] th;
+        HashMap<String, ArrayList<Prop>> props; 
         while(true){
                     do{
+                        props = new HashMap<String, ArrayList<Prop>>();
                         items = new ArrayList<Item>();
                         Item[] enItems = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,en,SIM_DOWNLOADS);
                         Item[] frItems = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,fr,SIM_DOWNLOADS);
@@ -66,7 +68,7 @@ public class App
 
                         logger.info("Spotlight has "+items.size()+" items to annotate");
                         for(int curItem = 0; curItem < items.size() ; curItem++){
-                            th[curItem] = new AnnotationThread(items.get(curItem));
+                            th[curItem] = new AnnotationThread(items.get(curItem),props);
                             th[curItem].start();
                         }
                         for(int curItem = 0; curItem < items.size() ; curItem++){
@@ -77,6 +79,7 @@ public class App
                             logger.warn(ex);
                             }
                         }
+                        Database.addAnnotations(props);
 
                     }while(items == null || items.size() > 0);
                 logger.info("done");
@@ -89,10 +92,12 @@ public class App
 
 class AnnotationThread extends Thread  {
     private Item item;
+    private HashMap<String, ArrayList<Prop>> props;
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
 
-    public AnnotationThread(Item item) {
+    public AnnotationThread(Item item,HashMap<String, ArrayList<Prop>> props) {
         this.item = item;
+        this.props = props;
     }
     public void run() {
         logger.info("[-] Start for item: "+item.getUri());
@@ -102,8 +107,10 @@ class AnnotationThread extends Thread  {
         ArrayList<Prop> content= SpotlightRequest.getProperties(item);
 
         if(content != null){
-            Database.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
-            Database.addAnnotations(item.getUri(), content);
+            props.put(item.getUri(), new ArrayList<Prop>());
+            props.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
+            props.get(item.getUri()).addAll(content);
+
         }else{
             logger.warn("Error while annotating" + item.getUri());
         }

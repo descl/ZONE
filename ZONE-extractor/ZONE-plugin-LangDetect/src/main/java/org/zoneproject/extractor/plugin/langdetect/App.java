@@ -23,6 +23,8 @@ package org.zoneproject.extractor.plugin.langdetect;
 
 import com.cybozu.labs.langdetect.LangDetectException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zoneproject.extractor.utils.Database;
@@ -56,8 +58,10 @@ public class App
         } catch (IOException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
+        HashMap<String, ArrayList<Prop>> props; 
         while(true){
             do{
+                props = new HashMap<String, ArrayList<Prop>>();
                 items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
                 if(items == null){
                     continue;
@@ -65,9 +69,11 @@ public class App
                 logger.info("LangDetect has "+items.length+" items to annotate");
                 for(Item item : items){
                     String lang = LangDetect.detectLang(item.concat());
-                    Prop p = new Prop(ZoneOntology.PLUGIN_LANG, lang, true,true);
-                    Database.addAnnotation(item.getUri(), p);
+                    
+                    props.put(item.getUri(), new ArrayList<Prop>());
+                    props.get(item.getUri()).add(new Prop(ZoneOntology.PLUGIN_LANG, lang, true,true));
                 }
+                Database.addAnnotations(props);
             }while(items == null || items.length > 0);
             
             logger.info("done");

@@ -93,6 +93,20 @@ public abstract class VirtuosoDatabase {
         addModelToStore(model, ZoneOntology.GRAPH_NEWS);
     }
     
+    public static void addAnnotations(HashMap<String, ArrayList<Prop>> props){
+        if(props == null){
+            return;
+        } 
+        Model model = ModelFactory.createDefaultModel();
+        
+        Iterator it = props.keySet().iterator();
+        while (it.hasNext()){
+           String itemUri = (String)(it.next());
+           ArrayList<Prop> itemProps = props.get(itemUri);
+           model.add(getModelForAnnotations(itemUri, itemProps));
+        }
+        addModelToStore(model, ZoneOntology.GRAPH_NEWS);
+    }
     public static void addAnnotations(String itemUri, ArrayList<Prop> props){
         if(props == null){
             return;
@@ -321,7 +335,7 @@ public abstract class VirtuosoDatabase {
         try{
             results = runSPARQLRequest(request);
         }catch(JenaException ex){
-            if(ex.getMessage().contains("timeout") ||ex.getMessage().contains("Problem during serialization") ){
+            if(ex.getMessage().contains("timeout") || ex.getMessage().contains("Problem during serialization") || ex.getMessage().contains("Connection failed") ){
                 logger.warn("connection lost with server (wait 5 secondes)");
                 try{Thread.currentThread().sleep(5000);}catch(InterruptedException ie){}
                 return getItemsNotAnotatedForPluginsWithDeps(pluginURI, deps, limit);
