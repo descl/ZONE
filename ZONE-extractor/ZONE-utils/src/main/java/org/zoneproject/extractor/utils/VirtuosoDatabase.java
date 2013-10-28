@@ -320,7 +320,7 @@ public abstract class VirtuosoDatabase {
         try{
             results = runSPARQLRequest(request);
         }catch(JenaException ex){
-            if(ex.getMessage().contains("timeout")){
+            if(ex.getMessage().contains("timeout") ||ex.getMessage().contains("Problem during serialization") ){
                 logger.warn("connection lost with server (wait 5 secondes)");
                 try{Thread.currentThread().sleep(5000);}catch(InterruptedException ie){}
                 return getItemsNotAnotatedForPluginsWithDeps(pluginURI, deps, limit);
@@ -384,6 +384,7 @@ public abstract class VirtuosoDatabase {
             return new Item(uri,results,uri,"relation","?value");
         }catch(JenaException ex){
             logger.warn("There are encoding errors on item "+uri+" the item will be deleted");
+            //deleteItem(uri);
             return null;
         }
     }

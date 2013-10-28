@@ -21,6 +21,8 @@ package org.zoneproject.extractor.plugin.spotlight;
  * #L%
  */
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
@@ -35,7 +37,7 @@ public class App
 {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_SPOTLIGHT;
-    public static int SIM_DOWNLOADS = 10;
+    public static int SIM_DOWNLOADS = 50;
     
     public App(){
         String [] tmp = {};
@@ -43,34 +45,41 @@ public class App
     }
     
     public static void main(String[] args) {
-        Item[] items = null;
-        Prop [] deps = {new Prop(ZoneOntology.PLUGIN_LANG, "\"fr\"")};
+        ArrayList<Item> items = null;
+        Prop [] fr = {new Prop(ZoneOntology.PLUGIN_LANG, "\"fr\"")};
+        Prop [] en = {new Prop(ZoneOntology.PLUGIN_LANG, "\"en\"")};
         
         AnnotationThread[] th;
         while(true){
-            do{
-                items = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,deps,SIM_DOWNLOADS);
-                if(items == null){
-                    continue;
-                }
-                th = new AnnotationThread[items.length];
+                    do{
+                        items = new ArrayList<Item>();
+                        Item[] enItems = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,en,SIM_DOWNLOADS);
+                        Item[] frItems = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,fr,SIM_DOWNLOADS);
+                        if(enItems != null) items.addAll(Arrays.asList(enItems));
+                        if(frItems != null) items.addAll(Arrays.asList(frItems));
+                        
+                        
+                        if(items == null){
+                            continue;
+                        }
+                        th = new AnnotationThread[items.size()];
 
-                logger.info("Spotlight has "+items.length+" items to annotate");
-                for(int curItem = 0; curItem < items.length ; curItem++){
-                    th[curItem] = new AnnotationThread(items[curItem]);
-                    th[curItem].start();
-                }
-                for(int curItem = 0; curItem < items.length ; curItem++){
-                    try {
-                        if(th[curItem] == null)continue;
-                        th[curItem].join();
-                    } catch (InterruptedException ex) {
-                    logger.warn(ex);
-                    }
-                }
+                        logger.info("Spotlight has "+items.size()+" items to annotate");
+                        for(int curItem = 0; curItem < items.size() ; curItem++){
+                            th[curItem] = new AnnotationThread(items.get(curItem));
+                            th[curItem].start();
+                        }
+                        for(int curItem = 0; curItem < items.size() ; curItem++){
+                            try {
+                                if(th[curItem] == null)continue;
+                                th[curItem].join();
+                            } catch (InterruptedException ex) {
+                            logger.warn(ex);
+                            }
+                        }
 
-            }while(items == null || items.length > 0);
-            logger.info("done");
+                    }while(items == null || items.size() > 0);
+                logger.info("done");
             try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
             
         }
@@ -98,5 +107,7 @@ class AnnotationThread extends Thread  {
         }else{
             logger.warn("Error while annotating" + item.getUri());
         }
+        //logger.info("[+] Ended for item: "+item.getUri());
+        
     }
 }

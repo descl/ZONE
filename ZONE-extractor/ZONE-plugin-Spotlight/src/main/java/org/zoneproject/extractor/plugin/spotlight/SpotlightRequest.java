@@ -88,6 +88,9 @@ public class SpotlightRequest {
         } catch (IOException ex) {
             logger.warn("The server "+ endpoint + " is not responding"+ ex);
             return null;
+        } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+            logger.warn("Not lang property for item "+item.getUri());
+            return null;
         }
     }
         public static String getResponse(String text,String endPoint) throws IOException {
