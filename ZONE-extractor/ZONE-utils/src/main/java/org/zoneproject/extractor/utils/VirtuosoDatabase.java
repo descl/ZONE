@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -309,12 +310,12 @@ public abstract class VirtuosoDatabase {
     public static Item[] getItemsNotAnotatedForPluginsWithDeps(String pluginURI, Prop []deps, int limit){
         ArrayList<Item> items = new ArrayList<Item>();
         String requestPlugs ="";
-        int i=0;
         for(Prop curPlugin : deps){
             requestPlugs += ". ?uri <"+curPlugin.getProp()+"> "+curPlugin.getValue()+" ";
         }
         
-        String request = "SELECT DISTINCT ?uri FROM <http://zone-project.org/datas/items> WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title "+requestPlugs+". OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined.  } FILTER (!bound(?pluginDefined)) } LIMIT "+limit;
+        //first  we run the big request on server in order to retrive all the items not anotated with their properties
+        String request = "SELECT ?uri ?relation ?value WHERE{ ?uri ?relation ?value. { SELECT DISTINCT ?uri FROM <http://zone-project.org/datas/items> WHERE{  ?uri <http://purl.org/rss/1.0/title> ?title "+requestPlugs+". OPTIONAL {?uri <"+pluginURI+"> ?pluginDefined.  } FILTER (!bound(?pluginDefined)) } LIMIT "+limit+ "} }";
         logger.info(request);
         ResultSet results;
         try{
@@ -330,18 +331,34 @@ public abstract class VirtuosoDatabase {
                 return null;
             }
         }
-        Item item;
+        
+        //we store all the results in a HashMap for each item
         QuerySolution result;
+        String itemURI;
+        HashMap<String,ArrayList<QuerySolution>> mappedItems = new HashMap<String,ArrayList<QuerySolution>>();
         while (results.hasNext()) {
             result = results.nextSolution();
-            item = getOneItemByURI(result.get("?uri").toString());
-            if(item != null){
-                items.add(item);
+            itemURI = result.get("?uri").toString();
+            if(!mappedItems.containsKey(itemURI)) {
+                mappedItems.put(itemURI, new ArrayList<QuerySolution>());
             }
+            mappedItems.get(itemURI).add(result);
+        }
+        
+        //we create all the items
+        Item item;
+        Iterator it = mappedItems.keySet().iterator();
+        while (it.hasNext()){
+           String uri =(String)(it.next());
+           ArrayList<QuerySolution> values = mappedItems.get(uri);
+           item = new Item(uri,values,uri,"relation","?value");
+           if(item != null){
+               items.add(item);
+           }
         }
         
         //manage case with no items in output but with other items to proceed
-        if(results.getRowNumber() > 0  && items.size() == 0){
+        if(results.getRowNumber() > 0  && items.isEmpty()){
             return null;
         }
         return items.toArray(new Item[items.size()]);

@@ -90,6 +90,18 @@ private static final long serialVersionUID = 1L;
             values.add(new Prop(relation,value,result.get(o).isLiteral(),false));
         }
     }
+    
+    public Item(String uri, ArrayList<QuerySolution> set, String s, String p, String o){
+        this.uri = uri;
+        values = new ArrayList<Prop>();
+
+        for (QuerySolution result : set) {
+            String relation = result.get(p).toString();
+            String value = result.get(o).toString();
+            values.add(new Prop(relation,value,result.get(o).isLiteral(),false));
+        }
+    }
+    
     public Item(String uri, String sparqlResultInfos){
         this.uri = uri;
         values = new ArrayList<Prop>();
