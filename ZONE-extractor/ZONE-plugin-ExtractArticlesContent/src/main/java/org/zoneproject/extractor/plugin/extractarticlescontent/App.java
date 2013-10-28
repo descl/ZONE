@@ -21,9 +21,15 @@ package org.zoneproject.extractor.plugin.extractarticlescontent;
  * #L%
  */
 
+import de.l3s.boilerpipe.BoilerpipeProcessingException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
+import org.zoneproject.extractor.utils.Prop;
 import org.zoneproject.extractor.utils.VirtuosoDatabase;
 import org.zoneproject.extractor.utils.ZoneOntology;
 
@@ -51,8 +57,10 @@ public class App
         Item[] items;
         DownloadThread[] th;
         
+        HashMap<String, ArrayList<Prop>> props; 
         while(true){
             do{
+                props = new HashMap<String, ArrayList<Prop>>();
                 items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,SIM_DOWNLOADS);
                 th = new DownloadThread[items.length];
                 if(items == null){
@@ -66,7 +74,7 @@ public class App
 
 
 
-                    th[curItemId] = new DownloadThread(curItem);
+                    th[curItemId] = new DownloadThread(curItem,props);
                     th[curItemId].start();
                 }
 
@@ -78,10 +86,47 @@ public class App
                     logger.warn(ex);
                     }
                 }
-
+                Database.addAnnotations(props);
             }while(items == null || items.length > 0);
             logger.info("done");
             try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
+        }
+    }
+}
+
+class DownloadThread extends Thread  {
+    private Item item;
+    private HashMap<String, ArrayList<Prop>> props;
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
+
+    public DownloadThread(Item item, HashMap<String, ArrayList<Prop>> props) {
+      this.props = props;
+      this.item = item;
+    }
+    public void run() {
+        run(0);
+    }
+    public void run(int restartLevel) {
+        try {
+            logger.info("Add ExtractArticlesContent for item: "+item.getUri());
+
+            String content = ExtractArticleContent.getContent(item);
+
+            props.put(item.getUri(), new ArrayList<Prop>());
+            props.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
+            if(content != null){
+                props.get(item.getUri()).add(new Prop(App.PLUGIN_RESULT_URI,content));
+            }
+        } catch (BoilerpipeProcessingException ex) {
+            logger.warn("annotation process because of download error for "+item.getUri());
+        } catch (MalformedURLException ex) {
+            logger.warn("annotation process because of malformed Uri for "+item.getUri());
+        } catch (java.io.IOException ex) {
+            logger.warn("annotation process because of download error for "+item.getUri());
+        }catch (com.hp.hpl.jena.shared.JenaException ex){
+            logger.warn("annotation process because of virtuoso partial error "+item.getUri());
+        }finally{
+            VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
         }
     }
 }
