@@ -9,7 +9,21 @@ class FavoritesController < ApplicationController
     end
 
     sourceURI =  "#{ZoneOntology::ZONE_USER}#{current_user.id}"
-    redirect_to url_for(:controller => :searches, :action => :create,  :filters => {:and => [{:uri =>sourceURI, :value=>"favorites"}]}), :method => 'post'
+
+    search = nil
+    Search.joins(:filters).where(["search_filters.uri = ?", sourceURI]).each do |i|
+      puts i.to_json
+      if i.filters.length == 1
+        search = i
+      end
+      puts i.filters.to_json
+    end
+
+    if search == nil
+      redirect_to url_for(:controller => :searches, :action => :create,  :filters => {:and => [{:uri =>sourceURI, :value=>"favorites"}]}, :searchName => t("menu.favoris"), :isNew => false), :method => 'post'
+    else
+      redirect_to url_for(search)
+    end
   end
 
   def create

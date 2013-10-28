@@ -18,7 +18,19 @@ class TwitterController < ApplicationController
     end
 
     sourceURI =  "#{ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE}/#{current_user.login}"
-    redirect_to url_for(:controller => :searches, :action => :create,  :sources => {:rss => [sourceURI]}), :method => 'post'
+
+    search = nil
+    Search.joins(:sources).where(["search_sources.value = ?", sourceURI]).each do |i|
+      if i.filters.length == 0
+        search = i
+      end
+    end
+
+    if search == nil
+      redirect_to url_for(:controller => :searches, :action => :create,  :sources => {:rss => [sourceURI]}, :searchName => "TwitterTimeline", :isNew => false), :method => 'post'
+    else
+      redirect_to url_for(search)
+    end
   end
   
   def add_timeline_to_sources

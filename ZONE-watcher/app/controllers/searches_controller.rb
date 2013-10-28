@@ -44,7 +44,7 @@ class SearchesController < ApplicationController
   # POST /searches.json
   def create
     @search = retrieveSearchFromForm(params)
-    isNew = (@search.id == nil)
+    isNew = ((@search.id == nil) && (params[:isNew] != "false"))
     respond_to do |format|
       if @search.save
         if isNew

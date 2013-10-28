@@ -3,6 +3,7 @@
 <table class="table table-hover  table-bordered">
   <thead>
   <tr>
+    <th><%= t("menu.name")%></th>
     <th><%= t("menu.sources")%></th>
     <th><%= t("menu.filters")%></th>
     <th></th>
@@ -12,6 +13,9 @@
   <tbody>
 <% @searches.each do |search| %>
   <tr>
+    <td>
+      <%= search.name%>
+    </td>
     <td>
       <% search.sources.each do |source| %>
           <%= raw source.getButton %>
