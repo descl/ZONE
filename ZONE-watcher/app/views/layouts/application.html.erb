@@ -41,22 +41,18 @@
         <div class="nav-collapse collapse">
           <ul class="nav">
             <li><%= link_to "Reador.NET", root_path, :class=>"navbar-brand" %></li>
-
-            <% if user_signed_in? %>
-            <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Vos recherches <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li class="<%= 'active' if current_page?(twitter_path) %>"><%= link_to raw("<i class=\"icon-twitter\" ></i> #{t('menu.twitter')}"), twitter_path %></li>
-                <li class="<%= 'active' if current_page?(sources_path) %>"><%= link_to raw("<i class=\"icon-list\" ></i> #{t('menu.yourSources')}"), sources_path %></li>
-                <li class="<%= 'active' if current_page?(favorites_path) %>"><%= link_to raw("<i class=\"icon-star\" ></i> #{t('menu.favoris')}"), favorites_path %></li>
-                <li class="<%= 'active' if current_page?(searches_path) %>"><%= link_to raw("<i class=\"icon-search\" ></i> #{t("menu.yourSearches")}"), searches_path %></li>
-                <li class="divider"></li>
-                <li class="<%= 'active' if current_page?(searches_path) %>"><%= link_to raw("<i class=\"icon-hand-right\" ></i> #{t("search.gobutton")}"), new_search_path %></li>
-              </ul>
-            </li>
-            <%else%>
-                <li class="<%= 'active' if current_page?(items_path) %>"><%= link_to t("menu.news"), items_path %></li>
-            <%end%>
+            <li>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+              <li><a tabindex="-1" href="#">Action</a></li>
+              <li><a tabindex="-1" href="#">Another action</a></li>
+              <li><a tabindex="-1" href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a tabindex="-1" href="#">Separated link</a></li>
+            </ul>
+            <li class="<%= 'active' if current_page?(searches_path) %>"><%= link_to t("menu.yourSearches"), searches_path %></li>
+            <li class="<%= 'active' if current_page?(items_path) %>"><%= link_to t("menu.news"), items_path %></li>
+            <li class="<%= 'active' if current_page?(sources_path) %>"><%= link_to t("menu.yourSources"), sources_path %></li>
+            <li class="<%= 'active' if current_page?(twitter_path) %>"><%= link_to t("menu.twitter"), twitter_path %></li>
             <li><%= link_to t("menu.help"), "http://www.zone-project.org/?p=718", :target => "_blank" %></li>
           </ul>
             <ul class="nav user-box pull-right">
