@@ -106,7 +106,7 @@ en:
     home:
       "Home"
     news:
-      "News"
+      "News sample"
     yourSearches:
       "Your searches"
     yourSources:
@@ -385,3 +385,5 @@ en:
           "Mandatory terms"
         ban:
           "Prohibited terms"
+  leftMenu:
+    search: "Search"

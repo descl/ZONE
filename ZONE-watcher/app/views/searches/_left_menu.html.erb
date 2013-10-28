@@ -3,7 +3,7 @@
 
 <ul class="nav nav-list bs-docs-sidenav" style="max-width: 180px">
   <% @searches.each do |curSearch| %>
-      <% curSearch.name ||= "Recherche #{curSearch.id}"%>
+      <% curSearch.name ||= "#{t("leftMenu.search")} #{curSearch.id}"%>
 
       <% #if curSearch.id == @search.id
       %>

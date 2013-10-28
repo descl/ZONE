@@ -48,9 +48,11 @@
         		end %>
 			</div>
 			<div class="btn-toolbar tags-toolbar">
-              <div class="btn-group btn-group-label btn-wrap">
-              <img src="/assets/langs/<%= @item.getLang()%>.png" alt="<%= @item.getLang()%>">
+              <% if @item.getLang() != nil%>
+                <div class="btn-group btn-group-label btn-wrap">
+                    <img src="/assets/langs/<%= @item.getLang()%>.png" alt="<%= @item.getLang()%>">
                 </div>
+              <%end%>
               <%@item.filters.each do |filter|%>
                 <%= raw filter.getButtonInNews %>
               <%end%>
