@@ -74,6 +74,12 @@ public abstract class VirtuosoDatabase {
         }
         return st;
     }
+    public static void initStore(){
+        VirtGraph vgraph = new VirtGraph(VIRTUOSO_SERVER, VIRTUOSO_USER, VIRTUOSO_PASS);
+        
+        vgraph.setReadFromAllGraphs(true);
+        st = new VirtModel(vgraph);
+    }
     
     public static Model getStore(String graph){
         return VirtModel.openDatabaseModel(graph, VIRTUOSO_SERVER, VIRTUOSO_USER, VIRTUOSO_PASS);
@@ -336,7 +342,9 @@ public abstract class VirtuosoDatabase {
             results = runSPARQLRequest(request);
         }catch(JenaException ex){
             if(ex.getMessage().contains("timeout") || ex.getMessage().contains("Problem during serialization") || ex.getMessage().contains("Connection failed") ){
+                logger.warn(ex);
                 logger.warn("connection lost with server (wait 5 secondes)");
+                initStore();
                 try{Thread.currentThread().sleep(5000);}catch(InterruptedException ie){}
                 return getItemsNotAnotatedForPluginsWithDeps(pluginURI, deps, limit);
             }else{
