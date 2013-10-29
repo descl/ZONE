@@ -140,7 +140,10 @@ class DownloadThread extends Thread  {
         }catch (com.hp.hpl.jena.shared.JenaException ex){
             logger.warn("annotation process because of virtuoso partial error "+item.getUri());
         }finally{
-            VirtuosoDatabase.addAnnotation(item.getUri(), new Prop(App.PLUGIN_URI,"true"));
+            if(props.get(item.getUri()) == null){
+                props.put(item.getUri(), new ArrayList<Prop>());
+            }
+            props.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
         }
     }
 }
