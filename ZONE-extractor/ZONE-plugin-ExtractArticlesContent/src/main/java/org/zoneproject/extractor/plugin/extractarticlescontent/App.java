@@ -77,14 +77,28 @@ public class App
                     th[curItemId] = new DownloadThread(curItem,props);
                     th[curItemId].start();
                 }
+                
+                //we check all the thread in ordre to know which one has not finish
+                boolean hasAlive = false;
+                for(int i = 0; i < 100; i++){
+                    hasAlive = false;
+                    for(DownloadThread cutrThread:  th){
+                        if(cutrThread.isAlive()){
+                            logger.info("is alive["+i+"]: "+cutrThread.item.getUri());
+                            hasAlive = true;
+                            //break;
+                        }
+                    }
+                    if(hasAlive == false){
+                        break;
+                    }else{
+                        try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
+                    }
+                }
 
                 for(int curItemId = 0; curItemId < items.length ; curItemId++){
-                    try {
                         if(th[curItemId] == null)continue;
-                        th[curItemId].join();
-                    } catch (InterruptedException ex) {
-                    logger.warn(ex);
-                    }
+                        th[curItemId].interrupt();
                 }
                 Database.addAnnotations(props);
             }while(items == null || items.length > 0);
@@ -95,7 +109,7 @@ public class App
 }
 
 class DownloadThread extends Thread  {
-    private Item item;
+    protected Item item;
     private HashMap<String, ArrayList<Prop>> props;
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
 
