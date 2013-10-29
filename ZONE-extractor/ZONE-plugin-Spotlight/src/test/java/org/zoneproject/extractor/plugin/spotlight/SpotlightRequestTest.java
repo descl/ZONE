@@ -68,8 +68,16 @@ public class SpotlightRequestTest {
         String endPoint = "http://spotlight.sztaki.hu:2225/rest";
         String f = SpotlightRequest.getResponse(text, endPoint);
         System.out.println(f);
-        String[] expRes = {"http://fr.dbpedia.org/resource/Mick_Jagger","http://fr.dbpedia.org/resource/France","http://fr.dbpedia.org/resource/Rolling_Stones","http://fr.dbpedia.org/resource/Hyde_Park","http://fr.dbpedia.org/resource/Londres"};
-        String[] result = SpotlightRequest.getNamedEntities(f);
+        Annotation[] expRes = {
+            new Annotation("http://fr.dbpedia.org/resource/Londres"),
+            new Annotation("http://fr.dbpedia.org/resource/Mick_Jagger"),
+            new Annotation("http://fr.dbpedia.org/resource/Hyde_Park"),
+            new Annotation("http://fr.dbpedia.org/resource/France"),
+            new Annotation("http://fr.dbpedia.org/resource/Rolling_Stones")
+            
+        };
+        Annotation[] result = SpotlightRequest.getNamedEntities(f);
+        
         assertArrayEquals(expRes, result);
     }
 
