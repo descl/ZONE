@@ -33,6 +33,7 @@ class Item# < ActiveRecord::Base
     #  return Array.new
     #end
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
+SELECT * WHERE{
     SELECT DISTINCT(?concept),?pubDateTime,  ?title, CONCAT( #{filtersIds} ) AS ?filtersVals
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     FROM <#{ZoneOntology::GRAPH_SOURCES}>
@@ -41,7 +42,7 @@ class Item# < ActiveRecord::Base
       OPTIONAL { ?concept RSS:pubDateTime ?pubDateTime}.
       #{sparqlFilter}
 
-    }ORDER BY DESC(?pubDateTime) LIMIT #{per_page} OFFSET #{start}"
+    }} ORDER BY DESC(?pubDateTime) LIMIT #{per_page} OFFSET #{start}"
 
     store = SPARQL::Client.new(endpoint)
     items = Array.new

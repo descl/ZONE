@@ -3,35 +3,21 @@
 
 <ul class="nav nav-list bs-docs-sidenav" style="max-width: 180px">
   <% @searches.each do |curSearch| %>
-      <% curSearch.name ||= "#{t("leftMenu.search")} #{curSearch.id}"%>
 
-      <% #if curSearch.id == @search.id
-      %>
-
-          <%
-             descriptionSearchBox  = render partial: "searches/reminder_panel", object: curSearch, as: 'search'
-             #if params[:id] != Rails.application.config.defaultRequestId.to_s
-                       %>
+          <% descriptionSearchBox  = render "searches/reminder_panel", :localSearch => curSearch %>
 
           <li
-
-          id="<%="searchBox#{curSearch.id}"%>"
-          data-id="<%="searchBox#{curSearch.id}"%>"
-          class="searchItem <%= "active" if (curSearch.id == @search.id)%>"
-          rel="popoverx"
-          data-content="<%= descriptionSearchBox.gsub('\"','\'') %>"
+            id="<%="searchBox#{curSearch.id}"%>"
+            data-id="<%="searchBox#{curSearch.id}"%>"
+            class="searchItem <%= "active" if (curSearch.id == @search.id)%>"
+            rel="popoverx"
+            data-content="<%= descriptionSearchBox.gsub('\"','\'') %>"
           >
 
-
-          <!--
-          data-original-title="<%= %>"
-          <i class="icon-trash" onclick="alert(\"tt\")"></i>-->
-          <!--<span class="section">-->
-            <%= link_to curSearch do %>
-              <%= curSearch.name[0,18]%>
-              <span class=" icon-chevron-right pull-right searchmoreButton"/>
-            <%end%>
-          </span>
+          <%= link_to curSearch do %>
+            <%= curSearch.getName(t("leftMenu.search"))[0,18]%>
+            <span class=" icon-chevron-right pull-right searchmoreButton"/></span>
+          <%end%>
     </li>
   <%end%>
 </ul>

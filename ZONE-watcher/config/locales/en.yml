@@ -156,7 +156,7 @@ en:
       "New search"
   index:
     disclaimer:
-      "Reador.NET is currently <b>under devlopment</b>, please say us all problems you can encounter using  <a href='javascript:void($zopim.livechat.window.openPopout())'>this link</a>!"
+      "Reador.NET is currently <b>under development</b>, please tell us all problems you can encounter using  <a href='javascript:void($zopim.livechat.window.openPopout())'>this link</a>!"
   moreabout:
     title:
       "More about Reador!"

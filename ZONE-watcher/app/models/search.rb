@@ -88,4 +88,8 @@ class Search < ActiveRecord::Base
 
     extendQuery
   end
+
+  def getName(default)
+    return self.name ||= "#{default} #{self.id}"
+  end
 end

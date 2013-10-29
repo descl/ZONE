@@ -1,15 +1,15 @@
 <%= form_for "formModal", :url => url_for( :controller =>'searches', :action => 'index'), method: :POST, html: { id: "formModal"} do |f| %>
-    <% if search.id != Rails.application.config.defaultRequestId.to_s
-            editButton = "<input name='searchName' class='editNameInputFrom input-small' type='text' value='#{search.name}' onkeypress='console.log(this.value);$(this).attr('value',this.value)'/><span class='icon-pencil pointerMouse' onclick=\"$($(this).parent()).children('.editNameInputFrom').focus();showUpdate();\"/>"
-            descriptionSearchBoxTitle = "#{editButton}      #{link_to '', search, method: :delete, data: { confirm: 'Are you sure?' }, :class => "icon-trash pull-right"}"
+    <% if localSearch.id != Rails.application.config.defaultRequestId.to_s
+            editButton = "<input name='searchName' class='editNameInputFrom input-small' type='text' value='#{localSearch.getName(t("leftMenu.search"))}' onkeypress='console.log(this.value);$(this).attr('value',this.value)'/><span class='icon-pencil pointerMouse' onclick=\"$($(this).parent()).children('.editNameInputFrom').focus();showUpdate();\"/>"
+            descriptionSearchBoxTitle = "#{editButton}      #{link_to '', localSearch, method: :delete, data: { confirm: 'Are you sure?' }, :class => "icon-trash pull-right"}"
        else
-         descriptionSearchBoxTitle = search.name
+         descriptionSearchBoxTitle = localSearch.getName(t("leftMenu.search"))
        end
     %>
 
 <h3 class="popover-title"><%= raw descriptionSearchBoxTitle%></h3>
     <div id="movedData"></div>
-    <div id="popover-<%= search.id%>">
+    <div id="popover-<%= localSearch.id%>">
         <div class="row-fluid">
             <div class="span1"></div>
             <div class="span10">
@@ -18,7 +18,7 @@
                 </div>
                 <div class="row-fluid">
                   <div id="wellSources" class="well summary span12">
-                    <% search.sources.each do |source| %>
+                    <% localSearch.sources.each do |source| %>
                       <%= raw source.getButton %>
                     <%end%>
                   </div>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="row-fluid">
                     <div id="summaryAnd" class="well summary span12 well-success" ondrop="drop(event)" ondragover="allowDrop(event)">
-                      <% search.getAndFilters.each do |filter| %>
+                      <% localSearch.getAndFilters.each do |filter| %>
                           <%= raw filter.getButton%>
                       <%end%>
                     </div>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="row-fluid">
                     <div id="summaryOr" class="well summary span12 well-info" ondrop="drop(event)" ondragover="allowDrop(event)">
-                      <% search.getOrFilters.each do |filter| %>
+                      <% localSearch.getOrFilters.each do |filter| %>
                         <%= raw filter.getButton%>
                       <%end%>
                     </div>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="row-fluid">
                     <div id="summaryWithout" class="well summary span12 well-danger" ondrop="drop(event)" ondragover="allowDrop(event)">
-                      <% search.getWithoutFilters.each do |filter| %>
+                      <% localSearch.getWithoutFilters.each do |filter| %>
                           <%= raw filter.getButton%>
                       <%end%>
                     </div>
@@ -68,14 +68,14 @@
         <div class="row-fluid bottomDiv">
             <div class="span1"></div>
             <div class="span5">
-                <button style="height:50px" id="updateSearch" class="btn btn-success span12 updater" type="submit" onclick="movingData('<%=search.id%>')">
+                <button style="height:50px" id="updateSearch" class="btn btn-success span12 updater" type="submit" onclick="movingData('<%=localSearch.id%>')">
                   <%= raw t 'items.reminder.update' %>
                 </button>
             </div>
             <div class="span5">
                 <button class="btn btn-info span12" type="submit" onclick="
-                movingData('<%=search.id%>');
-                $('#formModal').attr('action','/searches/<%=search.id%>/edit');
+                movingData('<%=localSearch.id%>');
+                $('#formModal').attr('action','/searches/<%=localSearch.id%>/edit');
                 $('#formModal').attr('method','GET');
                 ">
                     <%= raw t 'items.reminder.change' %>

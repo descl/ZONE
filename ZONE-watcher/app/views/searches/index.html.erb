@@ -14,7 +14,7 @@
 <% @searches.each do |search| %>
   <tr>
     <td>
-      <%= search.name%>
+      <%= search.getName(t("leftMenu.search"))%>
     </td>
     <td>
       <% search.sources.each do |source| %>
@@ -42,4 +42,10 @@
   <%= will_paginate @page_results, renderer: BootstrapPagination::Rails, class: "pagination pagination-centered" %>
 </div>
 
-<%= link_to t('search.gobutton'), new_search_path %>
+<div class="span12">
+<%= link_to new_search_path do %>
+    <button type="button" class="btn btn-success">
+      <h2><%= raw t 'search.gobutton' %></h2>
+</button>
+<%end%>
+</div>
