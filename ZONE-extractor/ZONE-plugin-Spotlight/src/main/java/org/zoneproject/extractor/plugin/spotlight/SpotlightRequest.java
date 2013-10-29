@@ -36,6 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
 import org.zoneproject.extractor.utils.ZoneOntology;
@@ -75,6 +76,9 @@ public class SpotlightRequest {
                 endpoint = Endpoints.valueOf(itemLang).getValue();
             }catch(java.lang.IllegalArgumentException ex){
                 endpoint = Endpoints.valueOf("EN").getValue();
+            }
+            if(item.concat().equals("")){
+                return result;
             }
             String json = getResponse(item.concat(), endpoint);
             Annotation[] entities = SpotlightRequest.getNamedEntities(json);
@@ -156,7 +160,11 @@ public class SpotlightRequest {
         text = "Réserve parlementaire: Chevènement et Hue demandent à Fabius des explications sur des fuites dans \"Le Monde\".\n Dépêche AFP, mardi 10 septembre 2013, 17h46. Les sénateurs Jean-Pierre Chevènement et Robert Hue ont demandé lundi au ministre des Affaires étrangères Laurent Fabius, dans une lettre commune, des explications sur un \"fichier\" que le Quai d'Orsay aurait communiqué au journal Le Monde concernant l'usage par des élus de leur réserve parlementaire. Dans son édition datée de dimanche-lundi, Le Monde affirmait s'être vu communiquer par le ministère des Affaires étrangères un fichier détaillant les versements de députés et sénateurs en faveur de programmes de développement ou relatifs à l'action extérieure de la France. Pointant du doigt l'utilisation par certains élus de leur réserve parlementaire 2011 ou 2012 pour financer leurs propres associations, le journal citait MM. Hue, président du Mouvement unitaire progressiste (MUP), Chevènement, président d'honneur du Mouvement républicain et citoyen (MRC), et l'ancien président Valéry Giscard d'Estaing. \"J'observe que M. Giscard d'Estaing,";
         
         text = "la\",Syrie";
-        String json = SpotlightRequest.getResponse(text,"http://spotlight.sztaki.hu:2225/rest");
-        getNamedEntities(json);
+        String itemId = "https://twitter.com/phdossmann/status/393016902722674689";
+        itemId = "https://twitter.com/hay_out/status/393292223259086848";
+        Item item = Database.getOneItemByURI(itemId);
+        System.out.println(item);
+        //String json = SpotlightRequest.getResponse(text,"http://spotlight.sztaki.hu:2225/rest");
+        //getNamedEntities(json);
     }
 }
