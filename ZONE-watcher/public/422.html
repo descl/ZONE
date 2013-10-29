@@ -86,7 +86,11 @@
                 <div class="span5 ">
                     <h1 class="triangle-border left"  id="reador-title"><u>The change you wanted was rejected.</u><br/><br/>Maybe you tried to change something you didn't have access to.
                         <script>
-                            document.write('<a href="' + document.referrer + '">Go Back</a>');
+                            var back = document.referrer
+                            if(back == ""){
+                                back = "/"
+                            }
+                            document.write('<a href="' + back + '">Go Back</a>');
                         </script>
                     </h1>
 
