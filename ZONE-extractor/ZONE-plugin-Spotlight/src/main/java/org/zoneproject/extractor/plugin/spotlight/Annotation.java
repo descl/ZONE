@@ -34,6 +34,9 @@ public class Annotation implements Comparable<Annotation> {
     private String type;
     private int offset;
 
+    public Annotation(String uri){
+        this(uri,0,"",0);
+    }
     public Annotation(String uri, double score, String type, int offset) {
         this.uri = uri;
         this.score = score;
