@@ -71,13 +71,27 @@ public class App
                             th[curItem] = new AnnotationThread(items.get(curItem),props);
                             th[curItem].start();
                         }
-                        for(int curItem = 0; curItem < items.size() ; curItem++){
-                            try {
-                                if(th[curItem] == null)continue;
-                                th[curItem].join();
-                            } catch (InterruptedException ex) {
-                            logger.warn(ex);
+                
+                        //we check all the thread in ordre to know which one has not finish
+                        boolean hasAlive = false;
+                        for(int i = 0; i < 100; i++){
+                            hasAlive = false;
+                            for(AnnotationThread cutrThread:  th){
+                                if(cutrThread.isAlive()){
+                                    logger.info("is alive["+i+"]: "+cutrThread.item.getUri());
+                                    hasAlive = true;
+                                }
                             }
+                            if(hasAlive == false){
+                                break;
+                            }else{
+                                try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
+                            }
+                        }
+
+                        for(int curItemId = 0; curItemId < items.size() ; curItemId++){
+                                if(th[curItemId] == null)continue;
+                                th[curItemId].interrupt();
                         }
                         Database.addAnnotations(props);
 
@@ -91,7 +105,7 @@ public class App
 
 
 class AnnotationThread extends Thread  {
-    private Item item;
+    protected Item item;
     private HashMap<String, ArrayList<Prop>> props;
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
 
