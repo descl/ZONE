@@ -58,7 +58,7 @@ SELECT * WHERE{
     require 'cgi'
     require 'uri'
     uri = CGI.unescape(URI.escape(CGI.unescape(param)))
-    uri = uri.gsub("%23","#")
+    #uri = uri.gsub("%23","#")
     
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT *
@@ -67,6 +67,7 @@ SELECT * WHERE{
     WHERE { <#{uri}> ?prop ?value.
             OPTIONAL{?value ?extraProp ?extraValue}";
     query +="}"
+    puts query
     store = SPARQL::Client.new(endpoint)
     result = store.query(query)
     if result.size == 0
