@@ -1,5 +1,5 @@
 module SearchesHelper
-  def button_link(uri, labels,filterVal,itemUri)
+  def button_link(uri, kind,filterVal,itemUri)
     if(filterVal != "" && uri != "")
       waitingText = ""
       tagUri = uri
@@ -23,8 +23,31 @@ module SearchesHelper
           title += "<i class='icon-trash pull-right pointerMouse' title='Delete' onclick='deleteTag(\"#{filterVal}\",\"#{tagUri}\",\"#{itemUri}\")'></i>";
       end
 
-      res= link_to filterVal, "javascript:void(0);", :class => labels, "data-uri" => search_filters_path(:uri => uri ), "filter-uri" => uri, "data-content"=>tagContent, "data-original-title"=> title
-      return "<div class=\"btn-group btn-group-label btn-wrap\">#{res}</div>"
+      case kind
+        when "twitter"
+          printableKind = t('items.tags.twitter')
+        when "place"
+          printableKind = t('items.tags.place')
+        when "work"
+          printableKind = t('items.tags.work')
+        when "organization"
+          printableKind = t('items.tags.organization')
+        when "person"
+          printableKind = t('items.tags.person')
+        when "event"
+          printableKind = t('items.tags.event')
+        when "lang"
+          printableKind = t('items.tags.lang')
+      else
+        printableKind = ""
+      end
+
+      res= link_to filterVal, "javascript:void(0);",
+                   :class => "label label-tag label-#{kind}", "data-uri" => search_filters_path(:uri => uri ),
+                   "filter-uri" => uri,
+                   "data-content"=>tagContent,
+                   "data-original-title"=> title
+      return "<div class=\"btn-group btn-group-label btn-wrap\" title='#{printableKind}'>#{res}</div>"
     end
   end
 end

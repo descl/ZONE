@@ -318,3 +318,37 @@ a.label:visited{
   padding-left:0px !important;
 
 }
+
+/*define the tags kinds*/
+.label-place[href] , .label-place[href]:visited, .label-place[href]:hover{
+  color : #953b39;
+  background-color : #f5b06d;
+}
+
+.label-work[href] , .label-work[href]:visited, .label-work[href]:hover{
+  color : #ffffff;
+  background-color : #2a952a;
+}
+
+.label-organization[href] , .label-organization[href]:visited, .label-organization[href]:hover{
+  color : #ffffff;
+  background-color : #4da8f4;
+}
+
+.label-person[href] , .label-person[href]:visited, .label-person[href]:hover{
+  color : #ffffff;
+  background-color : #b766bd;
+}
+
+.label-event[href] , .label-event[href]:visited, .label-event[href]:hover{
+  color : #ffffff;
+  background-color : #ef6460;
+}
+
+
+.label-tag[href] , .label-tag[href]:visited, .label-tag[href]:hover{
+  border:1px solid #e3e3e3;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+  text-shadow: none;
+}

@@ -12,6 +12,7 @@ class ZoneOntology < ActiveRecord::Base
   
   GRAPH_ITEMS = "http://zone-project.org/datas/items";
   GRAPH_SOURCES= "http://zone-project.org/datas/sources"
+  GRAPH_TAGS= "http://zone-project.org/datas/tags"
   
   SOURCES_PREFIX = "http://zone-project.org/model/sources"
   SOURCES_TYPE = "#{SOURCES_PREFIX}#Source"
@@ -43,4 +44,8 @@ class ZoneOntology < ActiveRecord::Base
   ZONE_USER = "http://zone-project.org/datas/users/"
   ZONE_FAVORITE = "http://zone-project.org/model/items#favorite"
 
+  RDF_LABEL = "http://www.w3.org/2000/01/rdf-schema#label"
+  RDF_TYPE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+  DBPEDIA_ABSTRACT = "http://dbpedia.org/ontology/#abstract"
+  DBPEDIA_THUMB = "http://dbpedia.org/ontology/#thumbnail"
 end

@@ -61,9 +61,11 @@ SELECT * WHERE{
     uri = uri.gsub("%23","#")
     
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
-    SELECT ?prop ?value
+    SELECT *
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
-    WHERE { <#{uri}> ?prop ?value.";
+    FROM <#{ZoneOntology::GRAPH_TAGS}>
+    WHERE { <#{uri}> ?prop ?value.
+            OPTIONAL{?value ?extraProp ?extraValue}";
     query +="}"
     store = SPARQL::Client.new(endpoint)
     result = store.query(query)
@@ -75,14 +77,25 @@ SELECT * WHERE{
     params = Hash.new
     result.each do |prop|
       if params[prop.prop.to_s] == nil
-          params[prop.prop.to_s] = Array.new
+          params[prop.prop.to_s] = Hash.new
       end
-      params[prop.prop.to_s] << prop.value.to_s
+      if (!prop.bound?(:extraProp))
+        if params[prop.prop.to_s][:value] == nil
+          params[prop.prop.to_s][:value] = Array.new
+        end
+        params[prop.prop.to_s][:value] << prop.value.to_s
+      else
+        if params[prop.prop.to_s][prop.value.to_s] == nil
+          params[prop.prop.to_s][prop.value.to_s] = Hash.new
+        end
+        params[prop.prop.to_s][prop.value.to_s][prop.extraProp.to_s] = prop.extraValue.to_s
+      end
     end
+    puts params.to_json
     
-    item = Item.new(uri, params["http://purl.org/rss/1.0/title"])
-    item.date = params["http://purl.org/rss/1.0/pubDate"] if params["http://purl.org/rss/1.0/pubDate"] != nil
-    item.description = params["http://purl.org/rss/1.0/description"] if params["http://purl.org/rss/1.0/description"] != nil
+    item = Item.new(uri, params["http://purl.org/rss/1.0/title"][:value][0])
+    item.date = params["http://purl.org/rss/1.0/pubDate"][:value] if params["http://purl.org/rss/1.0/pubDate"] != nil
+    item.description = params["http://purl.org/rss/1.0/description"][:value] if params["http://purl.org/rss/1.0/description"] != nil
     item.props = params
     item.filters = Array.new
 
@@ -94,16 +107,38 @@ SELECT * WHERE{
       end
     end
 
+    #add the filters
     item.props.each do |key|
-      key[1].each do |value|
-        filter = SearchFilter.new(:value =>  value)
-        if value.start_with?("http")
-          filter.uri = value
-        end
-        filter.prop = key[0]
-        filter.item = item
+      if (key[0] == "http://zone-project.org/model/items#favorite") || (key[0].start_with? "http://purl.org/rss") || (key[0].start_with? "http://zone-project.org/model/plugins/ExtractArticlesContent")
+        next
+      end
 
-        item.filters << filter
+      key[1].each do | filterKey, filterVal|
+        if filterKey.to_s == "value"
+          filterVal.each do |curVal|
+            if curVal == "true"
+              next
+            end
+            filter = SearchFilter.new(:value =>  curVal)
+            if curVal.start_with?("http")
+              filter.uri = curVal
+            end
+            filter.prop = key[0]
+            filter.item = item
+            item.filters << filter
+          end
+        else
+          filter = SearchFilter.new(:value =>  filterVal[ZoneOntology::RDF_LABEL])
+          filter.uri = filterKey
+          filter.prop = key[0]
+          filter.item = item
+          filter.type = filterVal[ZoneOntology::RDF_TYPE] if filterVal[ZoneOntology::RDF_TYPE] != nil
+          filter.abstract = filterVal[ZoneOntology::DBPEDIA_ABSTRACT] if filterVal[ZoneOntology::DBPEDIA_ABSTRACT] != nil
+          filter.thumb = filterVal[ZoneOntology::DBPEDIA_THUMB] if filterVal[ZoneOntology::DBPEDIA_THUMB] != nil
+
+          item.filters << filter
+
+        end
       end
     end
 

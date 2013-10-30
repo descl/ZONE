@@ -311,6 +311,14 @@ en:
           "Update"
         cancel:
           "Cancel"
+    tags:
+      twitter: "Twitter"
+      place: "Place"
+      work: "Informatique"
+      organization: "Organization"
+      person: "Person"
+      event: "Event"
+      lang: "Lang"
   newmodal:
     breadcrumb:
       sources:

@@ -310,6 +310,14 @@ fr:
           "Modifier"
         cancel:
           "Annuler"
+    tags:
+      twitter: "Twitter"
+      place: "Lieu"
+      work: "Informatique"
+      organization: "Organisation"
+      person: "Personne"
+      event: "Evenement"
+      lang: "Langue"
   newmodal:
     breadcrumb:
       sources:
@@ -386,6 +394,7 @@ fr:
           "Termes interdits"
   leftMenu:
     search: "Recherche"
+
 
   will_paginate:
     previous_label: "&#8592; Précédent"
