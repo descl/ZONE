@@ -1,5 +1,10 @@
+
 module SearchesHelper
-  def button_link(uri, kind,filterVal,itemUri)
+
+  def button_link(filter, kind,filterVal)
+
+    uri = filter.uri
+    itemUri = filter.item.uri
     if(filterVal != "" && uri != "")
       waitingText = ""
       tagUri = uri
@@ -38,11 +43,12 @@ module SearchesHelper
           printableKind = t('items.tags.event')
         when "lang"
           printableKind = t('items.tags.lang')
+          filterVal = "<img src='/assets/langs/#{filterVal}.png' alt='#{filterVal}'>"
       else
         printableKind = ""
       end
 
-      res= link_to filterVal, "javascript:void(0);",
+      res= link_to raw(filterVal), "javascript:void(0);",
                    :class => "label label-tag label-#{kind}", "data-uri" => search_filters_path(:uri => uri ),
                    "filter-uri" => uri,
                    "data-content"=>tagContent,

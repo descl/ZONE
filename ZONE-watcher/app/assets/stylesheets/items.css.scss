@@ -345,6 +345,10 @@ a.label:visited{
   background-color : #ef6460;
 }
 
+.label-lang[href] , .label-lang[href]:visited, .label-lang[href]:hover{
+  color : #ffffff;
+  background-color : #e3e3e3;
+}
 
 .label-tag[href] , .label-tag[href]:visited, .label-tag[href]:hover{
   border:1px solid #e3e3e3;

@@ -122,6 +122,7 @@ SELECT * WHERE{
             filter = SearchFilter.new(:value =>  curVal)
             if curVal.start_with?("http")
               filter.uri = curVal
+              filter.type = "http://www.w3.org/2004/02/skos/core#Concept"
             end
             filter.prop = key[0]
             filter.item = item
@@ -141,6 +142,20 @@ SELECT * WHERE{
         end
       end
     end
+
+    item.filters.sort! { |a,b|
+      if a.prop == "http://zone-project.org/model/plugins#lang"
+        -1
+      elsif b.prop == "http://zone-project.org/model/plugins#lang"
+        1
+      elsif a.type == nil
+        -1
+      elsif b.type == nil
+        1
+      else
+        a.type.downcase <=> b.type.downcase
+      end
+    }
 
     return item
   end

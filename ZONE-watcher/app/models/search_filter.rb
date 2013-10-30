@@ -25,9 +25,6 @@ class SearchFilter < ActiveRecord::Base
 
   def getSparqlTriple
     if self.uri != nil
-      if self.uri.start_with? "http://dbpedia.org"
-        self.uri = self.uri.insert 7, "www."
-      end
       return "?concept ?filter#{self.id} <#{self.uri}>"
     else
       return "?concept ?filter#{self.id} \"#{self.value}\""
@@ -91,35 +88,26 @@ class SearchFilter < ActiveRecord::Base
     end
 
     filterVal = getPrettyPrintingValue()
-    return button_link(self.uri, kind,filterVal, self.item.uri)
+    return button_link(self, kind,filterVal)
   end
 
   def getPrettyPrintingValue
-    if self.value != nil
+    if self.value != nil && !self.value.start_with?("http")
       return self.value
     end
 
+
     filterVal = ""
-    if(self.prop.starts_with? @WIKI_META_URI)
+    if(self.value.starts_with? "http")
       if(self.value.rindex('/') == nil)
         filterVal=self.value
       else
         filterVal=self.value[self.value.rindex('/')+1, self.value.length]
       end
+      if(filterVal.rindex("%23") != nil)
+        filterVal=filterVal[0, filterVal.rindex("%23")]
 
-    elsif(self.prop.starts_with? @LANG_URI)
-      filterVal=self.value
-    elsif(self.prop.starts_with? @SPOTLIGHT_URI)
-      filterVal=self.value[self.value.rindex('/')+1, self.value.length]
-
-    elsif(self.prop.starts_with? ZoneOntology::PLUGIN_SOCIAL_ANNOTATION)
-      filterVal=self.value
-    elsif( (self.prop.start_with? @SVM_PLUGIN_URI) || (self.prop.starts_with? @OPEN_CALAIS_URI))
-      filterVal=self.value
-    elsif (self.prop.start_with? @TWITTER_HASHTAG_PLUGIN_URI)
-      filterVal=self.value
-    elsif(self.prop.start_with? @TWITTER_MENTIONED_PLUGIN_URI)
-      filterVal=self.value
+      end
     end
 
     return filterVal.gsub "_", " "
@@ -127,9 +115,6 @@ class SearchFilter < ActiveRecord::Base
   def getInfos
     if self.uri == nil
       return {:abstract => nil, :thumbnail => nil}
-    end
-    if self.uri.start_with? "http://www"
-      self.uri = "http://#{self.uri[11,self.uri.length]}"
     end
 
     if self.uri.start_with? "http://fr.dbpedia"

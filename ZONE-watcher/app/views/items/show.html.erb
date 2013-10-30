@@ -21,25 +21,27 @@
 		<div class="row-fluid">
 			<!--header news part -->
             <img src="<%= @item.getTypePicture%>" class="littleCircleImage" width=30 height=30>
-            <a class="titleItem" target="_blank" href= "<%= @item.uri %>"><b><u><%= @item.props["http://purl.org/rss/1.0/title"][0]%></u> </b> </a>
-          <!--<span class="showFavorite hide"><i class="icon-share pointerMouse"></i></span>
-            <span class="row-favorite btn-group hide">
-                %= render 'show_tool_bar', :item => @item %>
-            </span>-->
+            <a class="titleItem" target="_blank" href= "<%= @item.uri %>">
+
+              <% if @item.uri.starts_with?('https://twitter.com') || @item.uri.starts_with?('http://twitter.com')  %>
+                <u><b><i> Via <%= @item.props["http://zone-project.org/model/plugins/twitter#author"][:value][0] %></i></b></u>
+              <% else %>
+                <b><u><%= @item.props["http://purl.org/rss/1.0/title"][:value][0]%></u> </b>
+              <%end%>
+
+            </a>
+
 			<i>
               <%=
                 begin
-                  date = DateTime.parse(@item.props["http://purl.org/rss/1.0/pubDate"][0])
+                  date = DateTime.parse(@item.props["http://purl.org/rss/1.0/pubDate"][:value][0])
                   date.strftime('Le %d/%m/%Y à %H:%M')
 
                 rescue
                 end
               %>
             </i>
-            <% if @item.uri.starts_with?('https://twitter.com') || @item.uri.starts_with?('http://twitter.com')  %>
-            	<br/>
-            	<i> Via <%= @item.props["http://zone-project.org/model/plugins/twitter#author"][0] %></i>
-            <% end %>
+
             
             <!--content news part -->
             <div class="contentArticle">
@@ -47,6 +49,7 @@
         			@item.props["http://purl.org/rss/1.0/description"][:value][0].html_safe
         		end %>
 			</div>
+
 			<div class="btn-toolbar tags-toolbar">
               <% if @item.getLang() != nil%>
                 <div class="btn-group btn-group-label btn-wrap">
@@ -54,6 +57,7 @@
                 </div>
               <%end%>
               <%@item.filters.each do |filter|%>
+                  <%= filter.to_json%>
                 <%= raw filter.getButtonInNews %>
               <%end%>
 
