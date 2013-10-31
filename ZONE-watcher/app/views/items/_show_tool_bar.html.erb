@@ -57,15 +57,15 @@
 <!--<button class="btn btn-share" onclick='checkOpacity(this)'>
   <i class="icon icon-check"></i>
 </button>-->
-<a class="shareLink btn-share" href="https://www.facebook.com/sharer.php?u=<%= @item.uri %>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+<a class="shareLink btn-share" title="<%= t('items.social.shareOn')%> facebook" href="https://www.facebook.com/sharer.php?u=<%= @item.uri %>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
   <img class="littleCircleImage"src="/assets/foregroundFB.png" height=30 width=30/>
 </a>
-<a class="shareLink btn-share" href="https://plus.google.com/share?url=<%= @item.uri %>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+<a class="shareLink btn-share" title="<%= t('items.social.shareOn')%> Google+" href="https://plus.google.com/share?url=<%= @item.uri %>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
   <img class="littleCircleImage"src="/assets/foregroundGoogle.png" alt="Share on Google+" height=30 width=30/>
 </a>
-<a class="shareLink btn-share" href="https://twitter.com/share?url=<%= @item.uri %>&via=readornet&text=<%= @item.props["http://purl.org/rss/1.0/title"][0]%>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+<a class="shareLink btn-share" title="<%= t('items.social.shareOn')%> twitter" href="https://twitter.com/share?url=<%= @item.uri %>&via=readornet&text=<%= @item.props["http://purl.org/rss/1.0/title"][0]%>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
   <img class="littleCircleImage" src="/assets/foregroundTwitter.png" height=30 width=30>
 </a>
-<a class="shareLink btn-share" target="_blank" href="http://www.diigo.com/post?url=<%= @item.uri %>&title=<%= @item.props["http://purl.org/rss/1.0/title"][0]%>">
+<a class="shareLink btn-share" title="<%= t('items.social.shareOn')%> diigo" target="_blank" href="http://www.diigo.com/post?url=<%= @item.uri %>&title=<%= @item.props["http://purl.org/rss/1.0/title"][0]%>">
 	<img style="border:none" src="http://www.diigo.com/images/diigo-icon/32.png" alt="Add to Diigo" height=30 width=30/>
 </a>

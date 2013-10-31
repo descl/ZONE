@@ -322,6 +322,8 @@ fr:
       person: "Personne"
       event: "Evenement"
       lang: "Langue"
+    social:
+      shareOn: "Partager sur"
   newmodal:
     breadcrumb:
       sources:

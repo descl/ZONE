@@ -323,6 +323,8 @@ en:
       person: "Person"
       event: "Event"
       lang: "Lang"
+    social:
+      shareOn: "Share on"
   newmodal:
     breadcrumb:
       sources:
