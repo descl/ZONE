@@ -26,6 +26,7 @@ package org.zoneproject.extractor.rssreader;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.shared.JenaException;
 import com.sun.syndication.feed.synd.SyndEnclosureImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
@@ -189,7 +190,22 @@ public class RSSGetter {
                 + "FILTER (!bif:exists ((select (1) where { ?uri <http://zone-project.org/model/sources#offline> \"true\" } )))"
                 + "FILTER (!bif:exists ((select (1) where { ?uri rdf:type <http://zone-project.org/model/sources#twitter> } )))"
                 + "}";
-        ResultSet res = Database.runSPARQLRequest(query, ZoneOntology.GRAPH_SOURCES);
+        ResultSet res;
+        try{
+            res = Database.runSPARQLRequest(query, ZoneOntology.GRAPH_SOURCES);
+        }catch(JenaException ex){
+            if(ex.getMessage().contains("timeout") || ex.getMessage().contains("Problem during serialization") || ex.getMessage().contains("Connection failed") ){
+                logger.warn(ex);
+                logger.warn("connection lost with server (wait 5 secondes)");
+                Database.initStore();
+                try{Thread.currentThread().sleep(5000);}catch(InterruptedException ie){}
+                return getSources();
+            }else{
+                logger.warn(ex);
+                logger.warn("Encoding error in some uri's request:"+query);
+                return null;
+            }
+        }
         ArrayList<String> sources = new ArrayList<String>();
         while (res.hasNext()) {
             QuerySolution r = res.nextSolution();
@@ -205,7 +221,22 @@ public class RSSGetter {
                 + "FILTER (!bif:exists ((select (1) where { ?uri <http://zone-project.org/model/sources#offline> \"true\" } )))"
                 + "FILTER (!bif:exists ((select (1) where { ?uri rdf:type <http://zone-project.org/model/sources#twitter> } )))"
                 + "}ORDER BY DESC(?pubDate) LIMIT "+limit+" ";
-        ResultSet res = Database.runSPARQLRequest(query, ZoneOntology.GRAPH_SOURCES);
+        ResultSet res;
+        try{
+            res = Database.runSPARQLRequest(query, ZoneOntology.GRAPH_SOURCES);
+        }catch(JenaException ex){
+            if(ex.getMessage().contains("timeout") || ex.getMessage().contains("Problem during serialization") || ex.getMessage().contains("Connection failed") ){
+                logger.warn(ex);
+                logger.warn("connection lost with server (wait 5 secondes)");
+                Database.initStore();
+                try{Thread.currentThread().sleep(5000);}catch(InterruptedException ie){}
+                return getLastsSources(limit);
+            }else{
+                logger.warn(ex);
+                logger.warn("Encoding error in some uri's request:"+query);
+                return null;
+            }
+        }
         ArrayList<String> sources = new ArrayList<String>();
         while (res.hasNext()) {
             QuerySolution r = res.nextSolution();
