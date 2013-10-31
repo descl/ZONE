@@ -15,6 +15,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         current_user.tokenSecret = auth["credentials"].secret
         current_user.login = auth["info"].nickname
         current_user.save
+        current_user.add_timeline_to_sources
         flash[:notice] = t('account.twitter.successAssociated')
 
         redirect_to root_url

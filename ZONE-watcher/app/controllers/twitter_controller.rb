@@ -17,7 +17,7 @@ class TwitterController < ApplicationController
     
     userSource = Source.find("#{ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE}/#{current_user.login}")
     if userSource.to_json == "null"
-      add_timeline_to_sources
+      current_user.add_timeline_to_sources
       flash[:notice] = t("twitter.created")
     end
 
@@ -35,21 +35,6 @@ class TwitterController < ApplicationController
     else
       redirect_to url_for(search)
     end
-  end
-  
-  def add_timeline_to_sources
-    @source = Source.new(
-      "#{ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE}/#{current_user.login}",
-      {
-        :owner => current_user.id, 
-        :attrs => {
-          RDF.type => ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE,
-          ZoneOntology::SOURCES_TWITTER_TOKEN =>current_user.token, 
-          ZoneOntology::SOURCES_TWITTER_TOKEN_SECRET => current_user.tokenSecret
-        }
-      }
-    )
-    @source.save
   end
 
 

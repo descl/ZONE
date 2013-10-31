@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
         user.password = Devise.friendly_token[0,20]
         user.token = session["devise.twitter_data"].credentials.token
         user.tokenSecret = session["devise.twitter_data"].credentials.secret
+        user.add_timeline_to_sources
       elsif data = session["devise.github_data"] && session["devise.github_data"]["extra"]["raw_info"]
         user.email = data["email"] if user.email.blank?
         user.provider = session["devise.github_data"].provider
@@ -54,5 +55,20 @@ class User < ActiveRecord::Base
     return Source.all(
         "?concept <#{ZoneOntology::SOURCES_OWNER}> ?owner.
           Filter(str(?owner) = \"#{id}\")")
+  end
+
+  def add_timeline_to_sources
+    @source = Source.new(
+        "#{ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE}/#{self.login}",
+        {
+            :owner => self.id,
+            :attrs => {
+                RDF.type => ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE,
+                ZoneOntology::SOURCES_TWITTER_TOKEN =>self.token,
+                ZoneOntology::SOURCES_TWITTER_TOKEN_SECRET => self.tokenSecret
+            }
+        }
+    )
+    @source.save
   end
 end
