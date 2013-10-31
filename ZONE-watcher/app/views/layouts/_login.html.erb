@@ -2,9 +2,21 @@
     <li class="<%= 'active' if current_page?(favorites_path) %>"><%= link_to raw("<i class=\"icon-star\" ></i>"), favorites_path, :title => t('menu.favoris') %></li>
 
     <li class="dropdown">
-      <a data-toggle="dropdown" class="dropdown-toggle" href="#"><%= raw (current_user.login == nil) ? "<b class='icon-user'></b> #{current_user.email}" : "<b class='icon-twitter'></b> #{current_user.login}" %></a>
+      <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+        <% if (current_user.provider.include? "reador")%>
+            <b class='icon-user'></b> <%=current_user.email%>
+            <%if (current_user.provider.include? "twitter") %>
+                (<b class='icon-twitter'></b> <%=current_user.login%>)
+            <%end%>
+        <%elsif (current_user.provider.include? "twitter") %>
+            <b class='icon-twitter'></b> <%=current_user.login%>
+        <%end%>
+      </a>
       <ul class="dropdown-menu">
         <li><%= link_to t("menu.editAccount"), edit_user_registration_path %></li>
+        <% if current_user.provider == nil%>
+            <li><%= link_to t("menu.connectToTwitter"), user_omniauth_authorize_path(:twitter) %></li>
+        <%end%>
         <li><%= link_to t("menu.logout"), destroy_user_session_path, :method=>'delete' %></li>
       </ul>
     </li>

@@ -133,6 +133,8 @@ en:
       "Sign up on <b>Reador</b>"
     editAccount:
       "Your account"
+    connectToTwitter:
+      "Link your account to twitter"
     twitterAccount:
       "Twitter account"
     logout:
@@ -399,3 +401,7 @@ en:
           "Prohibited terms"
   leftMenu:
     search: "Search"
+  account:
+    twitter:
+      alreadyAssociated: "An account is already linked to this twitter account"
+      successAssociated: "Your account has been linked."

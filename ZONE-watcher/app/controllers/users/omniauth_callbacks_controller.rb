@@ -1,15 +1,35 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def twitter
     auth = request.env["omniauth.auth"]
-    @user = User.find_for_provider_oauth(auth, current_user)
 
-    if @user.persisted?
-      set_flash_message(:notice, :success, :kind => "Twitter") #if is_navigational_format?
-      sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
+    #check if we need to associate account to a classic user
+    if user_signed_in? && current_user.provider == nil
 
+      if User.where(:provider => auth.provider, :uid => auth.uid).first
+        flash[:error] = t('account.twitter.alreadyAssociated')
+        redirect_to root_url
+      else
+        current_user.provider = "twitter+reador"
+        current_user.uid = auth.uid
+        current_user.token = auth["credentials"].token
+        current_user.tokenSecret = auth["credentials"].token
+        current_user.login = auth["info"].nickname
+        current_user.save
+        flash[:notice] = t('account.twitter.successAssociated')
+
+        redirect_to root_url
+      end
     else
-      session["devise.twitter_data"] = auth
-      redirect_to new_user_registration_url
+      @user = User.find_for_provider_oauth(auth, current_user)
+
+      if @user.persisted?
+        set_flash_message(:notice, :success, :kind => "Twitter") #if is_navigational_format?
+        sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
+
+      else
+        session["devise.twitter_data"] = auth
+        redirect_to new_user_registration_url
+      end
     end
   end
   def github

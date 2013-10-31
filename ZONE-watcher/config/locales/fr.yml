@@ -132,6 +132,8 @@ fr:
       "Creer son compte <b>Reador</b>"
     editAccount:
       "Votre compte"
+    connectToTwitter:
+      "Se lier à twitter"
     twitterAccount:
       "Compte twitter"
     logout:
@@ -404,3 +406,7 @@ fr:
     previous_label: "&#8592; Précédent"
     next_label: "Suivant &#8594;"
     page_gap: "&hellip;"
+  account:
+    twitter:
+      alreadyAssociated: "Un compte a déjà été associé à ce compte twitter"
+      successAssociated: "Votre compte a associé"

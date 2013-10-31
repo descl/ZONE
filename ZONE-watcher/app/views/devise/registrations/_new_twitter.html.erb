@@ -6,16 +6,10 @@
         <h3><%= t("menu.signInWith") %> twitter</h3>
       </div>
       <div class="modal-body">
-        <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+        <%= bootstrap_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
 
-      <%= devise_error_messages! %>
+      <%= f.email_field :email %>
 
-      <div><%= f.label :email %><br />
-      <%= f.email_field :email %></div>
-
-
-      <div><%= f.label :login %><br />
-      <%= f.text_field :login, :value => session["devise.twitter_data"]["info"].nickname.to_s %></div>
 
       <div><%= f.label "#{t("menu.twitterAccount")}: " %>
           <b><%= session["devise.twitter_data"]["info"].nickname.to_s %></b>
