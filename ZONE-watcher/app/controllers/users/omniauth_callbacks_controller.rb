@@ -12,7 +12,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         current_user.provider = "twitter+reador"
         current_user.uid = auth.uid
         current_user.token = auth["credentials"].token
-        current_user.tokenSecret = auth["credentials"].token
+        current_user.tokenSecret = auth["credentials"].secret
         current_user.login = auth["info"].nickname
         current_user.save
         flash[:notice] = t('account.twitter.successAssociated')
