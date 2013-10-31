@@ -3,7 +3,7 @@
 <p><%= link_to t('devise.cancelAccount'), registration_path(resource_name), :data => { :confirm => t('devise.areYouSure') }, :method => :delete %>.</p>
 
 
-<% if current_user.provider.include? "reador" %>
+<% if current_user.provider == nil  || (current_user.provider.include? "reador") %>
 
 
 <h2><%= t('menu.editAccount')%></h2>
