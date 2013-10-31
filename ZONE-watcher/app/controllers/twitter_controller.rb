@@ -5,7 +5,7 @@ class TwitterController < ApplicationController
   # GET /twitter_timelines
   # GET /twitter_timelines.json
   def index
-    if !user_signed_in? || (!current_user.provider.include? "twitter")
+    if !user_signed_in? || ((!current_user.provider != nil) && (!current_user.provider.include? "twitter"))
       flash[:error] = t("twitter.err.notlogged")
       begin
         redirect_to(:back)

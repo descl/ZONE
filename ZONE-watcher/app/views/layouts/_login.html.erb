@@ -3,9 +3,9 @@
 
     <li class="dropdown">
       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-        <% if (current_user.provider.include? "reador")%>
+        <% if current_user.provider == nil || (current_user.provider.include? "reador")%>
             <b class='icon-user'></b> <%=current_user.email%>
-            <%if (current_user.provider.include? "twitter") %>
+            <%if current_user.provider != nil && (current_user.provider.include? "twitter") %>
                 (<b class='icon-twitter'></b> <%=current_user.login%>)
             <%end%>
         <%elsif (current_user.provider.include? "twitter") %>
