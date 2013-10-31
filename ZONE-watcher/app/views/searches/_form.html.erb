@@ -48,6 +48,21 @@
 	<div class="row-fluid">
 		<div class="tab-content">
 			<div class="tab-pane active" id="sources">
+
+            <% if user_signed_in? %>
+                <div class="row-fluid">
+                  <div class="span1"></div>
+                  <div class="span9">
+                    <h2><%= raw t 'newmodal.selectName' %></h2>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                  <div class="span2"></div>
+                  <input name='searchName' type="text" class="span3" id="loginTwitter" value="<%=@search.name%>" placeholder="<%= raw t 'newmodal.selectNameHolder' %>">
+
+                </div>
+                <%end%>
+
 				<div class="row-fluid">
 					<div class="span1"></div>
 					<div class="span10">
@@ -92,8 +107,8 @@
 											<div class="span12 input-prepend input-append">
 												<div class="span1"></div>
 												<span class="add-on input-prefix"><b>@</b></span>
-												<input name="inputLogin" type="text" class="input-search span9" id="loginTwitter" autocomplete="on" placeholder="<%= raw t 'newmodal.sources.twitter.holderpersonn' %>" onKeyPress="if (event.keyCode == 13 && $(this).val()!=''){ addSource('Twitter','#loginTwitter');return false;}else if(event.keyCode == 13){return false;}">
-												<button type="button" class="btn btn-large btn-success" onclick="if ($('#loginTwitter').val()!='') addSource('Twitter','#loginTwitter');return false;">
+												<input name="inputLogin" type="text" class="input-search span9" id="loginTwitter" placeholder="<%= raw t 'newmodal.sources.twitter.holderpersonn' %>" onKeyPress="if (event.keyCode == 13 && $(this).val()!=''){ addSource('Twitter','#loginTwitter');return false;}else if(event.keyCode == 13){return false;}">
+												<button type="button" class="btn btn-success" onclick="if ($('#loginTwitter').val()!='') addSource('Twitter','#loginTwitter');return false;">
 													<%= raw t 'newmodal.sources.add' %>
 												</button>
 											</div>
@@ -102,8 +117,8 @@
 											<div class="span12 input-prepend input-append">
 												<div class="span1"></div>
 												<span class="add-on input-prefix"><b>#</b></span>
-												<input name="inputTag" type="text" class="input-search span9" id="searchTwitter" autocomplete="on" placeholder="<%= raw t 'newmodal.sources.twitter.holdertag' %>" onKeyPress="if (event.keyCode == 13 && $(this).val()!=''){ addSource('Twitter','#searchTwitter');return false;}else if(event.keyCode == 13){return false;}" />
-												<button type="button" class="btn btn-large btn-success" onclick="if ($('#searchTwitter').val()!='') addSource('Twitter','#searchTwitter');return false;">
+												<input name="inputTag" type="text" class="input-search span9" id="searchTwitter" placeholder="<%= raw t 'newmodal.sources.twitter.holdertag' %>" onKeyPress="if (event.keyCode == 13 && $(this).val()!=''){ addSource('Twitter','#searchTwitter');return false;}" />
+												<button type="button" class="btn btn-success" onclick="if ($('#searchTwitter').val()!='') addSource('Twitter','#searchTwitter');return false;">
 													<%= raw t 'newmodal.sources.add' %>
 												</button>
 											</div>
@@ -149,8 +164,8 @@
 											<div class="span12 input-prepend input-append inputSearchZone">
 												<div class="span1"></div>
 												<span class="add-on input-prefix"><i class="icon-search"></i></span>
-												<input name="inputRSS" id="searchRSS" type="url" class="input-search span9" autocomplete="on" placeholder="<%= raw t 'newmodal.sources.rss.holderurl' %>" onKeyPress="if (event.keyCode == 13 && $(this).val()!=''){addSource('RSS','#searchRSS');return false;}else if(event.keyCode == 13){return false;}">
-												<button type="button" class="btn btn-large btn-success" onclick="if ($('#searchRSS').val()!='') addSource('RSS','#searchRSS');return false;">
+												<input name="inputRSS" id="searchRSS" type="url" class="input-search span9" placeholder="<%= raw t 'newmodal.sources.rss.holderurl' %>" onKeyPress="if (event.keyCode == 13 && $(this).val()!=''){addSource('RSS','#searchRSS');return false;}else if(event.keyCode == 13){return false;}">
+												<button type="button" class="btn btn-success" onclick="if ($('#searchRSS').val()!='') addSource('RSS','#searchRSS');return false;">
 													<%= raw t 'newmodal.sources.add' %>
 												</button>
 											</div>

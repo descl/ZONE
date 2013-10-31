@@ -328,6 +328,8 @@ fr:
         "Filtrage"
       results:
         "Résultats"
+    selectName: "Nommez votre recherche"
+    selectNameHolder: "Donnez un nom à votre recherche"
     sources:
       title:
         "Sélectionner vos sources"

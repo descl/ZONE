@@ -329,6 +329,8 @@ en:
         "Filtering"
       results:
         "Results"
+    selectName: "Select search name"
+    selectNameHolder: "give a name to your search"
     sources:
       title:
         "Select your sources"
