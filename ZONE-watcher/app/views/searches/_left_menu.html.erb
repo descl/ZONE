@@ -1,7 +1,7 @@
 
 
 
-<ul class="nav nav-list bs-docs-sidenav" style="max-width: 180px">
+<ul class="nav nav-list bs-docs-sidenav" style="max-width: 180px; position: fixed">
   <% @searches.each do |curSearch| %>
 
           <% descriptionSearchBox  = render "searches/reminder_panel", :localSearch => curSearch %>
@@ -25,7 +25,7 @@
 <script type="text/javascript">
     $(function() {
         $('[rel="popoverx"]').popoverx({
-            fire_on : 'hover',
+            fire_on : 'click',
             hover_delay_close : 2000,
             onHidden :
                     function() {
