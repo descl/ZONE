@@ -12,7 +12,7 @@ xml.rss :version => "2.0" do
       next if @item.date == nil
       next if @item.description == nil
       xml.item do
-        xml.title @item.title[0]
+        xml.title @item.title
         if @item.description != nil
             xml.description  @item.description[0].html_safe
         else
@@ -25,8 +25,8 @@ xml.rss :version => "2.0" do
         if image != nil
             xml.enclosure url:image[0], type:"image/jpeg"
         end
-        @item.getTags.each do |tag|
-          xml.enclosure tag.value
+        @item.filters.each do |tag|
+          xml.enclosure tag.uri
 
         end
      end

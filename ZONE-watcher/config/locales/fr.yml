@@ -157,6 +157,7 @@ fr:
       "Recherche sémantique"
     gobutton:
       "Nouvelle recherche"
+    exampleButton: "Voir un exemple de flux annoté"
   index:
     disclaimer:
       "Reador.NET est en <b>cours de développement</b>, merci de nous faire remonter les problèmes que vous rencontrez en <a href='javascript:void($zopim.livechat.window.openPopout())'>cliquant ici</a>!"
