@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   def self.find_for_provider_oauth(auth, signed_in_resource=nil)
     user = User.where('uid = ?', auth.uid).first
-    if user != nil && ((user.provider == nil && auth == "reador") || ((user.provider != nil) && (!user.provider.include? auth.provider))
+    if user != nil && ((user.provider == nil && auth == "reador") || ((user.provider != nil) && (!user.provider.include? auth.provider)))
       user = nil
     end
     unless user
