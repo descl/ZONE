@@ -1,3 +1,6 @@
+Encoding.default_external = Encoding::UTF_8
+Encoding.default_internal = Encoding::UTF_8
+
 ZONEWatcher::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
