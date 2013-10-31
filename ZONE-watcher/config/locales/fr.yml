@@ -37,6 +37,8 @@ fr:
         "Owner"
       theme:
         "catégorie"
+      defaultTheme:
+        "non définie"
       show:
         "Afficher"
       hide:

@@ -38,6 +38,8 @@ en:
         "Owner"
       theme:
         "Category"
+      dafaultTheme:
+        "undefined"
       show:
         "Show"
       hide:
