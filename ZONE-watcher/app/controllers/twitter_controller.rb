@@ -31,7 +31,7 @@ class TwitterController < ApplicationController
     end
 
     if search == nil
-      redirect_to url_for(:controller => :searches, :action => :create,  :sources => {:rss => [sourceURI]}, :searchName => "TwitterTimeline", :isNew => false), :method => 'post'
+      redirect_to url_for(:controller => :searches, :action => :create,  :sources => {:rss => [sourceURI]}, :searchName => "TwitterTimeline", :isNew => true), :method => 'post'
     else
       redirect_to url_for(search)
     end
