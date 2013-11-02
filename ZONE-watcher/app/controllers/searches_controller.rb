@@ -21,7 +21,7 @@ class SearchesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @searches }
+      format.json { render json: @searches.to_json(:include => [:sources,:filters]) }
     end
   end
 
