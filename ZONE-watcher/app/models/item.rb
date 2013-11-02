@@ -77,19 +77,21 @@ SELECT * WHERE{
     
     params = Hash.new
     result.each do |prop|
-      if params[prop.prop.to_s] == nil
-          params[prop.prop.to_s] = Hash.new
+      propUri = prop.prop.to_s.force_encoding("UTF-8")
+      propValue = prop.value.to_s.force_encoding("UTF-8")
+      if params[propUri] == nil
+          params[propUri] = Hash.new
       end
       if (!prop.bound?(:extraProp))
-        if params[prop.prop.to_s][:value] == nil
-          params[prop.prop.to_s][:value] = Array.new
+        if params[propUri][:value] == nil
+          params[propUri][:value] = Array.new
         end
-        params[prop.prop.to_s][:value] << prop.value.to_s
+        params[propUri][:value] << propValue
       else
-        if params[prop.prop.to_s][prop.value.to_s] == nil
-          params[prop.prop.to_s][prop.value.to_s] = Hash.new
+        if params[propUri][propValue] == nil
+          params[propUri][propValue] = Hash.new
         end
-        params[prop.prop.to_s][prop.value.to_s][prop.extraProp.to_s] = prop.extraValue.to_s
+        params[propUri][propValue][prop.extraProp.to_s] = prop.extraValue.to_s
       end
     end
     puts params.to_json
