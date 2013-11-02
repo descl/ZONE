@@ -73,8 +73,8 @@ public class ZoneOntology {
     
     public static String GRAPH_NEWS = "http://zone-project.org/datas/items";
     public static String GRAPH_SOURCES = "http://zone-project.org/datas/sources";
+    public static String GRAPH_TAGS = "http://zone-project.org/datas/tags";
     
-    public static String PLUGIN_DBPEDIA_GEO = PLUGIN_PREFIX+"/DBPedia-geo";
     public static String WIKIMETA_ENTITIES = "http://www.wikimeta.org/Entities#";
     public static String WIKIMETA_LOC = WIKIMETA_ENTITIES+"LOC.ADMI";
     

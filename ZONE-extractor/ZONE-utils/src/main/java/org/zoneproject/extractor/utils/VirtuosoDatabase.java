@@ -41,6 +41,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -114,11 +115,14 @@ public abstract class VirtuosoDatabase {
         addModelToStore(model, ZoneOntology.GRAPH_NEWS);
     }
     public static void addAnnotations(String itemUri, ArrayList<Prop> props){
+        addAnnotations(itemUri,props, ZoneOntology.GRAPH_NEWS);
+    }
+    public static void addAnnotations(String itemUri, ArrayList<Prop> props, String graph){
         if(props == null){
             return;
         }
         Model model = getModelForAnnotations(itemUri, props);
-        addModelToStore(model, ZoneOntology.GRAPH_NEWS);
+        addModelToStore(model,graph);
     }
     
     /**
@@ -215,16 +219,36 @@ public abstract class VirtuosoDatabase {
         while((i++)<=5){
             try {
                 getStore(graph).add(model);
-                return;
+
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                try {
+                    Future<Model> task = executor.submit(new ThreadAddModelToStore(graph,model));
+                    task.get(60, TimeUnit.SECONDS);
+                    break;
+                } catch (InterruptedException ex) {
+                    logger.warn(ex);
+                } catch (ExecutionException ex) {
+                    Throwable t = ex.getCause();
+                    if( t instanceof JenaException ) {
+                        throw (JenaException)t;
+                    }else{
+                        throw new RuntimeException( t );
+                    }
+                } catch (TimeoutException ex) {
+                    logger.warn(ex);
+                }finally{
+                    if(!executor.isTerminated()){
+                        executor.shutdown();
+                    }
+                }
+                
             } catch (JenaException ex) {
                 if(ex.getMessage().contains("timeout")){
                     logger.warn("connection lost with server (wait 5 secondes)("+i+ " try)");
                 }else{
                     logger.warn("annotation process error because of virtuoso partial error(wait 5 secondes)("+i+ " try)");
                 }
-                /*if(i==0){
-                    return;
-                }*/
+                
                 try{Thread.currentThread().sleep(5000);}catch(InterruptedException ie){}
             }
         }
@@ -544,5 +568,21 @@ public abstract class VirtuosoDatabase {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(VirtuosoDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 }
+
+
+class ThreadAddModelToStore implements Callable<Model> {
+   String graph;
+   Model model;
+   ThreadAddModelToStore(String graph, Model model) {
+      this.graph = graph;
+      this.model = model;
+   }
+   public Model call() throws JenaException {return VirtuosoDatabase.getStore(graph).add(model);}
+}
+class ThreadExec implements Callable<ResultSet> {
+   QueryExecution q;
+   ThreadExec(QueryExecution q) {this.q = q;}
+   public ResultSet call() throws JenaException {return q.execSelect();}
 }
