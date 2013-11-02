@@ -120,7 +120,7 @@ GEM
     multi_json (1.7.9)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
-    mysql (2.9.1)
+    mysql2 (0.3.13)
     net-http-persistent (2.9)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
@@ -253,7 +253,7 @@ DEPENDENCIES
   i18n-js!
   jquery-rails (= 2.3.0)
   jquery-ui-rails
-  mysql
+  mysql2
   omniauth
   omniauth-github
   omniauth-google-oauth2
