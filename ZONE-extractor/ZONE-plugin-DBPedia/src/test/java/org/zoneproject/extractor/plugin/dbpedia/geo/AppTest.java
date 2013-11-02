@@ -21,7 +21,6 @@ package org.zoneproject.extractor.plugin.dbpedia.geo;
  * #L%
  */
 
-import org.zoneproject.extractor.plugin.dbpedia.geo.DbpediaSparqlRequest;
 import java.util.ArrayList;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -58,28 +57,17 @@ public class AppTest
     @org.junit.Test
     public void testApp1() {
         logger.info("getCitiesResult");
-        String city = "Toulon";
+        String entity = "http://fr.dbpedia.org/resource/Frank_Berton";
         ArrayList<Prop> expResult = new ArrayList<Prop>();
-        expResult.add(new Prop("http://rdf.insee.fr/geo/Arrondissement","http://rdf.insee.fr/geo/2011/ARR_832",false));
-        expResult.add(new Prop("http://rdf.insee.fr/geo/Pseudo-canton","http://rdf.insee.fr/geo/2011/CAN_8399",false));
-        expResult.add(new Prop("http://rdf.insee.fr/geo/Departement","http://rdf.insee.fr/geo/2011/DEP_83",false));
-        expResult.add(new Prop("http://rdf.insee.fr/geo/Region","http://rdf.insee.fr/geo/2011/REG_93",false));
-        expResult.add(new Prop("http://rdf.insee.fr/geo/Pays","http://rdf.insee.fr/geo/2011/PAYS_FR",false));
-        ArrayList<Prop> result = InseeSparqlRequest.getDimensions(city);
+        expResult.add(new Prop("http://www.w3.org/1999/02/22-rdf-syntax-ns#type","http://dbpedia.org/ontology/Person",false));
+        expResult.add(new Prop("http://www.w3.org/2000/01/rdf-schema#label","Frank Berton",true));
+        expResult.add(new Prop("http://dbpedia.org/ontology/#abstract","Frank Berton, né en 1962 à Amiens, est un avocat français spécialisé dans le droit pénal et le droit de la presse. Il fait partie du cabinet ADNS basé à Lille. Il a participé à la défense et procès de plusieurs affaires médiatisées comme l'affaire d'Outreau (2004-2005), l'affaire Cottrez (2010-2011), l'affaire Ponthieux (2010), la ville de Roubaix contre un restaurant Quick proposant du halal (2010) et la défense des familles des otages français tués au Niger par Al-Qaida au Maghreb islamique (2011). Sur intervention de Nicolas Sarkozy, il est désigné en 2008 par la justice française pour suivre l'affaire Florence Cassez.",true));
+        ArrayList<Prop> result = DbpediaSparqlRequest.getInfos(entity);
+        logger.info(result);
 
         assertEquals(expResult.size(), result.size());
         for(Prop p: expResult){
             assertTrue(result.contains(p));
         }
     }
-
-    /* dont work yet on apostrofs...
-    @org.junit.Test
-    public void testApp2() {
-        logger.info("getCitiesResult");
-        String city = "Clermont-L'Hérault";
-        ArrayList<Prop> result = InseeSparqlRequest.getDimensions(city);
-
-        assertEquals(0, result.size());
-    }*/
 }

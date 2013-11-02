@@ -20,20 +20,20 @@ package org.zoneproject.extractor.plugin.dbpedia.geo;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
+import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.Syntax;
 import com.hp.hpl.jena.shared.JenaException;
+import com.hp.hpl.jena.sparql.lang.Parser;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import org.zoneproject.extractor.utils.Database;
-import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
 import org.zoneproject.extractor.utils.ZoneOntology;
-import virtuoso.jena.driver.VirtModel;
 
 /**
  *
@@ -136,26 +136,38 @@ public class DbpediaSparqlRequest {
             lang="fr";
             endpoint = "http://fr.dbpedia.org/sparql";
         }
-        
-        String query = "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/> " +
+        String url = itemURI;
+        String queryString = "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/> " +
             " select ?label ?abstract ?thumb ?type where {" +
             "  {"+
-            "  <"+itemURI+"> <http://www.w3.org/2000/01/rdf-schema#label> ?label." +
-            "  OPTIONAL{ <"+itemURI+"> dbpedia-owl:abstract ?abstract.}" +
-            "  OPTIONAL{ <"+itemURI+"> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?type.}" +
-            "  OPTIONAL{ <"+itemURI+"> dbpedia-owl:thumbnail ?thumb}." +
+            "  <"+url+"> <http://www.w3.org/2000/01/rdf-schema#label> ?label." +
+            "  OPTIONAL{ <"+url+"> dbpedia-owl:abstract ?abstract.}" +
+            "  OPTIONAL{ <"+url+"> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?type.}" +
+            "  OPTIONAL{ <"+url+"> dbpedia-owl:thumbnail ?thumb}." +
             "  Filter((!bound(?abstract) || lang(?abstract) = \""+lang+"\") && (lang(?label) = \""+lang+"\"))}" +
             "} LIMIT 100";
-        //logger.info(query);
-        
-        QueryExecution qexec = QueryExecutionFactory.sparqlService(endpoint, query);
+        logger.info(queryString);
+        QueryExecution qexec;
+        if(lang.equals("fr")){
+            if(url.contains(" ")) {
+                return null;
+            }
+            //fix dbpedia fr bug on uri whith accents...
+            Query query = new Query() ;
+            query.setSyntax(Syntax.defaultSyntax);
+            Parser parser = Parser.createParser(Syntax.defaultSyntax) ;
+            parser.parse(query, queryString) ;
+            qexec = QueryExecutionFactory.sparqlService(endpoint, query);
+        }else{
+            qexec = QueryExecutionFactory.sparqlService(endpoint, queryString);
+        }
         try {
-            boolean containsType = false;
-            boolean typeIsOther = false;
             ResultSet results = qexec.execSelect();
             for (; results.hasNext();) {
                 QuerySolution curSol = results.nextSolution();
+                if(curSol.get("?label") != null){
                 result.put("http://www.w3.org/2000/01/rdf-schema#label", new Prop("http://www.w3.org/2000/01/rdf-schema#label",curSol.get("?label").asLiteral().getString()));
+                }
                 if(curSol.get("?abstract") != null){
                     result.put("http://dbpedia.org/ontology/#abstract", new Prop("http://dbpedia.org/ontology/#abstract",curSol.get("?abstract").asLiteral().getString()));
                 }
@@ -441,41 +453,31 @@ public class DbpediaSparqlRequest {
                             curSol.get("?type").toString().equals("http://dbpedia.org/class/yago/ConspiracyTheories") ||
                             curSol.get("?type").toString().equals("http://dbpedia.org/class/yago/ClimbingTechniques") ||
                             curSol.get("?type").toString().equals("http://dbpedia.org/class/yago/StockCharacters") ||
-                            curSol.get("?type").toString().equals("") ||
-                            curSol.get("?type").toString().equals("") ||
-                            curSol.get("?type").toString().equals("") ||
-                            curSol.get("?type").toString().equals("") ||
                             curSol.get("?type").toString().equals("http://www.opengis.net/gml/_Feature")){
                         
-                        typeIsOther = true;
                     }
-                    containsType = true;
                 }
             }
-            if(!result.containsKey("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")){// && (containsType == false || typeIsOther== true)){
+            if(!result.containsKey("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")){
                 result.put("http://www.w3.org/1999/02/22-rdf-syntax-ns#type", new Prop("http://www.w3.org/1999/02/22-rdf-syntax-ns#type","http://www.w3.org/2004/02/skos/core#Concept",false));
             }
             
             
             results = qexec.execSelect();
-            if(!result.containsKey("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")){
-                logger.info("--------------------------------------"+itemURI+"----------------------------------------------------------------------------------------------------------");
-                for (; results.hasNext();) {
-                    QuerySolution curSol = results.nextSolution();
-                    if( curSol.contains("?type")){
-                        logger.info(curSol.get("?label").asLiteral().getString() + " | " + curSol.get("?type").toString());
-                    }
-                }
-                return null;
-            }else{
-                Iterator it = result.keySet().iterator();
-                ArrayList<Prop> resultArrayList = new ArrayList<Prop>();
-                while( it.hasNext()){
-                    String cle = (String)it.next();
-                    resultArrayList.add(result.get(cle));
-                }
-                return resultArrayList;
+            
+            //check if label is defined and assigned a default one
+            if(result.get("http://www.w3.org/2000/01/rdf-schema#label") == null){
+                String label = itemURI.substring(itemURI.lastIndexOf("/")+1).replaceAll("_", " ");
+                result.put("http://www.w3.org/2000/01/rdf-schema#label", new Prop("http://www.w3.org/2000/01/rdf-schema#label",label));
             }
+            Iterator it = result.keySet().iterator();
+            ArrayList<Prop> resultArrayList = new ArrayList<Prop>();
+            while( it.hasNext()){
+                String cle = (String)it.next();
+                resultArrayList.add(result.get(cle));
+            }
+            return resultArrayList;
+                
         }catch(Exception ex){
             logger.error(ex);
             return null;

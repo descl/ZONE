@@ -23,7 +23,6 @@ package org.zoneproject.extractor.plugin.dbpedia.geo;
 
 import java.util.ArrayList;
 import org.zoneproject.extractor.utils.Database;
-import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
 import org.zoneproject.extractor.utils.ZoneOntology;
 
@@ -35,8 +34,8 @@ public class App
 {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_DBPEDIA;
-    public static int SIM_DOWNLOADS = 500000000;
-    
+    public static int SIM_DOWNLOADS = 500;
+        
     public App(){
         String [] tmp = {};
         App.main(tmp);
@@ -45,24 +44,21 @@ public class App
     public static void main(String[] args) {
         
         String[] items = null;
-        //do {
-            items = DbpediaSparqlRequest.getEmptyAnnotations(SIM_DOWNLOADS);
-            if(items == null){
-                //continue;
-            }
-            logger.info("DBpedia has "+items.length+" items to annotate");
-            for(String item : items){
-                //logger.info("Add DBpedia for item: "+item);
-                ArrayList<Prop> props;
-                props = DbpediaSparqlRequest.getInfos(item);
-                //logger.info(props);
-                if(props == null || props.size() < 3){
-                    continue;
+        while(true){
+            do {
+                items = DbpediaSparqlRequest.getEmptyAnnotations(SIM_DOWNLOADS);
+                
+                logger.info("DBpedia has "+items.length+" items to annotate");
+                for(String item : items){
+                    logger.info("Add DBpedia for item: "+item);
+                    ArrayList<Prop> props;
+                    props = DbpediaSparqlRequest.getInfos(item);
+                    Database.addAnnotations(item, props,ZoneOntology.GRAPH_TAGS);
+                    Database.addAnnotation(item, new Prop(PLUGIN_URI,"true"),ZoneOntology.GRAPH_TAGS);
                 }
-                Database.addAnnotations(item, props,ZoneOntology.GRAPH_TAGS);
-                Database.addAnnotation(item, new Prop(PLUGIN_URI,"true"),ZoneOntology.GRAPH_TAGS);
-            }
+            }while(items == null || items.length > 0);
+            
+            try{Thread.sleep(60*60*1000);}catch(Exception ie){}
         }
-        //while(items == null || items.length > 0);
-    //}
+    }
 }
