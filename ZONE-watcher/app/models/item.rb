@@ -78,7 +78,9 @@ SELECT * WHERE{
     params = Hash.new
     result.each do |prop|
       propUri = prop.prop.to_s.force_encoding("UTF-8")
+      propUri.encode("UTF-8")
       propValue = prop.value.to_s.force_encoding("UTF-8")
+      propValue.encode("UTF-8")
       if params[propUri] == nil
           params[propUri] = Hash.new
       end
