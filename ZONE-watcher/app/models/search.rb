@@ -90,6 +90,10 @@ class Search < ActiveRecord::Base
   end
 
   def getName(default)
-    return self.name ||= "#{default} #{self.id}"
+    if (self.name == "" || self.name == nil)
+      return "#{default} #{self.id}"
+    else
+      return self.name
+    end
   end
 end

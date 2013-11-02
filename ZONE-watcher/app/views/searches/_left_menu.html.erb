@@ -2,6 +2,14 @@
 
 
 <ul class="nav nav-list bs-docs-sidenav" style="max-width: 180px;">
+
+  <li class="">
+    <%= link_to new_search_path do %>
+<span class="btn btn-success">
+          <%= raw t 'search.gobutton' %>
+    </span>
+    <%end%>
+  </li>
   <% @searches.each do |curSearch| %>
 
           <% descriptionSearchBox  = render "searches/reminder_panel", :localSearch => curSearch %>
@@ -15,8 +23,13 @@
           >
 
           <%= link_to curSearch do %>
-            <%= curSearch.getName(t("leftMenu.search"))[0,18]%>
-            <span class=" icon-chevron-right pull-right searchmoreButton"/></span>
+            <div>
+              <%= curSearch.getName(t("leftMenu.search"))[0,18]%>
+              <span class=" icon-chevron-right pull-right searchmoreButton"/></span>
+              <%if (curSearch.id == @search.id)%>
+                <br/>&nbsp;&nbsp;&nbsp;<span><i><%= @itemsNumber %> news</i></span>
+              <%end%>
+            </div>
           <%end%>
     </li>
   <%end%>

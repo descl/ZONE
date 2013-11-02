@@ -285,7 +285,7 @@ fr:
         "Modification avancée"
     users:
       share:
-        "Partager : "
+        Partager : ""
     popover:
       title:
         "Confirmation"

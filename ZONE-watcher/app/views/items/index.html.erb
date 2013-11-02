@@ -13,17 +13,6 @@
     <div class="span10">
 
 
-
-
-<%= render 'home/search_tool'%>
-<%= #render 'reminder_panel'
-%>
-
-
-
-
-
-
 <div class="hidden">
     <%= @search.to_json %>
     <%= @search.sources.to_json %>
@@ -41,6 +30,51 @@
     });
 <% end %>
 
+
+<!-- rss feed and format page selection-->
+<div class="row-fluid">
+	<div class="btn-group pull-left">
+      <!--
+      TODO : put back the oneperline view (problem with infinite scroll)
+		<button id="btnCard" class="btn active" onclick="changeItemFormat('card');">
+			<i class="icon icon-th-large"></i>
+		</button>
+		<button id="btnList" class="btn" onclick="changeItemFormat('list');">
+			<i class="icon icon-th-list"></i>
+		</button>-->
+	</div>
+	<div id="titlePopover" hidden><%= raw t 'items.popover.smalltitle' %></div>
+
+    <script>
+        $('#buttonRss').popover({
+            trigger: 'hover',
+            placement: 'bottom',
+            html: true,
+            content: "<%=  t 'newmodal.filtering.generateRSS' %>"
+        });
+    </script>
+</div>
+
+<!-- items printing-->
+<div class="items-box">
+    <div class="row-fluid items-list">
+        <%= render :partial => "items", :items => @items %>
+
+    </div>
+    <div class="span12">
+      <%= link_to 'Load More ITEMS', items_path(:page => @items.next_page, :search => @search.id), :class => 'btn load-more-items', :remote => true if @items.next_page != nil%>
+
+        <%= # will_paginate @page_results, renderer: BootstrapPagination::Rails, class: "pagination pagination-centered"
+        %>
+    </div>
+
+</div>
+
+  </div>
+</div>
+
+
+<!-- modals -->
 <% if user_signed_in?%>
     <div id="modalDeleteTag" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-header">
@@ -49,9 +83,9 @@
       </div>
       <div class="modal-body deleteTag">
         <div class="row-fluid">
-            <div class="span12">
-                <%= raw t 'items.modal.delete.content' %>
-            </div>
+          <div class="span12">
+            <%= raw t 'items.modal.delete.content' %>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
@@ -81,62 +115,15 @@
     <h3 id="myModalLabel"><%= raw t 'items.modal.edit.title' %></h3>
   </div>
   <div class="modal-body deleteTag">
-  	<div class="row-fluid">
-	    <div class="span12">
-	    	<%= raw t 'items.modal.edit.content' %>
-	    	<input id="inputEditTag" name="tagName" type="text" placeholder="">
-	    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <%= raw t 'items.modal.edit.content' %>
+        <input id="inputEditTag" name="tagName" type="text" placeholder="">
+      </div>
     </div>
   </div>
   <div class="modal-footer">
-  	<button class="btn btn-success"><%= raw t 'items.modal.edit.update' %></button>
+    <button class="btn btn-success"><%= raw t 'items.modal.edit.update' %></button>
     <button class="btn" data-dismiss="modal" aria-hidden="true"><%= raw t 'items.modal.edit.cancel' %></button>
-  </div>
-</div>
-
-<!-- rss feed and format page selection-->
-<div class="row-fluid">
-	<div class="btn-group pull-right">
-      <!--
-      TODO : put back the oneperline view (problem with infinite scroll)
-		<button id="btnCard" class="btn active" onclick="changeItemFormat('card');">
-			<i class="icon icon-th-large"></i>
-		</button>
-		<button id="btnList" class="btn" onclick="changeItemFormat('list');">
-			<i class="icon icon-th-list"></i>
-		</button>-->
-	</div>
-	<div id="titlePopover" hidden><%= raw t 'items.popover.smalltitle' %></div>
-	<%= link_to(params.merge(:format => :rss)) do%>
-		<button id="buttonRss" class="btn btn-warning pull-right"><i class="icon-rss"></i></button>
-	<%end%>
-    <script>
-        $('#buttonRss').popover({
-            trigger: 'hover',
-            placement: 'bottom',
-            html: true,
-            content: "<%=  t 'newmodal.filtering.generateRSS' %>"
-        });
-    </script>
-	<span class="numberItem pull-right"><%= @itemsNumber %> items</span>
-</div>
-
-<hr>
-
-<!-- items printing-->
-<div class="items-box">
-    <div class="row-fluid items-list">
-        <%= render :partial => "items", :items => @items %>
-
-    </div>
-    <div class="span12">
-      <%= link_to 'Load More ITEMS', items_path(:page => @items.next_page, :search => @search.id), :class => 'btn load-more-items', :remote => true if @items.next_page != nil%>
-
-        <%= # will_paginate @page_results, renderer: BootstrapPagination::Rails, class: "pagination pagination-centered"
-        %>
-    </div>
-
-</div>
-
   </div>
 </div>

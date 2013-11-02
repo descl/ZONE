@@ -128,7 +128,7 @@ class SearchesController < ApplicationController
     else
       search = Search.new
     end
-    if form[:searchName] != nil
+    if form[:searchName] != nil && form[:searchName] != ""
       search.name = form[:searchName]
     end
 
