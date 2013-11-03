@@ -1,8 +1,10 @@
 <%# encoding: utf-8%>
   <div class="row">
 
-    <div class="span2 bs-docs-sidebar">
-      <%= render "searches/left_menu", :searches => @searches %>
+    <div class="span2" >
+      <div data-spy="affix" data-offset-top="0">
+        <%= render "searches/left_menu", :searches => @searches %>
+      </div>
     </div>
 
     <script>

@@ -282,7 +282,7 @@ fr:
       update:
         "Actualiser"
       change:
-        "Modification avancée"
+        "Modification<br/> avancée"
     users:
       share:
         Partager : ""

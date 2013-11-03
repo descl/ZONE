@@ -1,4 +1,4 @@
-<%= form_for "formModal", :url => url_for( :controller =>'searches', :action => 'index'), method: :POST, html: { id: "formModal"} do |f| %>
+<%= form_for "formModal", :url => url_for( :controller =>'searches', :action => 'index'), method: :POST, html: {class: "formModal", id: "form-#{localSearch.id}"} do |f| %>
     <% if localSearch.id != Rails.application.config.defaultRequestId.to_s
             editButton = "<input name='searchName' class='editNameInputFrom input-small' type='text' value='#{localSearch.getName(t("leftMenu.search"))}' onkeypress='console.log(this.value);$(this).attr('value',this.value)'/><span class='icon-pencil pointerMouse' onclick=\"$($(this).parent()).children('.editNameInputFrom').focus();showUpdate();\"/>"
             descriptionSearchBoxTitle = "#{editButton}      #{link_to '', localSearch, method: :delete, data: { confirm: 'Are you sure?' }, :class => "icon-trash pull-right"}"
@@ -92,28 +92,25 @@
             </div>
         </div>
         <hr>
-        <div class="row-fluid bottomDiv">
-              <div class="span5">
-                    <button style="height:50px" id="updateSearch" class="btn btn-success updater span12" type="submit" onclick="movingData('<%=localSearch.id%>')">
+      <div class="row-fluid">
+        <div class="span1"></div>
+      <div class="btn-toolbar">
+        <div class="span11 btn-group">
+                    <button style="height:50px" id="updateSearch" class="btn btn-success updater span5" type="submit" onclick="movingData('<%=localSearch.id%>')">
                       <%= raw t 'items.reminder.update' %>
                     </button>
-              </div>
-              <div class="span2">
-                <%= link_to(params.merge(:format => :rss),:title=>"mon flux RSS") do%>
-                  <button style="height:50px" class="btn btn-warning span12">
+                  <button style="height:50px" class="btn btn-warning span2">
                     <i class="icon-rss"></i>
                   </button>
-                <%end%>
 
-              </div>
-              <div class="span5">
-                    <button style="height:50px" class="btn btn-info span12" type="submit" onclick="
+                    <button style="height:50px" class="btn btn-info span5" type="submit" onclick="
                     movingData('<%=localSearch.id%>');
-                    $('#formModal').attr('action','/searches/<%=localSearch.id%>/edit');
-                    $('#formModal').attr('method','GET');
+                    $('.formModal').attr('action','/searches/<%=localSearch.id%>/edit');
+                    $('.formModal').attr('method','GET');
                     ">
                         <%= raw t 'items.reminder.change' %>
                     </button>
         </div>
+          </div></div>
     </div>
 <% end %>

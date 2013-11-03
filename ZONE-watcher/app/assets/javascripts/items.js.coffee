@@ -1,6 +1,6 @@
 #= require items_show
 #= require reminder_panel
-#= require "dino.js"
+# require "dino.js"
 
 downloadNewsDatas = (uri) ->
   $.ajax uri,

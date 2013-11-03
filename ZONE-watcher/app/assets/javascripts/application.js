@@ -117,7 +117,7 @@ function movingData(itemId) {
     inputDatas = "<input name='sources' type='hidden' value='" + JSON.stringify(source) + "'>" + "<input name='filters' type='hidden' value='" + JSON.stringify(filtering) + "'><input name='itemId' type='hidden' value='" + itemId + "'>";
     $('#movedData').html($('#movedData').html() + inputDatas);
 
-	$('#formModal').submit();
+	$('.formModal').submit();
 }
 
 // Functions for the draggable tags

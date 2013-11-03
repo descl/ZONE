@@ -71,7 +71,8 @@ function addTag(type, value, uri) {
 };
 function saveFormToHtml(doc){
     var contentToSave = $('.popover-content').children('p').html();
-    $("#"+doc.options.id).attr("data-content",contentToSave)
+    var searchId = $(contentToSave).attr("id").substring("form-".length);
+    $("#searchBox"+searchId).attr("data-content",contentToSave)
 }
 
 //Close all the popover after clicking on a selection

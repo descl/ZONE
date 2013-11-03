@@ -283,10 +283,10 @@ en:
       update:
         "Update"
       change:
-        "Advanced modification"
+        "Advanced<br/> modification"
     users:
       share:
-        "Share : "
+        Share : ""
     popover:
       title:
         "Confirmation"
