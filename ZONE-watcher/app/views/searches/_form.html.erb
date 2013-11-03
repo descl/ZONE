@@ -58,7 +58,7 @@
                 </div>
                 <div class="row-fluid">
                   <div class="span2"></div>
-                  <input name='searchName' type="text" class="span3" id="loginTwitter" value="<%=@search.name%>" placeholder="<%= raw t 'newmodal.selectNameHolder' %>">
+                  <input name='searchName' type="text" class="span3" id="searchName" value="<%=@search.name%>" placeholder="<%= raw t 'newmodal.selectNameHolder' %>">
 
                 </div>
                 <%end%>
@@ -337,7 +337,11 @@
 				<div class="row-fluid">
 					<div class="span1"></div>
 					<div class="span10">
-						<h4 class="black"><%= raw t 'newmodal.filtering.resume.musthave' %></h4>
+						<h4 class="black">
+                          <abbr title="<%= t 'newmodal.filtering.helpAndFilters' %>">
+                            <%= raw t 'newmodal.filtering.resume.musthave' %>
+                          </abbr>
+                        </h4>
 					</div>
 				</div>
 				<div class="row-fluid">
@@ -351,7 +355,11 @@
 				<div class="row-fluid">
 					<div class="span1"></div>
 					<div class="span10">
-						<h4 class="black"><%= raw t 'newmodal.filtering.resume.option' %></h4>
+                      <h4 class="black">
+                        <abbr title="<%= t 'newmodal.filtering.helpOrFilters' %>">
+                          <%= raw t 'newmodal.filtering.resume.option' %>
+                        </abbr>
+                      </h4>
 					</div>
 				</div>
 				<div class="row-fluid">
@@ -365,7 +373,11 @@
 				<div class="row-fluid">
 					<div class="span1"></div>
 					<div class="span10">
-						<h4 class="black"><%= raw t 'newmodal.filtering.resume.ban' %></h4>
+                      <h4 class="black">
+                        <abbr title="<%= t 'newmodal.filtering.helpWithoutFilters' %>">
+                          <%= raw t 'newmodal.filtering.resume.ban' %>
+                        </abbr>
+                      </h4>
 					</div>
 				</div>
 				<div class="row-fluid">

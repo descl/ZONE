@@ -401,6 +401,10 @@ fr:
           "Termes obligatoires"
         ban:
           "Termes interdits"
+      helpMessage: "Vous pouvez ajouter des tags ici directement en cliquant sur les tags présents dans les news"
+      helpAndFilters: "Ajoutez ici les tags que vous voulez absolument voir présents dans votre recherche"
+      helpWithoutFilters: "Ajoutez ici les tags que vous voulez bannir de votre recherche"
+      helpOrFilters: "Ajoutez ici les tags que vous voulez vois mis en valeur dans votre recherche mais qui ne sont pas essentiels"
   leftMenu:
     search: "Recherche"
 

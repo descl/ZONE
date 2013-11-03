@@ -168,17 +168,9 @@ function checkColor(){
 //Return an id for the filter
 function getId(type){
 	var idbasic = 0;
-	$(".well-info").children().each(function(){
-		if ( idbasic <= parseInt($(this).attr("id")))
-			idbasic = parseInt($(this).attr("id")) +1;
-	});
-	$(".well-success").children().each(function(){
-		if ( idbasic <= parseInt($(this).attr("id")))
-			idbasic = parseInt($(this).attr("id")) +1;
-	});
-	$(".well-danger").children().each(function(){
-		if ( idbasic <= parseInt($(this).attr("id")))
-			idbasic = parseInt($(this).attr("id")) +1;
+	$(".well-info, .well-success, .well-danger").children().each(function(){
+		if ( idbasic <= parseInt($(this).attr("id").substring("filter".length)))
+			idbasic = parseInt($(this).attr("id").substring("filter".length)) +1;
 	});
 	return idbasic;
 }

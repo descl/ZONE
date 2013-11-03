@@ -402,6 +402,10 @@ en:
           "Mandatory terms"
         ban:
           "Prohibited terms"
+      helpMessage: "You can add tags directly clicking on them in news"
+      helpAndFilters: "Add here tags that you really want to see in your search"
+      helpWithoutFilters: "Add here tags that you absolutely don't want to see in your search"
+      helpOrFilters: "Add here tags  that your want to see highlighted in your search but that are not essential"
   leftMenu:
     search: "Search"
   account:

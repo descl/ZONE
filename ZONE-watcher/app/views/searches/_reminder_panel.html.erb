@@ -26,6 +26,11 @@
                 </div>
             </div>
         </div>
+
+        <% andFilters = localSearch.getAndFilters%>
+        <% orFilters = localSearch.getOrFilters%>
+        <% withoutFilters = localSearch.getWithoutFilters%>
+
         <div class="row-fluid">
             <div class="span1"></div>
             <div class="span10">
@@ -33,35 +38,57 @@
                     <h3><span class="numberFiltering smallNumberFiltering">2</span> <%= raw t 'newmodal.breadcrumb.filtering' %></h3>
                 </div>
                 <div class="row-fluid">
-                    <p><b id="titleAnd"><%= raw t 'newmodal.filtering.buttonMusthave' %></b></p>
+                  <p><b id="titleAnd">
+                    <abbr title="<%= t 'newmodal.filtering.helpAndFilters' %>">
+                      <%= raw t 'newmodal.filtering.buttonMusthave' %>
+                    </abbr>
+                  </b></p>
                 </div>
+              <%if andFilters.size == 0%><abbr title="<%= t 'newmodal.filtering.helpMessage' %>"><%end%>
                 <div class="row-fluid">
                     <div id="summaryAnd" class="well summary span12 well-success" ondrop="drop(event)" ondragover="allowDrop(event)">
+
                       <% localSearch.getAndFilters.each do |filter| %>
                           <%= raw filter.getButton%>
                       <%end%>
                     </div>
                 </div>
+                </abbr>
+              <%if andFilters.size == 0%></abbr><%end%>
                 <div class="row-fluid">
-                    <p><b id="titleOr"><%= raw t 'newmodal.filtering.buttonOption' %></b></p>
+                  <p><b id="titleOr">
+                    <abbr title="<%= t 'newmodal.filtering.helpOrFilters' %>">
+                      <%= raw t 'newmodal.filtering.buttonOption' %>
+                    </abbr>
+                  </b></p>
                 </div>
+              <%if orFilters.size == 0%><abbr title="<%= t 'newmodal.filtering.helpMessage' %>"><%end%>
                 <div class="row-fluid">
                     <div id="summaryOr" class="well summary span12 well-info" ondrop="drop(event)" ondragover="allowDrop(event)">
+
                       <% localSearch.getOrFilters.each do |filter| %>
                         <%= raw filter.getButton%>
                       <%end%>
                     </div>
                 </div>
+              <%if orFilters.size == 0%></abbr><%end%>
                 <div class="row-fluid">
-                    <p><b id="titleWithout"><%= raw t 'newmodal.filtering.buttonBan' %></b></p>
+                  <p><b id="titleWithout">
+                    <abbr title="<%= t 'newmodal.filtering.helpWithoutFilters' %>">
+                      <%= raw t 'newmodal.filtering.buttonBan' %>
+                    </abbr>
+                  </b></p>
                 </div>
+              <%if withoutFilters.size == 0%><abbr title="<%= t 'newmodal.filtering.helpMessage' %>"><%end%>
                 <div class="row-fluid">
                     <div id="summaryWithout" class="well summary span12 well-danger" ondrop="drop(event)" ondragover="allowDrop(event)">
-                      <% localSearch.getWithoutFilters.each do |filter| %>
+
+                      <% withoutFilters.each do |filter| %>
                           <%= raw filter.getButton%>
                       <%end%>
                     </div>
                 </div>
+              <%if withoutFilters.size == 0%></abbr><%end%>
             </div>
         </div>
         <hr>
@@ -87,8 +114,6 @@
                     ">
                         <%= raw t 'items.reminder.change' %>
                     </button>
-
-
         </div>
     </div>
 <% end %>

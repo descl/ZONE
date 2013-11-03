@@ -1,15 +1,12 @@
-
-
+<div class="row-fluid">
+  <%= link_to new_search_path do %>
+    <span class="span12 btn btn-success">
+      <%= raw t 'search.gobutton' %>
+    </span>
+  <%end%>
+</div>
 
 <ul class="nav nav-list bs-docs-sidenav" style="max-width: 180px;">
-
-  <li class="">
-    <%= link_to new_search_path do %>
-<span class="btn btn-success">
-          <%= raw t 'search.gobutton' %>
-    </span>
-    <%end%>
-  </li>
   <% @searches.each do |curSearch| %>
 
           <% descriptionSearchBox  = render "searches/reminder_panel", :localSearch => curSearch %>

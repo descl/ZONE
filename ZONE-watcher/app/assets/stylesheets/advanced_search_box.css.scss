@@ -151,6 +151,7 @@ span.label-wrap{
 
 .label{
   margin:1px;
+  cursor:move;
 }
 
 /**
@@ -206,7 +207,10 @@ span.label-wrap{
 
 /**
  *   RSS source section
- */ 
+ */
+.rssSource{
+  cursor: default;
+}
 .contentRSS{
   border-radius:8px;
   margin-top: 10px;
