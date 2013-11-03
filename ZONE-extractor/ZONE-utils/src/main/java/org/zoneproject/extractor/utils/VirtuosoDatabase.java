@@ -101,7 +101,10 @@ public abstract class VirtuosoDatabase {
     }
     
     public static void addAnnotations(HashMap<String, ArrayList<Prop>> props){
-        if(props == null){
+        addAnnotations(props,ZoneOntology.GRAPH_NEWS);
+    }
+    public static void addAnnotations(HashMap<String, ArrayList<Prop>> props, String graph){
+        if(props == null || props.isEmpty()){
             return;
         } 
         Model model = ModelFactory.createDefaultModel();
@@ -112,8 +115,9 @@ public abstract class VirtuosoDatabase {
            ArrayList<Prop> itemProps = props.get(itemUri);
            model.add(getModelForAnnotations(itemUri, itemProps));
         }
-        addModelToStore(model, ZoneOntology.GRAPH_NEWS);
+        addModelToStore(model, graph);
     }
+    
     public static void addAnnotations(String itemUri, ArrayList<Prop> props){
         addAnnotations(itemUri,props, ZoneOntology.GRAPH_NEWS);
     }
