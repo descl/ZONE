@@ -22,6 +22,7 @@ package org.zoneproject.extractor.plugin.spotlight;
  */
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
@@ -37,7 +38,7 @@ public class App
 {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_SPOTLIGHT;
-    public static int SIM_DOWNLOADS = 50;
+    public static int SIM_DOWNLOADS = 100;
     
     public App(){
         String [] tmp = {};
@@ -74,7 +75,7 @@ public class App
                 
                         //we check all the thread in ordre to know which one has not finish
                         boolean hasAlive = false;
-                        for(int i = 0; i < 100; i++){
+                        for(int i = 0; i < 50; i++){
                             hasAlive = false;
                             for(AnnotationThread cutrThread:  th){
                                 if(cutrThread.isAlive()){
@@ -93,7 +94,9 @@ public class App
                                 if(th[curItemId] == null)continue;
                                 th[curItemId].interrupt();
                         }
+                        logger.info("start saving");
                         Database.addAnnotations(props);
+                        logger.info("end saving");
 
                     }while(items == null || items.size() > 0);
                 logger.info("done");
@@ -114,19 +117,27 @@ class AnnotationThread extends Thread  {
         this.props = props;
     }
     public void run() {
+        this.startAnnotate();
+    }
+    private void startAnnotate(){
         logger.info("[-] Start for item: "+item.getUri());
         //try {Thread.currentThread().sleep(5000);} catch (InterruptedException ex1) {}
         
         //Starting annotations downloading
         ArrayList<Prop> content= SpotlightRequest.getProperties(item);
 
-        if(content != null){
-            props.put(item.getUri(), new ArrayList<Prop>());
-            props.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
-            props.get(item.getUri()).addAll(content);
+        try{
+            if(content != null){
+                props.put(item.getUri(), new ArrayList<Prop>());
+                props.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
+                props.get(item.getUri()).addAll(content);
 
-        }else{
-            logger.warn("Error while annotating" + item.getUri());
+            }else{
+                logger.warn("Error while annotating" + item.getUri());
+            }
+        }catch(ConcurrentModificationException ex){
+            logger.warn("concurrent modification of the item");
+            this.startAnnotate();
         }
         //logger.info("[+] Ended for item: "+item.getUri());
         
