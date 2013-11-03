@@ -1,4 +1,6 @@
-<%# encoding: utf-8%>
+
+
+
   <div class="row">
 
     <div class="span2" >
@@ -14,6 +16,12 @@
     </script>
     <div class="span10">
 
+
+      <%if @itemsNumber == 0%>
+          <div class="row-fluid">
+            <%= render "home/search_tool"%>
+          </div>
+      <%end%>
 
 <div class="hidden">
     <%= @search.to_json %>
@@ -56,6 +64,8 @@
         });
     </script>
 </div>
+
+
 
 <!-- items printing-->
 <div class="items-box">

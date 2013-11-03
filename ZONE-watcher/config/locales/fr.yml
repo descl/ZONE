@@ -158,6 +158,7 @@ fr:
     gobutton:
       "Nouvelle recherche"
     exampleButton: "Voir un exemple de flux annoté"
+    noResDisclaimer: "La recherche que vous souhaitez effectuer ne contient aucune réponse. Vous devriez être plus laxistes sur le filtrage ou ajouter plus de sources?"
   index:
     disclaimer:
       "Reador.NET est en <b>cours de développement</b>, merci de nous faire remonter les problèmes que vous rencontrez en <a href='javascript:void($zopim.livechat.window.openPopout())'>cliquant ici</a>!"

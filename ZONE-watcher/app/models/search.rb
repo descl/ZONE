@@ -48,7 +48,7 @@ class Search < ActiveRecord::Base
     if store.query(query).length == 0
       return 0
     else
-      return store.query(query)[0]["number"]
+      return store.query(query)[0]["number"].value.to_i
     end
   end
 

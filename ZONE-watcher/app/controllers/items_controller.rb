@@ -54,12 +54,6 @@ class ItemsController < ApplicationController
       end
     end
 
-
-
-    if params[:isNew] == "true"
-      flash[:notice] = t('search.disclaimer')
-    end
-
     if params[:per_page] != nil
       per_page = params[:per_page].to_i
     else
@@ -71,9 +65,12 @@ class ItemsController < ApplicationController
     current_page = Integer(current_page)
 
     @itemsNumber = @search.getItemsNumber
-    #if itemsNumber > (10000 - per_page +1)
-    #  itemsNumber = (10000 - per_page +1)
-    #end
+
+    if params[:isNew] == "true"
+      flash[:notice] = t('search.disclaimer')
+    elsif(@itemsNumber == 0)
+      flash[:error] = t('search.noResDisclaimer')
+    end
 
     @items = WillPaginate::Collection.create(current_page, per_page, @itemsNumber) do |pager|
       start = (current_page-1)*per_page # assuming current_page is 1 based.
