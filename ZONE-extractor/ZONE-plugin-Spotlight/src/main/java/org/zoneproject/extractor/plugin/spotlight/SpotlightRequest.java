@@ -80,7 +80,11 @@ public class SpotlightRequest {
             if(item.concat().equals("")){
                 return result;
             }
-            String json = getResponse(item.concat(), endpoint);
+            String contentString = item.concat();
+            if(contentString.length()> 100000) {
+                contentString = item.concat().substring(0,100000);
+            }
+            String json = getResponse(contentString, endpoint);
             Annotation[] entities = SpotlightRequest.getNamedEntities(json);
             Arrays.sort(entities);
             for(int i=0; i < entities.length && i < NUMBER_OF_ANNOTATIONS; i++){
