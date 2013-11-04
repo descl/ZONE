@@ -208,20 +208,38 @@
 
                 actualWidth = $tip[0].offsetWidth
                 actualHeight = $tip[0].offsetHeight
-                var vscrollPosition = $("body, html").scrollTop() + 5;
+                /*descl edit*/
+                var naturalPopoverPlacement= pos.top + pos.height / 2 - actualHeight / 2;
+
+                var vscrollPositionTop = $("body, html").scrollTop() + 5;
+                var vscrollPositionBot = $("body, html").scrollTop()+$("body, html").height() - 5 - actualHeight;
+
+                var absolutePopoverPlacement = Math.max(vscrollPositionTop,naturalPopoverPlacement);
+                absolutePopoverPlacement = Math.min(vscrollPositionBot,absolutePopoverPlacement);
+
                 switch (inside ? placement.split(' ')[1] : placement) {
                     case 'bottom':
-                        tp = {top: Math.max(vscrollPosition,pos.top + pos.height), left: pos.left + pos.width / 2 - actualWidth / 2}
+                        tp = {top: pos.top + pos.height, left: pos.left + pos.width / 2 - actualWidth / 2}
                         break
                     case 'top':
-                        tp = {top: Math.max(vscrollPosition,pos.top - actualHeight), left: pos.left + pos.width / 2 - actualWidth / 2}
+                        tp = {top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2}
                         break
                     case 'left':
-                        tp = {top: Math.max(vscrollPosition,pos.top + pos.height / 2 - actualHeight / 2), left: pos.left - actualWidth}
+                        tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth}
                         break
                     case 'right':
-                        tp = {top: Math.max(vscrollPosition,pos.top + pos.height / 2 - actualHeight / 2), left: pos.left + pos.width}
+                        tp = {top: absolutePopoverPlacement, left: pos.left + pos.width}
                         break
+                }
+                var arrow = $tip.find('.arrow');
+
+                var relativeTop = pos.top-$("body, html").scrollTop();
+                if(naturalPopoverPlacement != absolutePopoverPlacement){
+                    //put arrow more on top
+                    var difference = absolutePopoverPlacement - naturalPopoverPlacement;
+
+                    var arrowMarginTop= - (difference + 11);
+                    arrow.css("margin-top", arrowMarginTop+"px")
                 }
                 if(this.options.ensure_visiable){
                     var bp = { w: $('body').outerWidth(), h:$('body').outerHeight()};
