@@ -49,6 +49,7 @@ class SearchesController < ApplicationController
     else
       @search = Search.find(params[:id])
     end
+    @search.touch
     @search.save
   end
 
@@ -56,6 +57,7 @@ class SearchesController < ApplicationController
   # POST /searches.json
   def create
     @search = retrieveSearchFromForm(params)
+    @search.touch
     isNew = ((@search.id == nil) && (params[:isNew] != "false"))
     respond_to do |format|
       if @search.save
