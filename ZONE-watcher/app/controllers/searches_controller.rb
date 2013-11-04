@@ -44,7 +44,11 @@ class SearchesController < ApplicationController
 
   # GET /searches/1/edit
   def edit
-    @search = retrieveSearchFromForm(params)
+    if params[:itemId] != nil
+      @search = retrieveSearchFromForm(params)
+    else
+      @search = Search.find(params[:id])
+    end
     @search.save
   end
 
