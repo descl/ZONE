@@ -37,8 +37,8 @@ public class App
     {
         DownloadNewsThread[] th = new DownloadNewsThread[SIM_DOWNLOADS];
         
-        //DownloadLastsNewsThread lastsThread = new DownloadLastsNewsThread();
-        //lastsThread.start();
+        DownloadLastsNewsThread lastsThread = new DownloadLastsNewsThread();
+        lastsThread.start();
         
         while(true){
             String [] sources = RSSGetter.getSources();

@@ -1,12 +1,8 @@
 package org.zoneproject.extractor.rssreader;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
-import org.zoneproject.extractor.utils.Prop;
-import org.zoneproject.extractor.utils.VirtuosoDatabase;
 
 
 /*
@@ -30,15 +26,13 @@ import org.zoneproject.extractor.utils.VirtuosoDatabase;
  * #L%
  */
 public class DownloadNewsThread extends Thread  {
-    private String source;
+    protected String source;
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
 
     public DownloadNewsThread(String source) {
       this.source = source;
     }
     public void run() {
-        //try {Thread.currentThread().sleep(5000);} catch (InterruptedException ex1) {}
-        
         //Starting rss downloading
         ArrayList<Item> items = RSSGetter.getFlux(source);
 
