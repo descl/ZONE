@@ -34,6 +34,7 @@ public class ZoneOntology {
     public static String ANNOTATION = PREFIX+"model/annotation";
     
     public static String PLUGIN_EXTRACT_ARTICLES_CONTENT =  PLUGIN_PREFIX+"/ExtractArticlesContent";
+    public static String PLUGIN_EXTRACT_ARTICLES_CONTENT_CACHE =  PLUGIN_EXTRACT_ARTICLES_CONTENT+"#cache";
     public static String PLUGIN_EXTRACT_ARTICLES_CONTENT_RES = PLUGIN_EXTRACT_ARTICLES_CONTENT+"#result";
     public static String PLUGIN_EXTRACT_ARTICLES_CONTENT_LINK = PLUGIN_EXTRACT_ARTICLES_CONTENT+"#link";
     
@@ -74,6 +75,7 @@ public class ZoneOntology {
     public static String GRAPH_NEWS = "http://zone-project.org/datas/items";
     public static String GRAPH_SOURCES = "http://zone-project.org/datas/sources";
     public static String GRAPH_TAGS = "http://zone-project.org/datas/tags";
+    public static String GRAPH_EAC = "http://zone-project.org/datas/ExtractArticlesContent";
     
     public static String WIKIMETA_ENTITIES = "http://www.wikimeta.org/Entities#";
     public static String WIKIMETA_LOC = WIKIMETA_ENTITIES+"LOC.ADMI";

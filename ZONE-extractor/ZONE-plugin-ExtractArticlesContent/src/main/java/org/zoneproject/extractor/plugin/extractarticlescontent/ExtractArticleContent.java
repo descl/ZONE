@@ -1,5 +1,8 @@
 package org.zoneproject.extractor.plugin.extractarticlescontent;
 
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.shared.JenaException;
 import de.l3s.boilerpipe.BoilerpipeProcessingException;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
 import java.io.IOException;
@@ -9,8 +12,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.jsoup.helper.HttpConnection;
 import org.xml.sax.InputSource;
+import org.zoneproject.extractor.utils.Database;
+import org.zoneproject.extractor.utils.Prop;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.ZoneOntology;
 
@@ -43,13 +47,11 @@ public class ExtractArticleContent {
             //try to get links in tweets
             Pattern p = Pattern.compile(URL_REGEX);
             Matcher m = p.matcher(item.getDescription());
-            String url;
             while(m.find()) {
                 String urlStr = m.group();
                 if (urlStr.startsWith("(") && urlStr.endsWith(")")){
                 urlStr = urlStr.substring(1, urlStr.length() - 1);
                 }
-                url= urlStr;
                 item.addElement(ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_LINK, urlStr);
             }
         }else{
@@ -59,7 +61,14 @@ public class ExtractArticleContent {
         
         String content = "";
         for(String curLink: item.getElements(ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_LINK)){
-            String curContent = getContent(curLink);
+            
+            String curContent = getInCache(curLink);
+            if(curContent == null){
+                String val;
+                curContent = ExtractArticleContent.getContent(curLink);
+                storeInCache(curLink, curContent);
+            }
+
             String title = "abcdefghijklmnopqstuvwxyz";
             if(item.getTitle() != null){
                 title = item.getTitle().trim();
@@ -91,15 +100,15 @@ public class ExtractArticleContent {
             URL url = new URL(java.net.URLDecoder.decode(uri, "UTF-8"));
             HttpURLConnection.setFollowRedirects(true);
             URLConnection conn = url.openConnection();
-                conn.setConnectTimeout(100000);
-                conn.setReadTimeout(100000);
+                conn.setConnectTimeout(70000);
+                conn.setReadTimeout(70000);
             
             //follow redirects
             do{
                 url = conn.getURL();
                 conn = (url).openConnection();
-                conn.setConnectTimeout(100000);
-                conn.setReadTimeout(100000);
+                conn.setConnectTimeout(70000);
+                conn.setReadTimeout(70000);
                 if(!conn.getURL().toString().contains("t.co/")){
                     conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
 
@@ -123,5 +132,44 @@ public class ExtractArticleContent {
             logger.warn("annotation process because of download error for "+uri+" "+ ex.getLocalizedMessage());
             return "";
         }
+    }
+    
+    public static String getInCache(String uri){
+        String request = "SELECT ?content WHERE{ <"+uri+"> <"+ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_CACHE+"> ?content.}LIMIT 1";
+        ResultSet results;
+        try{
+            results = Database.runSPARQLRequest(request,ZoneOntology.GRAPH_EAC);
+            
+        }catch(JenaException ex){
+            return null;
+        }
+        
+        //we store all the results in a HashMap for each item
+        QuerySolution result;
+        while (results.hasNext()) {
+            result = results.nextSolution();
+            return result.get("?content").toString();
+        }
+        return null;
+    }
+    
+    public static void storeInCache(String uri, String content){
+        Prop p = new Prop(ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_CACHE,content);
+        Database.addAnnotation(uri,p,ZoneOntology.GRAPH_EAC);
+    }
+        
+    public static void main(String[] args) throws MalformedURLException, IOException, BoilerpipeProcessingException{
+        logger.info("start tests");
+        String url = "http://www.leparisien.fr/faits-divers/paris-le-domicile-de-sebastien-bazin-l-ancien-president-du-ps-cambriole-04-11-2013-3285531.php";
+        String cacheValue = getInCache(url);
+        if(cacheValue == null){
+            String val;
+            val = ExtractArticleContent.getContent(url);
+            storeInCache(url, val);
+            
+        }
+            
+        logger.info(getInCache(url));
+        
     }
 }
