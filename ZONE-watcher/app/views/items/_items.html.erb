@@ -12,7 +12,7 @@
          cl = "pull-left clear-left"
        end
     %>
-    <div class="well item-bloc <%=cl%> span6 <%= similarityColor%>" local-uri="<%= item.localURI %>">
+    <div class="well item-bloc <%=cl%> span6 <%= similarityColor%>" local-uri="<%= item_path(:id => item.uri) %>">
       <div class="item_container" sourceid="<%= id %>"></div>
       <div class="item_wait" sourceid="<%= id%>">
         <a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>

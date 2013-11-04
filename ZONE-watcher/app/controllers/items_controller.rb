@@ -64,29 +64,35 @@ class ItemsController < ApplicationController
     current_page = 1 if current_page == nil
     current_page = Integer(current_page)
 
-    @itemsNumber = @search.getItemsNumber
 
-    if params[:isNew] == "true"
-      flash[:notice] = t('search.disclaimer')
-    elsif(@itemsNumber == 0)
-      flash[:error] = t('search.noResDisclaimer')
+    if @search.filters.empty? && @search.sources.empty?
+      flash[:error] = t('search.noFiltersDisclaimer')
+
+      @items = WillPaginate::Collection.create(1, 0, 0) do |pager|
+        start = 0
+        itemsTab = Array.new()
+        @sparqlRequest = ""
+        pager.replace(itemsTab)
+      end
+    else
+      @itemsNumber = @search.getItemsNumber
+
+      if params[:isNew] == "true"
+        flash[:notice] = t('search.disclaimer')
+      elsif(@itemsNumber == 0)
+        flash[:error] = t('search.noResDisclaimer')
+      end
+
+      @items = WillPaginate::Collection.create(current_page, per_page, @itemsNumber) do |pager|
+        start = (current_page-1)*per_page # assuming current_page is 1 based.
+        itemsTab = Item.all(@search,start,per_page)
+        @sparqlRequest = itemsTab[:query]
+        pager.replace(itemsTab[:result])
+      end
+
+      #define the feed uri used by application.html.erb
+      @feed_url= url_for(:controller => 'items', :action => 'index', :search => @search.id, :format => :rss)
     end
-
-    @items = WillPaginate::Collection.create(current_page, per_page, @itemsNumber) do |pager|
-      start = (current_page-1)*per_page # assuming current_page is 1 based.
-      itemsTab = Item.all(@search,start,per_page)
-      @sparqlRequest = itemsTab[:query]
-      pager.replace(itemsTab[:result])
-    end
-
-    @items.each do |element|
-      element.localURI = item_path(:id => element, :old => @filters)
-    end
-    
-    @uriForItemsNumber = filters_getNumber_path(:old => @filters)
-
-    #define the feed uri
-    @feed_url= url_for(:controller => 'items', :action => 'index', :search => @search.id, :format => :rss)
 
 
 
