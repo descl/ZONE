@@ -37,8 +37,8 @@ public class App
     {
         DownloadNewsThread[] th = new DownloadNewsThread[SIM_DOWNLOADS];
         
-        DownloadLastsNewsThread lastsThread = new DownloadLastsNewsThread();
-        lastsThread.start();
+        //DownloadLastsNewsThread lastsThread = new DownloadLastsNewsThread();
+        //lastsThread.start();
         
         while(true){
             String [] sources = RSSGetter.getSources();
@@ -48,18 +48,33 @@ public class App
                     th[curSource-i] = new DownloadNewsThread(sources[curSource]);
                     th[curSource-i].start();
                 }
-
-                for(int curSource = i; (curSource < (i+SIM_DOWNLOADS)) && (curSource < sources.length); curSource++){
-                    try {
-                        if(th[curSource-i] == null)continue;
-                        th[curSource-i].join();
-                        th[curSource-i]=null;
-                    } catch (InterruptedException ex) {
-                        logger.warn(ex);
+                
+                //we check all the thread in ordre to know which one has not finish
+                boolean hasAlive = false;
+                for(int timer = 0; timer < 100; timer++){
+                    hasAlive = false;
+                    for(DownloadNewsThread cutrThread:  th){
+                        if(cutrThread.isAlive()){
+                            if(timer > 20) {
+                                logger.info("is alive["+timer+"]: "+cutrThread.source);
+                            }
+                            hasAlive = true;
+                            //break;
+                        }
+                    }
+                    if(hasAlive == false){
+                        break;
+                    }else{
+                        try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
                     }
                 }
 
-                logger.info("["+(i+Math.min(sources.length%SIM_DOWNLOADS,SIM_DOWNLOADS))+"/"+sources.length+"] news annotated");
+                for(int curSource = i; (curSource < (i+SIM_DOWNLOADS)) && (curSource < sources.length); curSource++){
+                        if(th[curSource-i] == null)continue;
+                        th[curSource-i].interrupt();
+                }
+                
+                logger.info("["+(i+Math.min(sources.length%SIM_DOWNLOADS,SIM_DOWNLOADS))+"/"+sources.length+"] feeds downloaded");
             }
             logger.info("Done");
         }
