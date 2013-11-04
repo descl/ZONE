@@ -135,7 +135,7 @@ public class Install {
             	
                     for (Text t : catTextsInternal.getValue()){
             		
-        		if (catTextsInternal.getKey() == catTexts.getKey()){
+        		if (catTextsInternal.getKey().equals(catTexts.getKey())){
             			t.categorie = 1;
             		}
             		else{
