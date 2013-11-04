@@ -76,10 +76,16 @@ public abstract class VirtuosoDatabase {
         return st;
     }
     public static void initStore(){
-        VirtGraph vgraph = new VirtGraph(VIRTUOSO_SERVER, VIRTUOSO_USER, VIRTUOSO_PASS);
-        
-        vgraph.setReadFromAllGraphs(true);
-        st = new VirtModel(vgraph);
+        try{
+            VirtGraph vgraph = new VirtGraph(VIRTUOSO_SERVER, VIRTUOSO_USER, VIRTUOSO_PASS);
+
+            vgraph.setReadFromAllGraphs(true);
+            st = new VirtModel(vgraph);
+        }catch(Exception ex){
+            logger.warn("unable to restart the connexion to virtuoso (wait 5s)");
+            try{Thread.currentThread().sleep(5000);}catch(InterruptedException ie){}
+            initStore();
+        }
     }
     
     public static Model getStore(String graph){
