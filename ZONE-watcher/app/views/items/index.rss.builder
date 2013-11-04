@@ -1,8 +1,8 @@
 xml.instruct! :xml, :version =>"1.0"
 xml.rss :version => "2.0" do
     xml.channel do
-    xml.title "News"
-    xml.description "All news from ZONE"
+    xml.title "Reador.NET Search: #{@search.getName(t("leftMenu.search"))}"
+    xml.description "news comming from Reador.NET"
     #xml.link formatted_posts_url(:rss)
     
     for element in @items

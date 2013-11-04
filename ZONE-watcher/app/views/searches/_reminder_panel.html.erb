@@ -96,20 +96,21 @@
         <div class="span1"></div>
       <div class="btn-toolbar">
         <div class="span11 btn-group">
-                    <button style="height:50px" id="updateSearch" class="btn btn-success updater span5" type="submit" onclick="movingData('<%=localSearch.id%>')">
-                      <%= raw t 'items.reminder.update' %>
-                    </button>
-                  <button style="height:50px" class="btn btn-warning span2">
-                    <i class="icon-rss"></i>
-                  </button>
+            <button style="height:50px" id="updateSearch" class="btn btn-success updater span5" type="submit" onclick="movingData('<%=localSearch.id%>')">
+              <%= raw t 'items.reminder.update' %>
+            </button>
 
-                    <button style="height:50px" class="btn btn-info span5" type="submit" onclick="
-                    movingData('<%=localSearch.id%>');
-                    $('.formModal').attr('action','/searches/<%=localSearch.id%>/edit');
-                    $('.formModal').attr('method','GET');
-                    ">
-                        <%= raw t 'items.reminder.change' %>
-                    </button>
+            <%= link_to(params.merge(:format => :rss),:title=>"mon flux RSS", :class=>"btn btn-warning reminder-pannel-rss span2",:style=>"height:50px") do%>
+              <i class="icon-rss" style="height:50px"></i>
+            <%end%>
+
+            <button style="height:50px" class="btn btn-info span5" type="submit" onclick="
+            movingData('<%=localSearch.id%>');
+            $('.formModal').attr('action','/searches/<%=localSearch.id%>/edit');
+            $('.formModal').attr('method','GET');
+            ">
+                <%= raw t 'items.reminder.change' %>
+            </button>
         </div>
           </div></div>
     </div>
