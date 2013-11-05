@@ -15,9 +15,9 @@
     <div class="well item-bloc <%=cl%> span6 <%= similarityColor%>" local-uri="<%= item_path(:id => item.uri) %>">
       <div class="item_container" sourceid="<%= id %>"></div>
       <div class="item_wait" sourceid="<%= id%>">
-        <a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
-        <a href="<%= item.uri%>"><%= item.title%></a>
-
+        <a href="<%= item_path(:id => item.uri)%>"><i class=" icon-refresh hidden"></i></a>
+        <a href="<%= item.uri%>"><b><u><%= item.title%></b></u></a>
+        <div class="news-content"></div>
       </div>
     </div>
 
