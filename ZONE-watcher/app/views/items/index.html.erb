@@ -1,82 +1,46 @@
 
+<div class="row-fluid">
+
+  <div class="span2" >
+    <%= render "searches/left_menu", :searches => @searches %>
+  </div>
+
+  <div class="span1" ></div>
+  <div class="span9">
 
 
-  <div class="row-fluid">
-
-    <div class="span2" >
-      <div data-spy="affix" data-offset-top="0" style="width:166px !important;">
-        <%= render "searches/left_menu", :searches => @searches %>
+    <%if @itemsNumber == 0%>
+      <div class="row-fluid">
+        <%= render "home/search_tool"%>
       </div>
+    <%end%>
+
+    <div class="hidden">
+      <%= @search.to_json %>
+      <%= @search.sources.to_json %>
+      <%= @search.filters.to_json %>
+      <hr/>
+
+      <%= raw h(@sparqlRequest).gsub(/\n/, '<br/>') %>
+      <hr/>
     </div>
 
-    <div class="span10">
-
-
-      <%if @itemsNumber == 0%>
-          <div class="row-fluid">
-            <%= render "home/search_tool"%>
-          </div>
-      <%end%>
-
-<div class="hidden">
-    <%= @search.to_json %>
-    <%= @search.sources.to_json %>
-    <%= @search.filters.to_json %>
-    <hr/>
-
-    <%= raw h(@sparqlRequest).gsub(/\n/, '<br/>') %>
-    <hr/>
-</div>
-
-<%= javascript_tag do %>
+  <%= javascript_tag do %>
     $("#load-more2").bind("ajax:complete", function(et, e){
     $("#load-more2").html(e.responseText); // insert content
         event.preventDefault(); // Prevent link from following its href
     });
-<% end %>
+  <% end %>
 
-
-<!-- rss feed and format page selection-->
-<div class="row-fluid">
-	<div class="btn-group pull-left">
-      <!--
-      TODO : put back the oneperline view (problem with infinite scroll)
-		<button id="btnCard" class="btn active" onclick="changeItemFormat('card');">
-			<i class="icon icon-th-large"></i>
-		</button>
-		<button id="btnList" class="btn" onclick="changeItemFormat('list');">
-			<i class="icon icon-th-list"></i>
-		</button>-->
-	</div>
-	<div id="titlePopover" hidden><%= raw t 'items.popover.smalltitle' %></div>
-
-    <script>
-        $('#buttonRss').popover({
-            trigger: 'hover',
-            placement: 'bottom',
-            html: true,
-            content: "<%=  t 'newmodal.filtering.generateRSS' %>"
-        });
-    </script>
-</div>
-
-
-
-<!-- items printing-->
-<div class="items-box">
-    <div class="row-fluid items-list">
-        <%= render :partial => "items", :items => @items %>
-
+  <div class="row-fluid">
+    <!-- items printing-->
+    <div class="items-box items-list">
+      <%= render :partial => "items", :items => @items %>
     </div>
     <div class="span12">
       <%= link_to 'Load More ITEMS', items_path(:page => @items.next_page, :search => @search.id), :class => 'btn load-more-items', :remote => true if @items.next_page != nil%>
-
-        <%= # will_paginate @page_results, renderer: BootstrapPagination::Rails, class: "pagination pagination-centered"
-        %>
+      <% will_paginate @page_results, renderer: BootstrapPagination::Rails, class: "pagination pagination-centered"%>
     </div>
-
-</div>
-
   </div>
 </div>
 

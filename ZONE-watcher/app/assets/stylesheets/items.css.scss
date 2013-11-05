@@ -358,10 +358,14 @@ a.label:visited{
   text-shadow: none;
 }
 
+//left menu
 .reminder-pannel-rss{
   height: 50px; padding-left: 0px; padding-right: 0px; padding-top: 12px;
 }
 
 .formModal{
   min-width: 270px;
+}
+.affix{
+  overflow: auto !important; height:80%;
 }

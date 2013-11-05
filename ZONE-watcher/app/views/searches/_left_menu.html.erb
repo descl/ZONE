@@ -1,56 +1,68 @@
-<div class="row-fluid">
-  <%= link_to new_search_path do %>
-    <span class="span12 btn btn-success">
-      <%= raw t 'search.gobutton' %>
-    </span>
-  <%end%>
-</div>
+<div data-spy="affix" data-offset-top="0" >
+    <div class="row-fluid">
+      <%= link_to new_search_path do %>
+        <span class="span12 btn btn-success">
+          <%= raw t 'search.gobutton' %>
+        </span>
+      <%end%>
+    </div>
+    <ul class="nav nav-list">
+      <% @searches.each do |curSearch| %>
 
-<ul class="nav nav-list">
-  <% @searches.each do |curSearch| %>
+        <% descriptionSearchBox  = render "searches/reminder_panel", :localSearch => curSearch %>
 
-          <% descriptionSearchBox  = render "searches/reminder_panel", :localSearch => curSearch %>
-
-          <li
-            id="<%="searchBox#{curSearch.id}"%>"
-            data-id="<%="searchBox#{curSearch.id}"%>"
-            class="searchItem <%= "active" if (curSearch.id == @search.id)%>"
-            rel="popoverx"
-            data-content="<%= descriptionSearchBox.gsub('\"','\'') %>"
-          >
+        <li
+          id="<%="searchBox#{curSearch.id}"%>"
+          data-id="<%="searchBox#{curSearch.id}"%>"
+          class="searchItem <%= "active" if (curSearch.id == @search.id)%>"
+          rel="popoverx"
+          data-content="<%= descriptionSearchBox.gsub('\"','\'') %>"
+        >
 
           <%= link_to curSearch do %>
-            <div>
               <%= curSearch.getName(t("leftMenu.search"))[0,18]%>
               <span class=" icon-chevron-right pull-right searchmoreButton"/></span>
               <%if (curSearch.id == @search.id)%>
                 <br/>&nbsp;&nbsp;&nbsp;<span><i><%= @itemsNumber %> news</i></span>
               <%end%>
-            </div>
           <%end%>
-    </li>
-  <%end%>
-  <% if @searches.size == 15%>
-      <li>
-        <%= link_to searches_path do %>
-  <span class="">
-    <%= raw t 'search.moreSearches' %>
-  </span>
-        <%end%>
-      </li>
-  <%end%>
-</ul>
+        </li>
+      <%end%>
+      <% if @searches.size == 15%>
+          <li>
+            <%= link_to searches_path do %>
+      <span class="">
+        <%= raw t 'search.moreSearches' %>
+      </span>
+            <%end%>
+          </li>
+      <%end%>
+    </ul>
 
-<script type="text/javascript">
-    $(function() {
-        $('[rel="popoverx"]').popoverx({
-            fire_on : 'hover',
-            hover_delay_close : 2000,
-            onHidden :
-                    function() {
-                        saveFormToHtml(this);
-                    }
+    <script type="text/javascript">
+        $(function() {
+            $('[rel="popoverx"]').popoverx({
+                fire_on : 'click',
+                hover_delay_close : 2000,
+                onHidden :
+                        function() {
+                            saveFormToHtml(this);
+                        }
+            });
+        })
+    </script>
+</div>
+<script>
+    (function($){
+        $(window).load(function(){
+            $(".affix").mCustomScrollbar({
+                horizontalScroll:false,
+                scrollInertia: 0,
+                theme:"dark",
+                scrollButtons:{
+                    enable: true
+                }
+            });
         });
-    })
+    })(jQuery);
 </script>
-<div id="transparentDiv" class="span1"></div>
