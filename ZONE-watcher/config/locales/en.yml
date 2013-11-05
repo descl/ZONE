@@ -161,6 +161,7 @@ en:
     exampleButton: "See annotated feed sample"
     noResDisclaimer: "The search your are trying to do doesn't have any result yet. Maybe you should be more permissive on filters or add more sources?"
     noFiltersDisclaimer: "The search your are trying to make doesn't contains any sources and filters. Pleases add some to perform this search."
+    moreSearches: "More searches"
   index:
     disclaimer:
       "Reador.NET is currently <b>under development</b>, please tell us all problems you can encounter using  <a href='javascript:void($zopim.livechat.window.openPopout())'>this link</a>!"

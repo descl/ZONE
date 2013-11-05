@@ -10,7 +10,7 @@ class ItemsController < ApplicationController
     @searches = []
 
     if user_signed_in?
-      @searches = Search.where(:user_id => current_user.id).limit(20).order("updated_at desc")
+      @searches = Search.where(:user_id => current_user.id).limit(15).order("updated_at desc")
       if params[:search] == nil
         if @searches.size > 0
           @search = @searches.first
@@ -38,14 +38,15 @@ class ItemsController < ApplicationController
       end
     else
 
-      @searches << Search.find(Rails.application.config.defaultRequestId)
+      @searches = []
 
       if params[:search] == nil
         @search = Search.find(Rails.application.config.defaultRequestId)
+        @searches << @search
       else
         begin
           @search = Search.find(params[:search])
-          if !@searches.include? @cearch
+          if !@searches.include? @search
             @searches << @search
           end
         rescue e

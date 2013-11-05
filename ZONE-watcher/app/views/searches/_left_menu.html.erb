@@ -30,6 +30,15 @@
           <%end%>
     </li>
   <%end%>
+  <% if @searches.size == 15%>
+      <li>
+        <%= link_to searches_path do %>
+  <span class="">
+    <%= raw t 'search.moreSearches' %>
+  </span>
+        <%end%>
+      </li>
+  <%end%>
 </ul>
 
 <script type="text/javascript">
