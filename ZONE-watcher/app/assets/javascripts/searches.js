@@ -24,7 +24,7 @@ $(document).ready(function() {
            }
            $("#keyword").attr("filter-uri",ui.item.uri)
         },
-        minLength : 3
+        minLength : 5
     }).autocomplete("widget").addClass("span1");
 
 
@@ -195,7 +195,7 @@ function updateKeywordTable() {
         $.getJSON('/linked_words/' + $('#keyword').val() + '.json', function(data) {
             rebootFiltering();
             $.each(data, function(key, val) {
-                if ($('#keyword').val() != "" && $('#keyword').val().length>2) {
+                if ($('#keyword').val() != "" && $('#keyword').val().length>4) {
                     $('#keywordTable').append('<tr><td><label class="checkbox"><input type="checkbox" value="' + val.value + '" filter-uri="'+ val.uri+'">' + val.value + '</label></td></tr>');
                 }
             });
@@ -207,7 +207,7 @@ function updateKeywordTable() {
 //ask the timer if the related keyword table can be show. It will wait 1 second before doing it. If the function is call again, it will stop the current timer and start a new
 function askUpdateKeywordTable() {
     $("#keywordTable").hide();
-    if ($('#keyword').val() != "" && $('#keyword').val() != null && $('#keyword').val().length>2) {
+    if ($('#keyword').val() != "" && $('#keyword').val() != null && $('#keyword').val().length>4) {
         $("#progressBarFiltering").show();
         clearTimeout(timer);
         timer = setTimeout(function() {

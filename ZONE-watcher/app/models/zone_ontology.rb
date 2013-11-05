@@ -7,7 +7,8 @@ class ZoneOntology < ActiveRecord::Base
   PLUGIN_OPENCALAIS = "#{PLUGIN}/OpenCalais"
   PLUGIN_WIKIMETA = "#{PLUGIN}/WikiMeta"
   PLUGIN_SVM = "#{PLUGIN}/Categorization_SVM"
-  PLUGIN_SVM_RES = "#{PLUGIN}Categorization_SVM#result"
+  PLUGIN_SVM_RES = "#{PLUGIN}/Categorization_SVM#result"
+  PLUGIN_SPOTLIGHT_ENTITIES = "#{PLUGIN}/Spotlight#entities"
   ANNOTATION = "http://zone-project.org/model/annotation"
   
   GRAPH_ITEMS = "http://zone-project.org/datas/items";

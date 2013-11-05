@@ -8,7 +8,7 @@ class LinkedWordsController < ApplicationController
     @result = Array.new
     possibleWords = LinkedWord.complete(params[:desc])
     possibleWords.each do |word|
-      @result.concat(LinkedWord.getLinkedWords(word[:value]))
+      @result.concat(LinkedWord.getLinkedWords(word[:uri]))
     end
 
     respond_to do |format|
