@@ -1,5 +1,9 @@
 package org.zoneproject.extractor.rssreader;
 
+import org.zoneproject.extractor.utils.Database;
+import org.zoneproject.extractor.utils.Prop;
+import org.zoneproject.extractor.utils.ZoneOntology;
+
 /*
  * #%L
  * ZONE-RSSreader
@@ -71,6 +75,7 @@ public class App
 
                 for(int curSource = i; (curSource < (i+SIM_DOWNLOADS)) && (curSource < sources.length); curSource++){
                         if(th[curSource-i] == null)continue;
+                        Database.addAnnotation(th[curSource-i].source, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
                         th[curSource-i].interrupt();
                 }
                 

@@ -99,7 +99,7 @@ public class RSSGetter {
             return RSSGetter.getFlux(url,new XmlReader(new URL(url)));
         } catch (Exception ex) {
             Database.addAnnotation(url, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
-            Logger.getLogger(RSSGetter.class.getName()).log(Level.SEVERE, null, ex);
+            logger.warn("feed "+url+" is offline");
         }
         return new ArrayList<Item>();
     }
@@ -249,8 +249,12 @@ public class RSSGetter {
         for(String r: res)
             System.out.println(r);*/
         String fileURI = "http://feeds.bbci.co.uk/news/world/rss.xml";
-        fileURI = "http://camarade.over-blog.org/rss-articles.xml";
+        fileURI = "http://www.scoop.it/t/recrutement-informatique/rss.xml";
         ArrayList<Item> result = RSSGetter.getFlux(fileURI);
+        for(Item i: result){
+            logger.info(i.getUri());
+        }
+        Database.verifyItemsList(result);
         for(Item i: result){
             logger.info(i);
         }
