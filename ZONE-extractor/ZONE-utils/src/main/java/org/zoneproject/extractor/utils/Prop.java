@@ -23,15 +23,7 @@ package org.zoneproject.extractor.utils;
 
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  *
@@ -61,10 +53,11 @@ public class Prop {
     
     public Prop(Property t, String val, boolean isLi, boolean isS){
         this.type = t;
-        val = val.replaceAll("[^\\u0000-\\uFFFF]", "");
-        if(val.equals("")) {
-            val = "_";
+        if(val == null){
+            val="";
         }
+        
+        val = val.replaceAll("[^\\u0000-\\uFFFF]", "");
         this.value = val;
         this.isSearchable = isS;
         this.isLiteral = isLi;

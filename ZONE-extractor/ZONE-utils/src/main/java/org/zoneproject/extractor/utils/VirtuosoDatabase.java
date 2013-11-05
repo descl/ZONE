@@ -36,6 +36,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -292,7 +293,8 @@ public abstract class VirtuosoDatabase {
             Future<ResultSet> task = executor.submit(new ThreadExec(q));
             res = task.get(20, TimeUnit.SECONDS);
         } catch (InterruptedException ex) {
-            logger.warn(ex);
+            logger.warn("interrupted execution while runSPARQLRequest "+ex);
+            throw new RuntimeException( ex.getCause() );
         } catch (ExecutionException ex) {
             Throwable t = ex.getCause();
             if( t instanceof JenaException ) {
@@ -471,14 +473,15 @@ public abstract class VirtuosoDatabase {
         Resource r = m.createResource(uri);
         Property p = m.createProperty(prop);
         boolean res = true;
-        try{
-            res = getStore().contains(r,p);
-        }
+        //try{
+        res = getStore().contains(r,p);
+        /*}
         catch(Exception e){
-            deleteItem(uri);
-            logger.warn("The item "+uri +" existance cannot be check due to encoding errors  ("+ e+")");
-            return false;
-        }
+                deleteItem(uri);
+                logger.warn("The item "+uri +" existance cannot be check due to encoding errors  ("+ e+")");
+                return false;
+            }
+        }*/
         return res;
         
     }

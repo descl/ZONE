@@ -41,8 +41,13 @@ import org.zoneproject.extractor.utils.ZoneOntology;
 public class ExtractArticleContent {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     private static final String URL_REGEX = "\\(?\\b(http://|www[.]|https://)[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
+    private static final String[] notAllowedFormats = {"jpg", "png", "gif", "jpeg","mkv","m4v"};
 
-    public static String getContent(Item item) throws MalformedURLException, IOException, BoilerpipeProcessingException{
+    public static String getContent(Item item) {
+        if(item.getElements("http://zone-project.org/model/plugins/ExtractArticlesContent#cache").length > 0){
+            return item.getElements("http://zone-project.org/model/plugins/ExtractArticlesContent#cache")[0];
+        }
+        
         if(item.getUri().startsWith("https://twitter.com/")){
             //try to get links in tweets
             Pattern p = Pattern.compile(URL_REGEX);
@@ -61,10 +66,12 @@ public class ExtractArticleContent {
         
         String content = "";
         for(String curLink: item.getElements(ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_LINK)){
-            
-            String curContent = getInCache(curLink);
+            String curContent = null;
+            if(!curLink.equals(item.getUri())){
+                logger.info("je cherche dans le cache");
+                curContent = getInCache(curLink);
+            }
             if(curContent == null){
-                String val;
                 curContent = ExtractArticleContent.getContent(curLink);
                 storeInCache(curLink, curContent);
             }
@@ -95,20 +102,30 @@ public class ExtractArticleContent {
         }
         return content;
     }
-    public static String getContent(String uri) throws MalformedURLException, IOException, BoilerpipeProcessingException{
+    public static String getContent(String uri) {
+        int timeout = 70000;
+        if(uri.startsWith("http://feedproxy.google.com"))
+            timeout = 19000;
+
         try{
             URL url = new URL(java.net.URLDecoder.decode(uri, "UTF-8"));
             HttpURLConnection.setFollowRedirects(true);
             URLConnection conn = url.openConnection();
-                conn.setConnectTimeout(70000);
-                conn.setReadTimeout(70000);
+                conn.setConnectTimeout(timeout);
+                conn.setReadTimeout(timeout);
             
             //follow redirects
             do{
                 url = conn.getURL();
+                //check if the url is only an image
+                for(String extension: notAllowedFormats){
+                    if(url.toString().toLowerCase().endsWith(extension)){
+                        return "";
+                    }
+                }
                 conn = (url).openConnection();
-                conn.setConnectTimeout(70000);
-                conn.setReadTimeout(70000);
+                conn.setConnectTimeout(timeout);
+                conn.setReadTimeout(timeout);
                 if(!conn.getURL().toString().contains("t.co/")){
                     conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
 
@@ -117,12 +134,6 @@ public class ExtractArticleContent {
                 conn.getInputStream();
             }while(!conn.getURL().equals(url));
             
-            String urlString = conn.getURL().toString().toLowerCase();
-            
-            //check if the url is only an image
-            if(urlString.endsWith("png")|| urlString.endsWith("jpg") || urlString.endsWith("gif") || urlString.endsWith("jpeg") )
-                return "";
-
             return ArticleExtractor.INSTANCE.getText(new InputSource(conn.getInputStream())).replace("\u00A0", " ").trim()+"\n";
         
         }catch(java.io.FileNotFoundException ex){
@@ -131,6 +142,14 @@ public class ExtractArticleContent {
         }catch(java.io.IOException ex){
             logger.warn("annotation process because of download error for "+uri+" "+ ex.getLocalizedMessage());
             return "";
+        }catch(BoilerpipeProcessingException ex){
+            logger.warn("annotation process because of boilerpipe "+uri+" "+ ex.getLocalizedMessage());
+            return null;
+            
+        }catch(java.lang.IllegalArgumentException ex){
+            logger.warn("malformed uri "+uri+" "+ ex.getLocalizedMessage());
+            return null;
+            
         }
     }
     
@@ -160,16 +179,22 @@ public class ExtractArticleContent {
         
     public static void main(String[] args) throws MalformedURLException, IOException, BoilerpipeProcessingException{
         logger.info("start tests");
-        String url = "http://www.leparisien.fr/faits-divers/paris-le-domicile-de-sebastien-bazin-l-ancien-president-du-ps-cambriole-04-11-2013-3285531.php";
+        String url = "http://feedproxy.google.com/~r/Websourcingfr-LeBlog/~3/qeyE0kVcy1k/";
+        url = "http://feedproxy.google.com/~r/projectshrink/~3/x3ldmHBQY1I/jokers-clowns-7797.html";
+        url = "http://feedproxy.google.com/~r/artofphotography/~3/62VRP4YhI8Q/aop-156.m4v";
+        //Item item = Database.getOneItemByURI(url);
+        //Prop[] pl = {new Prop("http://zone-project.org/model/plugins/ExtractArticlesContent#cache", "?cache"};
+       // Item[] list = Database.getItemsNotAnotatedForPluginsWithDepsAndCache("http://test", pl, 1);
+        //logger.info(list[0]);
+        logger.info(getContent(url));
+        /*logger.info(item);
         String cacheValue = getInCache(url);
         if(cacheValue == null){
             String val;
             val = ExtractArticleContent.getContent(url);
             storeInCache(url, val);
-            
         }
-            
-        logger.info(getInCache(url));
+        logger.info(getInCache(url));*/
         
     }
 }

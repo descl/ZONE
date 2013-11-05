@@ -21,12 +21,8 @@ package org.zoneproject.extractor.plugin.extractarticlescontent;
  * #L%
  */
 
-import de.l3s.boilerpipe.BoilerpipeProcessingException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
@@ -42,7 +38,7 @@ public class App
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT;
     public static String PLUGIN_RESULT_URI = ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_RES;
-    public static int SIM_DOWNLOADS = 50;
+    public static int SIM_DOWNLOADS = 150;
     
     private static final String URL_REGEX = "\\(?\\b(http://|www[.])[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
     
@@ -121,29 +117,16 @@ class DownloadThread extends Thread  {
         run(0);
     }
     public void run(int restartLevel) {
-        try {
-            logger.info("Add ExtractArticlesContent for item: "+item.getUri());
+        logger.info("Add ExtractArticlesContent for item: "+item.getUri());
 
-            String content = ExtractArticleContent.getContent(item);
+        String content = ExtractArticleContent.getContent(item);
 
-            props.put(item.getUri(), new ArrayList<Prop>());
-            props.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
-            if(content != null){
-                props.get(item.getUri()).add(new Prop(App.PLUGIN_RESULT_URI,content));
-            }
-        } catch (BoilerpipeProcessingException ex) {
-            logger.warn("annotation process because of download error for "+item.getUri());
-        } catch (MalformedURLException ex) {
-            logger.warn("annotation process because of malformed Uri for "+item.getUri());
-        } catch (java.io.IOException ex) {
-            logger.warn("annotation process because of download error for "+item.getUri());
-        }catch (com.hp.hpl.jena.shared.JenaException ex){
-            logger.warn("annotation process because of virtuoso partial error "+item.getUri());
-        }finally{
-            if(props.get(item.getUri()) == null){
-                props.put(item.getUri(), new ArrayList<Prop>());
-            }
-            props.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
+        props.put(item.getUri(), new ArrayList<Prop>());
+        props.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
+        if(content != null){
+            props.get(item.getUri()).add(new Prop(App.PLUGIN_RESULT_URI,content));
         }
+
+        props.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
     }
 }
