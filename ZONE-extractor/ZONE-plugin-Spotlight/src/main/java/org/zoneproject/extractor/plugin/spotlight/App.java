@@ -126,20 +126,24 @@ class AnnotationThread extends Thread  {
         //Starting annotations downloading
         ArrayList<Prop> content= SpotlightRequest.getProperties(item);
 
+        if(item.getUri() != null){
+            this.save(item.getUri(), content);
+        }
+        //logger.info("[+] Ended for item: "+item.getUri());
+        
+    }
+    public void save(String uri, ArrayList<Prop> content){
         try{
             if(content != null){
                 props.put(item.getUri(), new ArrayList<Prop>());
                 props.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
                 props.get(item.getUri()).addAll(content);
-
             }else{
                 logger.warn("Error while annotating" + item.getUri());
             }
         }catch(ConcurrentModificationException ex){
             logger.warn("concurrent modification of the item");
-            this.startAnnotate();
+            this.save(uri,content);
         }
-        //logger.info("[+] Ended for item: "+item.getUri());
-        
     }
 }
