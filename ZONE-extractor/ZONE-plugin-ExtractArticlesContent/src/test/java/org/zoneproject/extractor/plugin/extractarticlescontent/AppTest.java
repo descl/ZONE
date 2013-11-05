@@ -63,15 +63,7 @@ public class AppTest
     {
         String itemUri = "http://www.tactiphone.com/apple-ne-pourra-pas-deposer-la-marque-iwatch-aux-usa.html";
         Item i = new Item(itemUri);
-        try {
             String content = ExtractArticleContent.getContent(i);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(AppTest.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(AppTest.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (BoilerpipeProcessingException ex) {
-            Logger.getLogger(AppTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
         assertTrue( true );
     }
 }
