@@ -126,7 +126,13 @@ class Source
     return true if @persisted == true
     puts self.to_json
     return Source.find(@uri.to_s) != nil
-  end 
+  end
+
+  def addOwner(user)
+    graph = RDF::URI.new(ZoneOntology::GRAPH_SOURCES)
+    subject = RDF::URI.new(@uri)
+    $repo.insert(RDF::Virtuoso::Query.insert_data([subject,RDF::URI.new(ZoneOntology::SOURCES_OWNER),user.to_s]).graph(graph))
+  end
   
   def save
 

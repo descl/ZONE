@@ -84,7 +84,7 @@ class SourcesController < ApplicationController
   end
 
   def themes
-    @themes = Filter.find(:prop => ZoneOntology::SOURCES_THEME)
+    @themes = Filter.find(:prop => ZoneOntology::SOURCES_THEME,:userId => current_user.id)
     @result = []
     @themes.each{|p|
       item =  {'text' => p.value, :value => p.value}
