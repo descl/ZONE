@@ -1,8 +1,14 @@
 package org.zoneproject.extractor.rssreader;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.zoneproject.extractor.utils.Database;
-import org.zoneproject.extractor.utils.Prop;
-import org.zoneproject.extractor.utils.ZoneOntology;
+import org.zoneproject.extractor.utils.Item;
 
 /*
  * #%L
@@ -32,56 +38,129 @@ import org.zoneproject.extractor.utils.ZoneOntology;
 public class App 
 {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
-    public static int SIM_DOWNLOADS = 20;
+    
+    public static int SIM_DOWNLOADS = 100;
+    public static int LIMIT_TIME_FOR_DOWN = 60;
+    
+    public static final ArrayList<Item> itemsPendingSave = new ArrayList<Item>(); 
+    
     public App(){
         String [] tmp = {};
         App.main(tmp);
     }
-    public static void main( String[] args )
-    {
-        DownloadNewsThread[] th = new DownloadNewsThread[SIM_DOWNLOADS];
+    
+    public static void main(String[] args) {
+        LinkedBlockingQueue<DownloadNewsThread> feedsThreads = new LinkedBlockingQueue<DownloadNewsThread>();
+        LinkedList<String> itemsPending = new LinkedList<String>();
         
         DownloadLastsNewsThread lastsThread = new DownloadLastsNewsThread();
         lastsThread.start();
         
         while(true){
             String [] sources = RSSGetter.getSources();
-            for(int i = 0; i < sources.length; i+=SIM_DOWNLOADS){
-
-                for(int curSource = i; (curSource < (i+SIM_DOWNLOADS)) && (curSource < sources.length); curSource++){
-                    th[curSource-i] = new DownloadNewsThread(sources[curSource]);
-                    th[curSource-i].start();
-                }
-                
-                //we check all the thread in ordre to know which one has not finish
-                boolean hasAlive = false;
-                for(int timer = 0; timer < 100; timer++){
-                    hasAlive = false;
-                    for(DownloadNewsThread cutrThread:  th){
-                        if(cutrThread.isAlive()){
-                            if(timer > 20) {
-                                logger.info("is alive["+timer+"]: "+cutrThread.source);
-                            }
-                            hasAlive = true;
-                            //break;
+            itemsPending.add(sources[0]);
+            itemsPending.addAll(Arrays.asList(sources));
+            
+            while(!itemsPending.isEmpty()){
+                    //we add new thread until the limit length is thrown
+                    while(feedsThreads.size() < SIM_DOWNLOADS && !itemsPending.isEmpty()){
+                        DownloadNewsThread newAnnot = new DownloadNewsThread(itemsPending.removeFirst());
+                        newAnnot.start();
+                        feedsThreads.add(newAnnot);
+                    }
+                    
+                    for(DownloadNewsThread a : feedsThreads){
+                        if(!a.isAlive()){
+                            feedsThreads.remove(a);
+                        }else if(a.getDuration() > LIMIT_TIME_FOR_DOWN){
+                            a.interrupt();
+                        }else if(a.getDuration() > 10){
+                            logger.info("is alive["+a.getDuration()+"]: "+a.source);
                         }
                     }
-                    if(hasAlive == false){
-                        break;
-                    }else{
+                    if(feedsThreads.size()>= SIM_DOWNLOADS){
                         try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
                     }
-                }
-
-                for(int curSource = i; (curSource < (i+SIM_DOWNLOADS)) && (curSource < sources.length); curSource++){
-                        if(th[curSource-i] == null)continue;
-                        Database.addAnnotation(th[curSource-i].source, new Prop(ZoneOntology.SOURCES_OFFLINE, "true"), ZoneOntology.GRAPH_SOURCES);
-                        th[curSource-i].interrupt();
-                }
                 
-                logger.info("["+(i+Math.min(sources.length%SIM_DOWNLOADS,SIM_DOWNLOADS))+"/"+sources.length+"] feeds downloaded");
+                logger.info("["+itemsPending.size()+"] feeds to downloaded");
+                if(itemsPendingSave.size() > 30){
+                    App.saveItems();
+                }
             }
-            logger.info("Done");
+            
+            App.saveItems();
         }
     }
+    public static final void saveItems(){
+        synchronized(itemsPendingSave){
+            logger.info("start save datas");
+            Database.addItems((ArrayList<Item>) itemsPendingSave.clone());
+            itemsPendingSave.clear();
+            logger.info("end save datas");
+        }
+    }
+}
+
+
+class DownloadNewsThread extends Thread  {
+    protected String source;
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
+    private Date startedDate;
+
+    public DownloadNewsThread(String source) {
+      this.source = source;
+      this.startedDate = new Date();
+    }
+    public void run() {
+        //Starting rss downloading
+        ArrayList<Item> items = RSSGetter.getFlux(source);
+
+        //Cleaning flow with already analysed items
+        Database.verifyItemsList(items);
+
+        //Printing result items
+        //for(int i=0; i< items.size();i++)logger.info("\n"+items.get(i));
+        
+        //saving to 4Store database
+        App.itemsPendingSave.addAll(items);
+        //Database.addItems(items);     
+        //TODO better!
+        logger.info("["+items.size()+"] Done for source: "+source);
+    }
+    public int getDuration(){
+        return (int)( ((new Date()).getTime() - startedDate.getTime())/ (1000) );
+    }
+}
+
+
+class DownloadLastsNewsThread extends Thread  {
+    private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
+
+    public DownloadLastsNewsThread() {
+    }
+    public void run() {
+        String lastRss = RSSGetter.getLastsSources(1)[0];
+        String [] sources;
+        while(true){
+            sources = RSSGetter.getLastsSources(50);
+            for(String cur: sources){
+                if(cur.equals(lastRss)){
+                    break;
+                }
+                logger.info("QUICKANNOTATE:"+cur);
+                DownloadNewsThread th = new DownloadNewsThread(cur);
+                th.start();
+                try {
+                    th.join();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(DownloadLastsNewsThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                App.saveItems();
+            }
+            if(sources.length>0){
+                lastRss = sources[0];
+            }
+            try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
+        }
+  }
 }
