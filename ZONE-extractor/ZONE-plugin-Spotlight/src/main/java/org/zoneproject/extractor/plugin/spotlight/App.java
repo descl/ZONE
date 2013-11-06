@@ -21,9 +21,12 @@ package org.zoneproject.extractor.plugin.spotlight;
  * #L%
  */
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.ConcurrentModificationException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.concurrent.LinkedBlockingQueue;
+import org.apache.commons.lang.ArrayUtils;
+import static org.zoneproject.extractor.plugin.spotlight.App.propsPendingSave;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
@@ -33,12 +36,15 @@ import org.zoneproject.extractor.utils.ZoneOntology;
  *
  * @author Desclaux Christophe <christophe@zouig.org>
  */
-
 public class App 
 {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_SPOTLIGHT;
-    public static int SIM_DOWNLOADS = 100;
+    public static int SIM_DOWNLOADS = 200;
+    public static int SIM_ANNOTATE = 20;
+    public static int LIMIT_TIME_FOR_DOWN = 1000;
+    
+    public static HashMap<String, ArrayList<Prop>> propsPendingSave; 
     
     public App(){
         String [] tmp = {};
@@ -46,104 +52,116 @@ public class App
     }
     
     public static void main(String[] args) {
-        ArrayList<Item> items = null;
+        LinkedList<Item> itemsPending = new LinkedList<Item>();
         Prop [] fr = {new Prop(ZoneOntology.PLUGIN_LANG, "\"fr\"")};
         Prop [] en = {new Prop(ZoneOntology.PLUGIN_LANG, "\"en\"")};
         
-        AnnotationThread[] th;
-        HashMap<String, ArrayList<Prop>> props; 
+        LinkedBlockingQueue<AnnotationThread> annotationThreads;
+        HashMap<String, ArrayList<Prop>> propsToSave; 
+        propsPendingSave = new HashMap<String, ArrayList<Prop>>();
         while(true){
-                    do{
-                        props = new HashMap<String, ArrayList<Prop>>();
-                        items = new ArrayList<Item>();
-                        Item[] enItems = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,en,SIM_DOWNLOADS);
-                        Item[] frItems = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,fr,SIM_DOWNLOADS);
-                        if(enItems != null) items.addAll(Arrays.asList(enItems));
-                        if(frItems != null) items.addAll(Arrays.asList(frItems));
-                        
-                        
-                        if(items == null){
-                            continue;
-                        }
-                        th = new AnnotationThread[items.size()];
-
-                        logger.info("Spotlight has "+items.size()+" items to annotate");
-                        for(int curItem = 0; curItem < items.size() ; curItem++){
-                            th[curItem] = new AnnotationThread(items.get(curItem),props);
-                            th[curItem].start();
-                        }
-                
-                        //we check all the thread in ordre to know which one has not finish
-                        boolean hasAlive = false;
-                        for(int i = 0; i < 50; i++){
-                            hasAlive = false;
-                            for(AnnotationThread cutrThread:  th){
-                                if(cutrThread.isAlive()){
-                                    logger.info("is alive["+i+"]: "+cutrThread.item.getUri());
-                                    hasAlive = true;
-                                }
-                            }
-                            if(hasAlive == false){
-                                break;
-                            }else{
-                                try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
-                            }
-                        }
-
-                        for(int curItemId = 0; curItemId < items.size() ; curItemId++){
-                                if(th[curItemId] == null)continue;
-                                th[curItemId].interrupt();
-                        }
-                        logger.info("start saving");
-                        Database.addAnnotations(props);
-                        logger.info("end saving");
-
-                    }while(items == null || items.size() > 0);
-                logger.info("done");
-            try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
+            annotationThreads = new LinkedBlockingQueue<AnnotationThread>();
             
+            while(true){//while we can download items
+
+                Item[] enItems = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,en,SIM_DOWNLOADS/2);
+                Item[] frItems = Database.getItemsNotAnotatedForPluginsWithDeps(PLUGIN_URI,fr,SIM_DOWNLOADS/2);
+                Item[] items = (Item[]) ArrayUtils.addAll(enItems,frItems);
+                
+                
+                if(items != null && items.length > 0){
+                    //check if the item is in annotation process
+                    for(Item i : items){
+                        boolean exist = false;
+                        for(AnnotationThread a: annotationThreads){
+                            if(a.item.getUri().equals(i.getUri())){
+                                exist = true;
+                            }
+                        }
+                        if(!exist){
+                            itemsPending.add(i);
+                        }
+                    }
+                }
+                if(itemsPending.isEmpty()){
+                    break;
+                }
+
+                while(!itemsPending.isEmpty()){
+                    
+                    //we add new thread until the limit length is thrown
+                    while(annotationThreads.size() < SIM_ANNOTATE && !itemsPending.isEmpty()){
+                        AnnotationThread newAnnot = new AnnotationThread(itemsPending.removeFirst());
+                        newAnnot.start();
+                        annotationThreads.add(newAnnot);
+                    }
+                    
+                    //try{
+                        //we try to end some terminated threads
+                    //synchronized(annotationThreads){
+                        for(AnnotationThread a :annotationThreads){
+                            if(!a.isAlive()){
+                                annotationThreads.remove(a);
+                            }else if(a.getDuration() > LIMIT_TIME_FOR_DOWN){
+                                a.interrupt();
+                            }else if(a.getDuration() > 10){
+                                logger.info("is alive["+a.getDuration()+"]: "+a.item.getUri());
+                            }
+                            //try{Thread.currentThread().sleep(1000);}catch(Exception ie){}//TODO remove
+                        }
+                    //}
+                    //}catch(java.util.ConcurrentModificationException concurrentAccess){
+                    //    logger.warn("concurrent access!");
+                    //}
+                    
+                    
+                    if(annotationThreads.size()>= SIM_ANNOTATE){
+                        try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
+                    }
+                }
+                
+                
+                logger.info("start saving");
+                synchronized(propsPendingSave){
+                    propsToSave = (HashMap<String, ArrayList<Prop>>)propsPendingSave.clone();
+                    propsPendingSave.clear();
+                }
+                Database.addAnnotations(propsToSave);
+                logger.info("end saving");
+
+            }
+            
+            logger.info("no more items to annotate");
+            try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
         }
     }
 }
 
-
 class AnnotationThread extends Thread  {
     protected Item item;
-    private HashMap<String, ArrayList<Prop>> props;
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
-
-    public AnnotationThread(Item item,HashMap<String, ArrayList<Prop>> props) {
+    private Date startedDate;
+    
+    public AnnotationThread(Item item) {
         this.item = item;
-        this.props = props;
+        this.startedDate = new Date();
     }
     public void run() {
-        this.startAnnotate();
-    }
-    private void startAnnotate(){
-        logger.info("[-] Start for item: "+item.getUri());
-        //try {Thread.currentThread().sleep(5000);} catch (InterruptedException ex1) {}
+        logger.info("[-] Add spotlight for item: "+item.getUri());
         
         //Starting annotations downloading
         ArrayList<Prop> content= SpotlightRequest.getProperties(item);
 
-        if(item.getUri() != null){
-            this.save(item.getUri(), content);
-        }
-        //logger.info("[+] Ended for item: "+item.getUri());
-        
-    }
-    public void save(String uri, ArrayList<Prop> content){
-        try{
+        synchronized(propsPendingSave){
+            App.propsPendingSave.put(item.getUri(), new ArrayList<Prop>());
+            App.propsPendingSave.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
+
             if(content != null){
-                props.put(item.getUri(), new ArrayList<Prop>());
-                props.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
-                props.get(item.getUri()).addAll(content);
-            }else{
-                logger.warn("Error while annotating" + item.getUri());
+                App.propsPendingSave.get(item.getUri()).addAll(content);
             }
-        }catch(ConcurrentModificationException ex){
-            logger.warn("concurrent modification of the item");
-            this.save(uri,content);
         }
+    }
+    public int getDuration(){
+        return (int)( ((new Date()).getTime() - startedDate.getTime())/ (1000) );
     }
 }
