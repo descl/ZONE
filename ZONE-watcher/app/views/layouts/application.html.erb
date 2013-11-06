@@ -55,7 +55,6 @@
             <li class="<%= 'active' if current_page?(items_path) %>"><%= link_to t("menu.news"), items_path %></li>
             <li class="<%= 'active' if current_page?(sources_path) %>"><%= link_to t("menu.yourSources"), sources_path %></li>
             <li class="<%= 'active' if current_page?(twitter_path) %>"><%= link_to t("menu.twitter"), twitter_path %></li>
-            <li><%= link_to t("menu.help"), "http://www.zone-project.org/?p=718", :target => "_blank" %></li>
           </ul>
             <ul class="nav user-box pull-right">
               <%= render 'layouts/login' %>
