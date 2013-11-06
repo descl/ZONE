@@ -22,6 +22,12 @@ class SearchSource < ActiveRecord::Base
           source.owner = user
         end
         source.save
+      else
+        #TODO
+        #if user != nil
+        #  source.addOwner(user)
+          #TODO : finish!
+        #end
       end
     end
 
@@ -36,7 +42,7 @@ class SearchSource < ActiveRecord::Base
     end
   end
 
-  def getSparqlTriple
+  def getSparqlTriple(user)
     if value == "all" || value ==  "Toutes les sources RSS de Reador" || value == "Toutes les sources twitter"
       if kind == "twitter"
         return "?concept <#{ZoneOntology::RSS_SOURCE}> <#{ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE}>"
@@ -51,6 +57,18 @@ class SearchSource < ActiveRecord::Base
         return "?concept <#{ZoneOntology::PLUGIN_TWITTER_AUTHOR}> \"#{value[0..-1]}\""
       end
     elsif kind == "rss"
+      if value.start_with? ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE
+        if user == nil || user < 0
+          return nil
+        else
+          twitterUser = value[(ZoneOntology::SOURCES_TYPE_TWITTER_TIMELINE.length() +1),value.length]
+
+          account = User.find(user)
+          if twitterUser != account.login
+            return nil
+          end
+        end
+      end
       return "?concept <#{ZoneOntology::RSS_SOURCE}> <#{self.getUri}>"
     end
   end

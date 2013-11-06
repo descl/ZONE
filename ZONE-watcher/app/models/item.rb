@@ -24,14 +24,17 @@ class Item# < ActiveRecord::Base
                                               :password => Rails.application.config.virtuosoPassword,
                                               :auth_method => 'digest')
 
-  def self.all(search = "",start=0,per_page=10)
-    sparqlFilter = search.generateSPARQLRequest
+  def self.all(search = "",user=-1,start=0,per_page=10)
+    sparqlFilter = search.generateSPARQLRequest(user)
     filtersIds = search.getOrFilters.map {|elem| "?filter#{elem.id}"}.join(',')
 
     endpoint = Rails.application.config.virtuosoEndpoint
     #if start > (10000 - per_page)
     #  return Array.new
     #end
+    if sparqlFilter == nil
+      return {:result => Array.new, :query => "", :error =>"cheater"}
+    end
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
 SELECT * WHERE{
     SELECT DISTINCT(?concept),?pubDateTime,  ?title, CONCAT( #{filtersIds} ) AS ?filtersVals

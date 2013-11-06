@@ -8,8 +8,10 @@ class ItemsController < ApplicationController
     @filters = []
     @sources = []
     @searches = []
+    userId=-1
 
     if user_signed_in?
+      userId = current_user.id
       @searches = Search.where(:user_id => current_user.id).limit(15).order("updated_at desc")
       if params[:search] == nil
         if @searches.size > 0
@@ -21,6 +23,11 @@ class ItemsController < ApplicationController
       else
         begin
           @search = Search.find(params[:search])
+          #check if he is allow to see the search
+          if ((@search.user_id != userId) && (params[:search].to_i != Rails.application.config.defaultRequestId))
+            @search =  @searches.first
+            @error = t('search.cheaterDisclaimer')
+          end
           if !@searches.include? @search
             @searches << @search
           end
@@ -30,14 +37,11 @@ class ItemsController < ApplicationController
           else
             @search = @searches.first
           end
-          respond_to do |format|
-            format.html { redirect_to(@search) }
-          end
-          return
+          @error = t('search.noSearchDisclaimer')
         end
       end
     else
-
+      #is visitor
       @searches = []
 
       if params[:search] == nil
@@ -46,11 +50,17 @@ class ItemsController < ApplicationController
       else
         begin
           @search = Search.find(params[:search])
+          if ((@search.user_id != -1) && (params[:search].to_i != Rails.application.config.defaultRequestId))
+            @search =  Search.find(Rails.application.config.defaultRequestId)
+            @error = t('search.cheaterDisclaimer')
+          end
           if !@searches.include? @search
             @searches << @search
           end
-        rescue e
-          @search = Search.find(Rails.application.config.defaultRequestId)
+        rescue
+          @search =  Search.find(Rails.application.config.defaultRequestId)
+          @searches << Search.find(Rails.application.config.defaultRequestId)
+          @error = t('search.noSearchDisclaimer')
         end
       end
     end
@@ -66,8 +76,13 @@ class ItemsController < ApplicationController
     current_page = Integer(current_page)
 
 
-    if @search.filters.empty? && @search.sources.empty?
-      flash[:error] = t('search.noFiltersDisclaimer')
+    if (@error != nil || (@search.filters.empty? && @search.sources.empty?) )
+      if(@error != nil)
+        flash[:error] = @error
+      else
+        flash[:error] = t('search.noFiltersDisclaimer')
+      end
+      @itemsNumber = 0
 
       @items = WillPaginate::Collection.create(1, 0, 0) do |pager|
         start = 0
@@ -76,7 +91,7 @@ class ItemsController < ApplicationController
         pager.replace(itemsTab)
       end
     else
-      @itemsNumber = @search.getItemsNumber
+      @itemsNumber = @search.getItemsNumber(userId)
 
       if params[:isNew] == "true"
         flash[:notice] = t('search.disclaimer')
@@ -86,9 +101,13 @@ class ItemsController < ApplicationController
 
       @items = WillPaginate::Collection.create(current_page, per_page, @itemsNumber) do |pager|
         start = (current_page-1)*per_page # assuming current_page is 1 based.
-        itemsTab = Item.all(@search,start,per_page)
+        itemsTab = Item.all(@search,userId,start,per_page)
         @sparqlRequest = itemsTab[:query]
+        @error = itemsTab[:error]
         pager.replace(itemsTab[:result])
+      end
+      if(@error == 'cheater' )
+        flash[:error] = t('search.cheaterDisclaimer')
       end
 
       #define the feed uri used by application.html.erb

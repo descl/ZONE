@@ -123,7 +123,7 @@ class SearchesController < ApplicationController
     if user_signed_in?
       userId = current_user.id
     else
-      userId=0
+      userId=-1
     end
 
     search = Search.new

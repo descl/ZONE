@@ -58,6 +58,7 @@ en:
         "New source"
       add:
         "Add"
+      edit: "Edit"
     opml:
       title:
         "Import opml file"
@@ -162,6 +163,8 @@ en:
     noResDisclaimer: "The search your are trying to do doesn't have any result yet. Maybe you should be more permissive on filters or add more sources?"
     noFiltersDisclaimer: "The search your are trying to make doesn't contains any sources and filters. Pleases add some to perform this search."
     moreSearches: "More searches"
+    cheaterDisclaimer: "Your are trying to acces a source that you should not be able to see. Please contact us if you think your search is legitimate."
+    noSearchDisclaimer: "The search that you are trying to view does not exist."
   index:
     disclaimer:
       "Reador.NET is currently <b>under development</b>, please tell us all problems you can encounter using  <a href='javascript:void($zopim.livechat.window.openPopout())'>this link</a>!"

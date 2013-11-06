@@ -57,6 +57,7 @@ fr:
         "Nouvelle source"
       add:
         "Ajouter"
+      edit: "Modifier"
     opml:
       title:
         "Importer un fichier opml"
@@ -161,6 +162,8 @@ fr:
     noResDisclaimer: "La recherche que vous souhaitez effectuer ne contient aucune réponse. Vous devriez être plus laxistes sur le filtrage ou ajouter plus de sources?"
     noFiltersDisclaimer: "La recherche que vous tentez d'effectuer ne contient ni filtres ni sources. Vous devez en ajouter"
     moreSearches: "Autres recherches"
+    cheaterDisclaimer: "Vous tentez d'accéder à une source que vous ne devriez pas pouvoir voir. Merci de nous contacter si vous trouvez votre recherche légitime."
+    noSearchDisclaimer: "La recherche que vous tentez d'afficher n'existe pas."
   index:
     disclaimer:
       "Reador.NET est en <b>cours de développement</b>, merci de nous faire remonter les problèmes que vous rencontrez en <a href='javascript:void($zopim.livechat.window.openPopout())'>cliquant ici</a>!"

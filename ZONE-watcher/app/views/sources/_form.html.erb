@@ -41,7 +41,13 @@
     </div>
     </div>
       <div class="modal-footer">
-        <div class="clear"><%= f.submit t("source.new.add"), :class => 'btn btn-success' %></div>
+        <div class="clear">
+          <%if type == "new"%>
+            <%= f.submit t("source.new.add"), :class => 'btn btn-success' %>
+          <%else%>
+            <%= f.submit t("source.new.edit"), :class => 'btn btn-success' %>
+          <%end%>
+        </div>
       </div>
 
    	</div>

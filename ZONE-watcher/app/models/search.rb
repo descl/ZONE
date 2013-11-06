@@ -21,7 +21,10 @@ class Search < ActiveRecord::Base
     if inputSources != nil
       inputSources.each do |kind,vals|
         vals.each do |value|
-          self.sources << SearchSource.build_from_form(CGI.unescape(value),kind,user)
+          source = SearchSource.build_from_form(CGI.unescape(value),kind,user)
+          if source != nil
+            self.sources << source
+          end
         end
       end
     end
@@ -35,14 +38,18 @@ class Search < ActiveRecord::Base
     end
   end
 
-  def getItemsNumber
+  def getItemsNumber(user)
     endpoint = Rails.application.config.virtuosoEndpoint
+    sparqlTriples = self.generateSPARQLRequest(user)
+    if sparqlTriples == nil
+      return 0
+    end
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT COUNT(DISTINCT ?concept) as ?number
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     FROM <#{ZoneOntology::GRAPH_SOURCES}> WHERE {\n"
     query +="?concept RSS:title ?title."
-    query += self.generateSPARQLRequest
+    query += sparqlTriples
     query += "} "
     store = SPARQL::Client.new(endpoint)
     if store.query(query).length == 0
@@ -64,10 +71,14 @@ class Search < ActiveRecord::Base
     return self.filters.find_all{|f| f.kind == "without" }
   end
 
-  def generateSPARQLRequest
+  def generateSPARQLRequest(user)
     extendQuery = ""
     self.sources.each do |source|
-      extendQuery += "{ #{source.getSparqlTriple}.} \nUNION "
+      sparqlTriple = source.getSparqlTriple(user)
+        if sparqlTriple== nil
+          return nil
+        end
+        extendQuery += "{ #{sparqlTriple}.} \nUNION "
     end
     if self.sources.length > 0
       extendQuery = extendQuery[0..-8]
