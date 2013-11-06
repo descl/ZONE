@@ -48,7 +48,7 @@ public class ExtractArticleContent {
         //    return item.getElements("http://zone-project.org/model/plugins/ExtractArticlesContent#cache")[0];
         //}
         
-        if(item.getUri().startsWith("https://twitter.com/")){
+        if(item.getUri().startsWith("https://twitter.com/") && item.getDescription() != null){
             //try to get links in tweets
             Pattern p = Pattern.compile(URL_REGEX);
             Matcher m = p.matcher(item.getDescription());
