@@ -46,7 +46,9 @@ public class DownloadLastsNewsThread extends Thread  {
                 logger.info("QUICKANNOTATE:"+cur);
                 new DownloadNewsThread(cur).start();
             }
-            lastRss = sources[0];
+            if(sources.length>0){
+                lastRss = sources[0];
+            }
             try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
         }
   }
