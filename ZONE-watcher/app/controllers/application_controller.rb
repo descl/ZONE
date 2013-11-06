@@ -12,4 +12,11 @@ class ApplicationController < ActionController::Base
     logger.debug "default_url_options is passed options: #{options.inspect}\n"
     { locale: I18n.locale }
   end
+
+  unless Rails.application.config.consider_all_requests_local
+    rescue_from Net::HTTP::Persistent::Error, :with => :render_db_error
+  end
+  def render_db_error(exception)
+    render :template => "/errors/noBD.html", :layout => "empty", :status => 500 and return
+  end
 end

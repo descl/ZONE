@@ -59,6 +59,9 @@ GEM
     arel (3.0.2)
     atomic (1.1.13)
     bcrypt-ruby (3.1.2)
+    better_errors (1.0.1)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
     bootstrap_form (1.0.0)
     builder (3.0.4)
     capistrano (2.15.5)
@@ -72,6 +75,7 @@ GEM
       activesupport (>= 3.0)
     cocaine (0.5.1)
       climate_control (>= 0.0.3, < 1.0)
+    coderay (1.1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -245,6 +249,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  better_errors
   bootstrap_form
   coffee-rails (~> 3.2.1)
   devise
