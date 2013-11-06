@@ -30,7 +30,7 @@ class TwitterController < ApplicationController
       end
     end
 
-    if search == nil
+    if search == nil || search.user_id != current_user.id
       redirect_to url_for(:controller => :searches, :action => :create,  :sources => {:rss => [sourceURI]}, :searchName => "TwitterTimeline", :isNew => true), :method => 'post'
     else
       redirect_to url_for(search)
