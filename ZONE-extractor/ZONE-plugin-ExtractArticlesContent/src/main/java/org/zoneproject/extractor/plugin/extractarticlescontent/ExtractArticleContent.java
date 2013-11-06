@@ -1,23 +1,4 @@
 package org.zoneproject.extractor.plugin.extractarticlescontent;
-
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.shared.JenaException;
-import de.l3s.boilerpipe.BoilerpipeProcessingException;
-import de.l3s.boilerpipe.extractors.ArticleExtractor;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import org.xml.sax.InputSource;
-import org.zoneproject.extractor.utils.Database;
-import org.zoneproject.extractor.utils.Prop;
-import org.zoneproject.extractor.utils.Item;
-import org.zoneproject.extractor.utils.ZoneOntology;
-
 /*
  * #%L
  * ZONE-plugin-ExtractArticlesContent
@@ -38,15 +19,34 @@ import org.zoneproject.extractor.utils.ZoneOntology;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
+
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.shared.JenaException;
+import de.l3s.boilerpipe.BoilerpipeProcessingException;
+import de.l3s.boilerpipe.extractors.ArticleExtractor;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.xml.sax.InputSource;
+import org.zoneproject.extractor.utils.Database;
+import org.zoneproject.extractor.utils.Prop;
+import org.zoneproject.extractor.utils.Item;
+import org.zoneproject.extractor.utils.ZoneOntology;
+
 public class ExtractArticleContent {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     private static final String URL_REGEX = "\\(?\\b(http://|www[.]|https://)[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
     private static final String[] notAllowedFormats = {"jpg", "png", "gif", "jpeg","mkv","m4v"};
 
     public static String getContent(Item item) {
-        if(item.getElements("http://zone-project.org/model/plugins/ExtractArticlesContent#cache").length > 0){
-            return item.getElements("http://zone-project.org/model/plugins/ExtractArticlesContent#cache")[0];
-        }
+        //if(item.getElements("http://zone-project.org/model/plugins/ExtractArticlesContent#cache").length > 0){
+        //    return item.getElements("http://zone-project.org/model/plugins/ExtractArticlesContent#cache")[0];
+        //}
         
         if(item.getUri().startsWith("https://twitter.com/")){
             //try to get links in tweets
@@ -67,15 +67,17 @@ public class ExtractArticleContent {
         String content = "";
         for(String curLink: item.getElements(ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_LINK)){
             String curContent = null;
-            if(!curLink.equals(item.getUri())){
-                logger.info("je cherche dans le cache");
-                curContent = getInCache(curLink);
-            }
-            if(curContent == null){
+            //if(!curLink.equals(item.getUri())){
+            //    logger.info("je cherche dans le cache");
+            //    curContent = getInCache(curLink);
+            //}
+            //if(curContent == null){
                 curContent = ExtractArticleContent.getContent(curLink);
-                storeInCache(curLink, curContent);
-            }
+            //    storeInCache(curLink, curContent);
+            //}
 
+            if(curContent == null)
+                continue;
             String title = "abcdefghijklmnopqstuvwxyz";
             if(item.getTitle() != null){
                 title = item.getTitle().trim();
@@ -84,7 +86,7 @@ public class ExtractArticleContent {
             if(item.getDescription() != null){
                 String description = item.getDescription().trim().substring(0,Math.min(item.getDescription().trim().length(),20));
 
-                if(curContent.contains(description)){
+                if(description != null && curContent.contains(description)){
                     curContent = curContent.substring(curContent.indexOf(description));
                 }
             }
@@ -113,6 +115,7 @@ public class ExtractArticleContent {
             URLConnection conn = url.openConnection();
                 conn.setConnectTimeout(timeout);
                 conn.setReadTimeout(timeout);
+                conn.setDefaultUseCaches(true);
             
             //follow redirects
             do{
@@ -126,6 +129,7 @@ public class ExtractArticleContent {
                 conn = (url).openConnection();
                 conn.setConnectTimeout(timeout);
                 conn.setReadTimeout(timeout);
+                conn.setDefaultUseCaches(true);
                 if(!conn.getURL().toString().contains("t.co/")){
                     conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
 
@@ -135,7 +139,7 @@ public class ExtractArticleContent {
             }while(!conn.getURL().equals(url));
             
             return ArticleExtractor.INSTANCE.getText(new InputSource(conn.getInputStream())).replace("\u00A0", " ").trim()+"\n";
-        
+            
         }catch(java.io.FileNotFoundException ex){
             logger.warn("annotation process because of download error for "+uri);
             return "";

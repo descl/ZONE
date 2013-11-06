@@ -20,13 +20,15 @@ package org.zoneproject.extractor.plugin.extractarticlescontent;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.concurrent.LinkedBlockingQueue;
+import static org.zoneproject.extractor.plugin.extractarticlescontent.App.propsPendingSave;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
-import org.zoneproject.extractor.utils.VirtuosoDatabase;
 import org.zoneproject.extractor.utils.ZoneOntology;
 
 /**
@@ -38,95 +40,121 @@ public class App
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     public static String PLUGIN_URI = ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT;
     public static String PLUGIN_RESULT_URI = ZoneOntology.PLUGIN_EXTRACT_ARTICLES_CONTENT_RES;
-    public static int SIM_DOWNLOADS = 150;
-    
+    public static int SIM_DOWNLOADS = 500;
+    public static int SIM_ANNOTATE = 50;
+    public static int LIMIT_TIME_FOR_DOWN = 1000;
     private static final String URL_REGEX = "\\(?\\b(http://|www[.])[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
+    
+    public static HashMap<String, ArrayList<Prop>> propsPendingSave; 
     
     public App(){
         String [] tmp = {};
         App.main(tmp);
     }
-     /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
-        Item[] items;
-        DownloadThread[] th;
+        LinkedList<Item> itemsPending = new LinkedList<Item>();
         
-        HashMap<String, ArrayList<Prop>> props; 
+        LinkedBlockingQueue<AnnotationThread> annotationThreads;
+        HashMap<String, ArrayList<Prop>> propsToSave; 
+        propsPendingSave = new HashMap<String, ArrayList<Prop>>();
         while(true){
-            do{
-                props = new HashMap<String, ArrayList<Prop>>();
-                items = VirtuosoDatabase.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,SIM_DOWNLOADS);
-                th = new DownloadThread[items.length];
-                if(items == null){
-                    continue;
-                }
-                logger.info("ExtractArticlesContent has "+items.length+" items to annotate");
-                Item curItem;
-                for(int curItemId = 0; curItemId < items.length ; curItemId++){
-                    curItem = items[curItemId];
+            annotationThreads = new LinkedBlockingQueue<AnnotationThread>();
+            
+            while(true){//while we can download items
 
-
-
-
-                    th[curItemId] = new DownloadThread(curItem,props);
-                    th[curItemId].start();
-                }
-                
-                //we check all the thread in ordre to know which one has not finish
-                boolean hasAlive = false;
-                for(int i = 0; i < 100; i++){
-                    hasAlive = false;
-                    for(DownloadThread cutrThread:  th){
-                        if(cutrThread.isAlive()){
-                            logger.info("is alive["+i+"]: "+cutrThread.item.getUri());
-                            hasAlive = true;
-                            //break;
+                Item[] items = Database.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,SIM_DOWNLOADS);
+                if(items != null && items.length > 0){
+                    //check if the item is in annotation process
+                    for(Item i : items){
+                        boolean exist = false;
+                        for(AnnotationThread a: annotationThreads){
+                            if(a.item.getUri().equals(i.getUri())){
+                                exist = true;
+                            }
+                        }
+                        if(!exist){
+                            itemsPending.add(i);
                         }
                     }
-                    if(hasAlive == false){
-                        break;
-                    }else{
+                }
+                if(itemsPending.isEmpty()){
+                    break;
+                }
+
+                while(!itemsPending.isEmpty()){
+                    
+                    //we add new thread until the limit length is thrown
+                    while(annotationThreads.size() < SIM_ANNOTATE && !itemsPending.isEmpty()){
+                        AnnotationThread newAnnot = new AnnotationThread(itemsPending.removeFirst());
+                        newAnnot.start();
+                        annotationThreads.add(newAnnot);
+                    }
+                    
+                    //try{
+                        //we try to end some terminated threads
+                    //synchronized(annotationThreads){
+                        for(AnnotationThread a :annotationThreads){
+                            if(!a.isAlive()){
+                                annotationThreads.remove(a);
+                            }else if(a.getDuration() > LIMIT_TIME_FOR_DOWN){
+                                a.interrupt();
+                            }else if(a.getDuration() > 10){
+                                logger.info("is alive["+a.getDuration()+"]: "+a.item.getUri());
+                            }
+                            //try{Thread.currentThread().sleep(1000);}catch(Exception ie){}//TODO remove
+                        }
+                    //}
+                    //}catch(java.util.ConcurrentModificationException concurrentAccess){
+                    //    logger.warn("concurrent access!");
+                    //}
+                    
+                    
+                    if(annotationThreads.size()>= SIM_ANNOTATE){
                         try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
                     }
                 }
-
-                for(int curItemId = 0; curItemId < items.length ; curItemId++){
-                        if(th[curItemId] == null)continue;
-                        th[curItemId].interrupt();
+                
+                
+                logger.info("start saving");
+                synchronized(propsPendingSave){
+                    propsToSave = (HashMap<String, ArrayList<Prop>>)propsPendingSave.clone();
+                    propsPendingSave.clear();
                 }
-                Database.addAnnotations(props);
-            }while(items == null || items.length > 0);
-            logger.info("done");
+                Database.addAnnotations(propsToSave);
+                logger.info("end saving");
+
+            }
+            
+            logger.info("no more items to annotate");
             try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
         }
     }
 }
 
-class DownloadThread extends Thread  {
+class AnnotationThread extends Thread  {
     protected Item item;
-    private HashMap<String, ArrayList<Prop>> props;
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
+    private Date startedDate;
 
-    public DownloadThread(Item item, HashMap<String, ArrayList<Prop>> props) {
-      this.props = props;
+    public AnnotationThread(Item item) {
       this.item = item;
+      this.startedDate = new Date();
     }
     public void run() {
-        run(0);
-    }
-    public void run(int restartLevel) {
         logger.info("Add ExtractArticlesContent for item: "+item.getUri());
-
         String content = ExtractArticleContent.getContent(item);
+        
+        synchronized(propsPendingSave){
+            App.propsPendingSave.put(item.getUri(), new ArrayList<Prop>());
+            App.propsPendingSave.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
 
-        props.put(item.getUri(), new ArrayList<Prop>());
-        props.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
-        if(content != null){
-            props.get(item.getUri()).add(new Prop(App.PLUGIN_RESULT_URI,content));
+            if(content != null){
+                App.propsPendingSave.get(item.getUri()).add(new Prop(App.PLUGIN_RESULT_URI,content));
+            }
         }
-
-        props.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
+    }
+    public int getDuration(){
+        return (int)( ((new Date()).getTime() - startedDate.getTime())/ (1000) );
     }
 }
