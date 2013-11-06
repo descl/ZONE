@@ -20,6 +20,7 @@ class Filter
     SELECT DISTINCT(?value)
     WHERE {
       ?uri <#{param[:prop]}> ?value.
+      ?uri <#{ZoneOntology::SOURCES_OWNER}>\"#{param[:userId]}\"
     }"
     store = SPARQL::Client.new(endpoint)
     filters = Array.new
