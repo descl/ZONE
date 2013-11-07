@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from Net::HTTP::Persistent::Error, :with => :render_db_error
+    rescue_from Mysql2::Error, :with => :render_db_error
   end
   def render_db_error(exception)
     render :template => "/errors/noBD.html", :layout => "empty", :status => 500 and return
