@@ -286,7 +286,7 @@ fr:
   items:
     reminder:
       update:
-        "Actualiser"
+        "Afficher"
       change:
         "Modification<br/> avancée"
     users:
@@ -297,7 +297,7 @@ fr:
         "Confirmation"
       content:
         added: "Tag bien ajouté"
-        update: "Actualiser"
+        update: "Watch"
       smalltitle:
         "Ajouter le tag comme :"
     newtag:
