@@ -15,6 +15,7 @@ end
 group :development do
   gem 'sqlite3'
   gem "better_errors"
+  gem "binding_of_caller"
 end
 
 # Gems used only for assets and not required
@@ -45,6 +46,8 @@ gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
+gem "devise_mailchimp", :git => "https://github.com/jcnnghm/devise_mailchimp"  # Last officially released gem
+gem "hominid", :git =>"https://github.com/descl/hominid.git"
 
 #opml files import
 gem 'opml_saw', :git => "git://github.com/feedbin/opml_saw.git", :branch => "master"

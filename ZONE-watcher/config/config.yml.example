@@ -4,12 +4,15 @@ virtuosoPassword: "dba"
 
 defaultRequestId: "1"
 
-zopimId: "1AfdKtAnFnyhyiv9K09kidoNONtAmgvV"
+zopimId: "Your zopim id"
 
 stathatId: "mail@example.com"
 
 devise:
   secretKey: 'YourSecretKey'
+  mailchimp:
+    apiKey: ""
+    listName: ""
   twitter:
     auth: "v"
     pass: "v"

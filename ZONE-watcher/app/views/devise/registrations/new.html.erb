@@ -12,6 +12,9 @@
   <%= f.email_field :email %>
   <%= f.password_field :password %>
   <%= f.password_field :password_confirmation %>
+  <%= f.control_group :join_mailing_list do %>
+    <%= f.check_box :join_mailing_list, label: t('activerecord.attributes.user.join_mailing_list') %>
+  <% end %>
   <%= f.actions do %>
     <%= f.primary raw t 'menu.signUp', :class=>'btn' %>
   <%end%>

@@ -9,6 +9,9 @@
         <%= bootstrap_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
 
       <%= f.email_field :email %>
+      <%= f.control_group :join_mailing_list do %>
+        <%= f.check_box :join_mailing_list, label: t('activerecord.attributes.user.join_mailing_list') %>
+      <% end %>
 
 
       <div><%= f.label "#{t("menu.twitterAccount")}: " %>

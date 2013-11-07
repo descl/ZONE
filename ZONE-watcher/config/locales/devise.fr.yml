@@ -13,6 +13,7 @@ fr:
         password: "Mot de passe"
         current_password: "Mot de passe actuel"
         password_confirmation: "Vérification du mot de passe"
+        join_mailing_list: "Suivre les informations du projet"
   devise:
     areYouSure:
       "Etes-vous sûr?"

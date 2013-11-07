@@ -4,10 +4,10 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :omniauthable
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :mailchimp
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :login, :token, :tokenSecret
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :login, :token, :tokenSecret, :join_mailing_list
   # attr_accessible :title, :body
 
   def self.find_for_provider_oauth(auth, signed_in_resource=nil)
