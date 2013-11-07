@@ -2,7 +2,19 @@
 #= require reminder_panel
 # require "dino.js"
 
-downloadNewsDatas = (uri) ->
+$ ->
+  #load items content for each item
+  $('.item-bloc[local-uri]').each (id, element) ->
+    localUri = $(element).attr('local-uri')
+    downloadNewsDatas(localUri)
+
+  #activate the infinite scroll
+  $('a.load-more-items').on 'inview', (e, visible) ->
+    return unless visible
+    $.getScript $(this).attr('href')
+
+
+(exports ? this).downloadNewsDatas = (uri) ->
   $.ajax uri,
     async: true
     context: uri
@@ -12,30 +24,30 @@ downloadNewsDatas = (uri) ->
         $(item).removeAttr("local-uri")
         $(item).find('[class*=item_wait]').detach()
         $(item).find('[class=item_container]').append(data)
+        setHighlightTags($(item))
 
     error: (xhr, ajaxOptions, thrownError) ->
       if (xhr.status == 500)
         downloadNewsDatas(uri)
+(exports ? this).setHighlightTags = (item) ->
+  curSearch = getCurSearch()
 
-$ ->
-  #load items content for each item
-  $('.item-bloc[local-uri]').each (id, element) ->
-    localUri = $(element).attr('local-uri')
-    downloadNewsDatas(localUri)
+  #we get all the filters
+  filtersSearch = new Array();
+  curSearch.find("#summaryOr,#summaryAnd").children().each (id,fi) ->
+    val = $(fi).attr("filter-uri")
+    if(val == "undefined")
+      val = $(fi).attr("filter-value")
+    filtersSearch.push(val)
 
-  $(".showFavorite").hover (->
-    $(this).next(".row-favorite").fadeIn()
-    $(this).hide()
-  ), ->
-    $(this).hide()
+  #we check filters in the news
+  $(item).find(".label-tag").each (id,filterItem) ->
+    filterval = $(filterItem).attr("filter-uri")
+    if(filterval == undefined)
+      filterval = $(filterItem).attr("filter-value")
+    if ($.inArray(filterval,filtersSearch) != -1)
+      $(filterItem).addClass("label-selected")
 
-  $(".row-favorite").hover (->
-    $(this).prev(".showFavorite").hide()
-  ), ->
-    $(this).hide()
-    $(this).prev(".showFavorite").fadeIn()
 
-  #activate the infinite scroll
-  $('a.load-more-items').on 'inview', (e, visible) ->
-    return unless visible
-    $.getScript $(this).attr('href')
+(exports ? this).getCurSearch = () ->
+  return $($(".searchItem.active").attr("data-content"))

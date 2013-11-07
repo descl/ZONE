@@ -39,7 +39,7 @@ class SearchFilter < ActiveRecord::Base
     
     self.uri = "undefined" if self.uri == nil
 
-    return "<span id=\"filter#{self.id}\" class=\"label label-#{type}\" draggable=\"true\" ondragstart=\"drag(event)\" filter-uri=\"#{self.uri}\">#{self.value} <i class=\"icon-remove pointerMouse\" onclick=\"removeElement('#{self.id}',event);\"></i></span>"
+    return "<span id=\"filter#{self.id}\" class=\"label label-#{type}\" draggable=\"true\" ondragstart=\"drag(event)\" filter-value=\"#{self.value}\" filter-uri=\"#{self.uri}\">#{self.value} <i class=\"icon-remove pointerMouse\" onclick=\"removeElement('#{self.id}',event);\"></i></span>"
   end
 
   def getButtonInNews

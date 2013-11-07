@@ -51,6 +51,7 @@ module SearchesHelper
       res= link_to raw(filterVal), "javascript:void(0);",
                    :class => "label label-tag label-#{kind}", "data-uri" => search_filters_path(:uri => uri ),
                    "filter-uri" => uri,
+                   "filter-value" => filter.value,
                    "data-content"=>tagContent,
                    "data-original-title"=> title
       return "<div class=\"btn-group btn-group-label btn-wrap\" title='#{printableKind}'>#{res}</div>"
