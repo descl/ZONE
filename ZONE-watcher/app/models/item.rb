@@ -107,8 +107,8 @@ SELECT * WHERE{
     item.props = params
     item.filters = Array.new
 
-    if params["http://zone-project.org/model/items#favorite"] != nil && user != nil
-      params["http://zone-project.org/model/items#favorite"].each do |fav|
+    if params["http://zone-project.org/model/items#favorite"] != nil && user != nil && params["http://zone-project.org/model/items#favorite"][:value] != nil
+      params["http://zone-project.org/model/items#favorite"][:value].each do |fav|
         if fav == "#{ZoneOntology::ZONE_USER}#{user.id}"
           item.favorite = true
         end
