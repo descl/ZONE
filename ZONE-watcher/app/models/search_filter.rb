@@ -96,6 +96,9 @@ class SearchFilter < ActiveRecord::Base
       return self.value
     end
 
+    if(self.value == nil)
+      self.value = self.uri
+    end
 
     filterVal = ""
     if(self.value.starts_with? "http")
