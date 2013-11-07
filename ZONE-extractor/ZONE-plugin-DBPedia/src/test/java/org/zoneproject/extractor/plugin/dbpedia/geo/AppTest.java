@@ -21,6 +21,7 @@ package org.zoneproject.extractor.plugin.dbpedia.geo;
  * #L%
  */
 
+import org.zoneproject.extractor.plugin.dbpedia.DbpediaSparqlRequest;
 import java.util.ArrayList;
 import junit.framework.Test;
 import junit.framework.TestCase;

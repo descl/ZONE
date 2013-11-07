@@ -1,4 +1,4 @@
-package org.zoneproject.extractor.plugin.dbpedia.geo;
+package org.zoneproject.extractor.plugin.dbpedia;
 
 /*
  * #%L
