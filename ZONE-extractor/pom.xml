@@ -46,7 +46,7 @@
     <!-- Enable SVM here!-->
     <!--<module>ZONE-plugin-categorization_SVM</module>-->
     <module>ZONE-TwitterReader</module>
-    <!--<module>ZONE-plugin-DBPedia-geo</module>-->
+    <module>ZONE-plugin-DBPedia</module>
     <module>ZONE-plugin-LangDetect</module>
     <module>ZONE-plugin-Spotlight</module>
 

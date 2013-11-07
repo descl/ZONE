@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <groupId>org.zoneproject.extractor</groupId>
-  <artifactId>ZONE-plugin-DBpedia-geo</artifactId>
+  <artifactId>ZONE-plugin-DBpedia</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>ZONE-plugin-DBpedia</name>
 
