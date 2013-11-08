@@ -15,8 +15,13 @@ class SearchSource < ActiveRecord::Base
         Twitter.add_user_to_sources(value[1..value.length])
       end
     elsif kind == "rss"
+      if !(value  =~ URI::regexp)
+        return nil
+      end
       source = Source.find(value)
       if source == nil
+        puts source
+        puts (source  =~ URI::regexp)
         source = Source.new(value)
         if user != nil
           source.owner = user
