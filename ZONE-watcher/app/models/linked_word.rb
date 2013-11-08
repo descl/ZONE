@@ -33,8 +33,12 @@ class LinkedWord
     store = SPARQL::Client.new(endpoint,{:read_timeout => 10})
     result = Array.new
 
-    store.query(query).each do |item|
-      result << {:value => item.label.to_s, :uri => item.tag.to_s}
+    begin
+      store.query(query).each do |item|
+        result << {:value => item.label.to_s, :uri => item.tag.to_s}
+      end
+    rescue
+      return complete(param[0,param.rindex(" ")])
     end
     return result
   end
