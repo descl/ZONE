@@ -116,6 +116,7 @@ class SearchFilter < ActiveRecord::Base
     return filterVal.gsub "_", " "
   end
   def getInfos
+    endpoint = Rails.application.config.virtuosoEndpoint
     if self.uri == nil
       return {:abstract => nil, :thumbnail => nil}
     end
@@ -140,6 +141,8 @@ class SearchFilter < ActiveRecord::Base
     if query[0][:abstract] == nil && query[0][:sameAs]!= nil
       return SearchFilter.new(:uri =>query[0][:sameAs]).getInfos
     end
-    return {:abstract => query[0][:abstract], :thumbnail => query[0][:thumb]}
+
+    linkedEntities = LinkedWord.getLinkedWords(uri)
+    return {:abstract => query[0][:abstract], :thumbnail => query[0][:thumb] ,:linkedEntities => linkedEntities, :kind => query[0][:kind]}
   end
 end

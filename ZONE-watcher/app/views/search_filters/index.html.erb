@@ -2,10 +2,16 @@
 	<div class="span12">
 		<% if @infos[:thumbnail] != nil%>
 			<%= image_tag @infos[:thumbnail], :class => "pull-left span5", :id => "imgtag", :alt => ""%>
-		<%end		%>
+		<%end%>
 
 		<span class="textContent">
 			<%= @infos[:abstract]%>
 		</span>
+      <span class="similar-tags">
+        <%@linkedFilters.each do |entity|%>
+          <%= raw entity.getButtonInNews%>
+        <%end%>
+      </span>
 	</div>
 </div>
+<%= javascript_include_tag "tags_managment" %>

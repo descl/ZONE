@@ -4,13 +4,18 @@ module SearchesHelper
   def button_link(filter, kind,filterVal)
 
     uri = filter.uri
-    itemUri = filter.item.uri
+    if filter.item != nil
+      itemUri = filter.item.uri
+    else
+      itemUri = nil
+    end
+
     if(filterVal != "" && uri != "")
       waitingText = ""
       tagUri = uri
       if uri != nil && (uri.include? "dbpedia.org")
         wait =  "<div class='row-fluid'><i class='icon-refresh'></i> Loading ...</div>";
-        waitingText = "<div class='infoPop'>"+wait+"</div>"
+        waitingText = "<div class='infoPop' filter-uri=\""+filter.uri+"\">"+wait+"</div>"
       end
       if uri == nil
         tagUri = ""
@@ -46,6 +51,10 @@ module SearchesHelper
           filterVal = "<img src='/assets/langs/#{filterVal}.png' alt='#{filterVal}'>"
       else
         printableKind = ""
+      end
+      if (filterVal.size > 15) && (!filterVal.start_with? "<")
+        printableKind = "#{filterVal} (#{printableKind})"
+        filterVal = "#{filterVal[0,13]}..."
       end
 
       res= link_to raw(filterVal), "javascript:void(0);",
