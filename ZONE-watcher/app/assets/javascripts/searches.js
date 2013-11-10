@@ -23,6 +23,7 @@ $(document).ready(function() {
             	askUpdateKeywordTable();
            }
            $("#keyword").attr("filter-uri",ui.item.uri)
+            askUpdateKeywordTable();
         },
         minLength : 5
     }).autocomplete("widget").addClass("span1");

@@ -20,6 +20,13 @@ function movingData(itemId) {
     var tabRss = [];
     var item = ""
     var url = ""
+
+    //add the not finish added items
+    if ($('#searchTwitter').val()!='') addSource('Twitter','#searchTwitter');
+    if ($('#loginTwitter').val()!='') addSource('Twitter','#loginTwitter');
+    if ($('#searchRSS').val()!='') addSource('RSS','#searchRSS');
+    if ($("#keyword").val() != '')addFilter('and');
+
     $("#wellSources").children().each(function() {
         item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
         if ($(this).hasClass('twitterSource')) {
