@@ -1,0 +1,49 @@
+<div class="row" xmlns="http://www.w3.org/1999/html">
+  <div class="<%= (params[:controller] == "home") ? "span2" : "span1" %>"></div>
+  <div id="dino-logo" class="span3"><img src="/assets/dino.png"/>
+  </div>
+  <div class="<%= (params[:controller] == "home") ? "span5" : "span7" %>">
+    <%= form_for "formModal", :url => "/searches", method: :POST, html: { class: "formModal"} do |f| %>
+        <div id="movedData"></div>
+        <h2 class="triangle-border left basicMouse"  id="reador-title">
+          <div class="row-fluid">
+            <input
+            class="home-input-search span11"
+            id="keyword"
+            type="text"
+            placeholder="<%= raw t 'search.infobulle' %>"
+            onkeypress="if (event.keyCode == 13) return false;"
+            onkeyup="return false;"
+            >
+          <span id="go-button" class="span1 pull-right hidden" >
+            <button class="btn-success" type="submit" class="btn-success" onclick="movingDataFromIndex()"><span class="icon-arrow-right"></span></button>
+          </span>
+          </div>
+        </h2>
+    <%end%>
+
+    <div class="row-fluid">
+      <div class="span12 btn-marged">
+        <%= link_to new_search_path do %>
+            <button type="button" class="btn btn-success span12">
+              <h2><%= raw t 'search.gobutton' %></h2>
+            </button>
+        <%end%>
+      </div>
+    </div>
+    <% if params[:controller] == "home"%>
+      <div class="row-fluid">
+        <div class="span2"></div>
+        <div class="span8 btn-marged">
+          <%= link_to Search.find(Rails.application.config.defaultRequestId) do %>
+            <button type="button" class="btn btn-warning span12">
+              <h4><%= raw t 'search.exampleButton' %></h4>
+            </button>
+          <%end%>
+        </div>
+      </div>
+    <%end%>
+  </div>
+  <div class="<%= (params[:controller] == "home") ? "span2" : "span1" %>"></div>
+</div>
+<%= javascript_include_tag("search-dino")%>

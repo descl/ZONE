@@ -5,35 +5,8 @@
 
 <div class="search clear-top">
 
-  <div class="row" xmlns="http://www.w3.org/1999/html">
-    <div class="span2"></div>
-    <div id="dino-logo" class="span3"><img src="/assets/dino.png"/>
-    </div>
-    <div class="span5 ">
-      <h2 class="triangle-border left basicMouse"  id="reador-title"><%= raw t 'search.infobulle' %></h2>
 
-      <div class="row-fluid">
-        <div class="span12 btn-marged">
-          <%= link_to new_search_path do %>
-              <button type="button" class="btn btn-success span12">
-                <h2><%= raw t 'search.gobutton' %></h2>
-              </button>
-          <%end%>
-        </div>
-      </div>
-      <div class="row-fluid">
-        <div class="span2"></div>
-        <div class="span8 btn-marged">
-          <%= link_to Search.find(Rails.application.config.defaultRequestId) do %>
-              <button type="button" class="btn btn-warning span12">
-                <h4><%= raw t 'search.exampleButton' %></h4>
-              </button>
-          <%end%>
-        </div>
-      </div>
-    </div>
-    <div class="span2"></div>
-  </div>
+  <%= render "home/search_dino" %>
 
   <div class="row" xmlns="http://www.w3.org/1999/html" style="margin-top:66px; height:546px">
     <div class="span1"></div>
