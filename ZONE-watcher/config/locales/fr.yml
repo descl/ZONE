@@ -157,7 +157,7 @@ fr:
     searchadvanced:
       "Recherche sémantique"
     gobutton:
-      "Créer une recherche complexe"
+      "Créer une <br/>recherche complexe"
     exampleButton: "Voir un exemple de flux annoté"
     noResDisclaimer: "La recherche que vous souhaitez effectuer ne contient aucune réponse. Vous devriez être plus laxistes sur le filtrage ou ajouter plus de sources?"
     noFiltersDisclaimer: "La recherche que vous tentez d'effectuer ne contient ni filtres ni sources. Vous devez en ajouter"

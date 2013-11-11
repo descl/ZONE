@@ -140,6 +140,10 @@ class ItemsController < ApplicationController
     uri = CGI.escape(uri)
     
     @item = Item.find(uri,current_user)
+    #hack in order to print items with ending slash
+    if @item == nil
+      @item  = Item.find(uri+"/",current_user)
+    end
 
     @filters = parseFilterParams(params)
     
