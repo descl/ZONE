@@ -1,6 +1,8 @@
 
 $ ->
   $("#keyword").focus();
+  if($("#keyword").val() != "")
+    $('#go-button').removeClass('hidden');
 
   #Instanciate the autocomplete for semantic search
   $("#keyword").autocomplete(
@@ -10,9 +12,8 @@ $ ->
 
     select: (event, ui) ->
       $("#keyword").attr "filter-uri", ui.item.uri
-      $("#go-button").removeClass("hidden");
 
-    minLength: 5
+    minLength: 1
   ).autocomplete("widget").addClass "span1"
 
 
@@ -30,6 +31,7 @@ $ ->
   tabItem = {}
   tabItem.value = $("#keyword").val()
   url = $("#keyword").attr("filter-uri")
+  tabItem.kind = "dbpedia"
   tabItem.uri = url  if url isnt "" and url isnt "undefined"
   tabAnd.push tabItem
 

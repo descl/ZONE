@@ -12,7 +12,7 @@
             id="keyword"
             type="text"
             placeholder="<%= raw t 'search.infobulle' %>"
-            onkeypress="if (event.keyCode == 13) return false;"
+            onkeypress="$('#go-button').removeClass('hidden'); "
             onkeyup="return false;"
             >
           <span id="go-button" class="span1 pull-right hidden" >
@@ -23,26 +23,21 @@
     <%end%>
 
     <div class="row-fluid">
-      <div class="span12 btn-marged">
+      <div class="span7 btn-marged">
         <%= link_to new_search_path do %>
-            <button type="button" class="btn btn-success span12">
-              <h2><%= raw t 'search.gobutton' %></h2>
+            <button type="button" class="btn btn-info span12">
+              <h4><%= raw t 'search.gobutton' %></h4>
             </button>
         <%end%>
       </div>
-    </div>
-    <% if params[:controller] == "home"%>
-      <div class="row-fluid">
-        <div class="span2"></div>
-        <div class="span8 btn-marged">
-          <%= link_to Search.find(Rails.application.config.defaultRequestId) do %>
-            <button type="button" class="btn btn-warning span12">
-              <h4><%= raw t 'search.exampleButton' %></h4>
-            </button>
-          <%end%>
-        </div>
+      <div class="span5 btn-marged">
+        <%= link_to Search.find(Rails.application.config.defaultRequestId) do %>
+          <button type="button" class="btn btn-warning span12">
+            <h5><%= raw t 'search.exampleButton' %></h5>
+          </button>
+        <%end%>
       </div>
-    <%end%>
+    </div>
   </div>
   <div class="<%= (params[:controller] == "home") ? "span2" : "span1" %>"></div>
 </div>

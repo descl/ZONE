@@ -56,7 +56,13 @@ class SearchesController < ApplicationController
   # POST /searches
   # POST /searches.json
   def create
-    @search = retrieveSearchFromForm(params)
+    begin
+      @search = retrieveSearchFromForm(params)
+    rescue
+      flash[:error] = t("search.badKeyWord")
+      flash.keep
+      return redirect_to(root_path)
+    end
     @search.touch
     isNew = ((@search.id == nil) && (params[:isNew] != "false"))
     respond_to do |format|
@@ -139,6 +145,7 @@ class SearchesController < ApplicationController
     end
 
     search.build_from_form(form,userId)
+
     return search
   end
 end

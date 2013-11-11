@@ -68,3 +68,6 @@ gem "stathat", "~> 0.1.7"
 gem 'whenever'
 
 gem 'bootstrap_form'
+
+#rights managment
+gem "cancan"

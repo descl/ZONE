@@ -13,6 +13,14 @@ class SearchFilter < ActiveRecord::Base
 
     if filter["uri"] != nil
       result.uri = filter["uri"]
+    elsif filter["kind"] == "dbpedia"
+      word = LinkedWord.complete(filter["value"],1)
+      if word == nil || word.size == 0
+        raise "CantCompleteRequest"
+      end
+      word = word[0]
+      result.uri = word[:uri]
+      result.value = word[:value]
     end
     result.value = CGI.unescape(filter["value"])
     result.kind = kind

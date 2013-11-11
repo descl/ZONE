@@ -2,7 +2,7 @@ include LinkedWordsHelper
 
 class LinkedWord
 
-  def self.complete(param = "")
+  def self.complete(param = "", limit=10)
     endpoint = Rails.application.config.virtuosoEndpoint
     words = param.split
     wordsRequest  = ""
@@ -28,7 +28,7 @@ class LinkedWord
       GRAPH <#{ZoneOntology::GRAPH_ITEMS}> {
         ?item <#{ZoneOntology::PLUGIN_SPOTLIGHT_ENTITIES}> ?tag
       }
-    }ORDER BY DESC(?popularity)  LIMIT 10"
+    }ORDER BY DESC(?popularity)  LIMIT #{limit}"
     puts query
     store = SPARQL::Client.new(endpoint,{:read_timeout => 10})
     result = Array.new
@@ -38,7 +38,11 @@ class LinkedWord
         result << {:value => item.label.to_s, :uri => item.tag.to_s}
       end
     rescue
-      return complete(param[0,param.rindex(" ")])
+      if(param.include?" ")
+        return complete(param[0,param.rindex(" ")])
+      else
+        return complete(param[0,param.size-1])
+      end
     end
     return result
   end
@@ -46,7 +50,7 @@ class LinkedWord
   def self.find(param)
     endpoint = Rails.application.config.virtuosoEndpoint
     query = "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
-    SELECT DISTINCT ?o COUNT(?links) AS ?popularity  WHERE{
+    SELECT DISTINCT ?o ?label COUNT(?links) AS ?popularity  WHERE{
       GRAPH <#{ZoneOntology::GRAPH_TAGS}> {
         ?o rdfs:label ?label.
         ?label bif:contains '\"#{param}\"'
@@ -57,7 +61,7 @@ class LinkedWord
     }ORDER BY DESC(?popularity)  LIMIT 1"
     store = SPARQL::Client.new(endpoint,{:read_timeout => 10})
     store.query(query).each do |item|
-      return item[:o].to_s
+      return {:uri => item[:o].to_s, :label => item[:label]}
     end
     return nil
   end
