@@ -124,6 +124,7 @@ class ItemsController < ApplicationController
     end
   end
 
+  caches_action :show, :cache_path => Proc.new { |c| c.params }, :expires_in => 1.minute
   # GET /items/1
   # GET /items/1.json
   def show

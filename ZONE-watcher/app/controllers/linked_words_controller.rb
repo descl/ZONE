@@ -1,6 +1,9 @@
 class LinkedWordsController < ApplicationController
   #caches_page :listWords, :autoComplete, :expires_in => 5.minutes
 
+  caches_action :autoComplete, :cache_path => Proc.new { |c| c.params }, :expires_in => 1.day
+  caches_action :listWords, :cache_path => Proc.new { |c| c.params }, :expires_in => 1.day
+
   # GET /linked_words
   # GET /linked_words/$entity.json
   #TODO: imcomprehensible...
@@ -18,12 +21,14 @@ class LinkedWordsController < ApplicationController
   end
 
   def autoComplete
-    cache(params[:desc], :expires_in => 10.minute) do
+    puts params[:desc]
+    #cache(params[:desc], :expires_in => 10.day) do
       @result = LinkedWord.complete(params[:desc])
-      respond_to do |format|
-        format.json {
-          render json: @result }
-        end
+    #end
+
+    respond_to do |format|
+      format.json {
+        render json: @result }
       end
     end
 end

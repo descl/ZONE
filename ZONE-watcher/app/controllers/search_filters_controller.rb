@@ -1,9 +1,6 @@
 class SearchFiltersController < ApplicationController
-  # GET /searches
-  # GET /searches.json
+  caches_action :index, :cache_path => Proc.new { |c| c.params }, :expires_in => 1.day
 
-  # GET /searches/1
-  # GET /searches/1.json
   def index
     uri = URI.unescape(params[:uri])
     @search_filter = SearchFilter.new(:uri => uri)
