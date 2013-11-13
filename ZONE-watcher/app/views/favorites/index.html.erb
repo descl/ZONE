@@ -8,8 +8,8 @@
   <div class="row-fluid">
     <% id=0; @favorites.each do |item| %>
       <div class="well item-bloc">
-        <div class="item_container" sourceid="<%= id %>"></div>
-        <div class="item_wait" sourceid="<%= id%>">
+        <div class="item_container" data-sourceid="<%= id %>"></div>
+        <div class="item_wait" data-sourceid="<%= id%>">
           <a href="<%= item.localURI%>"><i class=" icon-refresh"></i></a>
           <a href="<%= item.uri%>"><%= item.title%></a>
         </div>

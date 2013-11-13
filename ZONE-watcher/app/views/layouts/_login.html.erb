@@ -32,7 +32,17 @@
         <%= f.password_field :password, label: :none, placeholder: t('menu.password') %>
 
         <% if devise_mapping.rememberable? -%>
-          <%= f.check_box :remember_me, label: t('menu.remember') %>
+
+          <input name="user[remember_me]" type="hidden" value="0" />
+          <label>
+          <input id="user_remember_me" name="user[remember_me]" type="checkbox" value="1" />
+            <%= t('menu.remember')%>
+          </label>
+
+
+          <% f.control_group :remember_me do %>
+            <% f.check_box :remember_me, label: t('menu.remember') %>
+          <%end%>
         <% end -%>
 
 

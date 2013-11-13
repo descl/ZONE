@@ -4,8 +4,8 @@
 
 $ ->
   #load items content for each item
-  $('.item-bloc[local-uri]').each (id, element) ->
-    localUri = $(element).attr('local-uri')
+  $('.item-bloc[data-local-uri]').each (id, element) ->
+    localUri = $(element).attr('data-local-uri')
     downloadNewsDatas(localUri)
 
   #activate the infinite scroll
@@ -19,9 +19,9 @@ $ ->
     async: true
     context: uri
     success: (data) ->
-      item = $('.item-bloc[local-uri="'+uri+'"]')
+      item = $('.item-bloc[data-local-uri="'+uri+'"]')
       if(item.length > 0)
-        $(item).removeAttr("local-uri")
+        $(item).removeAttr("data-local-uri")
         $(item).find('[class*=item_wait]').detach()
         $(item).find('[class=item_container]').append(data)
         setHighlightTags($(item))

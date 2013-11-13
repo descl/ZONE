@@ -3,6 +3,9 @@ include LinkedWordsHelper
 class LinkedWord
 
   def self.complete(param = "", limit=10)
+    if param == ""
+      return Array.new
+    end
     endpoint = Rails.application.config.virtuosoEndpoint
     words = param.split
     wordsRequest  = ""

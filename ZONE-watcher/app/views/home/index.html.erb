@@ -3,9 +3,9 @@
 
   <%= render "home/search_dino" %>
 
-  <div class="row" xmlns="http://www.w3.org/1999/html" style="margin-top:66px; height:546px">
+  <div class="row" style="margin-top:66px; height:546px">
     <div class="span1"></div>
-        <iframe class="flex-video widescreen container well well-small span10" src="//player.vimeo.com/video/74277156" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    <iframe class="flex-video widescreen container well well-small span10" src="//player.vimeo.com/video/74277156" allowfullscreen></iframe>
     <div class="span1"></div>
   </div>
 
@@ -20,7 +20,7 @@
   <div class="container">
     <div class="text-center more-infos"><h1><a href="#moreAbout" id="moreAbout"><%= raw t 'moreabout.title' %></a></h1></div>
 
-    <span class="infos infos-off">
+    <div class="infos infos-off">
       <section id="why" class="clearfix">
         <div class="row">
           <div class="span4">
@@ -71,11 +71,9 @@
         <div class="span6">
           <h4><i class="icon-user"></i><%= raw t 'moreabout.whosunder.title' %></h4>
           <%= raw t 'moreabout.whosunder.content' %>
-          <iframe width="560" height="315" src="http://www.youtube.com/embed/yFkCumtCEeg" frameborder="0" allowfullscreen></iframe>
+          <iframe width="560" height="315" src="http://www.youtube.com/embed/yFkCumtCEeg" allowfullscreen></iframe>
         </div>
           <div class="span3"></div>
       </div>
     </section>
-   </span>
-  </div>
-</div>
+   </div>

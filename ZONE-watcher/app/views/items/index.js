@@ -14,9 +14,9 @@ return $.ajax({
   context: uri,
   success: function(data) {
     var item;
-  item = $('.item-bloc[local-uri="' + uri + '"]');
+  item = $('.item-bloc[data-local-uri="' + uri + '"]');
   if (item.length > 0) {
-  $(item).removeAttr("local-uri");
+  $(item).removeAttr("data-local-uri");
   $(item).find('[class*=item_wait]').detach();
   $(item).find('[class=item_container]').append(data);
   return setHighlightTags($(item));
@@ -37,9 +37,9 @@ $(function() {
     } else {
       $('a.load-more-items').attr('href', '<%=items_path :page => @items.next_page, :search => @search.id  %>');
     }
-    return $('.item-bloc[local-uri]').each(function(id, element) {
+    return $('.item-bloc[data-local-uri]').each(function(id, element) {
       var localUri;
-      localUri = $(element).attr('local-uri');
+      localUri = $(element).attr('data-local-uri');
       return downloadNewsDatas(localUri);
     });
 });
@@ -55,9 +55,9 @@ downloadNewsDatas = (uri,incr=0) ->
     async: true
     context: uri
     success: (data) ->
-      item = $('.item-bloc[local-uri="'+uri+'"]')
+      item = $('.item-bloc[data-local-uri="'+uri+'"]')
       if(item.length > 0)
-        $(item).removeAttr("local-uri")
+        $(item).removeAttr("data-local-uri")
         $(item).find('[class*=item_wait]').detach()
         $(item).find('[class=item_container]').append(data)
 
@@ -77,7 +77,7 @@ $ ->
     $('a.load-more-items').attr('href', '<%=items_path :page => @items.next_page, :search => @search.id  %>');
 
   #load items content for each item
-  $('.item-bloc[local-uri]').each (id, element) ->
-    localUri = $(element).attr('local-uri')
+  $('.item-bloc[data-local-uri]').each (id, element) ->
+    localUri = $(element).attr('data-local-uri')
     downloadNewsDatas(localUri)
 */

@@ -25,3 +25,19 @@
     float: left;
     font-size: 18px;
 }
+
+/* mailling list style*/
+
+#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+.modal-body{
+    padding: 0px;
+}
+.mc-field-group{
+    padding-left:10px;
+}
+#mc_embed_signup form {
+    margin: 0px;
+    padding: 0px;
+}

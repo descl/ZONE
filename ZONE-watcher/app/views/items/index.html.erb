@@ -25,21 +25,22 @@
       <hr/>
     </div>
 
-  <%= javascript_tag do %>
-    $("#load-more2").bind("ajax:complete", function(et, e){
-    $("#load-more2").html(e.responseText); // insert content
+    <%= javascript_tag do %>
+      $("#load-more2").bind("ajax:complete", function(et, e){
+      $("#load-more2").html(e.responseText); // insert content
         event.preventDefault(); // Prevent link from following its href
-    });
-  <% end %>
+      });
+    <% end %>
 
-  <div class="row-fluid">
-    <!-- items printing-->
-    <div class="items-box items-list">
-      <%= render :partial => "items", :items => @items %>
-    </div>
-    <div class="span12">
-      <%= link_to 'Load More ITEMS', items_path(:page => @items.next_page, :search => @search.id), :class => 'btn load-more-items', :remote => true if @items.next_page != nil%>
-      <% will_paginate @page_results, renderer: BootstrapPagination::Rails, class: "pagination pagination-centered"%>
+    <div class="row-fluid">
+      <!-- items printing-->
+      <div class="items-box items-list">
+        <%= render :partial => "items", :items => @items %>
+      </div>
+      <div class="span12">
+        <%= link_to 'Load More ITEMS', items_path(:page => @items.next_page, :search => @search.id), :class => 'btn load-more-items', :remote => true if @items.next_page != nil%>
+        <% will_paginate @page_results, renderer: BootstrapPagination::Rails, class: "pagination pagination-centered"%>
+      </div>
     </div>
   </div>
 </div>
@@ -50,7 +51,7 @@
     <div id="modalDeleteTag" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel"><%= raw t 'items.modal.delete.title' %></h3>
+        <h3 id="modaleDeleteLabel"><%= raw t 'items.modal.delete.title' %></h3>
       </div>
       <div class="modal-body deleteTag">
         <div class="row-fluid">
@@ -68,7 +69,7 @@
     <div id="modalDeleteTag" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel"><%= raw t 'items.modal.delete.title' %></h3>
+        <h3 id="modaleDeleteLabel"><%= raw t 'items.modal.delete.title' %></h3>
       </div>
       <div class="modal-body deleteTag">
         <div class="row-fluid">
@@ -83,7 +84,7 @@
 <div id="modalEditTag" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel"><%= raw t 'items.modal.edit.title' %></h3>
+    <h3 id="modaleEditLabel"><%= raw t 'items.modal.edit.title' %></h3>
   </div>
   <div class="modal-body deleteTag">
     <div class="row-fluid">

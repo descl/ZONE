@@ -2,6 +2,7 @@
 <html>
 <head>
   <title><%=  t("title")%></title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
   <% if @feed_url != nil %>
     <link rel="alternate" type="application/rss+xml" title="RSS" href="<%=@feed_url%>" />
   <%end%>
@@ -12,6 +13,7 @@
   <%= stylesheet_link_tag("/bootstrap/css/bootstrap-responsive.css") %>
   <%= stylesheet_link_tag("/custom-scrollbar-plugin/css/jquery.mCustomScrollbar.css") %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag("http://cdn-images.mailchimp.com/embedcode/classic-081711.css") %>
 
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag params[:controller] %>
@@ -43,14 +45,6 @@
         <div class="nav-collapse collapse">
           <ul class="nav">
             <li><%= link_to "Reador.NET", root_path, :class=>"navbar-brand" %></li>
-            <li>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-              <li><a tabindex="-1" href="#">Action</a></li>
-              <li><a tabindex="-1" href="#">Another action</a></li>
-              <li><a tabindex="-1" href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li><a tabindex="-1" href="#">Separated link</a></li>
-            </ul>
             <li class="<%= 'active' if current_page?(searches_path) %>"><%= link_to t("menu.yourSearches"), searches_path %></li>
             <li class="<%= 'active' if current_page?(items_path) %>"><%= link_to t("menu.news"), items_path %></li>
             <li class="<%= 'active' if current_page?(sources_path) %>"><%= link_to t("menu.yourSources"), sources_path %></li>

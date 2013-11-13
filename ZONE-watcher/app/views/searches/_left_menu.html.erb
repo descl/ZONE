@@ -21,7 +21,7 @@
 
           <%= link_to curSearch do %>
               <%= curSearch.getName(t("leftMenu.search"))[0,18]%>
-              <span class=" icon-chevron-right pull-right searchmoreButton"/></span>
+              <span class=" icon-chevron-right pull-right searchmoreButton"></span>
               <%if (curSearch.id == @search.id)%>
                 <br/>&nbsp;&nbsp;&nbsp;<span><i><%= @itemsNumber %> news</i></span>
               <%end%>
@@ -61,6 +61,12 @@
                 theme:"dark",
                 scrollButtons:{
                     enable: true
+                },
+                callbacks:{
+                    onTotalScroll: function(){
+                        console.log("toto");
+                        return false;
+                    }
                 }
             });
         });
