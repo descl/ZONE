@@ -22,10 +22,10 @@ function movingData(itemId) {
     var url = ""
 
     //add the not finish added items
-    if ($('#searchTwitter').val()!='') addSource('Twitter','#searchTwitter');
-    if ($('#loginTwitter').val()!='') addSource('Twitter','#loginTwitter');
-    if ($('#searchRSS').val()!='') addSource('RSS','#searchRSS');
-    if ($("#keyword").val() != '')addFilter('and');
+    if ($('#searchTwitter').val()!='' && $('#searchTwitter').val() != null) addSource('Twitter','#searchTwitter');
+    if ($('#loginTwitter').val()!='' && $('#searchTwitter').val() != null) addSource('Twitter','#loginTwitter');
+    if ($('#searchRSS').val()!='' && $('#searchTwitter').val() != null) addSource('RSS','#searchRSS');
+    if ($("#keyword").val() != '' && $('#searchTwitter').val() != null)addFilter('and');
 
     $("#wellSources").children().each(function() {
         item = encodeURI($(this).html().substr(0, $(this).html().search('<i') - 1));
@@ -263,4 +263,43 @@ function showUpdate(){
         clearInterval(timer);
         $(".updater").css("opacity","1");
     },2000);
+}
+
+//Add a source in the table
+function addSource(table, value) {
+    var reg = new RegExp('[, ]+');
+    text = $(value).val().replace(/^\s+/g,'').replace(/\s+$/g,'');
+    text = text.split(reg);
+
+    var eraseInput = true;
+    if (table == "Twitter") {
+        if (value == "#searchTwitter"){
+            $.each(text,function(){
+                content = "#" + this;
+                $("#wellSources").append("<span class='label label-info twitterSource'>" + content + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();checkWell()'></i></span> ");
+            })
+        }else{
+            $.each(text,function(){
+                content = "@" + this;
+                $("#wellSources").append("<span class='label label-info twitterSource'>" + content + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();checkWell()'></i></span> ");
+            })
+        }
+        $("#addAllTwitter").attr("disabled", true);
+    } else if (table == "RSS") {
+        $.each(text,function(){
+            if ( ( this.match("^http://") && this != "http://" ) || ( this.match("^https://") && this != "https://" ) ){
+                $("#wellSources").append("<span class='label-wrap label label-warning rssSource' >" + this + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();checkWell()'></i></span> ");
+                $("#addAllRSS").attr("disabled", true);
+            } else if(text.length==1){
+                //If length==1,meaning that there is only one url in the input, we keep it so that the user can change it
+                //If length > 1 , we just skip the url and don't put it in the sources
+                eraseInput=false;
+                return false;
+            }
+        });
+    }
+    if (eraseInput){
+        $(value).val("");
+        $(value).html("");
+    }
 }

@@ -51,45 +51,6 @@ function slideDown(id) {
         });
 }
 
-//Add a source in the table
-function addSource(table, value) {
-	var reg = new RegExp('[, ]+');
-	text = $(value).val().replace(/^\s+/g,'').replace(/\s+$/g,'');
-    text = text.split(reg);
-    
-    var eraseInput = true; 
-    if (table == "Twitter") {
-        if (value == "#searchTwitter"){
-        	$.each(text,function(){
-        		content = "#" + this;
-           		$("#wellSources").append("<span class='label label-info twitterSource'>" + content + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();checkWell()'></i></span> ");
-        	})
-        }else{
-			$.each(text,function(){
-        		content = "@" + this;
-           		$("#wellSources").append("<span class='label label-info twitterSource'>" + content + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").remove();checkWell()'></i></span> ");
-       		})
-        }
-        $("#addAllTwitter").attr("disabled", true);
-    } else if (table == "RSS") {
-    	$.each(text,function(){
-			if ( ( this.match("^http://") && this != "http://" ) || ( this.match("^https://") && this != "https://" ) ){
-	        	$("#wellSources").append("<span class='label-wrap label label-warning rssSource' >" + this + " <i class='icon-remove pointerMouse' onclick='$(this).closest(\"span\").next(\"br\").remove();$(this).closest(\"span\").remove();checkWell()'></i></span> ");
-	        	$("#addAllRSS").attr("disabled", true);
-	    	} else if(text.length==1){
-	    		//If length==1,meaning that there is only one url in the input, we keep it so that the user can change it
-	    		//If length > 1 , we just skip the url and don't put it in the sources
-	    		eraseInput=false;
-	    		return false;
-	    	}	
-    	});
-    }
-    if (eraseInput){
-    	$(value).val("");
-    	$(value).html("");
-    }
-}
-
 //add "all" sources in the table
 function addAllSource(table, value) {
     if (table == "Twitter") {
