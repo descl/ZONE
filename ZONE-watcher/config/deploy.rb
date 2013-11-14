@@ -49,6 +49,19 @@ set :keep_releases, 10
 after "deploy:restart", "deploy:cleanup"
 
 
+#clean cache
+namespace :memcached do
+  desc "Flushes memcached local instance"
+  task :flush, :roles => [:app] do
+    run("cd #{current_path} && rake memcached:flush")
+  end
+end
+
+after 'deploy:update' do
+  memcached.flush
+end
+
+
 set :use_sudo, false 
 
 
@@ -66,3 +79,4 @@ require "rvm/capistrano"
 #whenever config
 require "whenever/capistrano"
 set :whenever_command, "bundle exec whenever"
+
