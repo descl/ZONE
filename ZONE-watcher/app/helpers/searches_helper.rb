@@ -15,7 +15,7 @@ module SearchesHelper
       tagUri = uri
       if uri != nil && (uri.include? "dbpedia.org")
         wait =  "<div class='row-fluid'><i class='icon-refresh'></i> Loading ...</div>";
-        waitingText = "<div class='infoPop' filter-uri=\""+filter.uri+"\">"+wait+"</div>"
+        waitingText = "<div class='infoPopBox'><div class='infoPop' filter-uri=\""+filter.uri+"\">"+wait+"</div></div>"
       end
       if uri == nil
         tagUri = ""
@@ -25,7 +25,7 @@ module SearchesHelper
       btnMust =      "<button type='button' data-dismiss='clickover' class='btn btn-success span12 btnTag paddingMust' onclick='addTag(\"must\",\"" + name + "\",\"#{uri}\");openReminderOnChange()'>#{t('newmodal.filtering.buttonMusthave')}</button><br>";
       btnOptionnal = "<button type='button' data-dismiss='clickover' class='btn btn-info span12 btnTag' onclick='addTag(\"opt\",\"" + name + "\",\"#{uri}\");openReminderOnChange()'>#{t('newmodal.filtering.buttonOption')}</button><br>";
       btnBan =       "<button type='button' data-dismiss='clickover' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\",\"" + name + "\",\"#{uri}\");openReminderOnChange()'>#{t('newmodal.filtering.buttonBan')}</button>";
-      tagContent = "#{waitingText}<hr><div class='row-fluid'><div class='span12 text-center'><b class='adding-info'>#{t('items.popover.smalltitle')}</b></div></div><div class='row-fluid'><div class='span12'>" + btnMust + "</div></div><div class='row-fluid'><div class='span12'>" + btnOptionnal + "</div></div><div class='row-fluid'><div class='span12'>" + btnBan + "</div></div>";
+      tagContent = "<div style='width:276px'></div>#{waitingText}<hr><div class='row-fluid'><div class='span12 text-center'><b class='adding-info'>#{t('items.popover.smalltitle')}</b></div></div><div class='row-fluid'><div class='span12'>" + btnMust + "</div></div><div class='row-fluid'><div class='span12'>" + btnOptionnal + "</div></div><div class='row-fluid'><div class='span12'>" + btnBan + "</div></div>";
 
       title = filterVal
       tagUri = uri

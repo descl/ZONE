@@ -45,6 +45,7 @@ $(document).ready ->
           context: urlTag
           timeout: 5000
           success: (data) ->
+            $(".infoPop[filter-uri='" + urlTag + "']").hide()
             $(".infoPop[filter-uri='" + urlTag + "']").html data
 
             #truncate the dbpedia message
@@ -56,6 +57,7 @@ $(document).ready ->
               ellipsisText: ""
               moreAni: "fast"
               lessAni: "fast"
+            $(".infoPop[filter-uri='" + urlTag + "']").show()
 
 
           error: ->
