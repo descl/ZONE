@@ -62,6 +62,8 @@ SELECT * WHERE{
     require 'uri'
     uri = CGI.unescape(URI.escape(CGI.unescape(param)))
     #uri = uri.gsub("%23","#")
+    uri.gsub!('%25','%')
+    uri.gsub!('%','%25')
     
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT *
