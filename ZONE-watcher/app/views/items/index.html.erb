@@ -35,7 +35,9 @@
     <div class="row-fluid">
       <!-- items printing-->
       <div class="newNewsLinkBox" style="display: none;">
-          <%= link_to (items_path(:search => @search.id, :sinceWhen => @items[0].date, :per_page => "100", :load_on_top => true)), :remote => true ,:class=>"span12 well btn-success btn newNewsLink" do%>
+        <% lastDate = 0%>
+        <% lastDate = @items[0].date if @items.size > 0  %>
+          <%= link_to (items_path(:search => @search.id, :sinceWhen => lastDate, :per_page => "100", :load_on_top => true)), :remote => true ,:class=>"span12 well btn-success btn newNewsLink" do%>
             <span class="numberOfNewNews">0</span> <%= t('items.newResults')%>
           <%end%>
       </div>

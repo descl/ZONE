@@ -58,7 +58,8 @@ SELECT * WHERE{
     store.query(query).each do |item|
       similarity = item.filtersVals.to_s.scan(/http/).count
       itemObj = Item.new(item.concept.to_s, item.title, similarity)
-      itemObj.date = item.pubDateTime.to_s
+      itemObj.date = Time.now.to_i
+      itemObj.date = item.pubDateTime.to_s if item.bound?(:pubDateTime)
       items << itemObj
     end
     return {:result => items, :query => query}
