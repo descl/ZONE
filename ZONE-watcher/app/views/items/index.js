@@ -45,6 +45,7 @@ $(function() {
         return downloadNewsDatas(localUri);
         });
     <%else%>
+    $('.items-list').append('<%= escape_javascript(render :partial => "items", :items => @items) %>');
     return $('.item-bloc[data-local-uri]').each(function(id, element) {
         var localUri;
         localUri = $(element).attr('data-local-uri');
