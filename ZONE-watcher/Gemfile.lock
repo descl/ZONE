@@ -88,7 +88,6 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap_form (1.0.0)
     builder (3.0.4)
-    cancan (1.6.10)
     capistrano (2.15.5)
       highline
       net-scp (>= 1.0.0)
@@ -277,7 +276,6 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap_form
-  cancan
   coffee-rails (~> 3.2.1)
   devise
   devise-i18n
