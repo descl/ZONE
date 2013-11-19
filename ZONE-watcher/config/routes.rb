@@ -14,6 +14,7 @@ ZONEWatcher::Application.routes.draw do
         :via => :post
   get '/searches/selectSources' => 'searches#selectSources'
   resources :searches
+  get '/search/:search/getNewsNumber(/:sinceWhen)' => 'searches#getNewsNumber'
 
 
   #Twitter managment

@@ -333,6 +333,7 @@ fr:
     social:
       shareOn: "Partager sur"
     dateFormat: "'Le %d/%m/%Y à %H:%M'"
+    newResults: "nouveaux résultats"
   newmodal:
     breadcrumb:
       sources:

@@ -70,6 +70,11 @@ class ItemsController < ApplicationController
     else
       per_page = 10
     end
+    if params[:load_on_top] == "true"
+      @loadOnTop = true
+    else
+      @loadOnTop = false
+    end
 
     current_page = params[:page]
     current_page = 1 if current_page == nil
@@ -101,7 +106,7 @@ class ItemsController < ApplicationController
 
       @items = WillPaginate::Collection.create(current_page, per_page, @itemsNumber) do |pager|
         start = (current_page-1)*per_page # assuming current_page is 1 based.
-        itemsTab = Item.all(@search,userId,start,per_page)
+        itemsTab = Item.all(@search,userId,start,per_page,params[:sinceWhen])
         @sparqlRequest = itemsTab[:query]
         @error = itemsTab[:error]
         pager.replace(itemsTab[:result])

@@ -334,6 +334,7 @@ en:
     social:
       shareOn: "Share on"
     dateFormat: "%d/%m/%Y at %H:%M"
+    newResults: "new results"
   newmodal:
     breadcrumb:
       sources:

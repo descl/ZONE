@@ -38,7 +38,7 @@ class Search < ActiveRecord::Base
     end
   end
 
-  def getItemsNumber(user)
+  def getItemsNumber(user,sinceWhen=0)
     endpoint = Rails.application.config.virtuosoEndpoint
     sparqlTriples = self.generateSPARQLRequest(user)
     if sparqlTriples == nil
@@ -50,6 +50,8 @@ class Search < ActiveRecord::Base
     FROM <#{ZoneOntology::GRAPH_SOURCES}> WHERE {\n"
     query +="?concept RSS:title ?title."
     query += sparqlTriples
+    query += "?concept RSS:pubDateTime ?pubDateTime."
+    query += "FILTER(xsd:integer(?pubDateTime) > #{sinceWhen})"
     query += "} "
     store = SPARQL::Client.new(endpoint)
     if store.query(query).length == 0

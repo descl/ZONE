@@ -148,4 +148,28 @@ class SearchesController < ApplicationController
 
     return search
   end
+
+  def getNewsNumber
+    if user_signed_in?
+      userId = current_user.id
+    else
+      userId=-1
+    end
+
+    @search = Search.find(params[:search])
+
+    if params[:sinceWhen] != nil
+      sinceWhen = params[:sinceWhen].to_i
+      @number = @search.getItemsNumber(userId,sinceWhen)
+    else
+      @number = @search.getItemsNumber(userId)
+    end
+
+
+
+    respond_to do |format|
+      format.html {render :inline => "<%= @number %>"}
+    end
+
+  end
 end

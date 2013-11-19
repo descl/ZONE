@@ -24,7 +24,7 @@ class Item# < ActiveRecord::Base
                                               :password => Rails.application.config.virtuosoPassword,
                                               :auth_method => 'digest')
 
-  def self.all(search = "",user=-1,start=0,per_page=10)
+  def self.all(search = "",user=-1,start=0,per_page=10, since_when=nil)
     sparqlFilter = search.generateSPARQLRequest(user)
     filtersIds = search.getOrFilters.map {|elem| "?filter#{elem.id}"}.join(',')
 
@@ -43,15 +43,23 @@ SELECT * WHERE{
     WHERE {
       ?concept RSS:title ?title.
       OPTIONAL { ?concept RSS:pubDateTime ?pubDateTime}.
-      #{sparqlFilter}
+      #{sparqlFilter}"
 
-    }} ORDER BY DESC(?pubDateTime) LIMIT #{per_page} OFFSET #{start}"
+    if since_when != nil
+      query += "?concept RSS:pubDateTime ?pubDateTime."
+      query += "FILTER(xsd:integer(?pubDateTime) > #{since_when})"
+    end
+
+    query += "}} ORDER BY DESC(?pubDateTime) LIMIT #{per_page} OFFSET #{start}"
+
 
     store = SPARQL::Client.new(endpoint)
     items = Array.new
     store.query(query).each do |item|
       similarity = item.filtersVals.to_s.scan(/http/).count
-      items << Item.new(item.concept.to_s, item.title, similarity)
+      itemObj = Item.new(item.concept.to_s, item.title, similarity)
+      itemObj.date = item.pubDateTime.to_s
+      items << itemObj
     end
     return {:result => items, :query => query}
   end

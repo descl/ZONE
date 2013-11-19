@@ -2,7 +2,7 @@ include LinkedWordsHelper
 
 class LinkedWord
 
-  def self.complete(param = "", limit=10)
+  def self.complete(param = "", limit=5000)
     if param == ""
       return Array.new
     end

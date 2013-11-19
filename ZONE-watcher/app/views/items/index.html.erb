@@ -34,13 +34,19 @@
 
     <div class="row-fluid">
       <!-- items printing-->
-      <div class="items-box items-list">
+      <div class="newNewsLinkBox" style="display: none;">
+          <%= link_to (items_path(:search => @search.id, :sinceWhen => @items[0].date, :per_page => "100", :load_on_top => true)), :remote => true ,:class=>"span12 well btn-success btn newNewsLink" do%>
+            <span class="numberOfNewNews">0</span> <%= t('items.newResults')%>
+          <%end%>
+      </div>
+
+      <div  id="masonry-container" class="transitions-enabled  infinite-scroll items-box items-list has-gutters masonry-clearfix">
         <%= render :partial => "items", :items => @items %>
       </div>
-      <div class="span12">
+      <nav class="" id="page-nav">
         <%= link_to 'Load More ITEMS', items_path(:page => @items.next_page, :search => @search.id), :class => 'btn load-more-items', :remote => true if @items.next_page != nil%>
         <% will_paginate @page_results, renderer: BootstrapPagination::Rails, class: "pagination pagination-centered"%>
-      </div>
+      </nav>
     </div>
   </div>
 </div>

@@ -70,4 +70,8 @@ gem 'whenever'
 gem 'bootstrap_form'
 
 #rights managment
-gem "cancan"
+#gem "cancan"
+
+#items alignment
+gem "masonry-rails", :git =>"https://github.com/descl/masonry-rails.git"
+

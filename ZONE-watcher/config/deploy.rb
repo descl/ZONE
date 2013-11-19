@@ -57,9 +57,6 @@ namespace :memcached do
   end
 end
 
-after 'deploy:update' do
-  memcached.flush
-end
 
 
 set :use_sudo, false 

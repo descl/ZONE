@@ -10,6 +10,15 @@
  *
  *= require_self
  *= require_tree .
+
+ * dependances for masonry <= items printing
+ *= require 'masonry/basic'
+ *= require 'masonry/centered'
+ *= require 'masonry/fluid'
+ *= require 'masonry/gutters'
+ *= require 'masonry/infinitescroll'
+ *= require 'masonry/right-to-left'
+ *= require 'masonry/transitions'
  */
 
 .navbar-brand {

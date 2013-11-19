@@ -1,4 +1,4 @@
-<% id=0; @items.each do |item| %>
+<% @items.each do |item| %>
     <%
        similarityColor = case item.similarity
                            when 0 then ""
@@ -6,13 +6,8 @@
                            when 2 then "mediumSimilarity"
                            else "highSimilarity"
                          end
-       if id%2 == 1
-         cl = "pull-right clear-right"
-       else
-         cl = "pull-left clear-left"
-       end
     %>
-    <div class="well item-bloc <%=cl%> span6 <%= similarityColor%>" data-local-uri="<%= item_path(:id => item.uri) %>">
+    <div class="well item-bloc <%= similarityColor%>" data-local-uri="<%= item_path(:id => item.uri) %>" data-pub-date="<%= item.date %>">
       <div class="item_container"></div>
       <div class="item_wait">
         <a href="<%= item_path(:id => item.uri)%>"><i class=" icon-refresh hidden"></i></a>
@@ -20,5 +15,4 @@
         <div class="news-content"></div>
       </div>
     </div>
-
-<% id+=1; end %>
+<% end %>

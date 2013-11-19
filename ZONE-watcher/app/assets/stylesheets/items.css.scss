@@ -50,10 +50,6 @@ a.label:visited{
   background-color:#e8e8e8;
 }
 
-.item-bloc:nth-child(odd).span6{
-  margin-left:0px;
-}
-
 .sourceHover:hover,.sourceHoverFull:hover,.titleItem:hover{
   background:none;
   color:black;
@@ -378,3 +374,31 @@ a.label:visited{
 .contentArticle{
   overflow: hidden;
 }
+
+.newNewsLinkBox{
+  margin-bottom:40px;
+  color: white;
+
+}
+.newNewsLink[href] , .newNewsLink[href]:visited, .newNewsLink[href]:hover{
+  color: white;
+}
+
+.item-bloc{
+  width:300px;
+}
+
+#masonry-container {
+  background: #FFF;
+  padding: 5px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  clear: both;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.masonry-clearfix:before, .clearfix:after { content: ""; display: table; }
+.masonry-clearfix:after { clear: both; }
+.masonry-clearfix { zoom: 1; }
