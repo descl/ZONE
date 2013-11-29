@@ -72,7 +72,9 @@ SELECT * WHERE{
     uri = CGI.unescape(URI.escape(CGI.unescape(param)))
     #uri = uri.gsub("%23","#")
     uri.gsub!('%25','%')
-    uri.gsub!('%','%25')
+    if !uri.include?("%25")
+      uri.gsub!('/%\d2','%25')
+    end
     
     query = "PREFIX RSS: <http://purl.org/rss/1.0/>
     SELECT *
