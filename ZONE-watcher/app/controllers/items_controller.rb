@@ -122,7 +122,13 @@ class ItemsController < ApplicationController
 
 
     respond_to do |format|
-      format.html
+      format.html {
+        if params[:widget] == "true"
+          render "items/widget", :layout => "emptyWithJS", :locals => {:items => @items}
+        else
+          render html: @items
+        end
+      }
       format.js
       format.json { render json: @items }
       format.rss { render rss: @items }

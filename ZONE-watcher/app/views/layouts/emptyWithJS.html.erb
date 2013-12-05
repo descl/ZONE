@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%=  t("title")%></title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <% if @feed_url != nil %>
+      <link rel="alternate" type="application/rss+xml" title="RSS" href="<%=@feed_url%>" />
+  <%end%>
+  <%= stylesheet_link_tag("/bootstrap/css/bootstrap.min.css") %>
+
+  <%= stylesheet_link_tag("/jquery.sexy-combo/css/sexy-combo.css") %>
+  <%= stylesheet_link_tag("/jquery.sexy-combo/css/sexy/sexy.css") %>
+  <%= stylesheet_link_tag("/bootstrap/css/bootstrap-responsive.css") %>
+  <%= stylesheet_link_tag("/custom-scrollbar-plugin/css/jquery.mCustomScrollbar.css") %>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag("http://cdn-images.mailchimp.com/embedcode/classic-081711.css") %>
+
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag params[:controller] %>
+  <%= csrf_meta_tags %>
+  <%= javascript_include_tag("/bootstrap/js/bootstrap.min.js")%>
+  <%= javascript_include_tag "/jquery.sexy-combo/jquery.sexy-combo.js" %>
+  <%= javascript_include_tag "/jwplayer/jwplayer.js" %>
+  <%= javascript_include_tag "bootstrapx-clickoverx" %>
+  <%= javascript_include_tag "bootstrapx-clickover" %>
+  <%= javascript_include_tag("/custom-scrollbar-plugin/js/jquery.mCustomScrollbar.concat.min.js")%>
+  <%= favicon_link_tag "favicon.png" %>
+  <%= javascript_tag do %>
+      I18n.defaultLocale = "<%= I18n.default_locale %>";
+      I18n.locale = "<%= I18n.locale %>";
+  <% end %>
+</head>
+<body>
+
+
+<% if current_page?('/items') then mainClass="container-fluid" else mainClass="container" end%>
+<div class="<%= mainClass %>">
+  <div  id="page-contentt">
+    <%= render 'layouts/messages' %>
+    <%= yield %>
+  </div>
+</div>
+
+<div class="footer">
+  <%=  render "layouts/footer" %>
+</div>
+
+</body>
+</html>
