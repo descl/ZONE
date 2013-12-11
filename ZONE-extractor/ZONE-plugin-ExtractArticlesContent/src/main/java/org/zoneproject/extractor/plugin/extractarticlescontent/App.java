@@ -23,12 +23,14 @@ package org.zoneproject.extractor.plugin.extractarticlescontent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 import static org.zoneproject.extractor.plugin.extractarticlescontent.App.propsPendingSave;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
+import static org.zoneproject.extractor.utils.VirtuosoDatabase.getModelForAnnotations;
 import org.zoneproject.extractor.utils.ZoneOntology;
 
 /**
@@ -44,6 +46,7 @@ public class App
     public static int SIM_ANNOTATE = 50;
     public static int LIMIT_TIME_FOR_DOWN = 1000;
     private static final String URL_REGEX = "\\(?\\b(http://|www[.])[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
+    private static HashMap<String, ArrayList<Prop>> propsToSave; 
     
     public static HashMap<String, ArrayList<Prop>> propsPendingSave; 
     
@@ -56,16 +59,16 @@ public class App
         LinkedList<Item> itemsPending = new LinkedList<Item>();
         
         LinkedBlockingQueue<AnnotationThread> annotationThreads;
-        HashMap<String, ArrayList<Prop>> propsToSave; 
         propsPendingSave = new HashMap<String, ArrayList<Prop>>();
         while(true){
             annotationThreads = new LinkedBlockingQueue<AnnotationThread>();
             
             while(true){//while we can download items
 
+                //download items to annotate
                 Item[] items = Database.getItemsNotAnotatedForOnePlugin(PLUGIN_URI,SIM_DOWNLOADS);
                 if(items != null && items.length > 0){
-                    //check if the item is in annotation process
+                    //check if the item is already in annotation process
                     for(Item i : items){
                         boolean exist = false;
                         for(AnnotationThread a: annotationThreads){
@@ -113,22 +116,41 @@ public class App
                     if(annotationThreads.size()>= SIM_ANNOTATE){
                         try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
                     }
+                    
+                    //start saving if we have enough items to store
+                    if(propsPendingSave.size() > SIM_ANNOTATE){
+                        App.saveItems();
+                    }
                 }
                 
-                
-                logger.info("start saving");
-                synchronized(propsPendingSave){
-                    propsToSave = (HashMap<String, ArrayList<Prop>>)propsPendingSave.clone();
-                    propsPendingSave.clear();
-                }
-                Database.addAnnotations(propsToSave);
-                logger.info("end saving");
+                App.saveItems();
+
 
             }
             
             logger.info("no more items to annotate");
             try{Thread.currentThread().sleep(1000);}catch(Exception ie){}
         }
+    }
+    
+    private static void saveItems(){
+        logger.info("start saving");
+        synchronized(propsPendingSave){
+            propsToSave = (HashMap<String, ArrayList<Prop>>)propsPendingSave.clone();
+            propsPendingSave.clear();
+        }
+        try{
+            Database.addAnnotations(propsToSave);
+        }catch(java.lang.OutOfMemoryError ex){
+            logger.warn("outOfMemory exception during saving. Need to make it individually");
+            Iterator it = propsToSave.keySet().iterator();
+            while (it.hasNext()){
+               String itemUri = (String)(it.next());
+               ArrayList<Prop> itemProps = propsToSave.get(itemUri);
+               Database.addAnnotations(itemUri, itemProps);
+            }
+        }
+        logger.info("end saving");
     }
 }
 

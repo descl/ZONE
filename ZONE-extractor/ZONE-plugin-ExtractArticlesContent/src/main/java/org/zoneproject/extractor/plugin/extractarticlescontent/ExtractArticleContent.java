@@ -41,7 +41,7 @@ import org.zoneproject.extractor.utils.ZoneOntology;
 public class ExtractArticleContent {
     private static final org.apache.log4j.Logger  logger = org.apache.log4j.Logger.getLogger(App.class);
     private static final String URL_REGEX = "\\(?\\b(http://|www[.]|https://)[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
-    private static final String[] notAllowedFormats = {"jpg", "png", "gif", "jpeg","mkv","m4v"};
+    private static final String[] notAllowedFormats = {"jpg", "png", "gif", "jpeg","mkv","m4v","mp3","ogg","ogv"};
 
     public static String getContent(Item item) {
         //if(item.getElements("http://zone-project.org/model/plugins/ExtractArticlesContent#cache").length > 0){
@@ -152,6 +152,13 @@ public class ExtractArticleContent {
             
         }catch(java.lang.IllegalArgumentException ex){
             logger.warn("malformed uri "+uri+" "+ ex.getLocalizedMessage());
+            return null;
+            
+        }catch(java.lang.OutOfMemoryError ex){
+            logger.warn("oufOfMemory error uri "+uri+" "+ ex.getLocalizedMessage());
+            return null;
+        }catch(java.lang.ArrayIndexOutOfBoundsException ex){
+            logger.warn("outOfBoundsException error uri "+uri+" "+ ex.getLocalizedMessage());
             return null;
             
         }

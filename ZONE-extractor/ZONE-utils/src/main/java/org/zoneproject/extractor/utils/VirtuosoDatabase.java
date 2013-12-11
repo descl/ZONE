@@ -376,6 +376,9 @@ public abstract class VirtuosoDatabase {
         ResultSet results;
         try{
             results = runSPARQLRequest(request);
+            if(results == null){
+                throw new JenaException();
+            }
         }catch(JenaException ex){
             if(ex.getMessage().contains("timeout") || ex.getMessage().contains("Problem during serialization") || ex.getMessage().contains("Connection failed") ){
                 logger.warn(ex);
