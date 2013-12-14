@@ -45,9 +45,8 @@
       <div  id="masonry-container" class="transitions-enabled  infinite-scroll items-box items-list has-gutters masonry-clearfix">
         <%= render :partial => "items", :items => @items %>
       </div>
-      <nav class="" id="page-nav">
+      <nav id="page-nav">
         <%= link_to 'Load More ITEMS', items_path(:page => @items.next_page, :search => @search.id), :class => 'btn load-more-items', :remote => true if @items.next_page != nil%>
-        <% will_paginate @page_results, renderer: BootstrapPagination::Rails, class: "pagination pagination-centered"%>
       </nav>
     </div>
   </div>

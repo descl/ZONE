@@ -25,21 +25,23 @@ $ ->
     gutterWidth: 0,
     columnWidth: 40
 
-  #infinite scroll managment
-  $container.infinitescroll
-    navSelector: "#page-nav" # selector for the paged navigation
-    nextSelector: "#page-nav a" # selector for the NEXT link (to page 2)
-    itemSelector: ".item-bloc" # selector for all items you'll retrieve
-    prefill: true
-    loading:
-      finishedMsg: "No more pages to load."
-      img: "http://i.imgur.com/6RMhx.gif"
+  setTimeout ( ->
+    #infinite scroll managment
+    $container.infinitescroll
+      navSelector: "#page-nav" # selector for the paged navigation
+      nextSelector: "#page-nav a" # selector for the NEXT link (to page 2)
+      itemSelector: ".item-bloc" # selector for all items you'll retrieve
+      prefill: true
+      loading:
+        finishedMsg: "No more pages to load."
+        img: "http://i.imgur.com/6RMhx.gif"
 
-    # trigger Masonry as a callback
-    (newElements) ->
-      # hide new items while they are loading
-      $newElements = $(newElements).css(opacity: 0)
-      $.getScript $(newElements).attr('href')
+      # trigger Masonry as a callback
+      (newElements) ->
+        # hide new items while they are loading
+        $newElements = $(newElements).css(opacity: 0)
+        $.getScript $(newElements).attr('href')
+  ),3000
 
 (exports ? this).updateLayout = () ->
   $('#masonry-container').masonry('reload')
