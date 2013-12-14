@@ -50,7 +50,7 @@ module SearchesHelper
           printableKind = t('items.tags.lang')
           filterVal = "<img src='/assets/langs/#{filterVal}.png' alt='#{filterVal}'>"
       else
-        printableKind = ""
+        printableKind = t('items.tags.other')
       end
       if (filterVal.size > 15) && (!filterVal.start_with? "<")
         printableKind = "#{filterVal} (#{printableKind})"

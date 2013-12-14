@@ -331,6 +331,7 @@ en:
       person: "Person"
       event: "Event"
       lang: "Lang"
+      other: "Unknown type"
     social:
       shareOn: "Share on"
     dateFormat: "%d/%m/%Y at %H:%M"

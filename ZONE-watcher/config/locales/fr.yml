@@ -330,6 +330,7 @@ fr:
       person: "Personne"
       event: "Evenement"
       lang: "Langue"
+      other: "Type inconnu"
     social:
       shareOn: "Partager sur"
     dateFormat: "'Le %d/%m/%Y à %H:%M'"
