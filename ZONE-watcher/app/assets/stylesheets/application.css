@@ -50,3 +50,16 @@
     margin: 0px;
     padding: 0px;
 }
+
+.icon-refresh-animate {
+    animation-name: rotateThis;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    display:inline-block !important;
+}
+
+@keyframes rotateThis {
+    from { transform: scale( 1 ) rotate( 0deg );   }
+    to   { transform: scale( 1 ) rotate( 360deg ); }
+}

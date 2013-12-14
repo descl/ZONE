@@ -20,6 +20,7 @@ $ ->
 
 
 (exports ? this).movingDataFromIndex = ->
+  $("#go-search-button").html '<i class="icon-refresh icon-refresh-animate"></i>'
   window.onbeforeunload = ""
   $("#movedData").html ""
   source = {}
