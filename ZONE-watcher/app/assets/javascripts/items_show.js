@@ -90,6 +90,7 @@ function openReminderOnChange() {
         clearInterval(timer);
         defaultItem.addClass('active')
     },2100);
+    defaultItem.click();
     return false;
 }
 
