@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 import static org.zoneproject.extractor.plugin.extractarticlescontent.App.propsPendingSave;
+import static org.zoneproject.extractor.plugin.extractarticlescontent.App.articlesPendingSave;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
@@ -47,8 +48,10 @@ public class App
     public static int LIMIT_TIME_FOR_DOWN = 1000;
     private static final String URL_REGEX = "\\(?\\b(http://|www[.])[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
     private static HashMap<String, ArrayList<Prop>> propsToSave; 
+    private static HashMap<String, ArrayList<Prop>> articlesToSave; 
     
     public static HashMap<String, ArrayList<Prop>> propsPendingSave; 
+    public static HashMap<String, ArrayList<Prop>> articlesPendingSave; 
     
     public App(){
         String [] tmp = {};
@@ -60,6 +63,7 @@ public class App
         
         LinkedBlockingQueue<AnnotationThread> annotationThreads;
         propsPendingSave = new HashMap<String, ArrayList<Prop>>();
+        articlesPendingSave = new HashMap<String, ArrayList<Prop>>();
         while(true){
             annotationThreads = new LinkedBlockingQueue<AnnotationThread>();
             
@@ -118,7 +122,7 @@ public class App
                     }
                     
                     //start saving if we have enough items to store
-                    if(propsPendingSave.size() > SIM_ANNOTATE){
+                    if(articlesPendingSave.size() > SIM_ANNOTATE){
                         App.saveItems();
                     }
                 }
@@ -139,16 +143,25 @@ public class App
             propsToSave = (HashMap<String, ArrayList<Prop>>)propsPendingSave.clone();
             propsPendingSave.clear();
         }
+        synchronized(articlesPendingSave){
+            articlesToSave = (HashMap<String, ArrayList<Prop>>)articlesPendingSave.clone();
+            articlesPendingSave.clear();
+        }
         try{
+            Database.addAnnotations(articlesToSave,ZoneOntology.GRAPH_EAC);
             Database.addAnnotations(propsToSave);
         }catch(java.lang.OutOfMemoryError ex){
             logger.warn("outOfMemory exception during saving. Need to make it individually");
             Iterator it = propsToSave.keySet().iterator();
             while (it.hasNext()){
                String itemUri = (String)(it.next());
-               ArrayList<Prop> itemProps = propsToSave.get(itemUri);
-               Database.addAnnotations(itemUri, itemProps);
+               try{
+                Database.addAnnotations(itemUri, propsToSave.get(itemUri));
+               }catch(java.lang.OutOfMemoryError ex2){
+                   logger.warn("outOfMemory exception during one item saving :"+itemUri);
+               }
             }
+            Database.addAnnotations(propsToSave);
         }
         logger.info("end saving");
     }
@@ -167,13 +180,15 @@ class AnnotationThread extends Thread  {
         logger.info("Add ExtractArticlesContent for item: "+item.getUri());
         String content = ExtractArticleContent.getContent(item);
         
+        synchronized(articlesPendingSave){
+            if(content != null){
+                App.articlesPendingSave.put(item.getUri(), new ArrayList<Prop>());
+                App.articlesPendingSave.get(item.getUri()).add(new Prop(App.PLUGIN_RESULT_URI,content));
+            }
+        }
         synchronized(propsPendingSave){
             App.propsPendingSave.put(item.getUri(), new ArrayList<Prop>());
             App.propsPendingSave.get(item.getUri()).add(new Prop(App.PLUGIN_URI,"true"));
-
-            if(content != null){
-                App.propsPendingSave.get(item.getUri()).add(new Prop(App.PLUGIN_RESULT_URI,content));
-            }
         }
     }
     public int getDuration(){
