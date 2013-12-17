@@ -112,6 +112,10 @@ class DownloadNewsThread extends Thread  {
       this.startedDate = new Date();
     }
     public void run() {
+        //random sleep in order to have a slower process
+        long waitTime = Math.round(Math.random()*2000);
+        try{Thread.currentThread().sleep(waitTime);}catch(Exception ie){}
+        
         //Starting rss downloading
         ArrayList<Item> items = RSSGetter.getFlux(source);
 
