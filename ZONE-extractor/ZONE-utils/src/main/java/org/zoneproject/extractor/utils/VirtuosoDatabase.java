@@ -257,6 +257,7 @@ public abstract class VirtuosoDatabase {
                 if(ex.getMessage().contains("timeout")){
                     logger.warn("connection lost with server (wait 5 secondes)("+i+ " try)");
                 }else{
+                    logger.warn(ex.getMessage());
                     logger.warn("annotation process error because of virtuoso partial error(wait 5 secondes)("+i+ " try)");
                 }
                 
@@ -291,11 +292,12 @@ public abstract class VirtuosoDatabase {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         try {
             Future<ResultSet> task = executor.submit(new ThreadExec(q));
-            res = task.get(20, TimeUnit.SECONDS);
+            res = task.get(40, TimeUnit.SECONDS);
         } catch (InterruptedException ex) {
             logger.warn("interrupted execution while runSPARQLRequest "+ex);
             throw new RuntimeException( ex.getCause() );
         } catch (ExecutionException ex) {
+            logger.warn("executionException "+ex);
             Throwable t = ex.getCause();
             if( t instanceof JenaException ) {
                 throw (JenaException)t;
@@ -303,7 +305,7 @@ public abstract class VirtuosoDatabase {
                 throw new RuntimeException( t );
             }
         } catch (TimeoutException ex) {
-            logger.warn(ex);
+            logger.warn("timeout exception:"+ex);
         }finally{
             if(!executor.isTerminated()){
                 executor.shutdown();
@@ -377,9 +379,10 @@ public abstract class VirtuosoDatabase {
         try{
             results = runSPARQLRequest(request);
             if(results == null){
-                throw new JenaException();
+                throw new JenaException("Encoding");
             }
         }catch(JenaException ex){
+            System.out.println(ex.getMessage());
             if(ex.getMessage().contains("timeout") || ex.getMessage().contains("Problem during serialization") || ex.getMessage().contains("Connection failed") ){
                 logger.warn(ex);
                 logger.warn("connection lost with server (wait 5 secondes)");
