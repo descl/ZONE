@@ -36,6 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.zoneproject.extractor.utils.Config;
 import org.zoneproject.extractor.utils.Database;
 import org.zoneproject.extractor.utils.Item;
 import org.zoneproject.extractor.utils.Prop;
@@ -49,15 +50,15 @@ public class SpotlightRequest {
     private final static int NUMBER_OF_ANNOTATIONS = 10;
     public enum Endpoints {
 	//EN("http://spotlight.dbpedia.org/rest/"),
-	EN("http://localhost:2222/rest"),
-	FR("http://localhost:2225/rest"),
+	EN(Config.getVar("Spotlight-EN")),
+	FR(Config.getVar("Spotlight-FR"));
 	//NL("http://nl.dbpedia.org/spotlight/rest"),
-	DE("http://de.dbpedia.org/spotlight/rest"),
+	//DE("http://de.dbpedia.org/spotlight/rest"),
 	//HU("http://spotlight.sztaki.hu:2229/rest"),
-	IT("http://spotlight.sztaki.hu:2230/rest"),
+	//IT("http://spotlight.sztaki.hu:2230/rest"),
 	//PT("http://spotlight.sztaki.hu:2228/rest"),
 	//RU("http://spotlight.sztaki.hu:2227/rest"),
-	ES("http://spotlight.sztaki.hu:2231/rest");
+	//ES("http://spotlight.sztaki.hu:2231/rest");
 	//TR("http://spotlight.sztaki.hu:2235/rest");
         
         private final String value;
@@ -166,8 +167,9 @@ public class SpotlightRequest {
         text = "la\",Syrie";
         String itemId = "https://twitter.com/phdossmann/status/393016902722674689";
         itemId = "https://twitter.com/hay_out/status/393292223259086848";
+        itemId = "http://rue89.feedsportal.com/c/33822/f/608948/s/33028bdf/sc/23/l/0L0Srue890N0C20A130C10A0C280Cpetit0Eprobleme0Edamazon0Eresume0Egraphique0E2470A14/story01.htm";
         Item item = Database.getOneItemByURI(itemId);
-        System.out.println(item);
+        Database.addAnnotations(itemId,getProperties(item));
         //String json = SpotlightRequest.getResponse(text,"http://spotlight.sztaki.hu:2225/rest");
         //getNamedEntities(json);
     }
