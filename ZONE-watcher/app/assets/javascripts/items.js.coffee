@@ -43,6 +43,15 @@ $ ->
         $.getScript $(newElements).attr('href')
   ),3000
 
+  cloudTagsURL = $("#cloudTags").attr("data-uri")
+  console.log(cloudTagsURL)
+  $.ajax
+    url: cloudTagsURL
+    success: (data) ->
+      $("#cloudTags").html(data)
+    error: ->
+      console.log("error in fetching new news")
+
 (exports ? this).updateLayout = () ->
   $('#masonry-container').masonry('reload')
 
@@ -82,6 +91,7 @@ $ ->
     error: (xhr, ajaxOptions, thrownError) ->
       if (xhr.status == 500)
         downloadNewsDatas(uri,item)
+
 (exports ? this).setHighlightTags = (item) ->
   curSearch = getCurSearch()
 

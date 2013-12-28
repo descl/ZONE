@@ -31,6 +31,14 @@ class SearchesController < ApplicationController
     redirect_to items_path(:search => params[:id],:notice => notice )
   end
 
+  def tagsCloud
+    @tags = Search.find(params[:id]).getTagsCloud(current_user.object_id)
+    respond_to do |format|
+      format.html {render html: @tags, :layout => 'empty'}# index.html.erb
+      format.json { render json: @tags.to_json }
+    end
+  end
+
   # GET /searches/new
   # GET /searches/new.json
   def new

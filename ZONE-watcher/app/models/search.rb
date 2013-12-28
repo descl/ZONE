@@ -61,17 +61,6 @@ class Search < ActiveRecord::Base
     end
   end
 
-  def getOrFilters
-    return self.filters.find_all{|f| f.kind == "or" }
-  end
-
-  def getAndFilters
-    return self.filters.find_all{|f| f.kind == "and" }
-  end
-
-  def getWithoutFilters
-    return self.filters.find_all{|f| f.kind == "without" }
-  end
 
   def generateSPARQLRequest(user)
     extendQuery = ""
@@ -98,7 +87,6 @@ class Search < ActiveRecord::Base
     self.getWithoutFilters.each do |filter|
       extendQuery += "FILTER NOT EXISTS { #{filter.getSparqlTriple}.}. \n"
     end
-
     extendQuery
   end
 
@@ -108,5 +96,52 @@ class Search < ActiveRecord::Base
     else
       return self.name
     end
+  end
+
+  def getTagsCloud(user)
+    endpoint = Rails.application.config.virtuosoEndpoint
+    sparqlTriples = self.generateSPARQLRequest(user)
+    if sparqlTriples == nil
+      return 0
+    end
+    query = "PREFIX RSS: <http://purl.org/rss/1.0/>
+    SELECT ?tagEntity, ?tagName, COUNT(?tagEntity) AS ?popularity
+    FROM <#{ZoneOntology::GRAPH_ITEMS}>
+    FROM <#{ZoneOntology::GRAPH_TAGS}>
+    FROM <#{ZoneOntology::GRAPH_SOURCES}> WHERE {\n"
+
+    query += "GRAPH <#{ZoneOntology::GRAPH_ITEMS}> {"
+    query +="?concept RSS:title ?title."
+    query += sparqlTriples
+    query += "?concept <http://zone-project.org/model/plugins/Spotlight#entities> ?tagEntity."
+
+    query +="}
+    GRAPH <http://zone-project.org/datas/tags> {
+        ?tagEntity rdfs:label ?tagName.
+    }"
+
+    #query += "?concept RSS:pubDateTime ?pubDateTime."
+    #query += "FILTER(xsd:integer(?pubDateTime) > #{sinceWhen})"
+    query += "} ORDER BY DESC(?popularity) LIMIT 100"
+    puts query
+    store = SPARQL::Client.new(endpoint)
+
+    items = Array.new
+    store.query(query).each do |item|
+      tagObj = {:text => item.tagName.to_s, :uri => item.tagEntity.to_s, :weight => item.popularity.to_i}
+      items << tagObj
+    end
+    return {:result => items, :query => query}
+  end
+
+
+  def getOrFilters
+    return self.filters.find_all{|f| f.kind == "or" }
+  end
+  def getAndFilters
+    return self.filters.find_all{|f| f.kind == "and" }
+  end
+  def getWithoutFilters
+    return self.filters.find_all{|f| f.kind == "without" }
   end
 end
