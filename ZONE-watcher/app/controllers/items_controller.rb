@@ -8,6 +8,7 @@ class ItemsController < ApplicationController
     @filters = []
     @sources = []
     @searches = []
+    @search = nil
     userId=-1
 
     if user_signed_in?
@@ -97,6 +98,7 @@ class ItemsController < ApplicationController
       end
     else
       @itemsNumber = @search.getItemsNumber(userId)
+      @tagsCloud = @search.getTagsCloud(userId)
 
       if params[:isNew] == "true"
         flash[:notice] = t('search.disclaimer')
@@ -117,6 +119,7 @@ class ItemsController < ApplicationController
 
       #define the feed uri used by application.html.erb
       @feed_url= url_for(:controller => 'items', :action => 'index', :search => @search.id, :format => :rss)
+
     end
 
 

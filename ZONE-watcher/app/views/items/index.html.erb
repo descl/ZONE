@@ -5,8 +5,7 @@
     <%= render "searches/left_menu", :searches => @searches %>
   </div>
 
-  <div class="span1" ></div>
-  <div class="span9">
+  <div class="span10">
 
 
     <%if @itemsNumber == 0%>
@@ -33,7 +32,21 @@
     <% end %>
 
     <div class="row-fluid">
-      <div id="cloudTags" data-uri="<%= url_for(:action => 'tagsCloud', :controller => 'searches', :id => @search.id) %>">aaa</div>
+      <script type="text/javascript">
+          /*!
+           * Create an array of word objects, each representing a word in the cloud
+           */
+          var word_array = <%= raw @tagsCloud[:result].to_json %>;
+
+          $(function() {
+              // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
+              $("#cloudTags").jQCloud(word_array, {
+                  delayedMode:true,
+                  shape: "circle"
+              });
+          });
+      </script>
+      <div id="cloudTags" style="height:150px"></div>
       <!-- items printing-->
       <div class="newNewsLinkBox" style="display: none;">
         <% lastDate = 0%>

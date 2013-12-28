@@ -398,6 +398,9 @@ a.label:visited{
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
+#masonry-container {
+  margin: 0 auto;
+}
 
 .masonry-clearfix:before, .clearfix:after { content: ""; display: table; }
 .masonry-clearfix:after { clear: both; }

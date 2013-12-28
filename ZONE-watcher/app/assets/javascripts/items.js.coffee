@@ -22,8 +22,9 @@ $ ->
 
   $container.masonry
     itemSelector: '.item-bloc',
-    gutterWidth: 0,
-    columnWidth: 40
+    gutterWidth: 10,
+    columnWidth: 40,
+    isFitWidth: true,
 
   setTimeout ( ->
     #infinite scroll managment
@@ -42,15 +43,6 @@ $ ->
         $newElements = $(newElements).css(opacity: 0)
         $.getScript $(newElements).attr('href')
   ),3000
-
-  cloudTagsURL = $("#cloudTags").attr("data-uri")
-  console.log(cloudTagsURL)
-  $.ajax
-    url: cloudTagsURL
-    success: (data) ->
-      $("#cloudTags").html(data)
-    error: ->
-      console.log("error in fetching new news")
 
 (exports ? this).updateLayout = () ->
   $('#masonry-container').masonry('reload')
