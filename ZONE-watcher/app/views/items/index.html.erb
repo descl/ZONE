@@ -1,19 +1,23 @@
 
 <div class="row-fluid">
 
+  <!-- left menu-->
   <div class="span2" >
     <%= render "searches/left_menu", :searches => @searches %>
   </div>
 
+  <!--center content-->
   <div class="span10">
 
 
+    <!-- print the dino if no results-->
     <%if @itemsNumber == 0%>
       <div class="row-fluid">
         <%= render "home/search_dino", :page=>"search" %>
       </div>
     <%end%>
 
+    <!-- debug tools -->
     <div class="hidden">
       <%= @search.to_json %>
       <%= @search.sources.to_json %>
@@ -24,33 +28,50 @@
       <hr/>
     </div>
 
-    <%= javascript_tag do %>
+
+    <!-- trash! <% javascript_tag do %>
       $("#load-more2").bind("ajax:complete", function(et, e){
       $("#load-more2").html(e.responseText); // insert content
         event.preventDefault(); // Prevent link from following its href
       });
-    <% end %>
+    <% end %>-->
 
+
+    <!-- items printing zone-->
     <div class="row-fluid">
+
       <script type="text/javascript">
           /*!
            * Create an array of word objects, each representing a word in the cloud
            */
-          var word_array = <%= raw @tagsCloud[:result].to_json %>;
 
           $(function() {
-              // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
-              $("#cloudTags").jQCloud(word_array, {
+              $("#cloudTags").jQCloud(<%= raw @tagsCloud[:result].to_json %>, {
                   delayedMode:true,
                   shape: "circle"
               });
           });
       </script>
       <div id="cloudTags" style="height:150px"></div>
-      <!-- items printing-->
+
+
+      <div class="row-fluid">
+        <div class="btn-group pull-right">
+          <button title="Timeline layout" id="btnFormatTime" class="btn-format btn active" onclick="changeItemFormat('time');"><i class="icon icon-calendar"></i></button>
+          <button title="Grid layout"     id="btnFormatCard" class="btn-format btn"        onclick="changeItemFormat('card');"><i class="icon icon-th-large"></i></button>
+          <button title="condensed layout"id="btnFormatList" class="btn-format btn"        onclick="changeItemFormat('list');"><i class="icon icon-th-list" ></i></button>
+        </div>
+        <div id="titlePopover" hidden><%= raw t 'items.popover.smalltitle' %></div>
+        <%= link_to(params.merge(:format => :rss)) do%>
+            <button id="buttonRss" class="btn btn-warning pull-right"><i class="icon-rss"></i></button>
+        <%end%>
+        <span class="numberItem pull-right"><%= @itemsNumber %> news</span>
+      </div>
+
+      <hr>
+      <!-- new news button-->
       <div class="newNewsLinkBox" style="display: none;">
-        <% lastDate = 0%>
-        <% lastDate = @items[0].date if @items.size > 0  %>
+        <% lastDate = @items[0].date if @items.size > 0 else 0  %>
           <%= link_to (items_path(:search => @search.id, :sinceWhen => lastDate, :per_page => "100", :load_on_top => true)), :remote => true ,:class=>"span12 well btn-success btn newNewsLink" do%>
             <span class="numberOfNewNews">0</span> <%= t('items.newResults')%>
           <%end%>
@@ -65,6 +86,10 @@
     </div>
   </div>
 </div>
+
+
+
+
 
 
 <!-- modals -->
