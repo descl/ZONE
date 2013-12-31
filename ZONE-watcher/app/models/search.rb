@@ -113,12 +113,17 @@ class Search < ActiveRecord::Base
     query += "GRAPH <#{ZoneOntology::GRAPH_ITEMS}> {"
     query +="?concept RSS:title ?title."
     query += sparqlTriples
-    query += "?concept <http://zone-project.org/model/plugins/Spotlight#entities> ?tagEntity."
+    query += "OPTIONAL{
+                {
+                  ?concept <http://zone-project.org/model/plugins/Spotlight#entities> ?tagEntity.
+                  GRAPH <http://zone-project.org/datas/tags> {
+                    ?tagEntity rdfs:label ?tagName.
+                  }
+                }
+                UNION{?concept <http://zone-project.org/model/plugins/twitter#hashtag> ?tagEntity. BIND(?tagEntity AS ?tagName)}
+                UNION{?concept <http://zone-project.org/model/plugins/twitter#mentioned> ?tagEntity. BIND(?tagEntity AS ?tagName)}
 
-    query +="}
-    GRAPH <http://zone-project.org/datas/tags> {
-        ?tagEntity rdfs:label ?tagName.
-    }"
+              }}"
 
     #query += "?concept RSS:pubDateTime ?pubDateTime."
     #query += "FILTER(xsd:integer(?pubDateTime) > #{sinceWhen})"
