@@ -57,9 +57,9 @@
 
       <div class="row-fluid">
         <div class="btn-group pull-right">
-          <button title="Timeline layout" id="btnFormatTime" class="btn-format btn active" onclick="changeItemFormat('time');"><i class="icon icon-calendar"></i></button>
-          <button title="Grid layout"     id="btnFormatCard" class="btn-format btn"        onclick="changeItemFormat('card');"><i class="icon icon-th-large"></i></button>
-          <button title="condensed layout"id="btnFormatList" class="btn-format btn"        onclick="changeItemFormat('list');"><i class="icon icon-th-list" ></i></button>
+          <a title="Timeline layout" id="btnFormatTime" class="btn-format btn <%= 'active' if @layout == 'time'%>" href="<%= url_for( :layout => 'time', :search => @search )%>"><i class="icon icon-calendar"></i></a>
+          <a title="Grid layout"     id="btnFormatCard" class="btn-format btn <%= 'active' if @layout == 'card'%>" href="<%= url_for( :layout => 'card', :search => @search )%>"><i class="icon icon-th-large"></i></a>
+          <a title="condensed layout"id="btnFormatList" class="btn-format btn <%= 'active' if @layout == 'list'%>" href="<%= url_for( :layout => 'list', :search => @search )%>"><i class="icon icon-th-list" ></i></a>
         </div>
         <div id="titlePopover" hidden><%= raw t 'items.popover.smalltitle' %></div>
         <%= link_to(params.merge(:format => :rss)) do%>
@@ -72,16 +72,27 @@
       <!-- new news button-->
       <div class="newNewsLinkBox" style="display: none;">
         <% lastDate = @items[0].date if @items.size > 0 else 0  %>
-          <%= link_to (items_path(:search => @search.id, :sinceWhen => lastDate, :per_page => "100", :load_on_top => true)), :remote => true ,:class=>"span12 well btn-success btn newNewsLink" do%>
+          <%= link_to (items_path(:search => @search.id, :sinceWhen => lastDate, :per_page => "100", :load_on_top => true, :layout => @layout)), :remote => true ,:class=>"span12 well btn-success btn newNewsLink" do%>
             <span class="numberOfNewNews">0</span> <%= t('items.newResults')%>
           <%end%>
       </div>
 
-      <div  id="masonry-container" class="transitions-enabled  infinite-scroll items-box items-list has-gutters masonry-clearfix">
+      <div id="masonry-container" class="transitions-enabled  infinite-scroll items-box items-list has-gutters masonry-clearfix">
+        <% if @layout == "time"%>
+          <div class="timeline-container">
+            <div class="timeline">
+            </div>
+          </div>
+        <%end%>
+
         <%= render :partial => "items", :items => @items %>
       </div>
       <nav id="page-nav">
-        <%= link_to 'Load More ITEMS', items_path(:page => @items.next_page, :search => @search.id), :class => 'btn load-more-items', :remote => true if @items.next_page != nil%>
+        <%if @items.next_page != nil%>
+          <a href="<%= items_path(:search => @search.id, :layout => @layout)%>&page=<%=@items.next_page%>" class="btn load-more-items">
+            Load More ITEMS
+          </a>
+        <%end%>
       </nav>
     </div>
   </div>

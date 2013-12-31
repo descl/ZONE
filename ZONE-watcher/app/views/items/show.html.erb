@@ -34,7 +34,9 @@
                 %>
               </a>
             </blockquote>
-            <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+              <% if params[:layout] != "list" %>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+              <%end%>
           <%else%>
 
 			<!--header news part -->
@@ -49,18 +51,18 @@
 
             </a>
 
-			<i>
+            <i class="date-in-news">
               <%=
                 begin
                   date = DateTime.parse(@item.props["http://purl.org/rss/1.0/pubDate"][:value][0])
-                  date.strftime('Le %d/%m/%Y à %H:%M')
+                  date.strftime(t("items.dateFormat"))
 
                 rescue
                 end
               %>
             </i>
 
-            
+
             <!--content news part -->
             <div class="contentArticle">
 				<%= if @item.props["http://purl.org/rss/1.0/description"] != nil

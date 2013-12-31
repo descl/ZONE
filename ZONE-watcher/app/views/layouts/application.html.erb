@@ -16,6 +16,18 @@
   <%= stylesheet_link_tag("http://cdn-images.mailchimp.com/embedcode/classic-081711.css") %>
   <%= stylesheet_link_tag("jqcloud.css") %>
 
+  <!-- load specific css for items layout-->
+  <%=
+      case @layout
+        when "time"
+          stylesheet_link_tag("items_time.css")
+        when "card"
+          stylesheet_link_tag("items_card.css")
+        when "list"
+          stylesheet_link_tag("items_list.css")
+      end
+  %>
+
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag params[:controller] %>
   <%= csrf_meta_tags %>
@@ -61,7 +73,7 @@
     </div>
   </div>
 
-  <% if current_page?('/items') then mainClass="container-fluid" else mainClass="container" end%>
+  <% if @layout == "card" then mainClass="container-fluid" else mainClass="container" end%>
   <div class="<%= mainClass %>">
     <div  id="page-content">
       <%= render 'layouts/messages' %>

@@ -22,7 +22,7 @@ $ ->
 
   $container.masonry
     itemSelector: '.item-bloc',
-    gutterWidth: 10,
+    gutterWidth: 20,
     columnWidth: 40,
     isFitWidth: true,
 
@@ -30,26 +30,28 @@ $ ->
     #infinite scroll managment
     $container.infinitescroll
       navSelector: "#page-nav" # selector for the paged navigation
-      nextSelector: "#page-nav a" # selector for the NEXT link (to page 2)
+      nextSelector: "#page-nav a:first" # selector for the NEXT link (to page 2)
       itemSelector: ".item-bloc" # selector for all items you'll retrieve
-      prefill: true
+      prefill: true #load other pages if too big window
       loading:
         finishedMsg: "No more pages to load."
         img: "http://i.imgur.com/6RMhx.gif"
 
       # trigger Masonry as a callback
-      (newElements) ->
+      (newElements,opts) ->
         # hide new items while they are loading
         $newElements = $(newElements).css(opacity: 0)
-        $.getScript $(newElements).attr('href')
+        nextPath=opts.path[0]+opts.state.currPage
+        $.getScript nextPath
   ),3000
 
 (exports ? this).updateLayout = () ->
   $('#masonry-container').masonry('reload')
+  Arrow_Points()
 
 #functions declaration
 (exports ? this).getNewNews = () ->
-  lastNews = $('.items-box').children().first()
+  lastNews = $('.items-box').children(".item-bloc").first()
   lastNewsDate = lastNews.attr("data-pub-date")
 
   searchId = getCurSearch().attr("id").substr(5)
@@ -57,6 +59,7 @@ $ ->
 
   $.ajax
     url: uri
+    async: true
     context: uri
     timeout: 5000
     success: (data) ->
@@ -103,6 +106,31 @@ $ ->
     if ($.inArray(filterval,filtersSearch) != -1)
       $(filterItem).addClass("label-selected")
 
+Arrow_Points = ->
+  if (getPageFormat() != "time")
+    return
+  s = $("#masonry-container").find(".item-bloc")
+  s.each (i, obj) ->
+    posLeft = $(obj).css("left")
+
+    date = $(obj).attr("data-pub-date-string")
+    $(obj).find(".arrowAcronym").remove()
+
+    acronym = "<acronym class='arrowAcronym' title="+date+" style='border-bottom:dotted 1px black; cursor:help;'>"
+    if posLeft is  "5px"
+      html = acronym+"<span class='rightCorner'></span></acronym>"
+      $(obj).prepend html
+    else
+      html = acronym+"<span class='leftCorner'></span></acronym>"
+      $(obj).prepend html
+
 
 (exports ? this).getCurSearch = () ->
   return $($(".searchItem.active").attr("data-content"))
+
+(exports ? this).getPageFormat =->
+  idSelected = $(".btn-format.active").attr("id")
+  switch idSelected
+    when "btnFormatTime" then return "time"
+    when "btnFormatCard" then return "card"
+    when "btnFormatList" then return "list"

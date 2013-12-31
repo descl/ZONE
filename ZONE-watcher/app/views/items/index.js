@@ -37,19 +37,19 @@ error: function(xhr, ajaxOptions, thrownError) {
 
 $(function() {
     <% if@loadOnTop == true%>
-    $('.newNewsLinkBox').hide();
-    $('.items-list').prepend('<%= escape_javascript(render :partial => "items", :items => @items) %>');
-    return $('.item-bloc[data-local-uri]').each(function(id, element) {
-        var localUri;
-        localUri = $(element).attr('data-local-uri');
-        return downloadNewsDatas(localUri);
-        });
+        $('.newNewsLinkBox').hide();
+        $('.items-list').prepend('<%= escape_javascript(render :partial => "items", :items => @items) %>');
+        return $('.item-bloc[data-local-uri]').each(function(id, element) {
+            var localUri;
+            localUri = $(element).attr('data-local-uri');
+            return downloadNewsDatas(localUri);
+            });
     <%else%>
-    $('.items-list').append('<%= escape_javascript(render :partial => "items", :items => @items) %>');
-    return $('.item-bloc[data-local-uri]').each(function(id, element) {
-        var localUri;
-        localUri = $(element).attr('data-local-uri');
-        return downloadNewsDatas(localUri);
-        });
-        <%end%>
-        });
+        $('.items-list').append('<%= escape_javascript(render :partial => "items", :items => @items) %>');
+        return $('.item-bloc[data-local-uri]').each(function(id, element) {
+            var localUri;
+            localUri = $(element).attr('data-local-uri');
+            return downloadNewsDatas(localUri);
+            });
+    <%end%>
+});

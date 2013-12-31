@@ -9,6 +9,19 @@ class ItemsController < ApplicationController
     @sources = []
     @searches = []
     @search = nil
+    @layout = nil
+
+    case params[:layout]
+      when "time"
+        @layout = "time"
+      when "card"
+        @layout = "card"
+      when "list"
+        @layout = "list"
+      else
+        @layout = "time"
+    end
+
     userId=-1
 
     if user_signed_in?
@@ -161,7 +174,7 @@ class ItemsController < ApplicationController
     end
 
     @filters = parseFilterParams(params)
-    
+
     render  :layout => 'empty'
   end
 

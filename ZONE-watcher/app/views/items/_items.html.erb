@@ -6,8 +6,11 @@
                            when 2 then "mediumSimilarity"
                            else "highSimilarity"
                          end
+       prettyPrintDate = "undefined"
+          date = Time.at(item.date.to_i/1000.0)
+          prettyPrintDate = date.strftime(t("items.dateFormat"))
     %>
-    <div class="well item-bloc <%= similarityColor%>" data-local-uri="<%= item_path(:id => item.uri) %>" data-pub-date="<%= item.date %>">
+    <div class="well item-bloc <%= similarityColor%>" data-local-uri="<%= item_path(:id => item.uri, :layout => @layout) %>" data-pub-date-string="'<%= prettyPrintDate%>'" data-pub-date="<%= item.date %>">
       <div class="item_container"></div>
       <div class="item_wait">
         <a href="<%= item_path(:id => item.uri)%>"><i class=" icon-refresh hidden"></i></a>

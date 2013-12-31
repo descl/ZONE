@@ -94,39 +94,6 @@ function openReminderOnChange() {
     return false;
 }
 
-//Function that change the disposition of the items, used in /items
-function changeItemFormat(type) {
-    if (type == 'card') {
-        $("#btnCard").addClass('active');
-        $("#btnList").removeClass('active');
-
-        $(".item-bloc:even").addClass('span6 pull-left');
-        $(".item-bloc:even").addClass('clear-left');
-        $(".item-bloc:odd").addClass('span6 pull-right');
-        $(".item-bloc:odd").addClass('clear-right');
-        $('.item-bloc').removeClass('longWell');
-
-        $(".row-favorite").hide();
-        $(".showFavorite").hide();
-        $(".row-list").show();
-    } else {
-        $("#btnList").addClass('active');
-        $("#btnCard").removeClass('active');
-
-        $('.item-bloc').removeClass('span6');
-        $('.item-bloc').removeClass('pull-left');
-        $('.item-bloc').removeClass('pull-right');
-        $('.item-bloc').removeClass('clear-right');
-        $('.item-bloc').removeClass('clear-left');
-        $('.item-bloc').addClass('longWell');
-
-        $(".row-favorite").hide();
-        $(".showFavorite").hide();
-        $(".row-list").show();
-    }
-
-}
-
 //Function that show the delete a tag pophover
 function deleteTag(tag,tagUri,item){
 	$(".label-tag").popover('hide');

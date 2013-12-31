@@ -10,6 +10,9 @@
  *
  *= require_self
  *= require_tree .
+ *= stub items_time
+ *= stub items_card
+ *= stub items_list
 
  * dependances for masonry <= items printing
  *= require 'masonry/basic'

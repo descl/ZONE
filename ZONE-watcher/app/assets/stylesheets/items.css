@@ -359,7 +359,7 @@ a.label:visited{
   border-width: 2px;
 }
 
-//left menu
+/*left menu*/
 .reminder-pannel-rss{
   height: 50px; padding-left: 0px; padding-right: 0px; padding-top: 12px;
 }
@@ -382,10 +382,6 @@ a.label:visited{
 }
 .newNewsLink[href] , .newNewsLink[href]:visited, .newNewsLink[href]:hover{
   color: white;
-}
-
-.item-bloc{
-  width:300px;
 }
 
 #masonry-container {
