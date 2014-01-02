@@ -25,6 +25,9 @@ getWaitingScreen = ->
 
 $(document).ready ->
   #Generation of the popover of the tag
+  generateTags()
+
+(exports ? this).generateTags = () ->
   $(".label-tag").each ->
 
     #check if the tag is already "popoverised"
@@ -58,7 +61,6 @@ $(document).ready ->
               moreAni: "fast"
               lessAni: "fast"
             $(".infoPop[filter-uri='" + urlTag + "']").show()
-
 
           error: ->
             $(".infoPop").html ""

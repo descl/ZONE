@@ -146,6 +146,9 @@ class SearchFilter < ActiveRecord::Base
             } LIMIT 1"
     store = SPARQL::Client.new(endpointDBpedia)
     query = store.query(queryStr)
+    if query.size == 0
+      return nil
+    end
     if query[0][:abstract] == nil && query[0][:sameAs]!= nil
       return SearchFilter.new(:uri =>query[0][:sameAs]).getInfos
     end

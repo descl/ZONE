@@ -1,6 +1,7 @@
 require 'json'
 
 class SearchesController < ApplicationController
+  include SearchesHelper
   # GET /searches
   # GET /searches.json
   def index
@@ -34,10 +35,28 @@ class SearchesController < ApplicationController
   def tagsCloud
     start_date = params[:start]
     end_date = params[:end]
-    @tags = Search.find(params[:id]).getTagsCloud(current_user.object_id,start_date,end_date)
+    tagsInfos = Search.find(params[:id]).getTagsCloud(current_user.object_id,start_date,end_date)
+    @tags = Array.new
+    tagsInfos[:result].each do |tag|
+      tag[:html] = {
+          #title: tag[:weight],
+          class: "label-tag",
+
+          "data-content"=> tag_content(tag[:text], tag[:link]),
+          "filter-uri" => tag[:link],
+          "data-original-title" => tag[:text],
+          "data-uri" => search_filters_path(:uri => tag[:link] )
+      }
+      @tags << tag
+    end
+
     respond_to do |format|
-      format.html {render html: @tags, :layout => 'empty'}# index.html.erb
-      format.json { render json: @tags.to_json }
+      if(params[:render] == "newPage")
+        format.html {render html: @tags}# index.html.erb
+      else
+        format.html {render html: @tags, :layout => 'empty'}# index.html.erb
+        format.json { render json: @tags.to_json }
+      end
     end
   end
 

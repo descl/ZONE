@@ -2,11 +2,16 @@
 
     $(function() {
         // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
-        $("#tagsCloud").jQCloud(<%= raw @tags[:result].to_json %>, {
-            delayedMode:true,
-            shape: "circle"
+        $("#tagsCloud").jQCloud(<%= raw @tags.to_json %>, {
+            delayedMode:false,
+            shape: "circle",
+            afterCloudRender: setTimeout('generateTags()',200)
         });
     });
 </script>
 
 <div id="tagsCloud" style="height: 150px;"></div>
+
+<% if params[:render] == "newPage"%><pre><%= raw JSON.pretty_generate(@tags)%></pre><%end%>
+
+<%= javascript_include_tag "tags_managment" %>

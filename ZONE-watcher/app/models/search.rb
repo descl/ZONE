@@ -133,7 +133,7 @@ class Search < ActiveRecord::Base
     items = Array.new
     store.query(query).each do |item|
       if item.bound?(:tagName) && item.bound?(:tagEntity)
-        tagObj = {:text => item.tagName.to_s, :uri => item.tagEntity.to_s, :weight => item.popularity.to_i}
+        tagObj = {:text => item.tagName.to_s, :link => item.tagEntity.to_s, :weight => item.popularity.to_i}
         items << tagObj
       end
     end
