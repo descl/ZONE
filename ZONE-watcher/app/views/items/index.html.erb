@@ -40,35 +40,22 @@
     <!-- items printing zone-->
     <div class="row-fluid">
 
-      <script type="text/javascript">
-          /*!
-           * Create an array of word objects, each representing a word in the cloud
-           */
+      <div id="cloudZone" style="height:150px"></div>
 
-          $(function() {
-              $("#cloudTags").jQCloud(<%= raw @tagsCloud[:result].to_json %>, {
-                  delayedMode:true,
-                  shape: "circle"
-              });
-          });
-      </script>
-      <div id="cloudTags" style="height:150px"></div>
+      <div class="row-fluid" style="margin-bottom:10px">
+          <div class="span10" id="slider" style="padding-top:0px"></div>
 
 
-      <div class="row-fluid">
-        <div class="btn-group pull-right">
-          <a title="Timeline layout" id="btnFormatTime" class="btn-format btn <%= 'active' if @layout == 'time'%>" href="<%= url_for( :layout => 'time', :search => @search )%>"><i class="icon icon-calendar"></i></a>
-          <a title="Grid layout"     id="btnFormatCard" class="btn-format btn <%= 'active' if @layout == 'card'%>" href="<%= url_for( :layout => 'card', :search => @search )%>"><i class="icon icon-th-large"></i></a>
-          <a title="condensed layout"id="btnFormatList" class="btn-format btn <%= 'active' if @layout == 'list'%>" href="<%= url_for( :layout => 'list', :search => @search )%>"><i class="icon icon-th-list" ></i></a>
-        </div>
-        <div id="titlePopover" hidden><%= raw t 'items.popover.smalltitle' %></div>
-        <%= link_to(params.merge(:format => :rss)) do%>
-            <button id="buttonRss" class="btn btn-warning pull-right"><i class="icon-rss"></i></button>
-        <%end%>
-        <span class="numberItem pull-right"><%= @itemsNumber %> news</span>
+
+          <div class="span2 btn-group">
+
+            <a href="<%= url_for(params.merge(:format => :rss))%>" id="buttonRss" class="btn-format btn btn-warning"><i class="icon-rss"></i></a>
+            <a title="Timeline layout" id="btnFormatTime" class="btn-format btn <%= 'active' if @layout == 'time'%>" href="<%= url_for( :layout => 'time', :search => @search )%>"><i class="icon icon-calendar"></i></a>
+            <a title="Grid layout"     id="btnFormatCard" class="btn-format btn <%= 'active' if @layout == 'card'%>" href="<%= url_for( :layout => 'card', :search => @search )%>"><i class="icon icon-th-large"></i></a>
+            <a title="condensed layout"id="btnFormatList" class="btn-format btn <%= 'active' if @layout == 'list'%>" href="<%= url_for( :layout => 'list', :search => @search )%>"><i class="icon icon-th-list" ></i></a>
+          </div>
       </div>
 
-      <hr>
       <!-- new news button-->
       <div class="newNewsLinkBox" style="display: none;">
         <% lastDate = @items[0].date if @items.size > 0 else 0  %>

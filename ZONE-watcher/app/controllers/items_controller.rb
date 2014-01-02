@@ -111,7 +111,6 @@ class ItemsController < ApplicationController
       end
     else
       @itemsNumber = @search.getItemsNumber(userId)
-      @tagsCloud = @search.getTagsCloud(userId)
 
       if params[:isNew] == "true"
         flash[:notice] = t('search.disclaimer')

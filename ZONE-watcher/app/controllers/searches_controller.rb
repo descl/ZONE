@@ -32,7 +32,9 @@ class SearchesController < ApplicationController
   end
 
   def tagsCloud
-    @tags = Search.find(params[:id]).getTagsCloud(current_user.object_id)
+    start_date = params[:start]
+    end_date = params[:end]
+    @tags = Search.find(params[:id]).getTagsCloud(current_user.object_id,start_date,end_date)
     respond_to do |format|
       format.html {render html: @tags, :layout => 'empty'}# index.html.erb
       format.json { render json: @tags.to_json }

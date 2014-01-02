@@ -1,17 +1,12 @@
-
 <script type="text/javascript">
-    /*!
-     * Create an array of word objects, each representing a word in the cloud
-     */
-    var word_array = <%= raw @tags[:result].to_json %>;
 
     $(function() {
         // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
-        $("#example").jQCloud(word_array, {
+        $("#tagsCloud").jQCloud(<%= raw @tags[:result].to_json %>, {
             delayedMode:true,
-            shape: "rectangular"
+            shape: "circle"
         });
     });
 </script>
 
-<div id="example" style="height: 350px;"></div>
+<div id="tagsCloud" style="height: 150px;"></div>

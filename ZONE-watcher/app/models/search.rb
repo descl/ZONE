@@ -98,7 +98,7 @@ class Search < ActiveRecord::Base
     end
   end
 
-  def getTagsCloud(user)
+  def getTagsCloud(user,start_date,end_date)
     endpoint = Rails.application.config.virtuosoEndpoint
     sparqlTriples = self.generateSPARQLRequest(user)
     if sparqlTriples == nil
@@ -108,33 +108,34 @@ class Search < ActiveRecord::Base
     SELECT ?tagEntity, ?tagName, COUNT(?tagEntity) AS ?popularity
     FROM <#{ZoneOntology::GRAPH_ITEMS}>
     FROM <#{ZoneOntology::GRAPH_TAGS}>
-    FROM <#{ZoneOntology::GRAPH_SOURCES}> WHERE {\n"
+    FROM <#{ZoneOntology::GRAPH_SOURCES}> WHERE {\n
 
-    query += "GRAPH <#{ZoneOntology::GRAPH_ITEMS}> {"
-    query +="?concept RSS:title ?title."
-    query += sparqlTriples
-    query += "OPTIONAL{
-                {
-                  ?concept <http://zone-project.org/model/plugins/Spotlight#entities> ?tagEntity.
-                  GRAPH <http://zone-project.org/datas/tags> {
-                    ?tagEntity rdfs:label ?tagName.
-                  }
-                }
-                UNION{?concept <http://zone-project.org/model/plugins/twitter#hashtag> ?tagEntity. BIND(?tagEntity AS ?tagName)}
-                UNION{?concept <http://zone-project.org/model/plugins/twitter#mentioned> ?tagEntity. BIND(?tagEntity AS ?tagName)}
-
-              }}"
-
-    #query += "?concept RSS:pubDateTime ?pubDateTime."
-    #query += "FILTER(xsd:integer(?pubDateTime) > #{sinceWhen})"
-    query += "} ORDER BY DESC(?popularity) LIMIT 100"
+      GRAPH <#{ZoneOntology::GRAPH_ITEMS}> {
+        ?concept RSS:title ?title.
+        #{sparqlTriples}
+        ?concept RSS:pubDateTime ?date.
+        FILTER((xsd:decimal(?date) > #{start_date})&& (xsd:decimal(?date) < #{end_date}) )
+        OPTIONAL{
+          {
+            ?concept <http://zone-project.org/model/plugins/Spotlight#entities> ?tagEntity.
+            GRAPH <http://zone-project.org/datas/tags> {
+              ?tagEntity rdfs:label ?tagName.
+            }
+          }
+          UNION{?concept <http://zone-project.org/model/plugins/twitter#hashtag> ?tagEntity. BIND(?tagEntity AS ?tagName)}
+          UNION{?concept <http://zone-project.org/model/plugins/twitter#mentioned> ?tagEntity. BIND(?tagEntity AS ?tagName)}
+        }
+      }
+    } ORDER BY DESC(?popularity) LIMIT 100"
     puts query
     store = SPARQL::Client.new(endpoint)
 
     items = Array.new
     store.query(query).each do |item|
-      tagObj = {:text => item.tagName.to_s, :uri => item.tagEntity.to_s, :weight => item.popularity.to_i}
-      items << tagObj
+      if item.bound?(:tagName) && item.bound?(:tagEntity)
+        tagObj = {:text => item.tagName.to_s, :uri => item.tagEntity.to_s, :weight => item.popularity.to_i}
+        items << tagObj
+      end
     end
     return {:result => items, :query => query}
   end

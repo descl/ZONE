@@ -13,7 +13,7 @@ ZONEWatcher::Application.routes.draw do
   get '/searches/create' => 'searches#create',
         :via => :post
   get '/searches/selectSources' => 'searches#selectSources'
-  get '/searches/tagsCloud/:id' => 'searches#tagsCloud'
+  get '/searches/tagsCloud/:id/:start/:end' => 'searches#tagsCloud'
   resources :searches
   get '/search/:search/getNewsNumber(/:sinceWhen)' => 'searches#getNewsNumber'
 

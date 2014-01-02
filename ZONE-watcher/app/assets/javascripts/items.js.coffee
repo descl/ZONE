@@ -9,6 +9,50 @@
 #= require masonry/modernizr-transitions
 
 $ ->
+
+  now = new Date();
+  startDay = new Date(now)
+  startDay.setMonth(-1)
+  console.log(now)
+  console.log(startDay)
+
+  months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+  $("#slider").dateRangeSlider
+    arrows:false,
+    valueLabels:"change",
+    delayOut: 4000
+    wheelMode: "scroll"
+    step:
+      days: 1
+    bounds:
+      min: new Date(2013 , 5,1)
+      max: now
+    defaultValues:
+      min: startDay
+      max: now
+
+    scales: [
+      first: (value) ->
+        value
+
+      end: (value) ->
+        value
+
+      next: (value) ->
+        next = new Date(value)
+        new Date(next.setMonth(value.getMonth() + 1))
+
+      label: (value) ->
+        months[value.getMonth()]
+
+    ]
+  $("#slider").bind "valuesChanged", (e, data) ->
+    reloadTagsCloud(data.values.min, data.values.max)
+  #first init
+  reloadTagsCloud(startDay,now)
+
+
   #load items content for each item
   $('.item-bloc[data-local-uri]').each (id, element) ->
     localUri = $(element).attr('data-local-uri')
@@ -45,6 +89,20 @@ $ ->
         $.getScript nextPath
   ),3000
 
+
+(exports ? this).reloadTagsCloud = (minDate,maxDate) ->
+  minDate.setHours(0,0)
+  maxDate.setHours(23,59)
+  console.log "Values just changed. min: " + minDate + " max: " + maxDate
+  $.ajax
+    url: "/searches/tagsCloud/"+getCurSearchId()+"/"+minDate.getTime()+"/"+maxDate.getTime()
+    async: true
+    success: (data) ->
+      $("#cloudZone").html(data)
+    error: (xhr, ajaxOptions, thrownError) ->
+      console.log(xhr)
+      console.log(thrownError)
+
 (exports ? this).updateLayout = () ->
   $('#masonry-container').masonry('reload')
   Arrow_Points()
@@ -54,7 +112,7 @@ $ ->
   lastNews = $('.items-box').children(".item-bloc").first()
   lastNewsDate = lastNews.attr("data-pub-date")
 
-  searchId = getCurSearch().attr("id").substr(5)
+  searchId = getCurSearchId()
   uri = "/search/"+searchId+"/getNewsNumber/"+lastNewsDate
 
   $.ajax
@@ -127,6 +185,9 @@ Arrow_Points = ->
 
 (exports ? this).getCurSearch = () ->
   return $($(".searchItem.active").attr("data-content"))
+
+(exports ? this).getCurSearchId = () ->
+    return getCurSearch().attr("id").substr(5)
 
 (exports ? this).getPageFormat =->
   idSelected = $(".btn-format.active").attr("id")

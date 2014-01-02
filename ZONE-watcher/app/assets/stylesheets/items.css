@@ -207,10 +207,6 @@ a.label:visited{
   margin-top: 5px;
 }
 
-#buttonRss{
-  margin-right: 10px;
-}
-
 #updateSearch{
   transition: opacity 0.1s ease;
 }
@@ -401,3 +397,4 @@ a.label:visited{
 .masonry-clearfix:before, .clearfix:after { content: ""; display: table; }
 .masonry-clearfix:after { clear: both; }
 .masonry-clearfix { zoom: 1; }
+
