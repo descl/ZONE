@@ -20,7 +20,6 @@ $ ->
   months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
   $("#slider").dateRangeSlider
-    arrows:false,
     valueLabels:"change",
     delayOut: 4000
     wheelMode: "scroll"
