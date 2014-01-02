@@ -10,8 +10,9 @@
     });
 </script>
 
-<div id="tagsCloud" style="height: 150px;"></div>
+<div id="tagsCloud" style="height: 150px;">
+  <div class="background-dino"></div>
+</div>
 
-<% if params[:render] == "newPage"%><pre><%= raw JSON.pretty_generate(@tags)%></pre><%end%>
 
 <%= javascript_include_tag "tags_managment" %>

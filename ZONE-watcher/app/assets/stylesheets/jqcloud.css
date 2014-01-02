@@ -47,3 +47,19 @@ div.jqcloud {
 }
 
 div.jqcloud span { padding: 0; }
+
+.background-dino{
+
+    -khtml-opacity:.10;
+    -moz-opacity:.10;
+    -ms-filter:"alpha(opacity=10)";
+    filter:alpha(opacity=10);
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.1);
+    opacity:.10;
+
+    background-image: url("/assets/dino.png");
+    background-size: contain ;
+    background-position:right top;
+    background-repeat:no-repeat;
+    height:100%;
+}
