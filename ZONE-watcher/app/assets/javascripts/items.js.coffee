@@ -1,5 +1,6 @@
 #= require items_show
 #= require reminder_panel
+#= require tags_managment
 # require "dino.js"
 
 #= require masonry/jquery.masonry
@@ -49,8 +50,6 @@ $ ->
     ]
   $("#slider").bind "valuesChanged", (e, data) ->
     reloadTagsCloud(data.values.min, data.values.max)
-  #first init
-  reloadTagsCloud(startDay,now)
 
 
   #load items content for each item
@@ -95,10 +94,13 @@ $ ->
   maxDate.setHours(23,59)
   console.log "Values just changed. min: " + minDate + " max: " + maxDate
   $.ajax
-    url: "/searches/tagsCloud/"+getCurSearchId()+"/"+minDate.getTime()+"/"+maxDate.getTime()
+    url: "/searches/tagsCloud/"+getCurSearchId()+"/"+minDate.getTime()+"/"+maxDate.getTime()+".json"
     async: true
+    dataType : 'json'
     success: (data) ->
-      $("#cloudZone").html(data)
+      $("#cloudZone").html("<div class='background-dino'></div>")
+      $("#cloudZone").jQCloud(data, {delayedMode:false, shape: "circle", afterWordRender: setTimeout('generateTags()',200)})
+      generateTags()
     error: (xhr, ajaxOptions, thrownError) ->
       console.log(xhr)
       console.log(thrownError)

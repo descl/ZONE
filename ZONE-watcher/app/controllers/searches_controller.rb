@@ -55,7 +55,7 @@ class SearchesController < ApplicationController
         format.html {render html: @tags}# index.html.erb
       else
         format.html {render html: @tags, :layout => 'empty'}# index.html.erb
-        format.json { render json: @tags.to_json }
+        format.json { render json: @tags.to_json, status: :ok }
       end
     end
   end
