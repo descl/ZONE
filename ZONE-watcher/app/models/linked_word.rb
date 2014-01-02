@@ -84,17 +84,18 @@ class LinkedWord
     #             ?linked ?l ?links
     #         }ORDER BY DESC(?popularity)"
 
-    query = "SELECT ?linkedEntity ?linkedName ?kind COUNT(?linkedEntity) AS ?popularity WHERE{
-      GRAPH <#{ZoneOntology::GRAPH_ITEMS}> {
+    query = "SELECT ?linkedEntity ?linkedName ?kind ?popularity WHERE{
+      {SELECT ?linkedEntity COUNT(?linkedEntity) AS ?popularity FROM <http://zone-project.org/datas/items> {
         ?item <#{ZoneOntology::PLUGIN_SPOTLIGHT_ENTITIES}> <#{param}>.
         ?item <#{ZoneOntology::PLUGIN_SPOTLIGHT_ENTITIES}> ?linkedEntity.
         FILTER(?linkedEntity != <#{param}>)
-      }
+      } ORDER BY DESC(?popularity) LIMIT 10}
       GRAPH <http://zone-project.org/datas/tags> {
         ?linkedEntity rdfs:label ?linkedName.
         OPTIONAL{?linkedEntity <#{ZoneOntology::RDF_TYPE}> ?kind}.
       }
     }ORDER BY DESC(?popularity) LIMIT 10"
+    puts query
     store = SPARQL::Client.new(endpoint,{:read_timeout => 10})
     result = Array.new
     store.query(query).each do |item|
