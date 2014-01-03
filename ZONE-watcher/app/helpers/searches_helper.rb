@@ -73,6 +73,10 @@ module SearchesHelper
       waitingText = "<div class='infoPopBox'><div class='infoPop' filter-uri=\""+filterUri+"\">"+wait+"</div></div>"
     end
 
+    if(filterVal.start_with?"<img src")
+      filterVal = filterVal[24..25]
+    end
+
     btnMust =      "<button type='button' data-dismiss='clickover' class='btn btn-success span12 btnTag paddingMust' onclick='addTag(\"must\",\"" + filterVal + "\",\"#{filterUri}\");openReminderOnChange()'>#{t('newmodal.filtering.buttonMusthave')}</button><br>";
     btnOptionnal = "<button type='button' data-dismiss='clickover' class='btn btn-info span12 btnTag' onclick='addTag(\"opt\",\"" + filterVal + "\",\"#{filterUri}\");openReminderOnChange()'>#{t('newmodal.filtering.buttonOption')}</button><br>";
     btnBan =       "<button type='button' data-dismiss='clickover' class='btn btn-danger span12 btnTag' onclick='addTag(\"no\",\"" + filterVal + "\",\"#{filterUri}\");openReminderOnChange()'>#{t('newmodal.filtering.buttonBan')}</button>";
