@@ -10,6 +10,8 @@ class ItemsController < ApplicationController
     @searches = []
     @search = nil
     @layout = nil
+    @minDate = params[:minDate].to_i
+    @maxDate = params[:maxDate].to_i
 
     case params[:layout]
       when "time"
@@ -118,9 +120,10 @@ class ItemsController < ApplicationController
         flash[:error] = t('search.noResDisclaimer')
       end
 
-      @items = WillPaginate::Collection.create(current_page, per_page, @itemsNumber) do |pager|
+      itemsNumberForSearchWithDates = @search.getItemsNumber(userId,@minDate,@maxDate)
+      @items = WillPaginate::Collection.create(current_page, per_page, itemsNumberForSearchWithDates) do |pager|
         start = (current_page-1)*per_page # assuming current_page is 1 based.
-        itemsTab = Item.all(@search,userId,start,per_page,params[:sinceWhen])
+        itemsTab = Item.all(@search,userId,start,per_page,@minDate,@maxDate)
         @sparqlRequest = itemsTab[:query]
         @error = itemsTab[:error]
         pager.replace(itemsTab[:result])

@@ -335,6 +335,10 @@ fr:
       shareOn: "Partager sur"
     dateFormat: "Le %d/%m/%Y à %H:%M"
     newResults: "nouveaux résultats"
+    layout:
+      time: "Frise chronologique"
+      grid: "Grille de news"
+      list: "Affichage condensé"
   newmodal:
     breadcrumb:
       sources:

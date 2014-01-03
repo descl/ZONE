@@ -19,12 +19,14 @@
 
     <!-- debug tools -->
     <div class="hidden">
-      <%= @search.to_json %>
-      <%= @search.sources.to_json %>
-      <%= @search.filters.to_json %>
+      <div id="searchTrace"><%= @search.to_json %></div>
+      <div id="initialMINDate"><%= @minDate %></div>
+      <div id="initialMAXDate"><%= @maxDate %></div>
+      <div id="searchTraceSources"><%= @search.sources.to_json %></div>
+      <div id="searchTraceFilters"><%= @search.filters.to_json %></div>
       <hr/>
 
-      <%= raw h(@sparqlRequest).gsub(/\n/, '<br/>') %>
+      <div id="sparqlRequest"><%= raw h(@sparqlRequest).gsub(/\n/, '<br/>') %></div>
       <hr/>
     </div>
 
@@ -52,16 +54,16 @@
           <div class="span2 btn-group">
 
             <a href="<%= url_for(params.merge(:format => :rss))%>" id="buttonRss" class="btn-format btn btn-warning"><i class="icon-rss"></i></a>
-            <a title="Timeline layout" id="btnFormatTime" class="btn-format btn <%= 'active' if @layout == 'time'%>" href="<%= url_for( :layout => 'time', :search => @search )%>"><i class="icon icon-calendar"></i></a>
-            <a title="Grid layout"     id="btnFormatCard" class="btn-format btn <%= 'active' if @layout == 'card'%>" href="<%= url_for( :layout => 'card', :search => @search )%>"><i class="icon icon-th-large"></i></a>
-            <a title="condensed layout"id="btnFormatList" class="btn-format btn <%= 'active' if @layout == 'list'%>" href="<%= url_for( :layout => 'list', :search => @search )%>"><i class="icon icon-th-list" ></i></a>
+            <a title="<%= t('items.layout.time')%>" id="btnFormatTime" class="btn-format btn <%= 'active' if @layout == 'time'%>" href="<%= url_for( :layout => 'time', :search => @search )%>"><i class="icon icon-calendar"></i></a>
+            <a title="<%= t('items.layout.grid')%>"     id="btnFormatCard" class="btn-format btn <%= 'active' if @layout == 'card'%>" href="<%= url_for( :layout => 'card', :search => @search )%>"><i class="icon icon-th-large"></i></a>
+            <a title="<%= t('items.layout.list')%>"id="btnFormatList" class="btn-format btn <%= 'active' if @layout == 'list'%>" href="<%= url_for( :layout => 'list', :search => @search )%>"><i class="icon icon-th-list" ></i></a>
           </div>
       </div>
 
       <!-- new news button-->
       <div class="newNewsLinkBox" style="display: none;">
         <% lastDate = @items[0].date if @items.size > 0 else 0  %>
-          <%= link_to (items_path(:search => @search.id, :sinceWhen => lastDate, :per_page => "100", :load_on_top => true, :layout => @layout)), :remote => true ,:class=>"span12 well btn-success btn newNewsLink" do%>
+          <%= link_to (items_path(:search => @search.id, :minDate => lastDate, :per_page => "100", :load_on_top => true, :layout => @layout)), :remote => true ,:class=>"span12 well btn-success btn newNewsLink" do%>
             <span class="numberOfNewNews">0</span> <%= t('items.newResults')%>
           <%end%>
       </div>

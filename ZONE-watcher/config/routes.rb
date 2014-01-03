@@ -15,7 +15,7 @@ ZONEWatcher::Application.routes.draw do
   get '/searches/selectSources' => 'searches#selectSources'
   get '/searches/tagsCloud/:id/:start/:end' => 'searches#tagsCloud'
   resources :searches
-  get '/search/:search/getNewsNumber(/:sinceWhen)' => 'searches#getNewsNumber'
+  get '/search/:search/getNewsNumber(/:minDate)(/:maxDate)' => 'searches#getNewsNumber'
 
 
   #Twitter managment

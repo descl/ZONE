@@ -336,6 +336,10 @@ en:
       shareOn: "Share on"
     dateFormat: "%d/%m/%Y at %H:%M"
     newResults: "new results"
+    layout:
+      time: "Timeline layout"
+      grid: "Grid layout"
+      list: "Condensed layout"
   newmodal:
     breadcrumb:
       sources:

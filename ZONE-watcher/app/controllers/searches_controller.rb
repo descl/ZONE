@@ -186,14 +186,7 @@ class SearchesController < ApplicationController
     end
 
     @search = Search.find(params[:search])
-
-    if params[:sinceWhen] != nil
-      sinceWhen = params[:sinceWhen].to_i
-      @number = @search.getItemsNumber(userId,sinceWhen)
-    else
-      @number = @search.getItemsNumber(userId)
-    end
-
+    @number = @search.getItemsNumber(userId,params[:minDate].to_i,params[:maxDate].to_i)
 
 
     respond_to do |format|

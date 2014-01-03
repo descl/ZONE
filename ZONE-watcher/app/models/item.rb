@@ -24,7 +24,7 @@ class Item# < ActiveRecord::Base
                                               :password => Rails.application.config.virtuosoPassword,
                                               :auth_method => 'digest')
 
-  def self.all(search = "",user=-1,start=0,per_page=10, since_when=nil)
+  def self.all(search = "",user=-1,start=0,per_page=10, minDate=0, maxDate=0)
     sparqlFilter = search.generateSPARQLRequest(user)
     filtersIds = search.getOrFilters.map {|elem| "?filter#{elem.id}"}.join(',')
 
@@ -42,16 +42,17 @@ SELECT * WHERE{
     FROM <#{ZoneOntology::GRAPH_SOURCES}>
     WHERE {
       ?concept RSS:title ?title.
-      OPTIONAL { ?concept RSS:pubDateTime ?pubDateTime}.
       #{sparqlFilter}"
-
-    if since_when != nil
       query += "?concept RSS:pubDateTime ?pubDateTime."
-      query += "FILTER(xsd:integer(?pubDateTime) > #{since_when})"
+
+    if (minDate != 0 || maxDate != 0)
+      if (maxDate == 0)
+        maxDate = 99999999999999999999999
+      end
+      query += "FILTER((xsd:integer(?pubDateTime) > #{minDate.to_i}) AND (xsd:integer(?pubDateTime) <= #{maxDate.to_i}))"
     end
 
     query += "}} ORDER BY DESC(?pubDateTime) LIMIT #{per_page} OFFSET #{start}"
-
 
     store = SPARQL::Client.new(endpoint)
     items = Array.new
