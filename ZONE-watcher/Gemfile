@@ -30,17 +30,23 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+#IHM
 gem 'jquery-rails', "2.3.0"
 gem 'jquery-ui-rails'
+gem "font-awesome-rails"
+gem 'bootstrap_form'
 
-#gem "linkeddata"
+gem "will_paginate"
+gem "will_paginate-bootstrap"
+gem "masonry-rails", :git =>"https://github.com/descl/masonry-rails.git" #items alignment
+
+
+#Semantic Web
 gem "rest-client"
 gem "sparql-client", :github => 'descl/sparql-client'#, "~> 1.0.4.1"
 gem "rdf-virtuoso", "~> 0.1.1"
 
-gem "will_paginate"
-gem "will_paginate-bootstrap"
-
+#authentification
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-twitter'
@@ -48,18 +54,18 @@ gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 gem "devise_mailchimp", :git => "https://github.com/jcnnghm/devise_mailchimp"  # Last officially released gem
 gem "hominid", :git =>"https://github.com/descl/hominid.git"
+#gem "cancan" #rights managment
 
 #opml files import
 gem 'opml_saw', :git => "git://github.com/feedbin/opml_saw.git", :branch => "master"
 gem "paperclip", "~> 3.4.1"
 gem "remotipart", "~> 1.2.1" #load files with Ajax
 
-gem "tag_it", "~> 0.0.1"
 
-gem "font-awesome-rails"
 
 gem 'rvm-capistrano'
 
+#internationalization
 gem 'rails-i18n' #in order to have activerecord translations
 gem 'i18n-js', :github => 'fnando/i18n-js'
 gem 'devise-i18n'
@@ -67,11 +73,7 @@ gem 'devise-i18n'
 gem "stathat", "~> 0.1.7"
 gem 'whenever'
 
-gem 'bootstrap_form'
 
-#rights managment
-#gem "cancan"
 
-#items alignment
-gem "masonry-rails", :git =>"https://github.com/descl/masonry-rails.git"
+
 

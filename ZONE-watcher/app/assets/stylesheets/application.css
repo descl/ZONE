@@ -10,9 +10,12 @@
  *
  *= require_self
  *= require_tree .
+ * we remove the items css filtes
  *= stub items_time
  *= stub items_card
  *= stub items_list
+
+ *= require font-awesome
 
  * dependances for masonry <= items printing
  *= require 'masonry/basic'

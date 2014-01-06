@@ -53,7 +53,7 @@
 
           <div class="span2 btn-group">
 
-            <a href="<%= url_for(params.merge(:format => :rss))%>" id="buttonRss" class="btn-format btn btn-warning"><i class="icon-rss"></i></a>
+            <a href="<%= url_for(params.merge(:format => :rss))%>" id="buttonRss" class="btn-format btn btn-warning"><i class="fa-rss"></i></a>
             <a title="<%= t('items.layout.time')%>" id="btnFormatTime" class="btn-format btn <%= 'active' if @layout == 'time'%>" href="<%= url_for( :layout => 'time', :search => @search )%>"><i class="icon icon-calendar"></i></a>
             <a title="<%= t('items.layout.grid')%>"     id="btnFormatCard" class="btn-format btn <%= 'active' if @layout == 'card'%>" href="<%= url_for( :layout => 'card', :search => @search )%>"><i class="icon icon-th-large"></i></a>
             <a title="<%= t('items.layout.list')%>"id="btnFormatList" class="btn-format btn <%= 'active' if @layout == 'list'%>" href="<%= url_for( :layout => 'list', :search => @search )%>"><i class="icon icon-th-list" ></i></a>
