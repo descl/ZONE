@@ -67,8 +67,14 @@ public abstract class VirtuosoDatabase {
     private static String VIRTUOSO_USER = Config.getVar("Virtuoso-server-user");
     private static String VIRTUOSO_PASS = Config.getVar("Virtuoso-server-pass");
     public static String ZONE_URI = ZoneOntology.GRAPH_NEWS;
+    public static int callNumber = 0;
     
     public static Model getStore(){
+        //we clean the connexion sometimes in order t don't surcharge the virtuoso servor of files open in same time.
+        if(VirtuosoDatabase.callNumber++ > 1000){
+            VirtuosoDatabase.callNumber = 0;
+            st=null;
+        }
         if(st == null){
             VirtGraph vgraph = new VirtGraph(VIRTUOSO_SERVER, VIRTUOSO_USER, VIRTUOSO_PASS);
             vgraph.setReadFromAllGraphs(true);
