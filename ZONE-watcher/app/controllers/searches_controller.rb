@@ -35,7 +35,7 @@ class SearchesController < ApplicationController
   def tagsCloud
     start_date = params[:start]
     end_date = params[:end]
-    tagsInfos = Search.find(params[:id]).getTagsCloud(current_user.object_id,start_date,end_date)
+    tagsInfos = Search.find(params[:id]).getTagsCloud(getUserId(),start_date,end_date)
     @tags = Array.new
     tagsInfos[:result].each do |tag|
       tag[:html] = {
@@ -154,12 +154,16 @@ class SearchesController < ApplicationController
     render  :layout => 'empty'
   end
 
-  def retrieveSearchFromForm(form)
+  def getUserId
     if user_signed_in?
-      userId = current_user.id
+      return current_user.id
     else
-      userId=-1
+      return -1
     end
+
+  end
+
+  def retrieveSearchFromForm(form)
 
     search = Search.new
     if form[:itemId] != nil && form[:itemId] != '' && form[:itemId]!= Rails.application.config.defaultRequestId.to_s
@@ -173,20 +177,15 @@ class SearchesController < ApplicationController
       search.name = form[:searchName]
     end
 
-    search.build_from_form(form,userId)
+    search.build_from_form(form,getUserId())
 
     return search
   end
 
   def getNewsNumber
-    if user_signed_in?
-      userId = current_user.id
-    else
-      userId=-1
-    end
 
     @search = Search.find(params[:search])
-    @number = @search.getItemsNumber(userId,params[:minDate].to_i,params[:maxDate].to_i)
+    @number = @search.getItemsNumber(getUserId(),params[:minDate].to_i,params[:maxDate].to_i)
 
 
     respond_to do |format|
