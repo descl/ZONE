@@ -154,4 +154,8 @@ class Search < ActiveRecord::Base
   def getWithoutFilters
     return self.filters.find_all{|f| f.kind == "without" }
   end
+
+  def generateThumbTagsCloud(userId)
+    
+  end
 end

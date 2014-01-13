@@ -51,12 +51,8 @@ class SearchesController < ApplicationController
     end
 
     respond_to do |format|
-      if(params[:render] == "newPage")
-        format.html {render html: @tags}# index.html.erb
-      else
-        format.html {render html: @tags, :layout => 'empty'}# index.html.erb
-        format.json { render json: @tags.to_json, status: :ok }
-      end
+      format.html {render html: @tags, :layout => 'emptyWithJS'}# index.html.erb
+      format.json { render json: @tags.to_json, status: :ok }
     end
   end
 
@@ -80,6 +76,7 @@ class SearchesController < ApplicationController
     end
     @search.touch
     @search.save
+    @search.generateThumbTagsCloud(getUserId())
   end
 
   # POST /searches
@@ -96,6 +93,7 @@ class SearchesController < ApplicationController
     isNew = ((@search.id == nil) && (params[:isNew] != "false"))
     respond_to do |format|
       if @search.save
+        @search.generateThumbTagsCloud(getUserId())
         if isNew
           format.html { redirect_to items_path(:search => @search.id, :isNew => true )  }
         else

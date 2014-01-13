@@ -14,6 +14,7 @@
   <%= stylesheet_link_tag("/custom-scrollbar-plugin/css/jquery.mCustomScrollbar.css") %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= stylesheet_link_tag("http://cdn-images.mailchimp.com/embedcode/classic-081711.css") %>
+  <%= stylesheet_link_tag("jqcloud.css") %>
 
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag params[:controller] %>
@@ -23,6 +24,10 @@
   <%= javascript_include_tag "/jwplayer/jwplayer.js" %>
   <%= javascript_include_tag "bootstrapx-clickoverx" %>
   <%= javascript_include_tag "bootstrapx-clickover" %>
+  <%= javascript_include_tag "jQDateRangeSlider-withRuler-min" %>
+  <%= javascript_include_tag "jqcloud" %>
+  <%= javascript_include_tag "URI.min" %>
+  <%= javascript_include_tag "jquery.URI" %>
   <%= javascript_include_tag("/custom-scrollbar-plugin/js/jquery.mCustomScrollbar.concat.min.js")%>
   <%= favicon_link_tag "favicon.png" %>
   <%= javascript_tag do %>
@@ -32,18 +37,7 @@
 </head>
 <body>
 
-
-<% if current_page?('/items') then mainClass="container-fluid" else mainClass="container" end%>
-<div class="<%= mainClass %>">
-  <div  id="page-contentt">
-    <%= render 'layouts/messages' %>
     <%= yield %>
-  </div>
-</div>
-
-<div class="footer">
-  <%=  render "layouts/footer" %>
-</div>
 
 </body>
 </html>

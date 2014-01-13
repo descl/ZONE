@@ -77,3 +77,4 @@ gem 'whenever'
 
 
 
+gem "capit", "~> 0.3.3"

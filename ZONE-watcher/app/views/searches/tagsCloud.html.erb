@@ -1,6 +1,7 @@
 <script type="text/javascript">
 
-    $(function() {
+    $(document).ready(function(){
+
         // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
         $("#tagsCloud").jQCloud(<%= raw @tags.to_json %>, {
             delayedMode:false,
@@ -10,7 +11,7 @@
     });
 </script>
 
-<div id="tagsCloud" style="height: 150px;">
+<div id="tagsCloud" style="height: 200px; width:800px">
   <div class="background-dino"></div>
 </div>
 
